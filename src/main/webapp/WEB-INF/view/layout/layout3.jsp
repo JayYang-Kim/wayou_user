@@ -7,55 +7,61 @@
    String cp = request.getContextPath();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
-
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="ko"> <![endif]-->
+<!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="ko"> <![endif]-->
+<!--[if IE 8]>    <html class="lt-ie9" lang="ko"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="ko"> <!--<![endif]-->
 <head>
-<meta charset="utf-8" />
+    <meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     
-    <title>wayou - 너도 여행할 수 있어</title>
+    <title>WAYOU - 누워서 유람하듯 여행을 떠나요</title>
     
     <!-- Favicon - 파비콘 (주소창 영역 아이콘) -->
-    <link rel="Shortcut Icon" href="<%=cp%>/resource/user/images/common/saramit.ico"/>
+    <link rel="Shortcut Icon" href="<%=cp%>/resources/images/common/wayou.ico"/>
     
+    <!-- Stylesheet - Temp Common CSS File -->
+    <link rel="stylesheet" href="<%=cp%>/resources/css/style.css">
+
     <!-- Css -->
-    <link rel="stylesheet" href="<%=cp%>/resource/user/css/common.css" media="all" />
-	<link rel="stylesheet" href="<%=cp%>/resource/user/css/style.css" media="all" />
+    <link rel="stylesheet" href="<%=cp%>/resources/css/common.css" media="all" />
+    <link rel="stylesheet" href="<%=cp%>/resources/css/contents.css" media="all" />
 	
-
-    <!-- Javascript -->
-    <script src="<%=cp%>/resource/user/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="<%=cp%>/resource/user/js/lib/jquery-migrate-1.4.1.min.js"></script>
-    <script src="<%=cp%>/resource/user/js/lib/jquery-ui-1.12.1.min.js"></script>
-    
-    <script src="<%=cp%>/resource/user/js/plugins.js"></script>
-    <script src="<%=cp%>/resource/user/js/basic.js"></script>
-    <script src="<%=cp%>/resource/user/js/util.js"></script>
-
-    <!-- Carousel -->
-    <script type="text/javascript" src="<%=cp%>/resource/user/js/carousel.js"></script>
-    
-    <!-- 다음 주소검색 -->
-    <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-   
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="<%=cp%>/resources/js/lib/html5shiv.js"></script>
     <![endif]-->
 </head>
-<body>
 
-<div id="wrap">
-	    <tiles:insertAttribute name="header"/>
-		<div style="min-height: 60px;"></div> 
-	<div class="container">
-	    <tiles:insertAttribute name="body"/>
-	</div>
-<div class="footer">
-    <tiles:insertAttribute name="footer"/>
-</div>
-</div>
+<body>
+    <!-- Header -->
+    <header class="header-area">
+    	<tiles:insertAttribute name="header"/>
+    </header>
+    <!-- /Header -->
+
+    <!-- Body -->
+    <tiles:insertAttribute name="body"/>
+    <!-- /Body -->
+
+    <!-- Footer -->
+    <footer class="footer-area section-padding-80-0">
+        <tiles:insertAttribute name="footer"/>
+    </footer>
+    <!-- /Footer -->
+
+    <!-- **** All JS Files ***** -->
+    <!-- jQuery 2.2.4 -->
+    <script src="<%=cp%>/resources/js/lib/jquery.min.js"></script>
+    <!-- Popper -->
+    <script src="<%=cp%>/resources/js/lib/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="<%=cp%>/resources/js/lib/bootstrap.min.js"></script>
+    <!-- All Plugins -->
+    <script src="<%=cp%>/resources/js/lib/roberto.bundle.js"></script>
+    <!-- Active -->
+    <script src="<%=cp%>/resources/js/lib/default-assets/active.js"></script>
 </body>
 </html>

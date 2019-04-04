@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   Common_style
+   ========================================================================== */
+.h_web{display: none;}
+  @media only screen and (max-width: 991px) and (min-width: 417px) {
+    .h_web{display:block;}
+  }
+.h_mobile{display:block;}
+  @media only screen and (max-width: 991px) and (min-width: 417px) {
+    .h_mobile{display:none;}
+  }
+
+/* ==========================================================================
+   Layout_style
+   ========================================================================== */
+.top-header-area .top-header-content .top-area *{display: inline-block;color: #ffffff;line-height: 50px;font-size: 14px;}
+.main-header-area .logo h1 a{font-size:34px;}
+.main-header-area .login_area a, .main-header-area .login_area p{font-size: 14px;color: #2a303b;font-weight: 500;padding: 10px 20px;display: block;border-bottom: 1px solid #c4c4c4;cursor: pointer;}
+.main-header-area .login_area a:hover, .main-header-area .login_area a:active{background-color:#2b2b2b;color:#ffffff;}
+
+@media only screen and (max-width: 991px) and (min-width: 768px) {
+  .h_web{display:block;}
+  .h.mobile{display:none;}
+}

@@ -5,23 +5,98 @@
 <%
    String cp = request.getContextPath();
 %>
-	<footer class="clear">
-	    <div class="box_footer">
-	        <div class="links">
-	            <ul>
-	                <li><a href="#" target="_blank" title="회사소개 새창열기">회사소개</a></li>
-	                <li><a href="#" target="_blank" title="찾아오시는길 새창열기">찾아오시는길</a></li>
-	                <li><a href="#" title="회원약관 바로가기">회원약관</a></li>
-	                <li><a href="#" title="개인정보처리방침 바로가기">개인정보처리방침</a></li>
-	                <li><a href="#" title="이메일무단수집거부 바로가기">이메일무단수집거부</a></li>
-	                <li><a href="#" title="고객센터 바로가기">고객센터</a></li>
-	            </ul>
-	        </div>
-	        <div class="copyright">
-	            <p>(주)SARAMIT | 주소 : 서울특별시 마포구 월드컵북로 21 풍성빌딩 2-4층 쌍용강북교육센터<br/>
-	           	 대표 : | 사업자등록 : 123-45-67890<br/>
-	            Copyright (c) (주)SARAMIT. All rights reserved.</p>
-	            <span class="b_logo">SARAMIT</span>
-	        </div>
-	    </div>
-	</footer>
+
+<!-- Main Footer Area -->
+<div class="main-footer-area">
+    <div class="container">
+        <div class="row align-items-baseline justify-content-between">
+            <!-- Single Footer Widget Area -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-footer-widget mb-80">
+                    <!-- Footer Logo -->
+                    <a href="#" class="footer-logo"><img src="<%=cp%>/resources/images/core-img/logo2.png" alt=""></a>
+
+                    <h4>+12 345-678-9999</h4>
+                    <span>Info.colorlib@gmail.com</span>
+                    <span>856 Cordia Extension Apt. 356, Lake Deangeloburgh, South Africa</span>
+                </div>
+            </div>
+
+            <!-- Single Footer Widget Area -->
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single-footer-widget mb-80">
+                    <!-- Widget Title -->
+                    <h5 class="widget-title">Our Blog</h5>
+
+                    <!-- Single Blog Area -->
+                    <div class="latest-blog-area">
+                        <a href="#" class="post-title">Freelance Design Tricks How</a>
+                        <span class="post-date"><i class="fa fa-clock-o" aria-hidden="true"></i> Jan 02, 2019</span>
+                    </div>
+
+                    <!-- Single Blog Area -->
+                    <div class="latest-blog-area">
+                        <a href="#" class="post-title">Free Advertising For Your Online</a>
+                        <span class="post-date"><i class="fa fa-clock-o" aria-hidden="true"></i> Jan 02, 2019</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Single Footer Widget Area -->
+            <div class="col-12 col-sm-4 col-lg-2">
+                <div class="single-footer-widget mb-80">
+                    <!-- Widget Title -->
+                    <h5 class="widget-title">Links</h5>
+
+                    <!-- Footer Nav -->
+                    <ul class="footer-nav">
+                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> About Us</a></li>
+                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Our Room</a></li>
+                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Career</a></li>
+                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Single Footer Widget Area -->
+            <div class="col-12 col-sm-8 col-lg-4">
+                <div class="single-footer-widget mb-80">
+                    <!-- Widget Title -->
+                    <h5 class="widget-title">Subscribe Newsletter</h5>
+                    <span>Subscribe our newsletter gor get notification about new updates.</span>
+
+                    <!-- Newsletter Form -->
+                    <form action="index.html" class="nl-form">
+                        <input type="email" class="form-control" placeholder="Enter your email...">
+                        <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Copywrite Area -->
+<div class="container">
+    <div class="copywrite-content">
+        <div class="row align-items-center">
+            <div class="col-12 col-md-8">
+                <!-- Copywrite Text -->
+                <div class="copywrite-text">
+                    <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                </div>
+            </div>
+            <div class="col-12 col-md-4">
+                <!-- Social Info -->
+                <div class="social-info">
+                    <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
