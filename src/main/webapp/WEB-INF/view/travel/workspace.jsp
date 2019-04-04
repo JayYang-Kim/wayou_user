@@ -16,7 +16,7 @@
 			<p>
 			<span style="color: white;">서울<br>Seoul</span>
 			</p>
-		</div>
+		</div> 
 	</div>
 </nav>
 	<div class="searchSpace">

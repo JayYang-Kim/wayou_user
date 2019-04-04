@@ -19,7 +19,7 @@ public class MemberController {
 	
 	@RequestMapping(value="/member/login", method=RequestMethod.GET)
 	public String loginForm() {
-		return ".member.login";
+		return "member/login";
 	}
 	
 	//로그인이 갑자기 안된다 무슨 일 일까
@@ -29,7 +29,7 @@ public class MemberController {
 			User user,
 			HttpSession session
 			) {
-			System.out.println("hi");
+			//System.out.println("hi");
 			Map<String,Object> map = new HashMap<>();
 			User temp = memberService.readLoginInfo(user.getUserId());
 			boolean isUser = false;
