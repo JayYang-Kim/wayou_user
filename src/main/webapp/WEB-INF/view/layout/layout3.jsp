@@ -5,6 +5,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%
    String cp = request.getContextPath();
+   String uri = request.getRequestURI();
 // String path = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+cp;
 %>
 
@@ -23,6 +24,7 @@
     <!-- Css -->
     <link rel="stylesheet" href="<%=cp%>/resource/user/css/common.css" media="all" />
 	<link rel="stylesheet" href="<%=cp%>/resource/user/css/style.css" media="all" />
+	<link rel="stylesheet" href="<%=cp%>/resource/user/css/sangkeun.css" media="all" />
 	
 
     <!-- Javascript -->
@@ -33,6 +35,8 @@
     <script src="<%=cp%>/resource/user/js/plugins.js"></script>
     <script src="<%=cp%>/resource/user/js/basic.js"></script>
     <script src="<%=cp%>/resource/user/js/util.js"></script>
+    <script src="<%=cp%>/resource/user/js/sangkeun.js"></script>
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d54199dccf04c47c7869a5d1e688d52d"></script>
 
     <!-- Carousel -->
     <script type="text/javascript" src="<%=cp%>/resource/user/js/carousel.js"></script>
@@ -53,9 +57,7 @@
 	<div class="container">
 	    <tiles:insertAttribute name="body"/>
 	</div>
-<div class="footer">
     <tiles:insertAttribute name="footer"/>
-</div>
 </div>
 </body>
 </html>
