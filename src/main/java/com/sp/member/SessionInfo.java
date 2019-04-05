@@ -2,15 +2,15 @@ package com.sp.member;
 
 // 세션에 저장할 정보(아이디, 이름, 권한등)
 public class SessionInfo {
-	private long userIdx;
+	private int userIdx;
 	private String userId;
 	private String userName;
 	private int roleCode;
 	
-	public long getUserIdx() {
+	public int getUserIdx() {
 		return userIdx;
 	}
-	public void setUserIdx(long userIdx) {
+	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
 	}
 	public String getUserId() {

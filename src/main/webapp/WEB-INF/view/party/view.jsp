@@ -11,7 +11,13 @@
         <div class="row h-100 align-items-center">
             <div class="col-12">
                 <div class="breadcrumb-content text-center">
-                    <h2 class="page-title">여행 동료 모으기</h2>
+                    <h2 class="page-title">Blog Left Sidebar</h2>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Blog Left Sidebar</li>
+                        </ol>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -186,7 +192,7 @@
                 
                 <div>
                 	<div class="col-12 text-right">
-	                    <a href="<%=cp%>/travel/party/create" class="btn roberto-btn mb-50">파티 생성</a>
+	                    <a href="#" class="btn roberto-btn mb-50">파티 생성</a>
 	                </div>
                 </div>
 
