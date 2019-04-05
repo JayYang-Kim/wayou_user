@@ -67,7 +67,7 @@
 	</section>
 	<!-- Welcome Area End -->
 	
-	<section style="margin: 100px">
+<!-- 	<section style="margin: 100px">
 	<div class="hotel-search-form-area">
             <div class="container-fluid">
                 <div class="hotel-search-form">
@@ -81,10 +81,6 @@
                                 <label for="checkOut">Check Out</label>
                                 <input type="date" class="form-control" id="checkOut" name="checkout-date">
                             </div>
-                            <div class="col-6 col-md-2 col-lg-3">
-	                        <label for="children">여행 지역 및 랜드마크 검색</label>
-	                        <input type="text" class="form-control" id="input_search" name="input_search"/>
-	                    </div>
                             <div class="col-12 col-md-3">
                                 <button type="submit" class="form-control btn roberto-btn w-100">Check Availability</button>
                             </div>
@@ -93,7 +89,7 @@
                 </div>
             </div>
         </div>
-    </section>    
+    </section>    --> 
 	<!-- About Us Area End -->
 	
 	 <!-- Rooms Area Start -->
@@ -212,28 +208,37 @@
                     </nav>
                 </div>
 
-                <div class="col-12 col-lg-4">
-                    <!-- Hotel Reservation Area -->
+
+    <!-- Rooms Area End -->
+ <!-- Hotel Reservation Area -->
                     <div class="hotel-reservation--area mb-100">
                         <form action="#" method="post">
                             <div class="form-group mb-30">
-                                <label for="checkInDate">날짜 검색</label>
+                                <label for="checkInDate">Date</label>
                                 <div class="input-daterange" id="datepicker">
                                     <div class="row no-gutters">
-			                            <div class="col-6 col-md-6 col-lg-6">                              
-			                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
-			                            </div>
-			                           	<div class="col-6 col-md-6 col-lg-6">                              
-			                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
-			                            </div>
+                                        <div class="col-6">
+                                            <input type="text" class="input-small form-control" id="checkInDate" name="checkInDate" placeholder="Check In">
+                                        </div>
+                                        <div class="col-6">
+                                            <input type="text" class="input-small form-control" name="checkOutDate" placeholder="Check Out">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group mb-30">
-                                <label for="guests">가격순 검색</label>
+                                <label for="guests">Guests</label>
                                 <div class="row">
                                     <div class="col-6">
-                                        <button>낮은 가격순</button>
+                                        <select name="adults" id="guests" class="form-control">
+                                            <option value="adults">Adults</option>
+                                            <option value="01">01</option>
+                                            <option value="02">02</option>
+                                            <option value="03">03</option>
+                                            <option value="04">04</option>
+                                            <option value="05">05</option>
+                                            <option value="06">06</option>
+                                        </select>
                                     </div>
                                     <div class="col-6">
                                         <select name="children" id="children" class="form-control">
@@ -267,8 +272,6 @@
             </div>
         </div>
     </div>
-    <!-- Rooms Area End -->
-
     <!-- Call To Action Area Start -->
     <section class="roberto-cta-area">
         <div class="container">

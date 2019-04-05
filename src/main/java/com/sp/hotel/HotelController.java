@@ -15,5 +15,10 @@ public class HotelController {
 	public String list() {
 		return ".hotel.list";
 	}
+	
+	@RequestMapping(value={"/hotel/hdetail"},method=RequestMethod.GET )
+	public String hdetail() {
+		return ".hotel.hdetail";
+	}
 		
 }

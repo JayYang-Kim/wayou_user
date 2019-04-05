@@ -150,7 +150,7 @@
                                 <li><a href="<%=cp%>/hotel/main">숙박</a>
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/hotel/list">- 호텔</a></li>
-                                        <li><a href="#">- 나만의 호텔 예약</a></li>
+                                        <li><a href="<%=cp%>/hotel/hdetail">- 나만의 호텔 예약</a></li>
                                         <li><a href="#">- 이벤트</a></li>
                                         <li><a href="#">- 공지사항</a></li>
                                         <li><a href="#">- 문의사항</a></li>
