@@ -173,6 +173,11 @@
                         <div class="h_mobile search-btn ml-4">
                             <i class="fa fa-search" aria-hidden="true"></i>
                         </div>
+                        
+                        <!-- Book Now -->
+                        <div class="book-now-btn ml-3 ml-lg-5 h_mobile">
+                            <a href="#">여행 출발 <i class="fa fa-suitcase" aria-hidden="true"></i></a>
+                        </div>
 
                         <!-- Mobile Login -->
                         <!-- 비로그인 -->
