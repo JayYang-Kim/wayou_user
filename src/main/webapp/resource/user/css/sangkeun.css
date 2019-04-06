@@ -2,48 +2,67 @@
 
 #navBar {
   float:left;
-  background-color: #404040;
-  width: 30%;
   height: 750px;
+  border : 1px solid #e4e4e4;
+  padding:0;
+}
+.workspace-title {
+	width:100%;
+	background : #707070;
+	padding: 5px; 3px;
 }
 
 .searchSpace {
-	float:left;
 	width:20%;
 	background-color: #e4e4e4;
 	height:750px;
 }
-.workspace-title {
-	
-}
 
 .scrollbox {
   width: 100%;
-  height: 300px;
-  font-family: 'Junge', serif;
-  padding: 30px 20px;
+  height: 90%;
   font-size: 1.2em;
-  color: #999999;
   line-spacing: 20px;
-  margin: 60px auto;
-  line-height: 1.7em;
   overflow-y: scroll;
-  
-  background: linear-gradient(white 30%, hsla(0,0%,100%,0)), 
-    linear-gradient(hsla(0,0%,100%,0), white 70%) bottom,
-    radial-gradient(50% 0, ellipse, rgba(0,0,0,0.3), rgba(0,0,0,0) 70%), 
-    radial-gradient(50% 100%, ellipse, rgba(0,0,0,0.3), rgba(0,0,0,0) 70%) bottom;
-  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-  background-repeat: no-repeat;
-  background-attachment: local, local, scroll, scroll;
-}
-
-.locImage {
-	width: 100px;
-	height: 100px;
 }
 
 .LocList {
+	border-bottom : 1px solid #b3b3b3;
 	width: 100%; 
 	height:100px;
+	cursor: pointer;
+	padding:15px 5px;
+}
+
+.LocList:hover {
+	background-color: #e4e4e4;
+}
+
+.locImage {
+	width: 70px;
+	height: 70px;
+	float:left;
+}
+
+
+  
+.next3 {
+	float:right;
+  color: #95a5a6;
+  font-size: 2em;
+  font-family: 'Ropa Sans', sans-serif;
+  transition:all .2s linear;
+  -o-transition:all .2s linear;
+  -moz-transition:all .2s linear;
+  -webkit-transition:all .2s linear;
+  position: relative;
+  right:0px;
+  top:12px;
+}
+
+.landmark-title {
+	width:100%;
+	height:65px;
+	background : teal;
+	padding: 5px; 3px;
 }
