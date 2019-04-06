@@ -29,13 +29,16 @@
     <link rel="stylesheet" href="<%=cp%>/resources/css/common.css" media="all" />
     <link rel="stylesheet" href="<%=cp%>/resources/css/contents.css" media="all" />
     <link rel="stylesheet" href="<%=cp%>/resource/user/css/sangkeun.css" media="all" />
+    
+    <!-- jQuery 2.2.4 -->
+    <script src="<%=cp%>/resources/js/lib/jquery.min.js"></script>
+    <script src="<%=cp%>/resources/js/lib/util-jquery.js"></script>
+    <script src="<%=cp%>/resources/js/lib/util.js"></script>
 	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="<%=cp%>/resources/js/lib/html5shiv.js"></script>
     <![endif]-->
-    <!-- jQuery 2.2.4 -->
-    <script src="<%=cp%>/resources/js/lib/jquery.min.js"></script>
 </head>
 
 <body>
@@ -56,8 +59,6 @@
     <!-- /Footer -->
 
     <!-- **** All JS Files ***** -->
-    
-    
     <!-- Popper -->
     <script src="<%=cp%>/resources/js/lib/popper.min.js"></script>
     <!-- Bootstrap -->

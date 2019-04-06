@@ -22,11 +22,10 @@
 			var $info = $(this).children("input[type=hidden]");
 			/* $info.attr("data-locCode")+","+$info.attr("data-lat")+","+$info.attr("data-lng")); */
 			drawMap($info.attr("data-lat"),$info.attr("data-lng"));
+			$("#createWorkspace").css("background","teal");
+			$("#createWorkspace").prop("disabled",false);
 			
-			var url = "<%=cp%>/travel/locInfo";
-			$.ajax({
-				
-			});
+			//해당 지역 정보 가져와서 뿌리기
 		});
 	});
 	
@@ -66,6 +65,8 @@
 		});
 		
 	}
+
+	
 </script>
 
 <div id="container">
@@ -87,11 +88,33 @@
 				
 			</div>
 			<div>
-				<button class="button" style="background: teal; width: 100%; color: white; font-size: 16px; height: 50px;">일정만들기</button>
+				<button id="createWorkspace" class="button" style="background: gray; width: 100%; color: white; font-size: 16px; height: 50px;" disabled="disabled" data-toggle="modal" data-target="#basicModal">일정만들기</button>
 			</div>
 		</div>
 
 		<div class="col-sm-6" style="height: 100%; overflow: hidden;"id="map"></div>
 		
 	</div>
+</div>
+
+
+<!-- basic modal -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">일정만들기</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="여행 일정 제목">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary">만들기</button>
+      </div>
+    </div>
+  </div>
 </div>
