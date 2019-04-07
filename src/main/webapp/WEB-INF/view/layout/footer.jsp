@@ -9,67 +9,33 @@
 <!-- Main Footer Area -->
 <div class="main-footer-area">
     <div class="container">
+    	<div class="row top_footer">
+    		<ul>
+    			<li>
+    				<a href="#">서비스 소개</a>
+    			</li>
+    			<li>
+    				<a href="#">문의하기</a>
+    			</li>
+    			<li>
+    				<a href="#">이용약관</a>
+    			</li>
+    			<li>
+    				<a href="#">개인정보 처리방침</a>
+    			</li>
+    		</ul>
+    	</div>
         <div class="row align-items-baseline justify-content-between">
             <!-- Single Footer Widget Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="single-footer-widget mb-80">
-                    <!-- Footer Logo -->
-                    <a href="#" class="footer-logo"><img src="<%=cp%>/resources/images/core-img/logo2.png" alt=""></a>
-
-                    <h4>+12 345-678-9999</h4>
-                    <span>Info.colorlib@gmail.com</span>
-                    <span>856 Cordia Extension Apt. 356, Lake Deangeloburgh, South Africa</span>
-                </div>
-            </div>
-
-            <!-- Single Footer Widget Area -->
-            <div class="col-12 col-sm-6 col-lg-3">
-                <div class="single-footer-widget mb-80">
-                    <!-- Widget Title -->
-                    <h5 class="widget-title">Our Blog</h5>
-
-                    <!-- Single Blog Area -->
-                    <div class="latest-blog-area">
-                        <a href="#" class="post-title">Freelance Design Tricks How</a>
-                        <span class="post-date"><i class="fa fa-clock-o" aria-hidden="true"></i> Jan 02, 2019</span>
-                    </div>
-
-                    <!-- Single Blog Area -->
-                    <div class="latest-blog-area">
-                        <a href="#" class="post-title">Free Advertising For Your Online</a>
-                        <span class="post-date"><i class="fa fa-clock-o" aria-hidden="true"></i> Jan 02, 2019</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Footer Widget Area -->
-            <div class="col-12 col-sm-4 col-lg-2">
-                <div class="single-footer-widget mb-80">
-                    <!-- Widget Title -->
-                    <h5 class="widget-title">Links</h5>
-
-                    <!-- Footer Nav -->
-                    <ul class="footer-nav">
-                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> About Us</a></li>
-                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Our Room</a></li>
-                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> Career</a></li>
-                        <li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i> FAQs</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Single Footer Widget Area -->
-            <div class="col-12 col-sm-8 col-lg-4">
-                <div class="single-footer-widget mb-80">
-                    <!-- Widget Title -->
-                    <h5 class="widget-title">Subscribe Newsletter</h5>
-                    <span>Subscribe our newsletter gor get notification about new updates.</span>
-
-                    <!-- Newsletter Form -->
-                    <form action="index.html" class="nl-form">
-                        <input type="email" class="form-control" placeholder="Enter your email...">
-                        <button type="submit"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-                    </form>
+            <div class="col-12">
+                <div class="single-footer-widget mt20 mb-60">
+					<!-- <p>(주)WAYOU | 주소 : 서울특별시 마포구 월드컵북로 21 풍성빌딩 2-4층 쌍용강북교육센터<br/>
+		           	대표 : 이민영, 김진양, 임상근, 홍재승, 김소민 | 사업자등록 : 123-45-67890<br/>
+		            Copyright (c) (주)SARAMIT. All rights reserved.</p> -->
+		            <p>상호명 : (주)와유<span class="pl10 pr10">|</span>대표 : 김진양, 지용운, 이민영, 임상근, 엄유선, 김소민<span class="pl10 pr10">|</span>개인정보 책임자 : 지용운</p>
+		            <p>사업자 등록번호 : 123-45-67890<span class="pl10 pr10">|</span>통산 판매업 신고번호 : 제 2019-서울마포-00001호</p>
+		            <p>주소 : 주소 : 서울특별시 마포구 월드컵북로 21 풍성빌딩 2-4층 (주)와유<span class="pl10 pr10">|</span>광고 및 제휴 : <a href="mailto:wayou@gmail.com">wayou@gmail.com</a></p>
+		            <p class="mt20">(주)와유는 통신 판매 중개자이며 통신판매의 당사자가 아닙니다. 따라서 (주)와유는 상품, 거래정보 및 거래에 대하여 책임을 지지 않습니다.</p>
                 </div>
             </div>
         </div>
@@ -84,8 +50,12 @@
                 <!-- Copywrite Text -->
                 <div class="copywrite-text">
                     <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+						Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script> 
+							All rights reserved | This template is made with 
+							<i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+					</p>
                 </div>
             </div>
             <div class="col-12 col-md-4">

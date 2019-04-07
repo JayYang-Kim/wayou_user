@@ -63,7 +63,7 @@
         <div class="row h-100 align-items-center">
             <div class="col-12">
                 <div class="breadcrumb-content text-center">
-                    <h2 class="page-title">여행 동료 모으기 - 파티 생성</h2>
+                    <h2 class="page-title">여행 동료 모으기</h2>
                 </div>
             </div>
         </div>
