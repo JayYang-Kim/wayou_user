@@ -6,4 +6,68 @@
 		INSERT INTO party(partyCode, subject, content, startDate, endDate, userIdx, max, enabled, confirmCode)
     		VALUES(PARTY_SEQ.NEXTVAL, #{subject}, #{content}, #{startDate}, #{endDate}, #{userIdx}, #{max}, #{enabled}, #{confirmCode})
 	</insert>
+	
+	<!-- sql -->
+	<sql id="where-list">
+		<choose>
+			<when test="searchKey == 'all'">
+			   (INSTR(subject, #{searchValue}) &gt; 0
+		          OR DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0)
+			</when>
+			<when test="searchKey == 'subject'">
+			   INSTR(subject, #{searchValue}) &gt; 0
+			</when>
+			<when test="searchKey == 'content'">
+			    DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+			</when>
+			<when test="searchKey == 'userIdx'">
+			   INSTR(userId, #{searchValue}) &gt; 0
+			</when>
+			<when test="searchKey == 'userCount'">
+			   max = #{searchValue}
+			</when>
+			<otherwise>
+			    (TO_CHAR(${searchKey}, 'YYYYMMDD') = #{searchValue}
+		          OR TO_CHAR(${searchKey}, 'YYYY-MM-DD') = #{searchValue})
+			</otherwise>
+		</choose>
+	</sql>
+	<!-- /sql -->
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM party p
+		JOIN tb_user u ON p.userIdx = u.userIdx
+		<where>
+			<if test="searchValue != null and searchValue != ''">
+	     	    <include refid="where-list"/>
+	     	</if>
+		</where>
+	</select>
+	
+	<select id="listParty" parameterType="map" resultType="com.sp.party.Party">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT partyCode, subject, content, 
+		            TO_CHAR(startDate, 'YYYY-MM-DD') startDate, 
+		            TO_CHAR(endDate, 'YYYY-MM-DD') endDate, 
+		            p.userIdx,
+		            u.roleCode,
+		            u.userId,
+		            u.userName,
+		            TO_CHAR(created, 'YYYY-MM-DD') created, max, enabled, confirmCode
+		        FROM party p
+		        JOIN tb_user u ON p.userIdx = u.userIdx
+		        <where>
+		        	<if test="searchValue != null and searchValue != ''">
+			     	    <include refid="where-list"/>
+			     	</if>
+		        	AND (enabled = 0)
+		        </where>
+		        ORDER BY partyCode DESC
+		<![CDATA[
+		    ) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
 </mapper>

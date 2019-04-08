@@ -29,14 +29,28 @@ public class PartyServiceImpl implements PartyService {
 
 	@Override
 	public List<Party> listBoard(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Party> list = null;
+		
+		try {
+			list = dao.selectList("party.listParty", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
 
 	@Override
 	public int dataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("party.dataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override

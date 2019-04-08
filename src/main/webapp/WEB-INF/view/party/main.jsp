@@ -5,6 +5,14 @@
 <%
 	String cp=request.getContextPath();
 %>
+
+<script type="text/javascript">
+	function sendSearch() {
+		var f = document.search_form;
+		f.submit();
+	}
+</script>
+
 <!-- Breadcrumb Area Start -->
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);">
     <div class="container h-100">
@@ -22,10 +30,48 @@
 <!-- Blog Area Start -->
 <div class="roberto-news-area section-padding-100-0">
     <div class="container">
+    	<form name="search_form" action="<%=cp%>/travel/party" method="post">
+	    	<div class="row justify-content-center box_search mb40">
+		            <div class="col-12 col-lg-2">
+		            	<select name="searchKey">
+		            		<option value="all" ${searchKey == 'all' ? "selected='selected'" : ""}>제목 + 내용</option>
+		            		<option value="subject" ${searchKey == 'subject' ? "selected='selected'" : ""}>제목</option>
+		            		<option value="content" ${searchKey == 'content' ? "selected='selected'" : ""}>내용</option>
+		            		<option value="startDate" ${searchKey == 'startDate' ? "selected='selected'" : ""}>시작일</option>
+		            		<option value="endDate" ${searchKey == 'endDate' ? "selected='selected'" : ""}>종료일</option>
+		            		<option value="userIdx" ${searchKey == 'userIdx' ? "selected='selected'" : ""}>아이디</option>
+		            		<option value="userCount" ${searchKey == 'userCount' ? "selected='selected'" : ""}>인원수</option>
+		            	</select>
+		            </div>
+		            <div class="col-12 col-lg-8">
+		            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요."/>
+		            </div>
+		            <div class="col-12 col-lg-2">
+		            	<button type="button" class="btn roberto-btn" onclick="sendSearch()">검색</button>
+		            </div>
+			</div>
+		</form>
         <div class="row justify-content-center">
             <div class="col-12 col-lg-8">
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+            	<c:forEach var="dto" items="${list}">
+	                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+	                    <!-- Post Content -->
+	                    <div class="post-content party_list">
+	                        <!-- Post Meta -->
+	                        <div class="post-meta">
+	                            <a href="<%=cp%>/travel/party/view" class="post-author">${dto.startDate}</a>
+	                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">${dto.endDate}</a>
+	                        </div>
+	                        <!-- Post Title -->
+	                        <a href="<%=cp%>/travel/party/view" class="post-title">${dto.subject}</a>
+	                        <p>${dto.content}</p>
+	                        <a href="<%=cp%>/travel/party/view" data-partyCode="${dto.partyCode}" class="btn continue-btn">상세보기</a>
+	                    </div>
+	                </div>
+                </c:forEach>
+            
+                <!-- Sample -->
+                <%-- <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                     <!-- Post Content -->
                     <div class="post-content party_list">
                         <!-- Post Meta -->
@@ -38,151 +84,7 @@
                         <p>A round-the-world trip remains the world’s greatest journey. For two out of every three people, this is the ultimate travel experience, according to recent research...</p>
                         <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
                     </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="200ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 04, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">How To Boost Your Traffic Of Your Blog And Destroy The Competition</a>
-                        <p>Businesses such as GuideMeGreen and the co-op offer a real alternative for people concerned with these issues and with businesses that combine a strong ethical dimension in tandem with making profits...</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="300ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 09, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">Global Travel And Vacations Luxury Travel On A Tight Budget</a>
-                        <p>Life is hectic; it’s true. There are so many things that demand your time and attention. Between work, kids, family and household chores, there is precious little time left over for you.</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="400ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 22, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">Will The Democrats Be Able To Reverse The Online Gambling Ban</a>
-                        <p>Everyone loves good, old fashioned charcoal grilling. Aside from being cheaper than other grilling methods, it adds a raw, distinctive taste to your sausages, burgers, ribs, and other grilled items.</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="500ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 29, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">Les Houches The Hidden Gem Of The Chamonix Valley</a>
-                        <p>Las Vegas has more than 100,000 hotel rooms to choose from. There is something for every budget, and enough entertainment within walking distance to keep anyone occupied for months.</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-                
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 02, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">Cdc Issues Health Alert Notice For Travelers To Usa From Hon</a>
-                        <p>A round-the-world trip remains the world’s greatest journey. For two out of every three people, this is the ultimate travel experience, according to recent research...</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="200ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 04, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">How To Boost Your Traffic Of Your Blog And Destroy The Competition</a>
-                        <p>Businesses such as GuideMeGreen and the co-op offer a real alternative for people concerned with these issues and with businesses that combine a strong ethical dimension in tandem with making profits...</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="300ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 09, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">Global Travel And Vacations Luxury Travel On A Tight Budget</a>
-                        <p>Life is hectic; it’s true. There are so many things that demand your time and attention. Between work, kids, family and household chores, there is precious little time left over for you.</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="400ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 22, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">Will The Democrats Be Able To Reverse The Online Gambling Ban</a>
-                        <p>Everyone loves good, old fashioned charcoal grilling. Aside from being cheaper than other grilling methods, it adds a raw, distinctive taste to your sausages, burgers, ribs, and other grilled items.</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
-
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="500ms">
-                    <!-- Post Content -->
-                    <div class="post-content party_list">
-                        <!-- Post Meta -->
-                        <div class="post-meta">
-                            <a href="<%=cp%>/travel/party/view" class="post-author">Jan 29, 2019</a>
-                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">Event</a>
-                        </div>
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/party/view" class="post-title">Les Houches The Hidden Gem Of The Chamonix Valley</a>
-                        <p>Las Vegas has more than 100,000 hotel rooms to choose from. There is something for every budget, and enough entertainment within walking distance to keep anyone occupied for months.</p>
-                        <a href="<%=cp%>/travel/party/view" class="btn continue-btn">상세보기</a>
-                    </div>
-                </div>
+                </div> --%>
                 
                 <div>
                 	<div class="col-12 text-right">
@@ -191,13 +93,16 @@
                 </div>
 
                 <!-- Pagination -->
-                <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
+                <!-- <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
                     <ul class="pagination">
                         <li class="page-item"><a class="page-link" href="#">1</a></li>
                         <li class="page-item"><a class="page-link" href="#">2</a></li>
                         <li class="page-item"><a class="page-link" href="#">3</a></li>
                         <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a></li>
                     </ul>
+                </nav> -->
+                <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
+                	${paging}
                 </nav>
             </div>
 
