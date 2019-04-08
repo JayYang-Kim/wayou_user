@@ -5,7 +5,7 @@
 <%
 	String cp = request.getContextPath();
 %>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d54199dccf04c47c7869a5d1e688d52d"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=591cb76973b1a523d68f564d17c08ff0"></script>
 <script>
 	$(function(){
 		listLocation('All');
