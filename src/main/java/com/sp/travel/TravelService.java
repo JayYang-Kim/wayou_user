@@ -23,4 +23,14 @@ public class TravelService {
 			}
 		return list;
 	}
+
+	public Location getLocation(int locCode) {
+		Location dto = null;
+		try {
+			dto = dao.selectOne("workspace.basicInfo", locCode);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
 }

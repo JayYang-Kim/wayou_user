@@ -28,4 +28,12 @@ public class TravelController {
 		model.addAttribute("list", list);
 		return "travel/locList";
 	}
+	
+	
+	@RequestMapping(value="/travel/basicInfo")
+	public String basicInfo(@RequestParam int locCode,Model model) throws UnsupportedEncodingException {
+		Location dto = travelService.getLocation(locCode);
+		model.addAttribute("dto", dto);
+		return "travel/basicInfo";
+	}
 }

@@ -1,4 +1,4 @@
-/* @charset "UTF-8";
+@charset "UTF-8";
 
 #navBar {
   float:left;
@@ -20,10 +20,10 @@
 
 .scrollbox {
   width: 100%;
-  height: 90%;
+  height: 685px;
   font-size: 1.2em;
   line-spacing: 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .LocList {
@@ -65,4 +65,4 @@
 	height:65px;
 	background : teal;
 	padding: 5px; 3px;
-} */
+}

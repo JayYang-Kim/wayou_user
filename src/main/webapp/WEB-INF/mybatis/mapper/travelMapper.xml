@@ -17,4 +17,12 @@
 			</if>
 		</where>
 	</select>
+	
+	<select id="basicInfo" resultType="com.sp.travel.Location" parameterType="Integer">
+		select l.loccode,locname,locename,lat,lng,savefilename, memo 
+		from location l 
+		join locationcode c 
+		on l.loccode=c.loccode
+		where l.loccode=#{locCode}
+	</select>
 </mapper>
