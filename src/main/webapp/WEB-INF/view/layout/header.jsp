@@ -92,13 +92,13 @@
                             <ul id="nav">
                                 <li><a href="#">여행</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">- Home</a></li>
-                                        <li><a href="#">- Rooms</a></li>
-                                        <li><a href="#">- Single Rooms</a></li>
-                                        <li><a href="#">- About Us</a></li>
-                                        <li><a href="#">- Blog</a></li>
-                                        <li><a href="#">- Single Blog</a></li>
-                                        <li><a href="#">- Contact</a></li>
+                                        <li><a href="#">- 지역보기</a></li>
+                                        <li><a href="#">- 랜드마크보기</a></li>
+                                        <li><a href="#">- 일정모음</a></li>
+                                        <li><a href="<%=cp%>/travel/workspace">- 나만의 일정</a></li>
+                                        <li><a href="#">- 동료 모으기</a></li>
+                                        <li><a href="#">- 일정 만들기</a></li>
+                                        <li><a href="#">- 문의하기</a></li>
                                         <li><a href="#">- Dropdown</a>
                                             <ul class="dropdown">
                                                 <li><a href="#">- Dropdown Item</a></li>
