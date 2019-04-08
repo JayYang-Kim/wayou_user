@@ -1,4 +1,4 @@
-﻿<%@ page contentType="text/html; charset=UTF-8" %>
+﻿﻿<%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -90,12 +90,13 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                             <ul id="nav">
-                                <li><a href="#">여행</a>
+                            	<!-- Menu Sample -->
+                            	<%-- <li><a href="<%=cp%>/travel">여행</a>
                                     <ul class="dropdown">
                                         <li><a href="#">- 지역보기</a></li>
-                                        <li><a href="#">- 랜드마크보기</a></li>
-                                        <li><a href="#">- 일정모음</a></li>
-                                        <li><a href="<%=cp%>/travel/workspace">- 나만의 일정</a></li>
+                                        <li><a href="#">- 랜드마크 보기 </a></li>
+                                        <li><a href="#">- 일정 모음</a></li>
+                                        <li><a href="#">- 나만의 일정</a></li>
                                         <li><a href="#">- 동료 모으기</a></li>
                                         <li><a href="#">- 일정 만들기</a></li>
                                         <li><a href="#">- 문의하기</a></li>
@@ -107,6 +108,24 @@
                                                 <li><a href="#">- Dropdown Item</a></li>
                                             </ul>
                                         </li>
+                                    </ul>
+                                </li> --%>
+                                <li><a href="<%=cp%>/travel">여행</a>
+                                    <ul class="dropdown">
+                                        <li><a href="<%=cp%>/travel/location">- 지역보기</a></li>
+                                        <li><a href="<%=cp%>/travel/landMark">- 랜드마크 보기 </a></li>
+                                        <li><a href="#">- 일정 모음</a></li>
+                                        <li><a href="#">- 나만의 일정</a></li>
+                                        <li><a href="<%=cp%>/travel/party">- 동료 모으기</a>
+                                        	<ul class="dropdown">
+                                                <!-- <li><a href="#">- 리스트</a></li> -->
+                                                <li><a href="<%=cp%>/travel/party/create">- 파티 생성</a></li>
+                                                <li><a href="<%=cp%>/travel/party/myList">- 내 파티 리스트</a></li>
+                                                <li><a href="<%=cp%>/travel/party/attendList">- 참가 파티 리스트</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="#">- 일정 만들기</a></li>
+                                        <li><a href="<%=cp%>/travel/contactUs">- 문의하기</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">티켓몰</a>
@@ -153,6 +172,11 @@
                         <!-- Search -->
                         <div class="h_mobile search-btn ml-4">
                             <i class="fa fa-search" aria-hidden="true"></i>
+                        </div>
+                        
+                        <!-- Book Now -->
+                        <div class="book-now-btn ml-3 ml-lg-5 h_mobile">
+                            <a href="#">여행 출발 <i class="fa fa-suitcase" aria-hidden="true"></i></a>
                         </div>
 
                         <!-- Mobile Login -->

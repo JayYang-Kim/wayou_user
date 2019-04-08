@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="workspace">
+	<sql id="search">
+		
+	</sql>
+	
+	<select id="listLocation" resultType="com.sp.travel.Location" parameterType="String">
+		select l.loccode,locname,locename,lat,lng,savefilename
+		from location l 
+		join locationcode c 
+		on l.loccode=c.loccode
+		<where>
+			<if test="_parameter!='All'">
+				instr(locname,#{name}) &gt; 0
+			</if>
+		</where>
+	</select>
+</mapper>

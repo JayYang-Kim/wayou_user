@@ -5,34 +5,116 @@
 <%
 	String cp = request.getContextPath();
 %>
-<div id="container" style="height: 700px;">
-	
-	<div style="width: 25%; height:100%; float: left;">
-		<div class="workspace-title" style="background-color: #404040; height: 8%; text-align: center; padding-top: 15px;">
-<!-- 			<h1 style="color: white;">여행 도시를 선택하세요</h1> -->
-			<input type="text" name="city" style="width: 90%; height: 31px; border:solid #c8c8ca 1px; padding-top: 5px;">
-		</div>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=d54199dccf04c47c7869a5d1e688d52d"></script>
+<script>
+	$(function(){
+		listLocation('All');
+		drawMap(37.5643368, 126.9756091);
+	});
+	$(function(){
+		$("#locSearch").keyup(function(){
+			var value = $(this).val();
+			if(!value) value='All';
+			listLocation(value);
+		});
 		
-		<div class="scrollbox">
-			<div class="locList">
-				<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" class="locImage" style="float: left">
-				<p style="float: left;"><span>서울<br>Seoul</span></p>
+		$("body").on("click",".LocList", function(){
+			var $info = $(this).children("input[type=hidden]");
+			/* $info.attr("data-locCode")+","+$info.attr("data-lat")+","+$info.attr("data-lng")); */
+			drawMap($info.attr("data-lat"),$info.attr("data-lng"));
+			$("#createWorkspace").css("background","teal");
+			$("#createWorkspace").prop("disabled",false);
+			
+			//해당 지역 정보 가져와서 뿌리기
+		});
+	});
+	
+	function listLocation(data){
+		var url = "<%=cp%>/travel/locList";
+		var query = "name="+encodeURIComponent(data);	
+		$.ajax({
+			type:"get",
+			url:url,
+			data:query,
+			success:function(data){
+				$("#locScrollBox").html(data);
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+				console.log(e.responseText);
+			}
+			
+		});
+	}
+	function drawMap(lat,lng){
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new daum.maps.LatLng(lat, lng), // 지도의 중심좌표
+			level : 3, // 지도의 확대 레벨
+			mapTypeId : daum.maps.MapTypeId.ROADMAP
+		// 지도종류
+		};
+		// 지도를 생성한다 
+		var map = new daum.maps.Map(mapContainer, mapOption);
+		// 지도에 마커를 생성하고 표시한다
+		var marker = new daum.maps.Marker({
+		    position: new daum.maps.LatLng(lat, lng), // 마커의 좌표
+		    map: map // 마커를 표시할 지도 객체
+		});
+		
+	}
+
+	
+</script>
+
+<div id="container">
+	<div class="row" style="height: 680px;">
+		<div class="col-sm-3" id="navBar">
+			<div class="workspace-title" align="center">
+				<h6 style="color: white;">여행할 도시를 선택해 주세요</h6>
+				<input type="text" style="height:31px; width: 90%; margin-top: 5px;" id="locSearch">
+			</div>
+			<div id="locScrollBox" class="scrollbox"></div>
+			</div>
+
+		<div class="col-sm-3" style="height: 100%; border: 1px solid #e4e4e4; border-left: none;margin: 0;
+  padding : 0;">
+			<div class="landmark-title" align="center">
+				<h5 style="color: white; padding-top: 20px;">도시 정보</h5>
+			</div>
+			<div id="landInfo" style="height: 564px;">
+				
+			</div>
+			<div>
+				<button id="createWorkspace" class="button" style="background: gray; width: 100%; color: white; font-size: 16px; height: 50px;" disabled="disabled" data-toggle="modal" data-target="#basicModal">일정만들기</button>
 			</div>
 		</div>
-	</div>
-	<div style="width: 75%; height: 700px; float: right;" id="map"></div>
-	<script type="text/javascript">
-		window.onload=function(){
-			var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			mapOption = {
-				center : new daum.maps.LatLng(37.5670287, 126.9804529), // 지도의 중심좌표
-				level : 3, // 지도의 확대 레벨
-				mapTypeId : daum.maps.MapTypeId.ROADMAP
-			// 지도종류
-			};
 
-			// 지도를 생성한다 
-			var map = new daum.maps.Map(mapContainer, mapOption);
-		};
-	</script>
+		<div class="col-sm-6" style="height: 100%; overflow: hidden;"id="map"></div>
+		
+	</div>
+</div>
+
+
+<!-- basic modal -->
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="myModalLabel">일정만들기</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="여행 일정 제목">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary">만들기</button>
+      </div>
+    </div>
+  </div>
 </div>
