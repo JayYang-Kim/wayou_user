@@ -11,6 +11,12 @@
   @media only screen and (max-width: 991px) and (min-width: 417px) {
     .h_mobile{display:none;}
   }
+  
+/* Footer */
+.main-footer-area .top_footer{border-bottom: 1px solid #273d4b;}
+.main-footer-area .top_footer ul li{float:left;height:50px;line-height:50px;}
+.main-footer-area .top_footer ul li a{padding:0 15px;font-size:12px;color:#ffffff;}
+.main-footer-area .top_footer ul li a:hover, .main-footer-area .top_footer ul li a:active{color:#ffffff;}
 
 /* ==========================================================================
    Layout_style
@@ -19,6 +25,15 @@
 .main-header-area .logo h1 a{font-size:34px;}
 .main-header-area .login_area a, .main-header-area .login_area p{font-size: 14px;color: #2a303b;font-weight: 500;padding: 10px 20px;display: block;border-bottom: 1px solid #c4c4c4;cursor: pointer;}
 .main-header-area .login_area a:hover, .main-header-area .login_area a:active{background-color:#2b2b2b;color:#ffffff;}
+
+.single-blog-post .post-content.party_list {
+    -ms-flex: 0 0 100%;
+    flex: 0 0 100%;
+    max-width: 100%;
+    width: 100%;
+}
+
+.roberto-news-area .blog-details-title{margin-bottom:30px;padding-bottom:10px;border-bottom: 1px solid #ebebeb;}
 
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   .h_web{display:block;}

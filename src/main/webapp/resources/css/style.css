@@ -776,7 +776,7 @@ input:focus {
   .single-footer-widget span {
     color: #afb4bf;
     font-size: 14px;
-    display: block;
+    /* display: block; */
     margin-bottom: 10px; }
     .single-footer-widget span:last-child {
       margin-bottom: 0; }
@@ -789,7 +789,7 @@ input:focus {
       margin-bottom: 15px;
       text-align: center; } }
   .copywrite-text p {
-    font-size: 14px;
+    font-size: 12px;
     color: #afb4bf;
     margin-bottom: 0; }
     @media only screen and (max-width: 767px) {
@@ -797,7 +797,7 @@ input:focus {
         font-size: 12px; } }
     .copywrite-text p a {
       color: #afb4bf;
-      font-size: 14px; }
+      font-size: 12px; }
       @media only screen and (max-width: 767px) {
         .copywrite-text p a {
           font-size: 12px; } }
@@ -1921,7 +1921,7 @@ html .ui-button.ui-state-disabled:active {
       position: relative;
       z-index: 1;
       font-size: 12px;
-      color: #1cc3b2;
+      color: #2a303b;
       display: inline-block;
       margin-right: 30px;
       letter-spacing: 1px;
@@ -2113,7 +2113,7 @@ html .ui-button.ui-state-disabled:active {
         position: relative;
         z-index: 1;
         font-size: 14px;
-        color: #1cc3b2;
+        color: #2a303b;
         display: inline-block;
         margin-right: 30px;
         letter-spacing: 1px;
@@ -2265,7 +2265,7 @@ html .ui-button.ui-state-disabled:active {
     margin-right: 5px;
     border-radius: 3px; }
     .pagination .page-link:hover, .pagination .page-link:focus {
-      background-color: #1cc3b2;
+      background-color: #2a303b;
       color: #ffffff;
       border-color: #1cc3b2; }
     .pagination .page-link:focus {
