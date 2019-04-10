@@ -68,14 +68,18 @@ public class MyUtil {
 		// 바로가기
 		page=currentPageSetup+1;
 		while(page<=total_page && page <=(currentPageSetup+numPerBlock)) {
-			/*if(page==current_page) {
-				sb.append("<span class='curBox'>"+page+"</span>");
+			if(page==current_page) {
+				/*sb.append("<span class='curBox'>"+page+"</span>");*/
+				sb.append("<li class='page-item'>");
+				sb.append("<a href='#' class=\"page-link active\">"+page+"</a>");
+				sb.append("</li>");
 			} else {
-				sb.append("<a href='"+list_url+"page="+page+"' class='numBox'>"+page+"</a>");
-			}*/
-			sb.append("<li class='page-item'>");
-			sb.append("<a href='"+list_url+"page="+page+"' class=\"page-link\">"+page+"</a>");
-			sb.append("</li>");
+				/*sb.append("<a href='"+list_url+"page="+page+"' class='numBox'>"+page+"</a>");*/
+				sb.append("<li class='page-item'>");
+				sb.append("<a href='"+list_url+"page="+page+"' class=\"page-link\">"+page+"</a>");
+				sb.append("</li>");
+			}
+			
 			
 			page++;
 		}

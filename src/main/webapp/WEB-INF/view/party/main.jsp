@@ -7,9 +7,36 @@
 %>
 
 <script type="text/javascript">
+	$(function(){
+		listPartyNew();
+	});
+
 	function sendSearch() {
 		var f = document.search_form;
 		f.submit();
+	}
+	
+	function listPartyNew() {
+		var url="<%=cp%>/travel/partyNew";
+		
+		$.ajax({
+			type:"get"
+			,url:url
+			,success:function(data) {
+				$("#listPartyNew").html(data);
+			}
+		    ,beforeSend:function(e) {
+		    	e.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(e) {
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+		    	console.log(e.responseText);
+		    }
+		});
+		
 	}
 </script>
 
@@ -32,18 +59,18 @@
     <div class="container">
     	<form name="search_form" action="<%=cp%>/travel/party" method="post">
 	    	<div class="row justify-content-center box_search mb40">
-		            <div class="col-12 col-lg-2">
+		            <div class="col-12 col-sm-3 col-lg-2">
 		            	<select name="searchKey">
 		            		<option value="all" ${searchKey == 'all' ? "selected='selected'" : ""}>제목 + 내용</option>
 		            		<option value="subject" ${searchKey == 'subject' ? "selected='selected'" : ""}>제목</option>
 		            		<option value="content" ${searchKey == 'content' ? "selected='selected'" : ""}>내용</option>
 		            		<option value="startDate" ${searchKey == 'startDate' ? "selected='selected'" : ""}>시작일</option>
 		            		<option value="endDate" ${searchKey == 'endDate' ? "selected='selected'" : ""}>종료일</option>
-		            		<option value="userIdx" ${searchKey == 'userIdx' ? "selected='selected'" : ""}>아이디</option>
+		            		<option value="userId" ${searchKey == 'userIdx' ? "selected='selected'" : ""}>아이디</option>
 		            		<option value="userCount" ${searchKey == 'userCount' ? "selected='selected'" : ""}>인원수</option>
 		            	</select>
 		            </div>
-		            <div class="col-12 col-lg-8">
+		            <div class="col-12 col-sm-9 col-lg-8">
 		            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요."/>
 		            </div>
 		            <div class="col-12 col-lg-2">
@@ -59,12 +86,16 @@
 	                    <div class="post-content party_list">
 	                        <!-- Post Meta -->
 	                        <div class="post-meta">
-	                            <a href="<%=cp%>/travel/party/view" class="post-author">${dto.startDate}</a>
-	                            <a href="<%=cp%>/travel/party/view" class="post-tutorial">${dto.endDate}</a>
+	                            <span class="">파티장 : ${dto.userId}</span>
+	                            <span class="pl10 pr10">/</span>
+	                            <span class="">작성일 : ${dto.created}</span>
 	                        </div>
 	                        <!-- Post Title -->
 	                        <a href="<%=cp%>/travel/party/view" class="post-title">${dto.subject}</a>
 	                        <p>${dto.content}</p>
+	                        <div class="post-meta">	                           	
+	                           	<span class="pr10">모집일 :</span><span>${dto.startDate}</span> - <span>${dto.endDate}</span>
+	                        </div>
 	                        <a href="<%=cp%>/travel/party/view" data-partyCode="${dto.partyCode}" class="btn continue-btn">상세보기</a>
 	                    </div>
 	                </div>
@@ -93,14 +124,6 @@
                 </div>
 
                 <!-- Pagination -->
-                <!-- <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a></li>
-                    </ul>
-                </nav> -->
                 <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
                 	${paging}
                 </nav>
@@ -110,14 +133,14 @@
                 <div class="roberto-sidebar-area pl-md-4">
 
                     <!-- Recent Post -->
-                    <div class="single-widget-area mb-100">
+                    <!-- <div class="single-widget-area mb-100">
                         <h4 class="widget-title mb-30">인기 파티 (Top5)</h4>
 
-                        <!-- Single Recent Post -->
+                        Single Recent Post
                         <div class="single-recent-post d-flex">
-                            <!-- Content -->
+                            Content
                             <div class="post-content">
-                                <!-- Post Meta -->
+                                Post Meta
                                 <div class="post-meta">
                                     <a href="#" class="post-author">Jan 29, 2019</a>
                                     <a href="#" class="post-tutorial">Event</a>
@@ -126,11 +149,11 @@
                             </div>
                         </div>
 
-                        <!-- Single Recent Post -->
+                        Single Recent Post
                         <div class="single-recent-post d-flex">
-                            <!-- Content -->
+                            Content
                             <div class="post-content">
-                                <!-- Post Meta -->
+                                Post Meta
                                 <div class="post-meta">
                                     <a href="#" class="post-author">Jan 29, 2019</a>
                                     <a href="#" class="post-tutorial">Event</a>
@@ -139,11 +162,11 @@
                             </div>
                         </div>
 
-                        <!-- Single Recent Post -->
+                        Single Recent Post
                         <div class="single-recent-post d-flex">
-                            <!-- Content -->
+                            Content
                             <div class="post-content">
-                                <!-- Post Meta -->
+                                Post Meta
                                 <div class="post-meta">
                                     <a href="#" class="post-author">Jan 29, 2019</a>
                                     <a href="#" class="post-tutorial">Event</a>
@@ -152,11 +175,11 @@
                             </div>
                         </div>
 
-                        <!-- Single Recent Post -->
+                        Single Recent Post
                         <div class="single-recent-post d-flex">
-                            <!-- Content -->
+                            Content
                             <div class="post-content">
-                                <!-- Post Meta -->
+                                Post Meta
                                 <div class="post-meta">
                                     <a href="#" class="post-author">Jan 29, 2019</a>
                                     <a href="#" class="post-tutorial">Event</a>
@@ -164,64 +187,10 @@
                                 <a href="single-blog.html" class="post-title">Comment Importance Of Human Life</a>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 					
-					<!-- Recent Post -->
-                    <div class="single-widget-area mb-100">
-                        <h4 class="widget-title mb-30">최신 파티 (Top5)</h4>
-
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Proven Techniques Help You Herbal Breast</a>
-                            </div>
-                        </div>
-
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Cooking On A George Foreman Grill</a>
-                            </div>
-                        </div>
-
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Selecting The Right Hotel</a>
-                            </div>
-                        </div>
-
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Comment Importance Of Human Life</a>
-                            </div>
-                        </div>
-                    </div>
+					<!-- 최신 파티글 (top5) -->
+                    <div id="listPartyNew" class="single-widget-area mb-100"></div>
                     
                 </div>
             </div>

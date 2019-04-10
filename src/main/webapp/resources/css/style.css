@@ -2268,6 +2268,10 @@ html .ui-button.ui-state-disabled:active {
       background-color: #2a303b;
       color: #ffffff;
       border-color: #1cc3b2; }
+	.pagination .page-link.active {
+      background-color: #2a303b;
+      color: #ffffff;
+      border-color: #1cc3b2; }
     .pagination .page-link:focus {
       box-shadow: none; }
 

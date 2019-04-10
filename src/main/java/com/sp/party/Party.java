@@ -7,6 +7,7 @@ public class Party {
 	private String startDate;
 	private String endDate;
 	private int userIdx;
+	private String userId;
 	private String created;
 	private int max;
 	private int enabled;
@@ -47,6 +48,12 @@ public class Party {
 	}
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 	public String getCreated() {
 		return created;

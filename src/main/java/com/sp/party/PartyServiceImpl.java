@@ -28,11 +28,24 @@ public class PartyServiceImpl implements PartyService {
 	}
 
 	@Override
-	public List<Party> listBoard(Map<String, Object> map) {
+	public List<Party> listParty(Map<String, Object> map) {
 		List<Party> list = null;
 		
 		try {
 			list = dao.selectList("party.listParty", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+	
+	@Override
+	public List<Party> listPartyNew() {
+		List<Party> list = null;
+		
+		try {
+			list = dao.selectList("party.listPartyNew");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,20 +68,41 @@ public class PartyServiceImpl implements PartyService {
 
 	@Override
 	public Party readParty(int num) {
-		// TODO Auto-generated method stub
-		return null;
+		Party dto = null;
+		
+		try {
+			dto = dao.selectOne("party.detailParty", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Party preReadParty(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Party dto = null;
+		
+		try {
+			dto = dao.selectOne("party.preReadParty", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
 	public Party nextReadParty(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		Party dto = null;
+		
+		try {
+			dto = dao.selectOne("party.nextReadParty", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
 	}
 
 	@Override
@@ -82,6 +116,5 @@ public class PartyServiceImpl implements PartyService {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
-	
+
 }

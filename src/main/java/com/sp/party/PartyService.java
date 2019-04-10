@@ -5,7 +5,8 @@ import java.util.Map;
 
 public interface PartyService {
 	public int insertParty(Party dto);
-	public List<Party> listBoard(Map<String, Object> map);
+	public List<Party> listParty(Map<String, Object> map);
+	public List<Party> listPartyNew();
 	public int dataCount(Map<String, Object> map);
 	public Party readParty(int num);
 	public Party preReadParty(Map<String, Object> map);

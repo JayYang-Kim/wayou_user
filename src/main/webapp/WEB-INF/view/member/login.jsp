@@ -23,7 +23,12 @@
     <!-- Css -->
     <link rel="stylesheet" href="<%=cp%>/resources/css/common.css" media="all" />
 	<link rel="stylesheet" href="<%=cp%>/resources/css/loginStyle.css" media="all" />
-   
+   	
+   	<!-- jQuery 2.2.4 -->
+    <script src="<%=cp%>/resources/js/lib/jquery-1.12.4.min.js"></script>
+    <script src="<%=cp%>/resources/js/lib/util-jquery.js"></script>
+    <script src="<%=cp%>/resources/js/lib/util.js"></script>
+   	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="<%=cp%>/resources/js/lib/html5shiv.js"></script>
@@ -132,8 +137,5 @@
         <!-- //Footer -->
     </div>
     <!-- //Wrap -->
-    
-    <!-- Javascript -->
-    <script src="<%=cp%>/resources/js/lib/jquery-1.12.4.min.js"></script>
 </body>
 </html>

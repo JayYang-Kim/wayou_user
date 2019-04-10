@@ -62,7 +62,10 @@ public class PartyController {
 		map.put("start", start);
 		map.put("end", end);
 		
-		List<Party> list = partyService.listBoard(map);
+		List<Party> list = partyService.listParty(map);
+		for(Party dto : list) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
 		
 		String cp = req.getContextPath();
 		String query = "";
@@ -88,6 +91,21 @@ public class PartyController {
 		model.addAttribute("searchValue", searchValue);
 		
 		return ".party.main";
+	}
+	
+	@RequestMapping(value="/travel/partyNew", method = RequestMethod.GET)
+	public String listPartyNew(Model model) throws Exception {
+		
+		List<Party> list = partyService.listPartyNew();
+		
+		for(Party dto : list) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
+		
+		model.addAttribute("list", list);
+
+		return "party/main_r_new";
+		
 	}
 	
 	@RequestMapping(value="/travel/party/create", method = RequestMethod.GET)
