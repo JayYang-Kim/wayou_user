@@ -37,11 +37,28 @@
     <script type="text/javascript">
     	function sendOk() {
     		var f = document.login_form;
-    	
-    		if(!$("input[name='userId']").val() || !$("input[name='userPwd']").val()){
-    			alert("이름과 패스워드를 입력하세요");
+    		var msg = "* 아이디와 비밀번호를 입력해주세요.";
+    		
+    		if(!$("input[name='userId']").val()){    			
+    			$("input[name='userId']").focus().css("outline-color","#df4442");
+    			
+    			var out = "<span class='t_red f14'>" + msg + "</span>";
+    			
+				$("#loginMsg").html(out).addClass("mt30");
+				
     			return;
     		}
+    		
+    		if(!$("input[name='userPwd']").val()){
+    			$("input[name='userPwd']").focus().css("outline-color","#df4442");
+    			
+				var out = "<span class='t_red f14'>" + msg + "</span>";
+    			
+				$("#loginMsg").html(out).addClass("mt30");
+    			
+    			return;
+    		}
+    		
     		var url ="<%=cp%>/member/login";
     		var query = $("form[name='login_form']").serialize();
     		$.ajax({
@@ -57,7 +74,15 @@
     					}
     					location.href="<%=cp%>"+uri;
     				}else{
-    					alert("아이디 또는 비밀번호가 일치하지 않습니다.");
+    					msg = "* 존재하지 않는 아이디입니다.";
+    					
+    					if(data.isTemp) {
+    						msg = "* 아이디 또는 비밀번호가 일치하지 않습니다.";	
+    					}
+    					
+    					var out = "<span class='t_red f14'>" + msg + "</span>";
+    	    			
+    					$("#loginMsg").html(out).addClass("mt30");
     				}
     			},
     			beforesend:function(e){
@@ -110,6 +135,7 @@
                                     <span class="lbl">아이디 저장</span>
                                 </label>
                             </div>
+                            <div id="loginMsg"></div>
                             <div class="mt30">
                                 <button type="button" class="btn_login" onclick="sendOk()">로그인</button>
                             </div>

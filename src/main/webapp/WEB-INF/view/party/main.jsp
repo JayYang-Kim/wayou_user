@@ -18,10 +18,16 @@
 	
 	function listPartyNew() {
 		var url="<%=cp%>/travel/partyNew";
+		var query = "page=${page}";
+		
+		if(${not empty searchValue}) {
+			query += "&searchKey=${searchKey}&searchValue=${searchValue}"; 
+		}
 		
 		$.ajax({
 			type:"get"
 			,url:url
+			,data:query
 			,success:function(data) {
 				$("#listPartyNew").html(data);
 			}
@@ -66,7 +72,7 @@
 		            		<option value="content" ${searchKey == 'content' ? "selected='selected'" : ""}>내용</option>
 		            		<option value="startDate" ${searchKey == 'startDate' ? "selected='selected'" : ""}>시작일</option>
 		            		<option value="endDate" ${searchKey == 'endDate' ? "selected='selected'" : ""}>종료일</option>
-		            		<option value="userId" ${searchKey == 'userIdx' ? "selected='selected'" : ""}>아이디</option>
+		            		<option value="userId" ${searchKey == 'userId' ? "selected='selected'" : ""}>아이디</option>
 		            		<option value="userCount" ${searchKey == 'userCount' ? "selected='selected'" : ""}>인원수</option>
 		            	</select>
 		            </div>
@@ -91,12 +97,12 @@
 	                            <span class="">작성일 : ${dto.created}</span>
 	                        </div>
 	                        <!-- Post Title -->
-	                        <a href="<%=cp%>/travel/party/view" class="post-title">${dto.subject}</a>
+	                        <a href="${articleUrl}&partyCode=${dto.partyCode}" class="post-title">${dto.subject}</a>
 	                        <p>${dto.content}</p>
 	                        <div class="post-meta">	                           	
 	                           	<span class="pr10">모집일 :</span><span>${dto.startDate}</span> - <span>${dto.endDate}</span>
 	                        </div>
-	                        <a href="<%=cp%>/travel/party/view" data-partyCode="${dto.partyCode}" class="btn continue-btn">상세보기</a>
+	                        <a href="${articleUrl}&partyCode=${dto.partyCode}" data-partyCode="${dto.partyCode}" class="btn continue-btn">상세보기</a>
 	                    </div>
 	                </div>
                 </c:forEach>
@@ -117,11 +123,13 @@
                     </div>
                 </div> --%>
                 
-                <div>
-                	<div class="col-12 text-right">
-	                    <a href="<%=cp%>/travel/party/create" class="btn roberto-btn mb-50">파티 생성</a>
+                <c:if test="${not empty sessionScope.member}">
+	                <div>
+	                	<div class="col-12 text-right">
+		                    <a href="<%=cp%>/travel/party/create" class="btn roberto-btn mb-50">파티 생성</a>
+		                </div>
 	                </div>
-                </div>
+                </c:if>
 
                 <!-- Pagination -->
                 <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">

@@ -15,13 +15,14 @@ public class PartyServiceImpl implements PartyService {
 	private CommonDAO dao;
 
 	@Override
-	public int insertParty(Party dto) {
+	public int insertParty(Party dto) throws Exception {
 		int result = 0;
 		
 		try {
 			result = dao.insertData("party.partyInsert", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw e;
 		}
 		
 		return result;
@@ -106,15 +107,39 @@ public class PartyServiceImpl implements PartyService {
 	}
 
 	@Override
-	public int updateParty(Party dto) {
-		// TODO Auto-generated method stub
+	public int updateParty(Party dto) throws Exception {
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		return 0;
 	}
 
 	@Override
-	public int deleteParty(int num, int userIdx) {
-		// TODO Auto-generated method stub
+	public int deleteParty(int num, int userIdx) throws Exception {
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		return 0;
+	}
+
+	@Override
+	public int insertJoinParty(Map<String, Object> map) throws Exception {
+		int result = 0;
+		
+		try {
+			result = dao.insertData("party.insertJoinParty", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		return result;
 	}
 
 }

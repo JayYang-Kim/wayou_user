@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
@@ -94,7 +95,15 @@ public class PartyController {
 	}
 	
 	@RequestMapping(value="/travel/partyNew", method = RequestMethod.GET)
-	public String listPartyNew(Model model) throws Exception {
+	public String listPartyNew(@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		if(searchValue.length() != 0) {
+			searchValue = URLDecoder.decode(searchValue, "UTF-8");
+		}
 		
 		List<Party> list = partyService.listPartyNew();
 		
@@ -102,7 +111,18 @@ public class PartyController {
 			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
 		}
 		
+		String cp = req.getContextPath();
+		String query = "";
+		String articleUrl = cp + "/travel/party/view?page=" + current_page;
+		
+		if(searchValue.length()!=0) {
+			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			
+			articleUrl += "&" + query;
+		}
+		
 		model.addAttribute("list", list);
+		model.addAttribute("articleUrl", articleUrl);
 
 		return "party/main_r_new";
 		
@@ -128,13 +148,73 @@ public class PartyController {
 		dto.setUserIdx(info.getUserIdx());
 		dto.setConfirmCode(0);
 		
-		partyService.insertParty(dto);
+		try {
+			partyService.insertParty(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 		return "redirect:/travel/party";
 	}
 	
-	@RequestMapping(value="/travel/party/view", method = RequestMethod.GET)
-	public String party_view() {
+	@RequestMapping(value="/travel/party/view")
+	public String party_view(@RequestParam int partyCode,
+			@RequestParam int page,
+			@RequestParam(defaultValue="all") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			searchValue = URLDecoder.decode(searchValue, "UTF-8");
+		}
+		
+		String query = "page=" + page;
+		if(searchValue.length() != 0) {
+			query += "&searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		}
+		
+		Party dto = partyService.readParty(partyCode);
+		
+		if(dto == null) {
+			return "redirect:/travel/party?" + query;
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		map.put("partyCode", partyCode);
+		
+		Party preReadParty = partyService.preReadParty(map);
+		Party nextReadParty = partyService.nextReadParty(map);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("preReadParty", preReadParty);
+		model.addAttribute("nextReadParty", nextReadParty);
+		model.addAttribute("query", query);
+		
 		return ".party.view";
+	}
+	
+	@RequestMapping(value="/travel/party/joinParty", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertJoinParty(@RequestParam Map<String, Object> requestParam) throws Exception {
+		Map<String, Object> model = new HashMap<>();
+		
+		String state = "true";
+		try {
+			int result = partyService.insertJoinParty(requestParam);
+			if(result == 0) {
+				state = "false";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.put("state", state);
+				
+		return model;
 	}
 }

@@ -33,6 +33,12 @@ public class MemberController {
 			Map<String,Object> map = new HashMap<>();
 			User temp = memberService.readLoginInfo(user.getUserId());
 			boolean isUser = false;
+			boolean isTemp = true;
+			
+			if(temp == null) {
+				isTemp = false;
+			}
+			
 			if(temp != null && temp.getUserPwd().equals(user.getUserPwd())){
 				SessionInfo info = new SessionInfo();
 				info.setRoleCode(temp.getRoleCode());
@@ -45,6 +51,7 @@ public class MemberController {
 			String uri = (String)session.getAttribute("preLoginURI");
 			session.removeAttribute("preLoginURI");
 			map.put("isUser", isUser);
+			map.put("isTemp", isTemp);
 			map.put("uri", uri);
 		return map;
 	}

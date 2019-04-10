@@ -42,6 +42,7 @@
 			<if test="searchValue != null and searchValue != ''">
 	     	    <include refid="where-list"/>
 	     	</if>
+	     	AND (enabled = 0)
 		</where>
 	</select>
 	
@@ -85,7 +86,7 @@
 		        FROM party p
 		        JOIN tb_user u ON p.userIdx = u.userIdx
 		        WHERE (enabled = 0)
-		        ORDER BY created DESC  
+		        ORDER BY partyCode DESC  
 		<![CDATA[
 		    ) tb WHERE ROWNUM <= 5
 		) WHERE rnum >= 1
@@ -105,6 +106,7 @@
 		FROM party p
 		JOIN tb_user u ON p.userIdx = u.userIdx
 		WHERE partyCode = #{partyCode}
+		AND (enabled = 0)
 	</select>
 	
 	<!-- 이전글 -->
@@ -117,9 +119,10 @@
 				<if test="keyword != null and keyword != '' ">
             		<include refid="where-list"/>
               	</if>
-              	AND (partyCode &lt; #{partyCode})
+              	AND (partyCode &gt; #{partyCode})
+              	AND (enabled = 0)
             </where>
-		    ORDER BY partyCode DESC
+		    ORDER BY created ASC
 		) tb WHERE ROWNUM=1
 	</select>
 
@@ -133,9 +136,15 @@
 				<if test="keyword != null and keyword != '' ">
             		<include refid="where-list"/>
               	</if>
-              	AND (partyCode &gt; #{partyCode})
+              	AND (partyCode &lt; #{partyCode})
+              	AND (enabled = 0)
             </where>
-		    ORDER BY partyCode ASC
+		    ORDER BY created DESC
 		) tb WHERE ROWNUM=1
 	</select>
+	
+	<insert id="insertJoinParty" parameterType="map">
+		INSERT INTO partypeople(userIdx, pCode, partyCode, memo)
+    		VALUES(#{userIdx}, 0, #{partyCode}, #{memo})
+	</insert>
 </mapper>

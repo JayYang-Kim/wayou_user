@@ -18,7 +18,7 @@
                 <span class="pl10 pr10">/</span>
                 <span class="">작성일 : ${dto.created}</span>
 	        </div>
-	        <a href="single-blog.html" class="post-title">${dto.subject}</a>
+	        <a href="${articleUrl}&partyCode=${dto.partyCode}" class="post-title">${dto.subject}</a>
 	        <div>
 	        	<span>시작일 : ${dto.startDate}</span>
 			</div>

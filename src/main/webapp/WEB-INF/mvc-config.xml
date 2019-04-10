@@ -53,6 +53,10 @@
     		<mvc:exclude-mapping path="/member/logout"/>
     		<mvc:exclude-mapping path="/member/member"/>
     		<mvc:exclude-mapping path="/member/userIdCheck"/>
+    		
+    		<mvc:exclude-mapping path="/travel/party"/>
+    		<mvc:exclude-mapping path="/travel/partyNew"/>
+    		<mvc:exclude-mapping path="/travel/party/view"/>
     		<bean class="com.sp.common.LoginCheckInterceptor"/>
     	</mvc:interceptor>
     </mvc:interceptors>
