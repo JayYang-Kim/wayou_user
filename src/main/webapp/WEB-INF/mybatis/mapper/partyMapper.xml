@@ -95,17 +95,22 @@
 	
 		<!-- 파티 게시글 상세 -->
 	<select id="detailParty" parameterType="Integer" resultType="com.sp.party.Party">
-		SELECT partyCode, subject, content, 
+		SELECT p.partyCode, subject, content, 
 		    TO_CHAR(startDate, 'YYYY-MM-DD') startDate, 
 		    TO_CHAR(endDate, 'YYYY-MM-DD') endDate, 
 		    p.userIdx,
 		    u.roleCode,
 		    u.userId,
 		    u.userName,
-		    TO_CHAR(created, 'YYYY-MM-DD') created, max, enabled, confirmCode
+		    TO_CHAR(created, 'YYYY-MM-DD') created, max, enabled, confirmCode,
+		    NVL(partyPeopleCount, 0) partyPeopleCount
 		FROM party p
 		JOIN tb_user u ON p.userIdx = u.userIdx
-		WHERE partyCode = #{partyCode}
+		LEFT OUTER JOIN (
+		    SELECT partyCode, COUNT(*) partyPeopleCount FROM partyPeople
+		    GROUP BY partyCode
+		) pp ON p.partyCode = pp.partyCode
+		WHERE p.partyCode = #{partyCode}
 		AND (enabled = 0)
 	</select>
 	

@@ -12,6 +12,7 @@ public class Party {
 	private int max;
 	private int enabled;
 	private int confirmCode;
+	private int partyPeopleCount;
 	
 	public int getPartyCode() {
 		return partyCode;
@@ -78,5 +79,11 @@ public class Party {
 	}
 	public void setConfirmCode(int confirmCode) {
 		this.confirmCode = confirmCode;
+	}
+	public int getPartyPeopleCount() {
+		return partyPeopleCount;
+	}
+	public void setPartyPeopleCount(int partyPeopleCount) {
+		this.partyPeopleCount = partyPeopleCount;
 	}
 }

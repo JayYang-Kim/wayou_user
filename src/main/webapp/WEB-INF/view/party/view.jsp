@@ -17,6 +17,7 @@
 			,data:query
 			,success:function(data) {
 				if(data.state == "true") {
+					alert("파티 신청에 성공했습니다..");
 					$("textarea[name=message]").val("");
 				} else {
 					alert("파티 신청에 실패했습니다.");
@@ -88,47 +89,43 @@
 
                 <!-- Comments Area -->
                 <div class="comment_area mb-50 clearfix">
-                    <h2>02 Comments</h2>
-
-                    <ol>
-                        <!-- Single Comment Area -->
-                        <li class="single_comment_area">
-                            <!-- Comment Content -->
-                            <div class="comment-content d-flex">
-                                <!-- Comment Author -->
-                                <div class="comment-author">
-                                    <img src="<%=cp%>/resources/images/bg-img/40.jpg" alt="author">
-                                </div>
-                                <!-- Comment Meta -->
-                                <div class="comment-meta">
-                                    <a href="#" class="post-date">27 Aug 2016</a>
-                                    <h5>Brandon Kelley</h5>
-                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi.</p>
-                                    <a href="#" class="like">Like</a>
-                                    <a href="#" class="reply">Reply</a>
-                                </div>
-                            </div>
-                        </li>
-
-                        <!-- Single Comment Area -->
-                        <li class="single_comment_area">
-                            <!-- Comment Content -->
-                            <div class="comment-content d-flex">
-                                <!-- Comment Author -->
-                                <div class="comment-author">
-                                    <img src="<%=cp%>/resources/images/bg-img/42.jpg" alt="author">
-                                </div>
-                                <!-- Comment Meta -->
-                                <div class="comment-meta">
-                                    <a href="#" class="post-date">27 Aug 2018</a>
-                                    <h5>Lander Tea</h5>
-                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetu adipisci velit, sed quia non numquam eius modi</p>
-                                    <a href="#" class="like">Like</a>
-                                    <a href="#" class="reply">Reply</a>
-                                </div>
-                            </div>
-                        </li>
-                    </ol>
+                    <h2>참가신청 : <span>${dto.partyPeopleCount}</span> <span class="pl5 pr5">/</span> <span>${dto.max}</span></h2>
+					
+					<c:if test="${dto.partyPeopleCount == 0}">
+						<div class="box_partyPeople">
+							<span>등록된 참가신청 이력이 없습니다.</span>
+						</div>
+					</c:if>
+					<c:if test="${dto.partyPeopleCount != 0}">
+	                    <ol>
+	                        <!-- Single Comment Area -->
+	                        <li class="single_comment_area">
+	                            <!-- Comment Content -->
+	                            <div class="comment-content d-flex">
+	                                <!-- Comment Author -->
+	                                <div class="comment-author">
+	                                    <img src="<%=cp%>/resources/images/common/defaultImg.jpeg" alt="프로필 사진">
+	                                </div>
+	                                <!-- Comment Meta -->
+	                                <div class="comment-meta">
+	                                    <a href="#" class="post-date">27 Aug 2016</a>
+	                                    <h5>Brandon Kelley</h5>
+	                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi.</p>
+	                                    <c:if test="${sessionScope.member.userIdx == dto.userIdx}">
+	                                    	<div class="mt10">
+	                                    		<a href="#" class="like">수락</a>
+		                                    	<a href="#" class="reply">거절</a>
+	                                    	</div>
+	                                    </c:if>
+	                                    <%-- <c:if test="${sessionScope.member.userIdx != dto.userIdx}">
+	                                    	<a href="#" class="like">수정</a>
+		                                    <a href="#" class="reply">삭제</a>
+	                                    </c:if> --%>
+	                                </div>
+	                            </div>
+	                        </li>
+	                    </ol>
+                    </c:if>
                 </div>
 
                 <!-- Leave A Reply -->

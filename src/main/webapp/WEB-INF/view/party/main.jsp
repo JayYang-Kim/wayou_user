@@ -19,8 +19,9 @@
 	function listPartyNew() {
 		var url="<%=cp%>/travel/partyNew";
 		var query = "page=${page}";
-		
-		if(${not empty searchValue}) {
+	
+		var searchValue = "${searchValue}";
+		if(searchValue != "") {
 			query += "&searchKey=${searchKey}&searchValue=${searchValue}"; 
 		}
 		
