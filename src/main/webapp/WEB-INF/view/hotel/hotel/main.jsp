@@ -4,15 +4,9 @@
 <%
    String cp = request.getContextPath();
 %>
-<!-- 
-  .section-heading h2 {
-    font-size: 42px;
-    text-transform: capitalize;
-    margin-bottom: 0;
-    display: block;
-    line-height: 1.2; } -->
+
 <section class="welcome-area">
-	<div class="welcome-slides owl-carousel">
+	<div class="welcome-slides owl-carousel noImg">
 	    <!-- Single Welcome Slide -->
 	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/16.jpg">
 	        <!-- Welcome Content -->
@@ -24,54 +18,16 @@
 	                        <div class="welcome-text text-center">
 	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Welcome To wayou</h6>
 	                            <h2 data-animation="fadeInLeft" data-delay="500ms">Hotel</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
+	                          
 	                        </div>
 	                    </div>
 	                </div>
 	            </div>
 	        </div>
 	    </div>
-	
-	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/17.jpg">
-	        <!-- Welcome Content -->
-	        <div class="welcome-content h-100">
-	            <div class="container h-100">
-	                <div class="row h-100 align-items-center">
-	                    <!-- Welcome Text -->
-	                    <div class="col-12">
-	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">Welcome To wayou</h6>
-	                            <h2 data-animation="fadeInUp" data-delay="500ms">Hotel</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	
-	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/18.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/18.jpg">
-	        <!-- Welcome Content -->
-	        <div class="welcome-content h-100">
-	            <div class="container h-100">
-	                <div class="row h-100 align-items-center">
-	                    <!-- Welcome Text -->
-	                        <div class="col-12">
-	                            <div class="welcome-text text-center">
-	                                <h6 data-animation="fadeInDown" data-delay="200ms">Welcome To wayou</h6>
-	                                <h2 data-animation="fadeInDown" data-delay="500ms">Hotel</h2>
-	                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+	  </div>
 	</section>
-	<section style="margin: 100px">
+<section class="roberto-about-area section-padding-100-0">
 	<div class="hotel-search-form-area">
             <div class="container-fluid">
                 <div class="hotel-search-form">
@@ -201,52 +157,6 @@
 	                        <h6>Robert Downey <span>- CEO Deercreative</span></h6>
 	                    </div>
 	                </div>
-	
-	                <!-- Single Testimonial Slide -->
-	                <div class="single-testimonial-slide">
-	                    <h5>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus delectus facilis molestias, error vitae praesentium quos eaque qui ea, tempore blanditiis sint reprehenderit, quaerat. Commodi ab architecto sit suscipit exercitationem!”</h5>
-	                    <div class="rating-title">
-	                        <div class="rating">
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                        </div>
-	                        <h6>Akash Downey <span>- CEO Deercreative</span></h6>
-	                    </div>
-	                </div>
-	
-	                <!-- Single Testimonial Slide -->
-	                <div class="single-testimonial-slide">
-	                    <h5>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, ex quos. Alias a rem maiores, possimus dicta sit distinctio quis iusto!”</h5>
-	                    <div class="rating-title">
-	                        <div class="rating">
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                        </div>
-	                        <h6>Downey Sarah <span>- CEO Deercreative</span></h6>
-	                    </div>
-	                </div>
-	
-	                <!-- Single Testimonial Slide -->
-	                    <div class="single-testimonial-slide">
-	                        <h5>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore sequi laboriosam fugit suscipit aspernatur, minima minus voluptatum, id ab atque similique ex earum. Magni.”</h5>
-	                        <div class="rating-title">
-	                            <div class="rating">
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                            </div>
-	                            <h6>Robert Brown <span>- CEO Deercreative</span></h6>
-	                        </div>
-	                    </div>
-	
 	                </div>
 	            </div>
 	        </div>
