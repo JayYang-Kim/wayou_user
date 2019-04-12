@@ -29,7 +29,7 @@ public class PartyServiceImpl implements PartyService {
 	}
 
 	@Override
-	public List<Party> listParty(Map<String, Object> map) {
+	public List<Party> listParty(Map<String, Object> map) throws Exception {
 		List<Party> list = null;
 		
 		try {
@@ -42,7 +42,7 @@ public class PartyServiceImpl implements PartyService {
 	}
 	
 	@Override
-	public List<Party> listPartyNew() {
+	public List<Party> listPartyNew() throws Exception {
 		List<Party> list = null;
 		
 		try {
@@ -55,7 +55,7 @@ public class PartyServiceImpl implements PartyService {
 	}
 
 	@Override
-	public int dataCount(Map<String, Object> map) {
+	public int dataCount(Map<String, Object> map) throws Exception {
 		int result = 0;
 		
 		try {
@@ -68,7 +68,7 @@ public class PartyServiceImpl implements PartyService {
 	}
 
 	@Override
-	public Party readParty(int num) {
+	public Party readParty(int num) throws Exception {
 		Party dto = null;
 		
 		try {
@@ -81,7 +81,7 @@ public class PartyServiceImpl implements PartyService {
 	}
 
 	@Override
-	public Party preReadParty(Map<String, Object> map) {
+	public Party preReadParty(Map<String, Object> map) throws Exception {
 		Party dto = null;
 		
 		try {
@@ -94,7 +94,7 @@ public class PartyServiceImpl implements PartyService {
 	}
 
 	@Override
-	public Party nextReadParty(Map<String, Object> map) {
+	public Party nextReadParty(Map<String, Object> map) throws Exception {
 		Party dto = null;
 		
 		try {
@@ -142,4 +142,29 @@ public class PartyServiceImpl implements PartyService {
 		return result;
 	}
 
+	@Override
+	public int dataCountJoinParty(int num) throws Exception {
+		int result = 0;
+		
+		try {
+			result = dao.selectOne("party.dataCountJoinParty", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<JoinParty> listJoinParty(Map<String, Object> map) throws Exception {
+		List<JoinParty> list = null;
+		
+		try {
+			list = dao.selectList("party.listJoinParty", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
 }

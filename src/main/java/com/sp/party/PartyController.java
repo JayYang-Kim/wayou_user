@@ -217,4 +217,45 @@ public class PartyController {
 				
 		return model;
 	}
+	
+	@RequestMapping(value="/travel/party/listJoinParty", method = RequestMethod.GET)
+	public String listJoinParty(@RequestParam int partyCode,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			Model model) throws Exception {
+		
+		int total_page = 0;
+		int dataCount = 0;
+		int rows = 10;
+		
+		dataCount = partyService.dataCountJoinParty(partyCode);
+		
+		if(dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+		
+		if(current_page > total_page) {
+			current_page = total_page;
+		}
+		
+		int start = (current_page - 1) * rows + 1;
+		int end = current_page * rows;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("partyCode", partyCode);
+		
+		List<JoinParty> list = partyService.listJoinParty(map);
+		
+		for(JoinParty dto : list) {
+			dto.setMemo(myUtil.htmlSymbols(dto.getMemo()));
+		}
+		
+		model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		
+		return "party/listJoinParty";
+	}
 }

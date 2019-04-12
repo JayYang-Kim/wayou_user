@@ -152,4 +152,30 @@
 		INSERT INTO partypeople(userIdx, pCode, partyCode, memo)
     		VALUES(#{userIdx}, 0, #{partyCode}, #{memo})
 	</insert>
+	
+	<select id="dataCountJoinParty" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) 
+		FROM party p
+		JOIN partyPeople pp
+		ON p.partyCode = pp.partyCode
+		WHERE pp.partyCode = #{partyCode}
+	</select>
+	
+	<select id="listJoinParty" parameterType="map" resultType="com.sp.party.JoinParty">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT pp.partyCode, memo, u.userIdx, u.userId, u.userName, 
+		            TO_CHAR(pp.created, 'YYYY-MM-DD') created
+		        FROM party p
+		        JOIN partyPeople pp
+		        ON p.partyCode = pp.partyCode
+		        JOIN tb_user u
+		        ON pp.userIdx = u.userIdx
+		        WHERE pp.partyCode = #{partyCode}
+		    ) tb
+		<![CDATA[
+		    WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
 </mapper>

@@ -57,6 +57,7 @@
     		<mvc:exclude-mapping path="/travel/party"/>
     		<mvc:exclude-mapping path="/travel/partyNew"/>
     		<mvc:exclude-mapping path="/travel/party/view"/>
+    		<mvc:exclude-mapping path="/travel/party/listJoinParty"/>
     		<bean class="com.sp.common.LoginCheckInterceptor"/>
     	</mvc:interceptor>
     </mvc:interceptors>

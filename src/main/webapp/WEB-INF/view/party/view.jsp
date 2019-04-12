@@ -36,6 +36,62 @@
 		    }
 		});
 	}
+	
+	// 전역 변수
+	var pageNo = 1;
+	var	totalPage = 1;
+	
+	$(function(){
+		listJoinParty(1);
+	});
+	
+	function listJoinParty(page) {
+		var url = "<%=cp%>/travel/party/listJoinParty";
+		var query = "partyCode=${dto.partyCode}&page=" + page; 
+		
+		$.ajax({
+			type:"get"
+			,url:url
+			,data:query
+			,success:function(data) {
+				printJoinParty(data);
+			}
+		    ,beforeSend:function(e) {
+		    	<%--e.setRequestHeader("AJAX", true);--%>
+		    }
+		    ,error:function(e) {
+		    	<%-- if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	} --%>
+		    	console.log(e.responseText);
+		    }
+		});	
+	}
+	
+	function printJoinParty(data) {		
+		$("#listJoinParty").html(data);
+		
+		totalPage = $("#total_page").val();
+		var dataCount = $("#dataCount").val();
+		var page = $("#page").val();
+		
+		// 페이지 번호 숨김, 표시 처리
+		if(pageNo >= totalPage) {
+			$(".moreLayout").hide();
+		} else {
+			$(".moreLayout").show();
+		}
+	}
+	
+	function morePage() {
+		if(pageNo < totalPage) {
+			++pageNo;
+			listPage(pageNo);
+		} else {
+			$(".moreLayout").hide();
+		}
+	}
 </script>
 
 <!-- Breadcrumb Area Start -->
@@ -97,9 +153,9 @@
 						</div>
 					</c:if>
 					<c:if test="${dto.partyPeopleCount != 0}">
-	                    <ol>
-	                        <!-- Single Comment Area -->
-	                        <li class="single_comment_area">
+	                    <ol id="listJoinParty">
+	                        
+	                        <%-- <li class="single_comment_area">
 	                            <!-- Comment Content -->
 	                            <div class="comment-content d-flex">
 	                                <!-- Comment Author -->
@@ -117,16 +173,19 @@
 		                                    	<a href="#" class="reply">거절</a>
 	                                    	</div>
 	                                    </c:if>
-	                                    <%-- <c:if test="${sessionScope.member.userIdx != dto.userIdx}">
+	                                    <c:if test="${sessionScope.member.userIdx != dto.userIdx}">
 	                                    	<a href="#" class="like">수정</a>
 		                                    <a href="#" class="reply">삭제</a>
-	                                    </c:if> --%>
+	                                    </c:if>
 	                                </div>
 	                            </div>
-	                        </li>
+	                        </li> --%>
 	                    </ol>
                     </c:if>
                 </div>
+                <div class="moreLayout" style="text-align: right; height: 50px;">
+					<span onclick="morePage()" style="cursor:pointer">더보기</span>
+				</div>
 
                 <!-- Leave A Reply -->
                 <c:if test="${not empty sessionScope.member && sessionScope.member.userIdx != dto.userIdx}">
