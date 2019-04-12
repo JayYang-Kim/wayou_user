@@ -25,4 +25,24 @@
 		on l.loccode=c.loccode
 		where l.loccode=#{locCode}
 	</select>
+	
+	<select id="insertWorkspace" parameterType="map" resultType="Integer">
+		insert into workspace(workcode,subject,daycount,startday,endday,loccode,userIdx) 
+		values(workspace_seq.nextval,#{title},#{dayCount},#{startDay},#{endDay},#{locCode},#{userIdx})
+	</select>
+	
+	<select id="listLandmark" parameterType="Integer" resultType="com.sp.travel.Landmark">
+		select landcode, loccode, landname, lat, lng, tagCode from landmark 
+		<choose>
+			<when test="landName != 'All'">
+				where instr(landName,#{landName}) >0 and locCode = #{locCode}
+			</when>
+			<otherwise>
+				where locCode = #{locCode}
+			</otherwise>
+		</choose>
+	</select>
+	<select id="listLandmarkByTag" parameterType="Integer" resultType="com.sp.travel.Landmark">
+		select landcode, loccode, landname, lat, lng, tagCode from landmark where locCode=#{locCode} and tagCode=${tagNum}
+	</select>
 </mapper>

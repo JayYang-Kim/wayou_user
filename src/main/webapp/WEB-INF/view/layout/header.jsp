@@ -124,7 +124,7 @@
                                                 <li><a href="<%=cp%>/travel/party/attendList">- 참가 파티 리스트</a></li>
                                             </ul>
                                         </li>
-                                        <li><a href="#">- 일정 만들기</a></li>
+                                        <li><a href="<%=cp%>/travel/myplan/add">- 일정 만들기</a></li>
                                         <li><a href="<%=cp%>/travel/contactUs">- 문의하기</a></li>
                                     </ul>
                                 </li>

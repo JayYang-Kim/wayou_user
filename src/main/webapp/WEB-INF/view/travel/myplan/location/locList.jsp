@@ -6,12 +6,12 @@
 	String cp=request.getContextPath();
 %>
 	<c:forEach var="dto" items="${list}">
-		<div class="LocList">
+		<div class="locList">
 			<input type="hidden" name="info" data-locCode="${dto.locCode}" data-lat="${dto.lat}" data-lng="${dto.lng}">
 			<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" class="locImage">
 			<div
 				style="float: left; padding-left: 5px; padding-top: 12px; font-size: 16px;">
-				<span><b>${dto.locName}</b></span><br> <span style="color: #b3b3b3">${dto.locEName}</span>
+				<span><b>${dto.locName}</b></span><br> <span style="color: #b3b3b3; font-size: 12px;">${dto.locEName}</span>
 			</div>
 			<div class="next3">&gt;</div>
 		</div>

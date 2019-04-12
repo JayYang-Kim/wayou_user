@@ -7,6 +7,7 @@
 %>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=591cb76973b1a523d68f564d17c08ff0"></script>
 <script>
+	var current_locCode = "";
 	$(function(){
 		listLocation('All');
 		drawMap(37.5643368, 126.9756091);
@@ -18,15 +19,15 @@
 			listLocation(value);
 		});
 		
-		$("body").on("click",".LocList", function(){
+		$("body").on("click",".locList", function(){
 			var $info = $(this).children("input[type=hidden]");
 			/* $info.attr("data-locCode")+","+$info.attr("data-lat")+","+$info.attr("data-lng")); */
 			drawMap($info.attr("data-lat"),$info.attr("data-lng"));
 			$("#createWorkspace").css("background","teal");
 			$("#createWorkspace").prop("disabled",false);
 			
-			//해당 지역 정보 가져와서 뿌리기
-			var url = "<%=cp%>/travel/basicInfo"
+			current_locCode = $info.attr("data-locCode");
+			var url = "<%=cp%>/travel/myplan/basicInfo"
 			var data = "locCode="+$info.attr("data-locCode");
 			$.ajax({
 				type:"get",
@@ -46,7 +47,7 @@
 	});
 	
 	function listLocation(data){
-		var url = "<%=cp%>/travel/locList";
+		var url = "<%=cp%>/travel/myplan/locList";
 		var query = "name="+encodeURIComponent(data);	
 		$.ajax({
 			type:"get",
@@ -81,8 +82,27 @@
 		});
 		
 	}
+	$(function(){
+		$("#btn_addRoute").click(function(){
+			/* $info.attr("data-locCode")+","+$info.attr("data-lat")+","+$info.attr("data-lng")); */
+			var $input = $("body").find("input[data-locCode='"+current_locCode+"']");
+			var lat = $input.attr("data-lat");
+			var lng = $input.attr("data-lng");
+			var form = $(this).parent().parent().find("form[name=createRouteForm]");
+			var title = form.find("input[name='title']").val();
+			var from = form.find("input[name='startDay']").val();
+			var to = form.find("input[name='endDay']").val();
+			form.find("input[name='locCode']").val(current_locCode);
+			form.find("input[name='lat']").val(lat);
+			form.find("input[name='lng']").val(lng);
+			if(!title || !from || !to){
+				alert("양식을 모두 작성해주세요!");
+				return;
+			}
 
-	
+			form.submit();
+		});
+	});
 </script>
 
 
@@ -126,17 +146,20 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form>
 	      <div class="modal-body" style="height: auto;" align="center">
-			<input type="text" placeholder="여행 일정 제목" style="width: 90%;" name="title"><br>
-			<input type="text" id="from" style="margin-top: 10px;width: 90%;"><br>
-			<input type="text" id='to' style="margin-top: 10px;width: 90%;">
+		      <form name="createRouteForm" action="<%=cp%>/travel/myplan/workspace" method="post">
+		      	<input type="hidden" name="locCode">
+		      	<input type="hidden" name="lat">
+		      	<input type="hidden" name="lng">
+				<input type="text" name="title" placeholder="여행 일정 제목" style="width: 90%;"><br>
+				<input type="text" id="from" name="startDay" style="margin-top: 10px;width: 90%;" placeholder="출발일"><br>
+				<input type="text" id="to" name='endDay' style="margin-top: 10px;width: 90%;" placeholder="도착일">
+		      </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-	        <button type="button" class="btn btn-primary" style="background: teal;">만들기</button>
+	        <button type="button" class="btn btn-primary" style="background: teal;" id="btn_addRoute">만들기</button>
 	      </div>
-      </form>
     </div>
   </div>
 </div>

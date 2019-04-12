@@ -1,6 +1,7 @@
 package com.sp.travel;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,37 @@ public class TravelService {
 			e.printStackTrace();
 		}
 		return dto;
+	}
+
+	public int insertWorkspace(Map<String, Object> map) {
+		int result = 0;
+		try {
+			result = dao.insertData("workspace.insertWorkspace", map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<Landmark> landList(Map<String,Object> map) {
+		List<Landmark> list = null;
+		try {
+			list = dao.selectList("workspace.listLandmark", map);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	return list;
+	}
+
+	public List<Landmark> landListByTag(Map<String, Object> map) {
+		List<Landmark> list = null;
+		try {
+			list = dao.selectList("workspace.listLandmarkByTag", map);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 }
