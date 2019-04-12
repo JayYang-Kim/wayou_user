@@ -9,9 +9,10 @@
 <script>
 	var dragObject;
 	var current_day;
+	
 	$(function(){
-		listLandmark('${locCode}','All');
-		drawMap('${lat}','${lng}');
+		listLandmark('${sessionScope.locCode}','All');
+		drawMap('${sessionScope.lat}','${sessionScope.lng}');
 		current_day = 1;
 	});
 	
@@ -19,7 +20,7 @@
 		$("#landSearch").keyup(function(){
 			var value = $(this).val();
 			if(!value) value='All';
-			listLandmark('${locCode}',value);
+			listLandmark('${sessionScope.locCode}',value);
 		});
 		
 		$("body").on("click",".landList", function(){
@@ -33,7 +34,12 @@
 				return;
 			}
 			$(this).parent().remove();
+			if($(this).closest("#landInfo").find("div").size==0){
+				$("#tip").show();
+			}
 		});
+		
+		
 	});
 	function listLandmark(locCode,data){
 		var url = "<%=cp%>/travel/myplan/landList";
@@ -162,25 +168,47 @@
 	    }
 	}
 	$(function(){
-		$("#btn_addRoute").click(function(){
-			var form = $(this).parent().parent().find("form[name=createRouteForm]");
-			var title = form.find("input[name='title']").val();
-			var from = form.find("input[name='from']").val();
-			var to = form.find("input[name='to']").val();
-			form.find("input[type='hidden']").val(current_locCode);
-			
-			if(!title || !from || !to){
-				alert("양식을 모두 작성해주세요!");
-				return;
+		$("#btn_addRouteByDay").click(function(){
+			if(!confirm("저장하시겠습니까?")){
+				return false;
 			}
-			form.action = "<%=cp%>/travel/workspace";
-			form.submit();
+			
+			var $landList = $("#landInfo").find("input[type=hidden]");
+			var landCodes = [];
+			for(var i=0; i<$landList.length; i++){
+				landCodes[i] = $landList.eq(i).attr("data-landcode");
+			}
+			
+			var url = "<%=cp%>/travel/myplan/addRouteByDay";
+			var query = "day="+current_day+"&workNum=${sessionScope.workNum}&landCodes="+landCodes;
+			
+			$.ajax({
+				type:"post",
+				url : url,
+				data : query,
+				dataType : "json",
+				success : function(data){
+					if(data.isSuccess){
+						alert("성공적으로 저장되었습니다.");
+						return;
+					}else{
+						alert("저장에 실패하였습니다. 잠시후 다시 시도해주세요");
+					}
+				},
+				beforesend:function(e){
+					e.setRequestHeader("AJAX",true);
+				},
+				error:function(e){
+					console.log(e.responseText);
+				}
+			});
+			
 		});
 	});
 	
 	function listByTag(tagNum){
 		var url = "<%=cp%>/travel/myplan/listByTag";
-		var query = "locCode=${locCode}&tagNum="+tagNum;
+		var query = "locCode=${sessionScope.locCode}&tagNum="+tagNum;
 		
 		$.ajax({
 			type:"get",
@@ -204,8 +232,7 @@
 		$(".dayBar").click(function(){
 			var $selected = $(this);
 			var $lis = $(this).parent().children(".dayBar");
-			current_day = $(this).attr("data-day");
-			alert(current_day);
+			
 			$($lis).each(function(){
 				if($(this).hasClass("ldbliActive")){
 					$(this).removeClass("ldbliActive");
@@ -213,9 +240,32 @@
 				}
 			});
 			$(this).addClass("ldbliActive");
-			
+			current_day = $(this).attr("data-day");
+			listLandmark('${sessionScope.locCode}','All');
+			drawMap('${lat}','${lng}');
+			/* loadSavedRouteByDay(current_day); */
 		});
 	});
+	
+	function loadSavedRouteByDay(day){
+		var url = "<%=cp%>/travel/myplan/loadSavedRouteByDay";
+		var query = "day="+day+"&workNum=${workNum}";
+		
+		$.ajax({
+			type:"get",
+			url:url,
+			data:query,
+			success:function(data){
+				$("#landInfo").html(data);
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+				console.log(e.responseText);
+			}
+		});
+	}
 </script>
 
 
@@ -227,7 +277,7 @@
 				  	<li style="width: 100%;" class="dayBar">
 				    	<div style="padding-left: 10px; min-height: 30px; color: white; height: 70px; width: 100%; font-size: 16px; padding-top:25px;">전체 일정 보기</div>
 				    </li>
-				  	<c:forEach var="i" begin="1" end="${dayCount}" step="1" >
+				  	<c:forEach var="i" begin="1" end="${sessionScope.dayCount}" step="1" >
 					    <li class="dayBar" style="width: 100%;" data-day="${i}">
 					      <div style="padding-left: 10px;min-height: 30px; color: white; height: 60px; width: 100%; font-size: 16px; padding-top:20px;">${i}일차</div>
 					    </li>
@@ -258,7 +308,7 @@
 				<img src="<%=cp%>/resource/user/images/travel/tip_ko.png" alt="이미지 없음" style="width: 90%; margin-top: 20px;" id="tip">
 			</div>
 			<div>
-				<button id="createWorkspace" class="button" style="background: gray; width: 100%; color: white; font-size: 16px; height: 50px;" disabled="disabled" data-toggle="modal" data-target="#basicModal">전체 일정 작성 완료!</button>
+				<button id="btn_addRouteByDay" class="button" style="background: gray; width: 100%; color: white; font-size: 16px; height: 50px;" disabled="disabled">작성 완료</button>
 			</div>
 		</div>
 		<div class="col12 col-lg-7" style="height: 750px; overflow: hidden;"id="map"></div>
@@ -270,14 +320,14 @@ $(function(){
 	    drop: function(event, ui) {
 	    	var clone = dragObject.clone();
 	    	clone.css("left","0px").css("top","0px");
-	    	clone.find("div[class=next3]").text("X");
-	    	clone.find("div[class=next3]").addClass("removeLocation");
+	    	clone.find("div[class=next3 ]").text("X");
+	    	clone.find("div[class=next3 ]").addClass("removeLocation");
 	    	$("#tip").hide();
 	        $("#landInfo").append(clone);
 	        $("map").empty();
 	        drawRouteToMap($(this).children("div"));
-	        $("#createWorkspace").css("background","#1cc3b2");
-			$("#createWorkspace").prop("disabled",false);
+	        $("#btn_addRouteByDay").css("background","#1cc3b2");
+			$("#btn_addRouteByDay").prop("disabled",false);
 	    }
 	});
 });

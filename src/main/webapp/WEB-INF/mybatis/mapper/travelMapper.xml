@@ -2,9 +2,16 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="workspace">
-	<sql id="search">
-		
-	</sql>
+	<select id="currentWorkSeqNum" resultType="Integer">
+		select workspace_seq.nextval from dual
+	</select>
+	
+	
+	<select id="currentWorkDetailSeqNum" resultType="Integer">
+		select workspacedetail_seq.nextval from dual
+	</select>
+	
+	
 	
 	<select id="listLocation" resultType="com.sp.travel.Location" parameterType="String">
 		select l.loccode,locname,locename,lat,lng,savefilename
@@ -28,7 +35,7 @@
 	
 	<select id="insertWorkspace" parameterType="map" resultType="Integer">
 		insert into workspace(workcode,subject,daycount,startday,endday,loccode,userIdx) 
-		values(workspace_seq.nextval,#{title},#{dayCount},#{startDay},#{endDay},#{locCode},#{userIdx})
+		values(#{seqNum},#{title},#{dayCount},#{startDay},#{endDay},#{locCode},#{userIdx})
 	</select>
 	
 	<select id="listLandmark" parameterType="Integer" resultType="com.sp.travel.Landmark">
@@ -44,5 +51,25 @@
 	</select>
 	<select id="listLandmarkByTag" parameterType="Integer" resultType="com.sp.travel.Landmark">
 		select landcode, loccode, landname, lat, lng, tagCode from landmark where locCode=#{locCode} and tagCode=${tagNum}
+	</select>
+	
+	<insert id="insertWorkDetail" parameterType="map">
+		insert into workspacedetail(detailcode,workcode,day) values(#{seqNum},#{workCode},#{day})
+	</insert>
+	
+	<insert id="insertWorkLand" parameterType="map">
+		insert into workLand(worklandCode,detailcode,ordernum,landcode) values(workland_seq.nextval,#{detailCode},#{orderNum},#{landCode})
+	</insert>
+	
+	<delete id="deleteWorkLand" parameterType="Integer">
+		delete from workland where detailCode=#{seqNum}
+	</delete>
+	
+	<select id="isDetailExist" parameterType="map" resultType="Integer">
+		select nvl(count(*),0) from workspacedetail where day=#{day} and workCode=#{workCode}
+	</select>
+	
+	<select id="getDetailCode" parameterType="map" resultType="Integer">
+		select detailCode from workspacedetail where day=#{day} and workCode=#{workCode}
 	</select>
 </mapper>

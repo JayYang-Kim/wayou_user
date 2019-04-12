@@ -66,4 +66,78 @@ public class TravelService {
 		}
 		return list;
 	}
+
+	public int currentWorkSeqNum() {
+		int result = 0;
+		try {
+			result = dao.selectOne("workspace.currentWorkSeqNum");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<Landmark> landListByDay(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int currentWorkDetailSeqNum() {
+		int result =0;
+		try {
+			result = dao.selectOne("workspace.currentWorkDetailSeqNum");
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int insertWorkDetail(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.insertData("workspace.insertWorkDetail",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int insertWorkLand(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.insertData("workspace.insertWorkLand",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public void deleteWorkLand(int seqNum) {
+		try {
+			dao.insertData("workspace.deleteWorkLand",seqNum);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int isDetailExist(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.insertData("workspace.isDetailExist",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int getDetailCode(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		int seqNum=0;
+		try {
+			seqNum = dao.insertData("workspace.getDetailCode",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return seqNum;
+	}
 }
