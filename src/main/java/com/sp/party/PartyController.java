@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
@@ -146,7 +145,7 @@ public class PartyController {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		
 		dto.setUserIdx(info.getUserIdx());
-		dto.setConfirmCode(0);
+		dto.setConfirmCode(0);	
 		
 		try {
 			partyService.insertParty(dto);
@@ -181,6 +180,8 @@ public class PartyController {
 			return "redirect:/travel/party?" + query;
 		}
 		
+		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
@@ -198,64 +199,93 @@ public class PartyController {
 		return ".party.view";
 	}
 	
-	@RequestMapping(value="/travel/party/joinParty", method = RequestMethod.POST)
-	@ResponseBody
-	public Map<String, Object> insertJoinParty(@RequestParam Map<String, Object> requestParam) throws Exception {
-		Map<String, Object> model = new HashMap<>();
+	@RequestMapping(value="/travel/party/update", method = RequestMethod.GET)
+	public String partyUpdateForm(@RequestParam int partyCode,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model) throws Exception {
 		
-		String state = "true";
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			searchValue = URLDecoder.decode(searchValue, "UTF-8");
+		}
+		
+		String query = "page=" + current_page;
+		if(searchValue.length() != 0) {
+			query += "&searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		}
+		
+		Party dto = partyService.readParty(partyCode);
+		
+		if(dto == null) {
+			return "redirect:/travel/party?" + query;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("query", query);
+		model.addAttribute("mode", "update");
+		
+		return ".party.create";
+	}
+	
+	@RequestMapping(value="/travel/party/update", method = RequestMethod.POST)
+	public String partyUpdateSubmit(Party dto,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
+			HttpSession session,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		String query = "page=" + current_page;
+		if(searchValue.length() != 0) {
+			query += "&searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+		}
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			return "redirect:/travel/party?" + query;
+		}
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		if(info.getUserIdx() != dto.getUserIdx()) {
+			return "redirect:/travel/party?" + query;
+		}
+		
+		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		
 		try {
-			int result = partyService.insertJoinParty(requestParam);
-			if(result == 0) {
-				state = "false";
-			}
+			partyService.updateParty(dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		model.put("state", state);
-				
-		return model;
+			
+		return "redirect:/travel/party?" + query;
 	}
 	
-	@RequestMapping(value="/travel/party/listJoinParty", method = RequestMethod.GET)
-	public String listJoinParty(@RequestParam int partyCode,
+	@RequestMapping(value="/travel/party/delete")
+	public String partyDelete(@RequestParam int partyCode,
 			@RequestParam(value="page", defaultValue="1") int current_page,
-			Model model) throws Exception {
+			@RequestParam(defaultValue="all") String searchKey,
+			@RequestParam(defaultValue="") String searchValue) throws Exception {
 		
-		int total_page = 0;
-		int dataCount = 0;
-		int rows = 10;
-		
-		dataCount = partyService.dataCountJoinParty(partyCode);
-		
-		if(dataCount != 0) {
-			total_page = myUtil.pageCount(rows, dataCount);
+		String query = "page=" + current_page;
+		if(searchValue.length() != 0) {
+			query += "&searchKey" + searchKey + "&searchValue" + searchValue;
 		}
 		
-		if(current_page > total_page) {
-			current_page = total_page;
+		try {
+			int result = partyService.deleteParty(partyCode);
+			
+			if(result == 0) {
+				return "redirect:/travel/party/view?" + query;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "redirect:/travel/party/view?" + query;
 		}
 		
-		int start = (current_page - 1) * rows + 1;
-		int end = current_page * rows;
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("start", start);
-		map.put("end", end);
-		map.put("partyCode", partyCode);
-		
-		List<JoinParty> list = partyService.listJoinParty(map);
-		
-		for(JoinParty dto : list) {
-			dto.setMemo(myUtil.htmlSymbols(dto.getMemo()));
-		}
-		
-		model.addAttribute("list", list);
-		model.addAttribute("dataCount", dataCount);
-		model.addAttribute("page", current_page);
-		model.addAttribute("total_page", total_page);
-		
-		return "party/listJoinParty";
+		return "redirect://travel/party?" + query;
 	}
 }

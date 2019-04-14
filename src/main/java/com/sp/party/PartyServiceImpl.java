@@ -108,63 +108,30 @@ public class PartyServiceImpl implements PartyService {
 
 	@Override
 	public int updateParty(Party dto) throws Exception {
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		return 0;
-	}
-
-	@Override
-	public int deleteParty(int num, int userIdx) throws Exception {
-		try {
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
-		return 0;
-	}
-
-	@Override
-	public int insertJoinParty(Map<String, Object> map) throws Exception {
 		int result = 0;
 		
 		try {
-			result = dao.insertData("party.insertJoinParty", map);
+			result = dao.updateData("party.updateParty", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteParty(int num) throws Exception {
+		int result = 0;
+		
+		try {
+			dao.deleteData("party.deleteJoinParty", num);
+			dao.deleteData("party.deleteParty", num);
+			result = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
 		}
 		
 		return result;
-	}
-
-	@Override
-	public int dataCountJoinParty(int num) throws Exception {
-		int result = 0;
-		
-		try {
-			result = dao.selectOne("party.dataCountJoinParty", num);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return result;
-	}
-
-	@Override
-	public List<JoinParty> listJoinParty(Map<String, Object> map) throws Exception {
-		List<JoinParty> list = null;
-		
-		try {
-			list = dao.selectList("party.listJoinParty", map);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		return list;
 	}
 }

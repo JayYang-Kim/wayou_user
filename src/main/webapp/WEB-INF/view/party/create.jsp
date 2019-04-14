@@ -51,8 +51,7 @@
 			return;
 		}
 		
-		/* alert("${mode}"); */
-		f.action = "<%=cp%>/travel/party/${mode}";
+		f.action = "<%=cp%>/travel/party/${mode}?${query}";
 		f.submit();
 	}
 </script>
@@ -75,7 +74,7 @@
 <div class="mt-50 mb-100">
 	<div class="container">
 		<div class="mb20">
-			<h2>파티 생성</h2>
+			<h2>${mode == "create" ? "파티 생성" : "파티 수정"}</h2>
 		</div>
 		<form name="form_party" method="post">
 			<div>
@@ -83,42 +82,46 @@
 					<tr>
 						<th>제목</th>
 						<td colspan="3">
-							<input type="text" name="subject" class="form-control" placeholder="Your Name">
+							<input type="text" name="subject" class="form-control" value="${dto.subject}" placeholder="제목을 입력해주세요.">
 						</td>
 					</tr>
 					<tr>
 						<th>모집 시작일</th>
 						<td>
-							<input type="date" name="startDate" class="form-control" placeholder="Your Name">
+							<input type="date" name="startDate" class="form-control" value="${dto.startDate}" placeholder="모집 시작일" ${mode == "update" ? "disabled='disabled'" : ""}/>
 						</td>
 						<th>모집 종료일</th>
 						<td>
-							<input type="date" name="endDate" class="form-control" placeholder="Your Name">
+							<input type="date" name="endDate" class="form-control" value="${dto.endDate}" placeholder="모집 종료일" ${mode == "update" ? "disabled='disabled'" : ""}/>
 						</td>
 					</tr>
 					<tr>
 						<th>참여인원</th>
 						<td>
-							<input type="text" name="max" class="form-control" placeholder="Your Name">
+							<input type="text" name="max" class="form-control" value="${dto.max}" placeholder="참여 인원" ${mode == "update" ? "disabled='disabled'" : ""}/>
 						</td>
 						<th>활성여부</th>
 						<td>
-							<input type="radio" name="enabled" value="0"/>활성
-							<input type="radio" name="enabled" value="1"/>비활성
+							<input type="radio" name="enabled" value="0" ${dto.enabled == 0 ? "checked='checked'" : ""} ${mode == "update" ? "disabled='disabled'" : ""}/>활성
+							<input type="radio" name="enabled" value="1" ${dto.enabled == 1 ? "checked='checked'" : ""} ${mode == "update" ? "disabled='disabled'" : ""}/>비활성
 						</td>
 					</tr>
 					<tr>
 						<th>내용</th>
 						<td colspan="3">
-							<textarea class="content" name="content"></textarea>
+							<textarea class="content" name="content">${dto.content}</textarea>
 						</td>
 					</tr>
 				</table>
 			</div>
 			<div class="mt-30">
 				<div class="col-12 text-right">
-			    	<button type="button" class="btn roberto-btn mb-50" onclick="insert_party()">파티 생성</button>
-			    	<button type="button" class="btn roberto-btn mb-50" onclick="location.href='<%=cp%>/travel/party'">생성 취소</button>
+					<c:if test="${mode == 'update'}">
+						<input type="hidden" name="partyCode" value="${dto.partyCode}"/>
+						<input type="hidden" name="userIdx" value="${dto.userIdx}"/>
+					</c:if>
+			    	<button type="button" class="btn roberto-btn mb-50" onclick="insert_party()">${mode == "create" ? "파티 생성" : "파티 수정"}</button>
+			    	<button type="button" class="btn roberto-btn mb-50" onclick="location.href='<%=cp%>/travel/party'">${mode == "create" ? "생성 취소" : "수정 취소"}</button>
 			    </div>
 			</div>
 		</form>

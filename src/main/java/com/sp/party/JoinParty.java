@@ -1,18 +1,26 @@
 package com.sp.party;
 
 public class JoinParty {
-	private int partyCode;
-	private String memo;
-	private int userIdx;
-	private String userId;
-	private String userName;
-	private String created;
+	private int partyCode; // 파티 코드
+	private int createdUserIdx; // 파티 생성 유저 idx
+	private String memo; // 내용
+	private int userIdx; // 참가 신청 유저 idx
+	private String userId; // 참가 신청 유저 id
+	private String userName; // 참가 신청 유저 이름
+	private String created; // 참가 신청일
+	private int pCode; // 참가 유형 코드 (0 : 대기, 1 : 참여, 2 : 거절, 3: 나감)
 	
 	public int getPartyCode() {
 		return partyCode;
 	}
 	public void setPartyCode(int partyCode) {
 		this.partyCode = partyCode;
+	}
+	public int getCreatedUserIdx() {
+		return createdUserIdx;
+	}
+	public void setCreatedUserIdx(int createdUserIdx) {
+		this.createdUserIdx = createdUserIdx;
 	}
 	public String getMemo() {
 		return memo;
@@ -43,5 +51,11 @@ public class JoinParty {
 	}
 	public void setCreated(String created) {
 		this.created = created;
+	}
+	public int getpCode() {
+		return pCode;
+	}
+	public void setpCode(int pCode) {
+		this.pCode = pCode;
 	}
 }

@@ -1,18 +1,18 @@
 package com.sp.party;
 
 public class Party {
-	private int partyCode;
-	private String subject;
-	private String content;
-	private String startDate;
-	private String endDate;
-	private int userIdx;
-	private String userId;
-	private String created;
-	private int max;
-	private int enabled;
-	private int confirmCode;
-	private int partyPeopleCount;
+	private int partyCode; // 파티 코드
+	private String subject; // 제목
+	private String content; // 내용
+	private String startDate; // 모집 시작일
+	private String endDate; // 모집 종료일
+	private int userIdx; // 생성 유저 idx
+	private String userId; // 생성 유저 id
+	private String created; // 생성일
+	private int max; // 참기 인원
+	private int enabled; // 활성 여부
+	private int confirmCode; // 등록 여부 (0 : 대기, 1 : 수락, 2 : 불가)
+	private int partyPeopleCount; // 참가 신청한 인원 수
 	
 	public int getPartyCode() {
 		return partyCode;

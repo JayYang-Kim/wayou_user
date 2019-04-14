@@ -16,12 +16,16 @@
 			,url:url
 			,data:query
 			,success:function(data) {
-				if(data.state == "true") {
-					alert("파티 신청에 성공했습니다..");
+				if(data.msg == "false") {
+					alert("이미 파티를 신청하셨습니다.");
 					$("textarea[name=message]").val("");
-				} else {
+				} else if(data.state == "false") {
 					alert("파티 신청에 실패했습니다.");
 					$("textarea[name=message]").val("");
+				} else if(data.state == "true") {
+					alert("파티 신청에 성공했습니다.");
+					$("textarea[name=message]").val("");
+					listJoinParty(1);
 				}
 			}
 		    ,beforeSend:function(e) {
@@ -92,6 +96,100 @@
 			$(".moreLayout").hide();
 		}
 	}
+	
+	$(function(){
+		var partyCode = ${dto.partyCode};
+		
+		$("body").on("click", "#joinParty_accept", function(){
+			var url = "<%=cp%>/travel/party/joinParty/accept";
+			var userIdx = $("#userIdx").val();
+			var query = "partyCode=" + partyCode + "&userIdx=" + userIdx;
+	
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"json"
+				,success:function(data) {
+					if(data.msg == "true") {
+						listJoinParty(1);
+					} else {
+						alert("참가신청 참가 실패했습니다.");
+					}
+				}
+			    ,beforeSend:function(e) {
+			    	e.setRequestHeader("AJAX", true);
+			    }
+			    ,error:function(e) {
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+			    	console.log(e.responseText);
+			    }
+			});
+		});
+		
+		$("body").on("click", "#joinParty_refuse", function(){
+			var url = "<%=cp%>/travel/party/joinParty/refuse";
+			var userIdx = $("#userIdx").val();
+			var query = "partyCode=" + partyCode + "&userIdx=" + userIdx;
+	
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"json"
+				,success:function(data) {
+					if(data.msg == "true") {
+						listJoinParty(1);
+					} else {
+						alert("참가신청 거절 실패했습니다.");
+					}
+				}
+			    ,beforeSend:function(e) {
+			    	e.setRequestHeader("AJAX", true);
+			    }
+			    ,error:function(e) {
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+			    	console.log(e.responseText);
+			    }
+			});
+		});
+		
+		$("body").on("click", "#joinParty_delete", function(){
+			var url = "<%=cp%>/travel/party/joinParty/delete";
+			var userIdx = $("#userIdx").val();
+			var query = "partyCode=" + partyCode + "&userIdx=" + userIdx;
+	
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"json"
+				,success:function(data) {
+					if(data.msg == "true") {
+						listJoinParty(1);
+					} else {
+						alert("참가신청 나가기 실패했습니다.");
+					}
+				}
+			    ,beforeSend:function(e) {
+			    	e.setRequestHeader("AJAX", true);
+			    }
+			    ,error:function(e) {
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+			    	console.log(e.responseText);
+			    }
+			});
+		});
+	});
 </script>
 
 <!-- Breadcrumb Area Start -->
@@ -136,8 +234,8 @@
                     			<a href="<%=cp%>/travel/party?${query}" class="btn roberto-btn f_right">목록</a>
                     		</c:if>
                     		<c:if test="${sessionScope.member.userIdx == dto.userIdx}">                    		
-                    			<a href="<%=cp%>/travel/party?${query}" class="btn roberto-btn f_right">수정</a>
-                    			<a href="<%=cp%>/travel/party?${query}" class="btn roberto-btn f_right mr10">삭제</a>
+                    			<a href="<%=cp%>/travel/party/update?${query}&partyCode=${dto.partyCode}" class="btn roberto-btn f_right">수정</a>
+                    			<a href="<%=cp%>/travel/party/delete?${query}&partyCode=${dto.partyCode}" class="btn roberto-btn f_right mr10">삭제</a>
                     		</c:if>
                 		</div>
                 	</div>
@@ -153,37 +251,10 @@
 						</div>
 					</c:if>
 					<c:if test="${dto.partyPeopleCount != 0}">
-	                    <ol id="listJoinParty">
-	                        
-	                        <%-- <li class="single_comment_area">
-	                            <!-- Comment Content -->
-	                            <div class="comment-content d-flex">
-	                                <!-- Comment Author -->
-	                                <div class="comment-author">
-	                                    <img src="<%=cp%>/resources/images/common/defaultImg.jpeg" alt="프로필 사진">
-	                                </div>
-	                                <!-- Comment Meta -->
-	                                <div class="comment-meta">
-	                                    <a href="#" class="post-date">27 Aug 2016</a>
-	                                    <h5>Brandon Kelley</h5>
-	                                    <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi.</p>
-	                                    <c:if test="${sessionScope.member.userIdx == dto.userIdx}">
-	                                    	<div class="mt10">
-	                                    		<a href="#" class="like">수락</a>
-		                                    	<a href="#" class="reply">거절</a>
-	                                    	</div>
-	                                    </c:if>
-	                                    <c:if test="${sessionScope.member.userIdx != dto.userIdx}">
-	                                    	<a href="#" class="like">수정</a>
-		                                    <a href="#" class="reply">삭제</a>
-	                                    </c:if>
-	                                </div>
-	                            </div>
-	                        </li> --%>
-	                    </ol>
+	                    <ol id="listJoinParty"></ol>
                     </c:if>
                 </div>
-                <div class="moreLayout" style="text-align: right; height: 50px;">
+                <div class="moreLayout blind" style="text-align: right; height: 50px;">
 					<span onclick="morePage()" style="cursor:pointer">더보기</span>
 				</div>
 

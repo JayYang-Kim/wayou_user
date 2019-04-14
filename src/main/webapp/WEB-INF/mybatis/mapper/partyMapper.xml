@@ -148,6 +148,21 @@
 		) tb WHERE ROWNUM=1
 	</select>
 	
+	<delete id="deleteParty" parameterType="Integer">
+		DELETE FROM party WHERE partyCode = #{partyCode}
+	</delete>
+	
+	<update id="updateParty" parameterType="com.sp.party.Party">
+		UPDATE party SET
+			subject = #{subject},
+			content = #{content}
+		WHERE partyCode = #{partyCode}
+	</update>
+	
+	<delete id="deleteJoinParty" parameterType="Integer">
+		DELETE FROM partyPeople WHERE partyCode = #{partyCode}
+	</delete>
+	
 	<insert id="insertJoinParty" parameterType="map">
 		INSERT INTO partypeople(userIdx, pCode, partyCode, memo)
     		VALUES(#{userIdx}, 0, #{partyCode}, #{memo})
@@ -164,13 +179,14 @@
 	<select id="listJoinParty" parameterType="map" resultType="com.sp.party.JoinParty">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT pp.partyCode, memo, u.userIdx, u.userId, u.userName, 
-		            TO_CHAR(pp.created, 'YYYY-MM-DD') created
-		        FROM party p
-		        JOIN partyPeople pp
-		        ON p.partyCode = pp.partyCode
-		        JOIN tb_user u
-		        ON pp.userIdx = u.userIdx
+		        SELECT pp.partyCode, memo, p.userIdx createdUserIdx, u.userIdx, u.userId, u.userName, 
+				    TO_CHAR(pp.created, 'YYYY-MM-DD') created,
+				    pCode
+				FROM party p
+				JOIN partyPeople pp
+				ON p.partyCode = pp.partyCode
+				JOIN tb_user u
+				ON pp.userIdx = u.userIdx
 		        WHERE pp.partyCode = #{partyCode}
 		    ) tb
 		<![CDATA[
@@ -178,4 +194,22 @@
 		) WHERE rnum >= #{start}
 		]]>
 	</select>
+	
+	<update id="updateJoinParty_accept">
+		UPDATE partyPeople SET
+		    pCode = 1
+		WHERE partyCode = #{partyCode} and userIdx = #{userIdx}
+	</update>
+	
+	<update id="updateJoinParty_refuse">
+		UPDATE partyPeople SET
+		    pCode = 2
+		WHERE partyCode = #{partyCode} and userIdx = #{userIdx}
+	</update>
+	
+	<update id="updateJoinParty_delete">
+		UPDATE partyPeople SET
+		    pCode = 3
+		WHERE partyCode = #{partyCode} and userIdx = #{userIdx}
+	</update>
 </mapper>
