@@ -134,6 +134,12 @@
   white-space: nowrap;
   width: 100% !important; }
 
+/*엄유선  */
+.welcome-slides.noImg:hover .owl-prev, .welcome-slides.noImg:hover .owl-next, .welcome-slides.noImg:focus .owl-prev, .welcome-slides.noImg:focus .owl-next {
+	opacity: inherit;
+	visibility: hidden;
+}
+
 @media only screen and (max-width: 991px) and (min-width: 768px) {
   .h_web{display:block;}
   .h.mobile{display:none;}

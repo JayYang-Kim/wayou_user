@@ -1,40 +1,166 @@
 @charset "UTF-8";
 
-.searchSpace {
-	float:left;
-	width:20%;
-	background-color: #e4e4e4;
-	height:700px;
+#navBar {
+  float:left;
+  height: 750px;
+  border : 1px solid #e4e4e4;
+  padding:0;
 }
 .workspace-title {
-	
+	width:100%;
+	background : #707070;
+	padding: 5px; 3px;
+}
+
+.searchSpace {
+	width:20%;
+	background-color: #e4e4e4;
+	height:750px;
 }
 
 .scrollbox {
   width: 100%;
-  height: 90%;
-  font-family: 'Junge', serif;
+  height: 685px;
   font-size: 1.2em;
-  color: #999999;
   line-spacing: 20px;
-  line-height: 1.7em;
-  overflow-y: scroll;
-  
-  background: linear-gradient(white 30%, hsla(0,0%,100%,0)), 
-    linear-gradient(hsla(0,0%,100%,0), white 70%) bottom,
-    radial-gradient(50% 0, ellipse, rgba(0,0,0,0.3), rgba(0,0,0,0) 70%), 
-    radial-gradient(50% 100%, ellipse, rgba(0,0,0,0.3), rgba(0,0,0,0) 70%) bottom;
-  background-size: 100% 40px, 100% 40px, 100% 14px, 100% 14px;
-  background-repeat: no-repeat;
-  background-attachment: local, local, scroll, scroll;
+  overflow-y : auto;
 }
-
-.locImage {
-	width: 100px;
-	height: 100px;
-}
-
-.LocList {
+.locList {
+	border-bottom : 1px solid #b3b3b3;
 	width: 100%; 
 	height:100px;
+	cursor: pointer;
+	padding:15px 5px;
+}
+
+.locList:hover {
+	background-color: #e4e4e4;
+}
+.landList {
+	border-bottom : 1px solid #b3b3b3;
+	width: 100%; 
+	height:100px;
+	cursor: pointer;
+	padding:15px 5px;
+}
+
+.landList:hover {
+	background-color: #e4e4e4;
+}
+.locImage {
+	width: 70px;
+	height: 70px;
+	float:left;
+}
+#landInfo {
+	overflow-y : scroll;
+ 	-ms-overflow-style:none;
+}
+
+ #landInfo::-webkit-scrollbar{
+	display:none;
+}
+
+  
+.next3 {
+	float:right;
+  color: #95a5a6;
+  font-size: 2em;
+  font-family: 'Ropa Sans', sans-serif;
+  transition:all .2s linear;
+  -o-transition:all .2s linear;
+  -moz-transition:all .2s linear;
+  -webkit-transition:all .2s linear;
+  position: relative;
+  right:0px;
+  top:12px;
+}
+
+.landmark-title {
+	width:100%;
+	height:65px;
+	background : teal;
+	padding: 5px; 3px;
+}
+
+.leftDayBar ul li :hover {
+	background: #1cc3b2;
+	cursor: pointer;
+}
+.ldbliActive {
+	background: #1cc3b2;
+}
+ 
+.leftDayBar {
+	overflow-y : scroll;
+	-ms-overflow-style:none;
+}
+
+.leftDayBar::-webkit-scrollbar{
+	display:none;
+}
+
+.tags {
+  list-style: none;
+  margin: 0;
+  overflow: hidden; 
+  padding: 0;
+}
+
+.tags li {
+  float: left; 
+}
+
+.tag {
+  background: #eee;
+  border-radius: 3px 0 0 3px;
+  color: #999;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  padding: 0 20px 0 23px;
+  position: relative;
+  margin: 0 10px 10px 0;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+}
+
+.tag::before {
+  background: #707070;
+  border-radius: 10px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.25);
+  content: '';
+  height: 6px;
+  left: 10px;
+  position: absolute;
+  width: 6px;
+  top: 10px;
+}
+
+.tag::after {
+  background: #707070;
+  border-bottom: 13px solid transparent;
+  border-left: 10px solid #eee;
+  border-top: 13px solid transparent;
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.tag:hover {
+  background-color: teal;
+  color: white;
+}
+
+.tag:hover::after {
+   border-left-color: teal; 
+}
+
+.routeBar {
+	height: 750px; 
+	border: 1px solid #e4e4e4; 
+	border-left: none;
+	margin: 0;
+	padding : 0;
 }

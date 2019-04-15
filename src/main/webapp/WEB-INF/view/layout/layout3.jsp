@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="<%=cp%>/resources/css/common.css" media="all" />
     <link rel="stylesheet" href="<%=cp%>/resources/css/contents.css" media="all" />
     <link rel="stylesheet" href="<%=cp%>/resources/css/datepicker.css" media="all" />
-    <link rel="stylesheet" href="<%=cp%>/resource/user/css/sangkeun.css" media="all" />
+    <link rel="stylesheet" href="<%=cp%>/resources/css/sangkeun.css" media="all" />
     
     <!-- jQuery 2.2.4 -->
     <script src="<%=cp%>/resources/js/lib/jquery.min.js"></script>

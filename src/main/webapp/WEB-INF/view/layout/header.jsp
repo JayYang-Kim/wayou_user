@@ -146,23 +146,14 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#">숙박</a>
+                                <li><a href="<%=cp%>/hotel/hotel/main">숙박</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">- Home</a></li>
-                                        <li><a href="#">- Rooms</a></li>
-                                        <li><a href="#">- Single Rooms</a></li>
-                                        <li><a href="#">- About Us</a></li>
-                                        <li><a href="#">- Blog</a></li>
-                                        <li><a href="#">- Single Blog</a></li>
-                                        <li><a href="#">- Contact</a></li>
-                                        <li><a href="#">- Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                            </ul>
-                                        </li>
+                                        <li><a href="<%=cp%>/hotel/hotel/list">- 호텔</a></li>
+                                        <li><a href="<%=cp%>/hotel/hotel/article">- 나만의 호텔 예약</a></li>
+                                        <li><a href="<%=cp%>/hotel/hevent/hevent">- 이벤트</a></li>
+                                        <li><a href="#">- 공지사항</a></li>
+                                        <li><a href="<%=cp%>/hotel/hqna/list">- 문의사항</a></li>
+                                        <li><a href="#">- FAQ</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="#">문의사항</a></li>
