@@ -148,7 +148,7 @@ function sendHqna(mode) {
 	}
 	
 	var url="<%=cp%>/hotel/hqna/"+mode;
-	var query=new FormData(f);
+	var query=new FsormData(f);
 	
 	ajaxJSON(url, "post", query, "created");
 }
