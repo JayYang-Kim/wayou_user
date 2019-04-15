@@ -1,3 +1,10 @@
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+	String cp=request.getContextPath();
+%>
 <!DOCTYPE html>
 <!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="ko"> <![endif]-->
 <!--[if IE 7]>    <html class="lt-ie9 lt-ie8" lang="ko"> <![endif]-->
@@ -11,21 +18,21 @@
     <title>WAYOU - 누워서 유람하듯 여행을 떠나요</title>
  
     <!-- Favicon - 파비콘 (주소창 영역 아이콘) -->
-    <link rel="Shortcut Icon" href="./resources/images/common/wayou.ico"/>
+    <link rel="Shortcut Icon" href="<%=cp%>/resources/images/common/wayou.ico"/>
 
 	<!-- style -->
-	<link rel="stylesheet" href="./resources/css/common.css" media="all" />
-	<link rel="stylesheet" href="./resources/css/contents.css" media="all" />
+	<link rel="stylesheet" href="<%=cp%>/resources/css/common.css" media="all" />
+	<link rel="stylesheet" href="<%=cp%>/resources/css/contents.css" media="all" />
 
 	<!-- javascript -->
-	<script src="./resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="./resources/js/lib/jquery-migrate-1.4.1.min.js"></script>
-	<script src="./resources/js/lib/jquery-ui-1.12.1.min.js"></script>
+	<script src="<%=cp%>/resources/js/lib/jquery-1.12.4.min.js"></script>
+	<script src="<%=cp%>/resources/js/lib/jquery-migrate-1.4.1.min.js"></script>
+	<script src="<%=cp%>/resources/js/lib/jquery-ui-1.12.1.min.js"></script>
 	<!--[if lt IE 9]>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 	<![endif]-->
-	<script src="./resources/js/plugins.js"></script>
-	<script src="./resources/js/ui_script.js"></script>
+	<script src="<%=cp%>/resources/js/plugins.js"></script>
+	<script src="<%=cp%>/resources/js/ui_script.js"></script>
 	<!-- //javascript -->
 </head>
 

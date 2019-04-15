@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="workspace">
+	<select id="currentWorkSeqNum" resultType="Integer">
+		select workspace_seq.nextval from dual
+	</select>
+	
+	
+	<select id="currentWorkDetailSeqNum" resultType="Integer">
+		select workspacedetail_seq.nextval from dual
+	</select>
+	
+	
+	
+	<select id="listLocation" resultType="com.sp.travel.Location" parameterType="String">
+		select l.loccode,locname,locename,lat,lng,savefilename
+		from location l 
+		join locationcode c 
+		on l.loccode=c.loccode
+		<where>
+			<if test="_parameter!='All'">
+				instr(locname,#{name}) &gt; 0
+			</if>
+		</where>
+	</select>
+	
+	<select id="basicInfo" resultType="com.sp.travel.Location" parameterType="Integer">
+		select l.loccode,locname,locename,lat,lng,savefilename, memo 
+		from location l 
+		join locationcode c 
+		on l.loccode=c.loccode
+		where l.loccode=#{locCode}
+	</select>
+	
+	<select id="insertWorkspace" parameterType="map" resultType="Integer">
+		insert into workspace(workcode,subject,daycount,startday,endday,loccode,userIdx) 
+		values(#{seqNum},#{title},#{dayCount},#{startDay},#{endDay},#{locCode},#{userIdx})
+	</select>
+	
+	<select id="listLandmark" parameterType="Integer" resultType="com.sp.travel.Landmark">
+		select landcode, loccode, landname, lat, lng, tagCode from landmark 
+		<choose>
+			<when test="landName != 'All'">
+				where instr(landName,#{landName}) >0 and locCode = #{locCode}
+			</when>
+			<otherwise>
+				where locCode = #{locCode}
+			</otherwise>
+		</choose>
+	</select>
+	<select id="listLandmarkByTag" parameterType="Integer" resultType="com.sp.travel.Landmark">
+		select landcode, loccode, landname, lat, lng, tagCode from landmark where locCode=#{locCode} and tagCode=${tagNum}
+	</select>
+	
+	<insert id="insertWorkDetail" parameterType="map">
+		insert into workspacedetail(detailcode,workcode,day) values(#{seqNum},#{workCode},#{day})
+	</insert>
+	
+	<insert id="insertWorkLand" parameterType="map">
+		insert into workLand(worklandCode,detailcode,ordernum,landcode) values(workland_seq.nextval,#{detailCode},#{orderNum},#{landCode})
+	</insert>
+	
+	<delete id="deleteWorkLand" parameterType="Integer">
+		delete from workland where detailCode=#{seqNum}
+	</delete>
+	
+	<select id="isDetailExist" parameterType="map" resultType="Integer">
+		select nvl(count(*),0) from workspacedetail where day=#{day} and workCode=#{workCode}
+	</select>
+	
+	<select id="getDetailCode" parameterType="map" resultType="Integer">
+		select detailCode from workspacedetail where day=#{day} and workCode=#{workCode}
+	</select>
+	
+	<select id="landListByDay" parameterType="map" resultType="com.sp.travel.Landmark">
+		select wl.landCode, lat, lng, landName, tagCode, savefilename
+		from workland wl
+		join landmark lm on wl.landCode = lm.landCode
+		left outer join landmarkfile lmf on wl.landCode = lmf.landCode
+		where wl.detailCode = (select detailCode from workspacedetail where day=#{day} and workCode=#{workCode})
+		order by orderNum asc
+	</select>
+</mapper>

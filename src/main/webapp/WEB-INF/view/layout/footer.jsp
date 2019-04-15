@@ -10,7 +10,7 @@
 <div class="main-footer-area">
     <div class="container">
     	<div class="row top_footer">
-    		<ul>
+     		<ul>
     			<li>
     				<a href="#">서비스 소개</a>
     			</li>
