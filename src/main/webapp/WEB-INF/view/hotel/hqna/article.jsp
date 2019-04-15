@@ -6,34 +6,6 @@
    String cp = request.getContextPath();
 %>
 
-<script type="text/javascript">
-	//게시글 지울수있는사람 2명으로 => 관리자와 글쓴이만 할수있게
-	
-function deleteBoard(num) {
-<c:if test="${sessionScope.member.userId=='admin' || sessionScope.member.userId==dto.userId}">	
-		if(confirm("게시물을 삭제 하시겠습니까 ?")) {
-		var url="<%=cp%>/bbs/delete?num="+num+"&${query}";
-		location.href=url;
-	}
-</c:if>
-
-<c:if test="${sessionScope.member.userId!='admin' && sessionScope.member.userId!=dto.userId}">
-	alert("게시글을 삭제할 수 없습니다.");
-</c:if>
-}
-	
-function updateBoard(num) {
-<c:if test="${sessionScope.member.userId==dto.userId}">
-	var url="<%=cp%>/bbs/update?num="+num+"&page=${page}";
-	location.href=url;
-</c:if>
-<c:if test="${sessionScope.member.userId!=dto.userId}">
-	alert("게시글을 수정 할 수 없습니다.");
-</c:if>
-}
-
-</script>
-
 <div class="body-container" style="width: 700px;">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
@@ -68,13 +40,7 @@ function updateBoard(num) {
 			   </td>
 			</tr>
 						
-			<tr height="35" style="border-bottom: 1px solid #cccccc;">
-			    <td colspan="2" align="left" style="padding-left: 5px;">
-			       첨&nbsp;&nbsp;부 :
-			       <c:if test="${not empty dto.saveFilename}"><a href="<%=cp%>/bbs/download?num=${dto.num}">${dto.originalFilename }</a>(<fmt:formatNumber value="${dto.filesize/1024 }" pattern="#,##0.00"/> kb)</c:if>
-			    </td>
-			</tr>
-			
+
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 : 

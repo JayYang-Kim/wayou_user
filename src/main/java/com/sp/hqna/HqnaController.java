@@ -1,6 +1,7 @@
 package com.sp.hqna;
 
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,8 +75,7 @@ public class HqnaController {
 			dto.setListNum(listNum);
 			n++;
 		}
-		
-
+			
 		String paging=myUtil.pagingMethod(current_page, total_page, "listPage");
 		
 		model.addAttribute("list", list);

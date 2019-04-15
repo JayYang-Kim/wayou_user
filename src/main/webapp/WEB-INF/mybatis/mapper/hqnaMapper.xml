@@ -62,14 +62,14 @@
 		UPDATE question SET hitCount=hitCount+1 WHERE qnaCode=#{qnaCode}
 	</update>
 	
-	<select id="readHqna" parameterType="map" resultType="com.sp.hqna.hqna">
+	<select id="readHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 	SELECT qnaCode, q.userIdx, subject, content, hitCount, created,
 	FROM question q
 	JOIN tb_user u ON u.userIdx=q.userIdx
 	WHERE qnaCode=#{qnaCode}
 	</select> 
 	
-	<select id="preRedaHqna" parameterType="map" resultType="com.sp.hqna.hqna">
+	<select id="preRedaHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 		SELECT tb.*FROM (
 			SELECT qnaCode, subject
 			FROM question q
@@ -84,7 +84,7 @@
 		)tb WHERE ROWNUM=1
 	</select>
 	
-	<select id="nextReadHqna" parameterType="map" resultType="com.sp.hqna.hqna">
+	<select id="nextReadHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 		SELECT tb.*FROM (
 			SELECT qnaCode, subject
 			FROM question q

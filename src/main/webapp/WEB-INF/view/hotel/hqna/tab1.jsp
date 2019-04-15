@@ -9,7 +9,7 @@
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">
 		      <td align="left" width="50%">
-		          ${dataCount }개 (${page }/${total_page }) 페이지
+		          ${dataCount }개 (${page}/${total_page }) 페이지
 		      </td>
 		      <td align="right">
 		          &nbsp;
@@ -25,15 +25,15 @@
 		      <th width="80" style="color: #787878;">작성일</th>
 		      <th width="60" style="color: #787878;">조회수</th>
 		  </tr>
-<c:forEach var="dto" items="${list}">	 
+<c:forEach var="hqna" items="${list}">	 
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-		      <td>${dto.listNum }</td>
+		      <td>${hqna.listNum }</td>
 		      <td align="left" style="padding-left: 10px;">
-		           <a href="javascript:articleBoard('${dto.num}')">${dto.subject}</a>
+		               <a href="">${hqna.subject }</a>
 		      </td>
 		      <td>${sessionScope.member.userName }</td>
-		      <td>${dto.created }</td>
-		      <td>${dto.hitCount }</td>
+		      <td>${hqna.created }</td>
+		      <td>${hqna.hitCount }</td>
 		  </tr>
 </c:forEach>	
 		</table>
@@ -49,7 +49,7 @@
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn" onclick="reloadBoard();">새로고침</button>
+		          <button type="button" class="btn" onclick="reloadHqna();">새로고침</button>
 		      </td>
 		      <td align="center">
 		              <select name="key" id="key" class="selectField">

@@ -20,12 +20,6 @@
 <script type="text/javascript">
 
 $(function(){
-	var id=$("#tabContent1");
-	var url="<%=cp%>/hotel/hqna/tab1";
-	viewTabContent(id, url);
-});
-
-$(function(){
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		  // alert(e.target); // newly activated tab
 		  // e.relatedTarget // previous active tab
@@ -51,6 +45,12 @@ function viewTabContent(id, url) {
 	  });
 }
 
+
+//전역변수
+var pageNo = 1;
+var key = "all";
+var value = "";
+
 function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data를 리턴한 jsp에 뿌려주고 해당 jsp의 html을 해당 id자리에 뿌려줌
 	
 	$.ajax({ 
@@ -72,11 +72,36 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 			console.log(e.responseText);
 		}		
 	});
-}	
-//전역변수
-var pageNo = 1;
-var key = "all";
-var value = "";
+}
+
+function ajaxJSON(url, type, query, mode) {
+	
+	$.ajax({
+		type:type
+		,url:url
+		,data:query
+		,dataType:"JSON"
+		,success:function(data){
+			if(mode=="delete") {
+				if(data.state=="false"){
+					alert("삭제 권한이 없습니다.");
+				}else{
+					listPage(pageNo);
+				}
+			}
+		}
+		,beforeSend:function(e) {
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e) {
+			if(e.status==403){  
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}		
+	});
+}
 
 $(function () {
 	listPage(1);
@@ -89,21 +114,44 @@ function  listPage(page) {
 	var id="tabContent1";
 	var url="<%=cp%>/hotel/hqna/tab1";
 	var query="pageNo="+page;
-	if(value!=" ") {
+	if(value!="") {
 		query +="&key="+key+"&value="+encodeURIComponent(value);
 	}
 	
 	ajaxHTML(url, "get", query, id);
 }
 
-function serchList() {
-	key=$("#key").val();
-	value=$("#value").val();
+function reloadHqna() {
+	key=$("all")
+	value="";
 	
 	listPage(1);
 }
 
-
+function sendHqna(mode) {
+	var f=document.boardForm;
+	
+	if(! f.subject.value) {
+		f.subject.focus();
+		return;
+	}
+	
+	if(! f.content.value) {
+		f.content.focus();
+		return;
+	}
+	
+	if(mode=="created") {
+		key="all"
+		value="";
+		pageNo=1;
+	}
+	
+	var url="<%=cp%>/hotel/hqna/"+mode;
+	var query=new FormData(f);
+	
+	ajaxJSON(url, "post", query, "created");
+}
 </script>
 
 </head>

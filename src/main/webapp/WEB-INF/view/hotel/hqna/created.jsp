@@ -5,49 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
-
-<script type="text/javascript">
-    function sendOk() {
-        var f = document.boardForm;
-
-    	var str = f.subject.value;
-        if(!str) {
-            alert("제목을 입력하세요. ");
-            f.subject.focus();
-            return;
-        }
-
-    	str = f.content.value;
-        if(!str) {
-            alert("내용을 입력하세요. ");
-            f.content.focus();
-            return;
-        }
-
-    	f.action="<%=cp%>/hotel/hqna/${mode}";
-
-        f.submit();
-    }
-</script>
-<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: none;" data-jarallax-original-styles="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
-        <div class="container h-100">
-            <div class="row h-100 align-items-end">
-                <div class="col-12">
-                    <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5" style="text-align: center;">
-                        <h2 class="room-title">문의 게시판</h2>
-                        <h2 class="room-price"> <span></span></h2>
-                    </div>
-                </div>
-            </div>
-        </div>
- </div>
-<div class="body-container" style="width: 700px; text-align: center;" >
-    <div class="body-title">
-        <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
-    </div>
-    
-    <div>
-			<form name="boardForm" method="post" >
+			<form name="boardForm" method="post" enctype="multipart/form-data"><!--파일업로드 필수 : enctype="multipart/form-data"  -->
 			  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
@@ -69,15 +27,16 @@
 			        <textarea name="content" rows="12" class="boxTA" style="width: 95%;">${dto.content}</textarea>
 			      </td>
 			  </tr>
+			  
 
 			  </table>
 			
 			  <table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
 			     <tr height="45"> 
 			      <td align="center" >
-			        <button type="button" class="btn" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
+			        <button type="button" class="btn" onclick="sendHqna('${mode}');">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/list';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="button" class="btn" onclick="listPage(pageNo)">${mode=='update'?'수정취소':'등록취소'}</button>
 			  
 					  <c:if test="${mode=='update'}">
 					         	 <input type="hidden" name="num" value="${dto.num}">
@@ -87,6 +46,3 @@
 			    </tr>
 			  </table>
 			</form>
-    </div>
-    
-</div>
