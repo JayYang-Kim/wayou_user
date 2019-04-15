@@ -78,8 +78,13 @@ public class TravelService {
 	}
 
 	public List<Landmark> landListByDay(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Landmark> list = null;
+		try {
+			list = dao.selectList("workspace.landListByDay", map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 	public int currentWorkDetailSeqNum() {
@@ -123,7 +128,7 @@ public class TravelService {
 	public int isDetailExist(Map<String, Object> map) {
 		int result=0;
 		try {
-			result = dao.insertData("workspace.isDetailExist",map);
+			result = dao.selectOne("workspace.isDetailExist",map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -134,7 +139,7 @@ public class TravelService {
 		// TODO Auto-generated method stub
 		int seqNum=0;
 		try {
-			seqNum = dao.insertData("workspace.getDetailCode",map);
+			seqNum = dao.selectOne("workspace.getDetailCode",map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}

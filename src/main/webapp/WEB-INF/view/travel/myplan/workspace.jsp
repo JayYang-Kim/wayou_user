@@ -11,16 +11,18 @@
 	var current_day;
 	
 	$(function(){
-		listLandmark('${sessionScope.locCode}','All');
-		drawMap('${sessionScope.lat}','${sessionScope.lng}');
+		listLandmark('${locCode}','All');
+		drawMap('${lat}','${lng}');
 		current_day = 1;
+		loadSavedRouteByDay(1);
+		$("#btn_addRouteByDay").text(current_day+"일차 작성완료");
 	});
 	
 	$(function(){
 		$("#landSearch").keyup(function(){
 			var value = $(this).val();
 			if(!value) value='All';
-			listLandmark('${sessionScope.locCode}',value);
+			listLandmark('${locCode}',value);
 		});
 		
 		$("body").on("click",".landList", function(){
@@ -37,6 +39,8 @@
 			if($(this).closest("#landInfo").find("div").size==0){
 				$("#tip").show();
 			}
+			$("#btn_addRouteByDay").css("background","#1cc3b2");
+			$("#btn_addRouteByDay").prop("disabled",false);
 		});
 		
 		
@@ -180,7 +184,7 @@
 			}
 			
 			var url = "<%=cp%>/travel/myplan/addRouteByDay";
-			var query = "day="+current_day+"&workNum=${sessionScope.workNum}&landCodes="+landCodes;
+			var query = "day="+current_day+"&workNum=${workNum}&landCodes="+landCodes;
 			
 			$.ajax({
 				type:"post",
@@ -208,7 +212,7 @@
 	
 	function listByTag(tagNum){
 		var url = "<%=cp%>/travel/myplan/listByTag";
-		var query = "locCode=${sessionScope.locCode}&tagNum="+tagNum;
+		var query = "locCode=${locCode}&tagNum="+tagNum;
 		
 		$.ajax({
 			type:"get",
@@ -241,9 +245,16 @@
 			});
 			$(this).addClass("ldbliActive");
 			current_day = $(this).attr("data-day");
-			listLandmark('${sessionScope.locCode}','All');
+			listLandmark('${locCode}','All');
 			drawMap('${lat}','${lng}');
-			/* loadSavedRouteByDay(current_day); */
+			loadSavedRouteByDay(current_day);
+			$("#btn_addRouteByDay").text(current_day+"일차 작성완료");
+		});
+		
+		$("#totalComplete").click(function(){
+			if(!confirm("일정 작성을 완료하시겠습니까?(추후 수정 가능)")){
+				return;
+			}
 		});
 	});
 	
@@ -277,13 +288,13 @@
 				  	<li style="width: 100%;" class="dayBar">
 				    	<div style="padding-left: 10px; min-height: 30px; color: white; height: 70px; width: 100%; font-size: 16px; padding-top:25px;">전체 일정 보기</div>
 				    </li>
-				  	<c:forEach var="i" begin="1" end="${sessionScope.dayCount}" step="1" >
+				  	<c:forEach var="i" begin="1" end="${dayCount}" step="1" >
 					    <li class="dayBar" style="width: 100%;" data-day="${i}">
 					      <div style="padding-left: 10px;min-height: 30px; color: white; height: 60px; width: 100%; font-size: 16px; padding-top:20px;">${i}일차</div>
 					    </li>
 				    </c:forEach>
-				    <li style="width: 100%;">
-				    	<div style="padding-left: 10px; min-height: 30px; color: white; height: 70px; width: 100%; font-size: 16px; padding-top:25px;">추가하기(일단 보류)</div>
+				    <li style="width: 100%;" class="dayBar">
+				    	<div id="totalComplete" style="padding-left: 10px; min-height: 30px; color: white; height: 70px; width: 100%; font-size: 16px; padding-top:25px;">전체 일정 작성완료</div>
 				    </li>
 				  </ul>
 		</div>
@@ -308,7 +319,7 @@
 				<img src="<%=cp%>/resource/user/images/travel/tip_ko.png" alt="이미지 없음" style="width: 90%; margin-top: 20px;" id="tip">
 			</div>
 			<div>
-				<button id="btn_addRouteByDay" class="button" style="background: gray; width: 100%; color: white; font-size: 16px; height: 50px;" disabled="disabled">작성 완료</button>
+				<button id="btn_addRouteByDay" class="button" style="background: gray; width: 100%; color: white; font-size: 16px; height: 50px;" disabled="disabled"></button>
 			</div>
 		</div>
 		<div class="col12 col-lg-7" style="height: 750px; overflow: hidden;"id="map"></div>

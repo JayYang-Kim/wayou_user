@@ -84,7 +84,6 @@
 	}
 	$(function(){
 		$("#btn_addRoute").click(function(){
-			/* $info.attr("data-locCode")+","+$info.attr("data-lat")+","+$info.attr("data-lng")); */
 			var $input = $("body").find("input[data-locCode='"+current_locCode+"']");
 			var lat = $input.attr("data-lat");
 			var lng = $input.attr("data-lng");
@@ -92,15 +91,33 @@
 			var title = form.find("input[name='title']").val();
 			var from = form.find("input[name='startDay']").val();
 			var to = form.find("input[name='endDay']").val();
-			form.find("input[name='locCode']").val(current_locCode);
-			form.find("input[name='lat']").val(lat);
-			form.find("input[name='lng']").val(lng);
+			
 			if(!title || !from || !to){
 				alert("양식을 모두 작성해주세요!");
 				return;
 			}
-
-			form.submit();
+			var query = "locCode="+current_locCode+"&lat="+lat+"&lng="+lng+"&title="+title+"&startDay="+from+"&endDay="+to;
+			$.ajax({
+				type:"post",
+				url : "<%=cp%>/travel/myplan/workspace",
+				data:query,
+				dataType:"json",
+				success:function(data){
+					if(data.isInserted){
+						location.href="<%=cp%>/travel/myplan/workspace?workNum="+data.workNum
+						+"&locCode="+data.locCode+"&lat="+data.lat+"&lng="+data.lng+"&dayCount="+data.dayCount;	
+					}else{
+						alert("경로 생성에 실패하였습니다. 잠시 후 다시 시도해주세요");
+					}	
+				},
+				beforesend:function(e){
+					e.setRequestHeader("AJAX",true);
+				},
+				error:function(e){
+					alert("경로 생성에 실패하였습니다. 잠시 후 다시 시도해주세요 ");
+					console.dir(e);
+				}
+			});
 		});
 	});
 </script>
@@ -147,10 +164,7 @@
         </button>
       </div>
 	      <div class="modal-body" style="height: auto;" align="center">
-		      <form name="createRouteForm" action="<%=cp%>/travel/myplan/workspace" method="post">
-		      	<input type="hidden" name="locCode">
-		      	<input type="hidden" name="lat">
-		      	<input type="hidden" name="lng">
+		      <form name="createRouteForm">
 				<input type="text" name="title" placeholder="여행 일정 제목" style="width: 90%;"><br>
 				<input type="text" id="from" name="startDay" style="margin-top: 10px;width: 90%;" placeholder="출발일"><br>
 				<input type="text" id="to" name='endDay' style="margin-top: 10px;width: 90%;" placeholder="도착일">

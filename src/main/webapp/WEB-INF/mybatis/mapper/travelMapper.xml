@@ -72,4 +72,13 @@
 	<select id="getDetailCode" parameterType="map" resultType="Integer">
 		select detailCode from workspacedetail where day=#{day} and workCode=#{workCode}
 	</select>
+	
+	<select id="landListByDay" parameterType="map" resultType="com.sp.travel.Landmark">
+		select wl.landCode, lat, lng, landName, tagCode, savefilename
+		from workland wl
+		join landmark lm on wl.landCode = lm.landCode
+		left outer join landmarkfile lmf on wl.landCode = lmf.landCode
+		where wl.detailCode = (select detailCode from workspacedetail where day=#{day} and workCode=#{workCode})
+		order by orderNum asc
+	</select>
 </mapper>

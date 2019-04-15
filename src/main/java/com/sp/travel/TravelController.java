@@ -46,13 +46,28 @@ public class TravelController {
 		return "travel/myplan/location/basicInfo";
 	}
 	
+	
 	@RequestMapping(value="/travel/myplan/workspace", method=RequestMethod.GET)
-	public String workspaceMain() {
+	public String workspace(
+			@RequestParam int locCode,
+			@RequestParam int workNum,
+			@RequestParam int dayCount,
+			@RequestParam String lat,
+			@RequestParam String lng,
+			HttpSession session,
+			Model model
+			) {
+		model.addAttribute("locCode", locCode);
+		model.addAttribute("lat", lat);
+		model.addAttribute("lng", lng);
+		model.addAttribute("workNum", workNum);
+		model.addAttribute("dayCount", dayCount);
 		return ".travel.myplan.workspace";
 	}
 	
 	@RequestMapping(value="/travel/myplan/workspace", method=RequestMethod.POST) //지역 선택 후 일자와 타이틀을 골라 일정 생성 요청
-	public String workspace(
+	@ResponseBody
+	public Map<String,Object> addWorkspace(
 		@RequestParam int locCode,
 		@RequestParam String title,
 		@RequestParam String startDay,
@@ -92,15 +107,20 @@ public class TravelController {
 		int seqNum = travelService.currentWorkSeqNum();
 		map.put("seqNum", seqNum);
 		
-		travelService.insertWorkspace(map);
-		
-		session.setAttribute("workNum", seqNum);
-		session.setAttribute("locCode", locCode);
-		session.setAttribute("lat", lat);
-		session.setAttribute("lng", lng);
-		session.setAttribute("dayCount", diff/1000/60/60/24);
-	
-		return "redirect:/travel/myplan/workspace";
+		int result = travelService.insertWorkspace(map);
+		boolean isInserted = false;
+		if(result==1) {
+			isInserted = true;
+		}
+		System.out.println("==================="+seqNum+","+locCode+","+lat+","+lng+","+diff/1000/60/60/24+","+isInserted);
+		map.clear();
+		map.put("workNum", seqNum);
+		map.put("locCode", locCode);
+		map.put("lat", lat);
+		map.put("lng", lng);
+		map.put("dayCount", diff/1000/60/60/24);
+		map.put("isInserted", isInserted);
+		return map;
 	}
 	
 	@RequestMapping(value="/travel/myplan/listByTag")
@@ -110,6 +130,7 @@ public class TravelController {
 		map.put("tagNum", tagNum);
 		List<Landmark> list = travelService.landListByTag(map);
 		model.addAttribute("list", list);
+		model.addAttribute("isSaved", false);
 		return "travel/myplan/landmark/landList";
 	}
 
@@ -129,13 +150,15 @@ public class TravelController {
 	@RequestMapping(value="/travel/myplan/loadSavedRouteByDay") //일자별로 저장된 경로 가져오기 using ajax
 	public String loadSavedRouteByDay(
 			@RequestParam int day,
-			@RequestParam int workNum
+			@RequestParam int workNum,
+			Model model
 			) {
 		Map<String,Object> map = new HashMap<>();
-		map.put("", day);
-		map.put("", workNum);
+		map.put("day", day);
+		map.put("workCode", workNum);
 		List<Landmark> list = travelService.landListByDay(map);
-		
+		model.addAttribute("isSaved", true);
+		model.addAttribute("list", list);
 		return "travel/myplan/landmark/landList";
 	}
 	
@@ -155,16 +178,16 @@ public class TravelController {
 		map.put("day", day);
 		map.put("workCode", workNum);
 		int isDetailExist = travelService.isDetailExist(map);
-		
+		System.out.println("isDetailExist:"+isDetailExist);
 		boolean isSuccess = true;
 		int seqNum = 0;
 		if(isDetailExist!=1) {
 			seqNum = travelService.currentWorkDetailSeqNum();
 			map.put("seqNum", seqNum);
 			travelService.insertWorkDetail(map);
-			travelService.deleteWorkLand(seqNum);
 		}else if(isDetailExist==1){
 			seqNum = travelService.getDetailCode(map);
+			travelService.deleteWorkLand(seqNum);
 		}
 		//workLand 삽입
 		map.clear();
@@ -181,6 +204,11 @@ public class TravelController {
 		map.clear();
 		map.put("isSuccess", isSuccess);
 		return map;
+	}
+	
+	@RequestMapping(value="/travel/myplan/list")
+	public String myList() {
+		return ".travel.myplan.list";
 	}
 	
 	
