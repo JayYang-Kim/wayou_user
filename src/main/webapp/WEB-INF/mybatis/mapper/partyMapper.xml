@@ -164,9 +164,19 @@
 	</delete>
 	
 	<insert id="insertJoinParty" parameterType="map">
-		INSERT INTO partypeople(userIdx, pCode, partyCode, memo)
+		INSERT INTO partyPeople(userIdx, pCode, partyCode, memo)
     		VALUES(#{userIdx}, 0, #{partyCode}, #{memo})
 	</insert>
+	
+	<select id="chkinsertJoinParty" parameterType="map" resultType="map">
+		SELECT NVL(COUNT(*), 0) joinPartyCount,
+		p.max
+		FROM party p
+		JOIN partyPeople pp
+		ON p.partyCode = pp.partyCode
+		WHERE pp.partyCode = #{partyCode}
+		GROUP BY p.max
+	</select>
 	
 	<select id="dataCountJoinParty" parameterType="Integer" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) 

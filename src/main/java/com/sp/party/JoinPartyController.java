@@ -29,6 +29,7 @@ public class JoinPartyController {
 		
 		String state = "true";
 		String msg = "true";
+		
 		try {
 			int result = joinPartyService.insertJoinParty(requestParam);
 			if(result == 0) {

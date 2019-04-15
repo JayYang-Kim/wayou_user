@@ -24,8 +24,8 @@
 					$("textarea[name=message]").val("");
 				} else if(data.state == "true") {
 					alert("파티 신청에 성공했습니다.");
-					$("textarea[name=message]").val("");
 					listJoinParty(1);
+					$("textarea[name=message]").val("");
 				}
 			}
 		    ,beforeSend:function(e) {
@@ -104,7 +104,9 @@
 			var url = "<%=cp%>/travel/party/joinParty/accept";
 			var userIdx = $("#userIdx").val();
 			var query = "partyCode=" + partyCode + "&userIdx=" + userIdx;
-	
+			
+			alert(query);
+			
 			$.ajax({
 				type:"post"
 				,url:url
@@ -112,6 +114,7 @@
 				,dataType:"json"
 				,success:function(data) {
 					if(data.msg == "true") {
+						alert("참가신청 참가 성공했습니다.");
 						listJoinParty(1);
 					} else {
 						alert("참가신청 참가 실패했습니다.");
@@ -142,6 +145,7 @@
 				,dataType:"json"
 				,success:function(data) {
 					if(data.msg == "true") {
+						alert("참가신청 거절 성공했습니다.");
 						listJoinParty(1);
 					} else {
 						alert("참가신청 거절 실패했습니다.");
@@ -172,6 +176,7 @@
 				,dataType:"json"
 				,success:function(data) {
 					if(data.msg == "true") {
+						alert("참가신청 나가기 성공했습니다.");
 						listJoinParty(1);
 					} else {
 						alert("참가신청 나가기 실패했습니다.");
@@ -259,7 +264,7 @@
 				</div>
 
                 <!-- Leave A Reply -->
-                <c:if test="${not empty sessionScope.member && sessionScope.member.userIdx != dto.userIdx}">
+                <c:if test="${not empty sessionScope.member && sessionScope.member.userIdx != dto.userIdx && dto.partyPeopleCount < dto.max}">
                 <div class="roberto-contact-form mt-80 mb-100">
                     <h2>참가 신청하기</h2>
 

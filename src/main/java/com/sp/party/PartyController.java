@@ -288,4 +288,70 @@ public class PartyController {
 		
 		return "redirect://travel/party?" + query;
 	}
+	
+	@RequestMapping(value="/travel/party/myList")
+	public String myPartyList(@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			searchValue = URLDecoder.decode(searchValue, "UTF-8");
+		}
+		
+		int total_page = 0;
+		int dataCount = 0;
+		int rows = 10;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		dataCount = partyService.dataCount(map);
+		
+		if(dataCount != 0) {
+			total_page = myUtil.pageCount(rows, dataCount);
+		}
+		
+		if(current_page > total_page) {
+			current_page = total_page;
+		}
+		
+		int start = (current_page - 1) * rows + 1;
+		int end = current_page * rows;
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Party> list = partyService.listParty(map);
+		for(Party dto : list) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
+		
+		String cp = req.getContextPath();
+		String query = "";
+		String listUrl = cp + "/travel/party/myList";
+		String articleUrl = cp + "/travel/party/view?page=" + current_page;
+		
+		if(searchValue.length()!=0) {
+			query = "searchKey=" + searchKey + "&searchValue=" + URLEncoder.encode(searchValue, "UTF-8");
+			
+			listUrl += "?" + query;
+			articleUrl += "&" + query;
+		}
+		
+		String paging = myUtil.paging(current_page, total_page, listUrl);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("page", current_page);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+		
+		return ".party.myList.main";
+	}
 }

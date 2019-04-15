@@ -95,5 +95,4 @@ public class JoinPartyServiceImpl implements JoinPartyService {
 		
 		return result;
 	}
-
 }

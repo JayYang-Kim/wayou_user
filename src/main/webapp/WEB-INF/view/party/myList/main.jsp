@@ -73,7 +73,6 @@
 		            		<option value="content" ${searchKey == 'content' ? "selected='selected'" : ""}>내용</option>
 		            		<option value="startDate" ${searchKey == 'startDate' ? "selected='selected'" : ""}>시작일</option>
 		            		<option value="endDate" ${searchKey == 'endDate' ? "selected='selected'" : ""}>종료일</option>
-		            		<option value="userId" ${searchKey == 'userId' ? "selected='selected'" : ""}>아이디</option>
 		            		<option value="userCount" ${searchKey == 'userCount' ? "selected='selected'" : ""}>인원수</option>
 		            	</select>
 		            </div>
@@ -86,7 +85,7 @@
 			</div>
 		</form>
         <div class="row justify-content-center">
-            <div class="col-12 col-lg-8">
+            <div class="col-12">
             	<c:forEach var="dto" items="${list}">
 	                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 	                    <!-- Post Content -->
@@ -142,72 +141,6 @@
                 <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="600ms">
                 	${paging}
                 </nav>
-            </div>
-
-            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
-                <div class="roberto-sidebar-area pl-md-4">
-
-                    <!-- Recent Post -->
-                    <!-- <div class="single-widget-area mb-100">
-                        <h4 class="widget-title mb-30">인기 파티 (Top5)</h4>
-
-                        Single Recent Post
-                        <div class="single-recent-post d-flex">
-                            Content
-                            <div class="post-content">
-                                Post Meta
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Proven Techniques Help You Herbal Breast</a>
-                            </div>
-                        </div>
-
-                        Single Recent Post
-                        <div class="single-recent-post d-flex">
-                            Content
-                            <div class="post-content">
-                                Post Meta
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Cooking On A George Foreman Grill</a>
-                            </div>
-                        </div>
-
-                        Single Recent Post
-                        <div class="single-recent-post d-flex">
-                            Content
-                            <div class="post-content">
-                                Post Meta
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Selecting The Right Hotel</a>
-                            </div>
-                        </div>
-
-                        Single Recent Post
-                        <div class="single-recent-post d-flex">
-                            Content
-                            <div class="post-content">
-                                Post Meta
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Comment Importance Of Human Life</a>
-                            </div>
-                        </div>
-                    </div> -->
-					
-					<!-- 최신 파티글 (top5) -->
-                    <div id="listPartyNew" class="single-widget-area mb-100"></div>
-                    
-                </div>
             </div>
         </div>
     </div>
