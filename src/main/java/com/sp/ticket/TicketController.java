@@ -14,5 +14,10 @@ public class TicketController {
 	public String list() {
 		return ".ticket.list";
 	}
+	
+	@RequestMapping(value="/ticket/detail")
+	public String detail() {
+		return ".ticket.detail";
+	}
 }
 

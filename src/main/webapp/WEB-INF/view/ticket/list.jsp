@@ -28,53 +28,36 @@
 
 
 
-	
+	          
   <!-- Rooms Area Start -->
   <div class="roberto-rooms-area section-padding-100-0">
       <div class="container">
           <div class="row">
-          	<div style="width: 300px;">
-          	  <div>
+          	  <div class="col-12 col-lg-4 mr-10">
                   <!-- Hotel Reservation Area -->
                   <div class="hotel-reservation--area mb-100">
                       <form action="#" method="post">
                           <div class="form-group mr-10 mb-30">
-                              <label for="checkInDate">Date</label>
-                              <div class="input-daterange" id="datepicker">
+                              <label for="regionSearch">지역 검색</label>
+                              
                                   <div class="row no-gutters">
-                                      <div class="col-6">
-                                          <input type="text" class="input-small form-control" id="checkInDate" name="checkInDate" placeholder="Check In">
-                                      </div>
-                                      <div class="col-6">
-                                          <input type="text" class="input-small form-control" name="checkOutDate" placeholder="Check Out">
+                                      <div class="col-12">
+	                        				<input type="text" class="form-control" id="input_search" name="input_search"/>
                                       </div>
                                   </div>
-                              </div>
+                             
                           </div>
                           <div class="form-group mb-30">
-                              <label for="guests">Guests</label>
+                              <label for="guests">카테고리</label>
                               <div class="row">
-                                  <div class="col-6">
-                                      <select name="adults" id="guests" class="form-control">
-                                          <option value="adults">Adults</option>
-                                          <option value="01">01</option>
-                                          <option value="02">02</option>
-                                          <option value="03">03</option>
-                                          <option value="04">04</option>
-                                          <option value="05">05</option>
-                                          <option value="06">06</option>
-                                      </select>
-                                  </div>
-                                  <div class="col-6">
-                                      <select name="children" id="children" class="form-control">
-                                          <option value="children">Children</option>
-                                          <option value="01">01</option>
-                                          <option value="02">02</option>
-                                          <option value="03">03</option>
-                                          <option value="04">04</option>
-                                          <option value="05">05</option>
-                                          <option value="06">06</option>
-                                      </select>
+                                  <div class="col-12">
+									<button class="btn roberto-btnn w-100 mb10" style="font-size: 16px;">테마파크</button>
+									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">워터파크</button>
+									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">익스트림</button>
+									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">공연/전시</button>
+									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">키즈</button>
+									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">축제/캠핑</button>
+									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">투어/교통</button>
                                   </div>
                               </div>
                           </div>
@@ -88,33 +71,36 @@
                                   </div>
                               </div>
                           </div>
-                          <div class="form-group">
-                              <button type="submit" class="btn roberto-btn w-100">Check Available</button>
-                          </div>
+                        
                       </form>
                   </div>
               </div>
-             </div> 
-          
-			<div style="width: 700px; padding-left: 200px;">
-              <div>
+
+          		
+          		
+             
+               <div class="col-12 col-lg-8">
+               <div style="text-align: right; font-size: 20px; margin-bottom: 20px;">인기순</div>
+
                   <!-- Single Room Area -->
+
                   <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                       <!-- Room Thumbnail -->
                       <div class="room-thumbnail">
-                          <img src="img/bg-img/43.jpg" alt="">
+                          <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" alt="">
                       </div>
                       <!-- Room Content -->
                       <div class="room-content">
-                          <h2>Room View Sea</h2>
-                          <h4>400$ <span>/ Day</span></h4>
+                          <span>경기도 용인</span>
+                          <h2>에버랜드 입장권</h2>
+                          <h4>50000<span>원</span></h4>
                           <div class="room-feature">
-                              <h6>Size: <span>30 ft</span></h6>
-                              <h6>Capacity: <span>Max persion 5</span></h6>
+                              <h6>Size: <span>★★★★★(255)</span></h6>
+                              <h6>Capacity: <span>423개 구매</span></h6>
                               <h6>Bed: <span>King beds</span></h6>
                               <h6>Services: <span>Wifi, television ...</span></h6>
                           </div>
-                          <a href="#" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                          <a href="<%=cp%>/ticket/detail" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                       </div>
                   </div>
 
@@ -212,7 +198,6 @@
 
           </div>
       </div>
-  </div>
   <!-- Rooms Area End -->
 	
 

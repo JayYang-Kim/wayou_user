@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="tqna">
+	<insert id="insertBoard" parameterType="com.sp.ticket.QnABoard">
+		INSERT INTO question(qnaCode, catCode, subject, content, userIdx)
+		VALUES (question_seq.NEXTVAL, '1', #{subject}, #{content,  jdbcType=CLOB}, #{userIdx})
+	</insert>
+	
+	
+	<sql id="where-list">
+		<choose>
+			<when test="searchKey == 'all' ">
+			(INSTR(subject, #{searchValue}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0)	
+			</when>
+			<when test="searchKey == 'subject' ">
+			INSTR(subject, #{searchValue}) &gt; 0
+			</when>
+			<when test="searchKey == 'content' ">
+			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+			</when>
+			<when test="searchKey == 'created' ">
+			(TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
+				OR TO_CHAR(created, 'YYYY-MM-DD') = #{searchValue})
+			</when>
+			<otherwise>
+				INSTR(${searchKey}, #{searchValue}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM question q
+		JOIN tb_user u ON q.userIdx=u.userIdx
+		<where>
+			<if test="searchValue !=null and searchValue !='' ">
+				<include refid="where-list"/>
+			</if>
+			AND CATCODE =1 
+		</where>
+		
+	</select>
+	
+	<!-- 글리스트 -->
+	<select id="listBoard" parameterType="map" resultType="com.sp.ticket.QnABoard">
+	<!-- SELECT * FROM (
+    	SELECT ROWNUM rnum, tb.* FROM (
+        	SELECT QNACODE, CATCODE, subject, TO_CHAR(created, 'YYYY-MM-DD') created,
+                tb_user.userName, hitCount
+        	FROM question
+        	JOIN tb_user ON question.userIdx=tb_user.userIdx
+        	<where>
+				<if test="searchValue !=null and searchValue !='' ">
+				<include refid="where-list"/>
+				</if>
+				AND CATCODE =1
+			</where>
+			
+        	ORDER BY created DESC
+<![CDATA[        	
+    	) tb WHERE ROWNUM <= #{end}
+	) WHERE rnum >= #{start}
+]]> -->
+		SELECT * FROM (
+	    	SELECT ROWNUM rnum, tb.* FROM (
+	        	SELECT q.QNACODE, q.CATCODE, subject, TO_CHAR(created, 'YYYY-MM-DD') created,
+	                userName, hitCount,
+	                NVL(answerCount, 0) answerCount
+	        	FROM question q
+	        	JOIN tb_user u ON q.userIdx = u.userIdx
+	            LEFT OUTER JOIN (
+	                SELECT qe.qnaCode, COUNT(*) answerCount
+	                FROM question qe
+	                JOIN answer an
+	                ON qe.qnaCode = an.qnaCode
+	                GROUP BY qe.qnaCode
+	            ) qe ON qe.qnaCode = q.qnaCode
+	            <where>
+					<if test="searchValue !=null and searchValue !='' ">
+					<include refid="where-list"/>
+					</if>
+					AND CATCODE = 1
+				</where>
+	        	ORDER BY created DESC  	
+		<![CDATA[
+	    	) tb WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
+	
+	<!-- 글보기 -->
+	<select id="readBoard" parameterType="Integer" resultType="com.sp.ticket.QnABoard">
+		SELECT q.QNACODE, CATCODE, content, hitCount, answercode, answercreated, answercontent
+		FROM question q
+		JOIN tb_user u ON q.userIdx = u.userIdx
+		JOIN answer a ON q.qnacode = a.qnacode
+		WHERE q.catcode=1
+	</select>
+	
+	<!-- 조회수 증가 -->
+	<update id="updateHitCount" parameterType="Integer">
+		UPDATE question SET hitCount=hitCount+1 WHERE qnaCode = #{qnaCode}
+	</update>
+	
+	
+</mapper>
