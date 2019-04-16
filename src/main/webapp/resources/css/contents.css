@@ -4,11 +4,11 @@
    Common_style
    ========================================================================== */
 .h_web{display: none;}
-  @media only screen and (max-width: 991px) and (min-width: 417px) {
+  @media only screen and (max-width: 991px) {
     .h_web{display:block;}
   }
 .h_mobile{display:block;}
-  @media only screen and (max-width: 991px) and (min-width: 417px) {
+  @media only screen and (max-width: 991px) {
     .h_mobile{display:none;}
   }
   

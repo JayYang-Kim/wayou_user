@@ -13,4 +13,9 @@ public interface PartyService {
 	public Party nextReadParty(Map<String, Object> map) throws Exception;
 	public int updateParty(Party dto) throws Exception;
 	public int deleteParty(int num) throws Exception;
+	
+	public List<Party> myListParty(Map<String, Object> map) throws Exception;
+	public int myParty_dataCount(Map<String, Object> map) throws Exception;
+	public List<Party> attendListParty(Map<String, Object> map) throws Exception;
+	public int attendParty_dataCount(Map<String, Object> map) throws Exception;
 }
