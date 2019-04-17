@@ -690,7 +690,9 @@ input:focus {
 .footer-area {
   position: relative;
   z-index: 1;
-  background-color: #2a303b; }
+  background-color: #2a303b;
+  
+}
 
 .single-footer-widget {
   position: relative;

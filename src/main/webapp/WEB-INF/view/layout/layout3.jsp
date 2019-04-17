@@ -55,7 +55,7 @@
     <!-- /Body -->
 
     <!-- Footer -->
-    <footer class="footer-area">
+    <footer class="footer-area clear">
     <!-- <footer class="footer-area section-padding-80-0"> -->
         <tiles:insertAttribute name="footer"/>
     </footer>
