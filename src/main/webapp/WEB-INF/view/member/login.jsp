@@ -46,7 +46,7 @@
     			
 				$("#loginMsg").html(out).addClass("mt30");
 				
-    			return;
+    			return false;
     		}
     		
     		if(!$("input[name='userPwd']").val()){
@@ -56,42 +56,10 @@
     			
 				$("#loginMsg").html(out).addClass("mt30");
     			
-    			return;
+    			return false;
     		}
     		
-    		var url ="<%=cp%>/member/login";
-    		var query = $("form[name='login_form']").serialize();
-    		$.ajax({
-    			type:"post",
-    			url:url,
-    			data:query,
-    			dataType:"json",
-    			success:function(data){    
-    				if(data.isUser){
-    					var uri = data.uri;
-    					if(uri==null || uri.indexOf('login')>0){
-    						uri ="/main";
-    					}
-    					location.href="<%=cp%>"+uri;
-    				}else{
-    					msg = "* 존재하지 않는 아이디입니다.";
-    					
-    					if(data.isTemp) {
-    						msg = "* 아이디 또는 비밀번호가 일치하지 않습니다.";	
-    					}
-    					
-    					var out = "<span class='t_red f14'>" + msg + "</span>";
-    	    			
-    					$("#loginMsg").html(out).addClass("mt30");
-    				}
-    			},
-    			beforesend:function(e){
-    				e.setRequestHeader("AJAX",true);
-    			},
-    			error:function(e){
-    				console.log(e);
-    			}
-    		});
+    		return true;
     	}
     </script>
 </head>
@@ -113,7 +81,7 @@
         <div id="container" class="login_container">
             <!-- contents -->
             <div class="register">
-                <form name="login_form">
+                <form name="login_form" action="<%=cp%>/member/login" method="post" onsubmit="return sendOk();">
                     <fieldset>
                         <div class="box_login">
                             <h3 class="title">로그인</h3>
@@ -137,7 +105,8 @@
                             </div>
                             <div id="loginMsg"></div>
                             <div class="mt30">
-                                <button type="button" class="btn_login" onclick="sendOk()">로그인</button>
+                                <button type="submit" class="btn_login">로그인</button><br>
+                                <p>${msg}</p>
                             </div>
                         </div>
                     </fieldset>

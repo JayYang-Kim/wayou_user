@@ -9,6 +9,7 @@
 	xmlns:util="http://www.springframework.org/schema/util"
 	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
 	    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -16,7 +17,8 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
         http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
-        http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd">
+        http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
 
     <mvc:annotation-driven />
 
@@ -39,29 +41,6 @@
        </property>
     </bean>
      
-    <!-- Interceptor 설정 -->
-     <mvc:interceptors>
-    	<mvc:interceptor>
-    		<mvc:mapping path="/**"/>
-    		<mvc:exclude-mapping path="/"/>
-    		<mvc:exclude-mapping path="/main"/>
-    		<mvc:exclude-mapping path="/resource/**"/>
-    		<mvc:exclude-mapping path="/resources/**"/>
-    		<mvc:exclude-mapping path="/member/login"/>
-    		<mvc:exclude-mapping path="/guide.html"/>
-    		<mvc:exclude-mapping path="/member/loginSubmit"/>
-    		<mvc:exclude-mapping path="/member/logout"/>
-    		<mvc:exclude-mapping path="/member/member"/>
-    		<mvc:exclude-mapping path="/member/userIdCheck"/>
-    		
-    		<mvc:exclude-mapping path="/travel/party"/>
-    		<mvc:exclude-mapping path="/travel/partyNew"/>
-    		<mvc:exclude-mapping path="/travel/party/view"/>
-    		<mvc:exclude-mapping path="/travel/party/listJoinParty"/>
-    		<bean class="com.sp.common.LoginCheckInterceptor"/>
-    	</mvc:interceptor>
-    </mvc:interceptors>
-     
 	<bean id="tilesViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<property name="order" value="1" />
 		<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
@@ -81,6 +60,13 @@
          <property name="maxUploadSize" value="10485760" />
     </bean>
 
+
+	 	<!-- @Secured, @PreAuthorize, @PostAuthorize 어노테이션등 시큐리티 어노테이션 -->
+    <security:global-method-security proxy-target-class="true"
+          secured-annotations="enabled"
+          jsr250-annotations="enabled"
+          pre-post-annotations="enabled"/>
+          
     <!-- 예외처리 -->
 <!--     
     <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerExceptionResolver">

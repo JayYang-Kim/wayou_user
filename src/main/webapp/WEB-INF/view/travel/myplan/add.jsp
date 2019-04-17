@@ -126,7 +126,7 @@
 
 <div id="container">
 	<div class="row" style="margin-left: 0; margin-right: 0">
-		<div class="col12 col-lg-3" id="navBar">
+		<div class="col12 col-lg-2" id="navBar">
 			<div class="workspace-title" align="center">
 				<h6 style="color: white;">여행할 도시를 선택해 주세요</h6>
 				<input type="text" style="height:31px; width: 90%; margin-top: 5px;" id="locSearch">
@@ -134,7 +134,7 @@
 			<div id="locScrollBox" class="scrollbox"></div>
 			</div>
 
-		<div class="col12 col-lg-3" style="height: 750px; border: 1px solid #e4e4e4; border-left: none;margin: 0;
+		<div class="col12 col-lg-2" style="height: 750px; border: 1px solid #e4e4e4; border-left: none;margin: 0;
   padding : 0;">
 			<div class="landmark-title" align="center">
 				<h5 style="color: white; padding-top: 20px;">도시 정보</h5>
@@ -147,7 +147,7 @@
 			</div>
 		</div>
 
-		<div class="col12 col-lg-6" style="height: 750px; overflow: hidden;"id="map"></div>
+		<div class="col12 col-lg-8" style="height: 750px; overflow: hidden;"id="map"></div>
 		
 	</div>
 </div>

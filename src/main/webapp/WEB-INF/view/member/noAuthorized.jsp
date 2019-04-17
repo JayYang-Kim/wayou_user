@@ -5,8 +5,4 @@
 <%
 	String cp=request.getContextPath();
 %>
-<div id="container">
-<div style="width: 100%;" >
-	<img src="<%=cp%>/resources/images/bg-img/background_tour.jpg" style="width:100%;height:270px;">
-</div>
-</div>
+<p>권한 없음 ㅎㅎ</p>
