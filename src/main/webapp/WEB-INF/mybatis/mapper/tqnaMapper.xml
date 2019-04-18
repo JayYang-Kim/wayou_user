@@ -66,10 +66,11 @@
 ]]> -->
 		SELECT * FROM (
 	    	SELECT ROWNUM rnum, tb.* FROM (
-	        	SELECT q.QNACODE, q.CATCODE, subject, TO_CHAR(created, 'YYYY-MM-DD') created,
-	                userName, hitCount,
+	        	SELECT q.QNACODE, q.CATCODE, subject, content, TO_CHAR(created, 'YYYY-MM-DD') created, q.userIdx,
+	                userName, hitCount, answercode, answerCreated, answerContent, 
 	                NVL(answerCount, 0) answerCount
 	        	FROM question q
+	        	LEFT OUTER JOIN answer a ON q.qnacode = a.qnacode
 	        	JOIN tb_user u ON q.userIdx = u.userIdx
 	            LEFT OUTER JOIN (
 	                SELECT qe.qnaCode, COUNT(*) answerCount
@@ -93,17 +94,34 @@
 	
 	<!-- 글보기 -->
 	<select id="readBoard" parameterType="Integer" resultType="com.sp.ticket.QnABoard">
-		SELECT q.QNACODE, CATCODE, content, hitCount, answercode, answercreated, answercontent
+		SELECT q.QNACODE, CATCODE, subject, content, hitCount, answercode, answerCreated, answerContent, u.userIdx
 		FROM question q
 		JOIN tb_user u ON q.userIdx = u.userIdx
-		JOIN answer a ON q.qnacode = a.qnacode
-		WHERE q.catcode=1
+		LEFT OUTER JOIN answer a ON q.qnacode = a.qnacode
+		WHERE q.catcode=1 AND q.qnaCode = #{qnaCode}
 	</select>
 	
 	<!-- 조회수 증가 -->
 	<update id="updateHitCount" parameterType="Integer">
 		UPDATE question SET hitCount=hitCount+1 WHERE qnaCode = #{qnaCode}
 	</update>
+	
+	<!-- 조회수 읽어오기 -->
+	<select id="readHitCount" parameterType="Integer" resultType="Integer">
+		SELECT hitCount FROM question WHERE qnaCode=#{qnaCode}
+	</select>
+	
+	<!-- 글수정 -->
+	<update id="updateBoard" parameterType="com.sp.ticket.QnABoard">
+		UPDATE question SET qnaCode=#{qnaCode}, subject=#{subject}, content=#{content, jdbcType=CLOB}
+    		WHERE qnaCode=#{qnaCode}
+	</update>
+	
+	<!-- 글삭제 -->
+	<delete id="deleteBoard" parameterType="Integer">
+		DELETE FROM question WHERE qnaCode=#{qnaCode}
+	</delete>
+	
 	
 	
 </mapper>

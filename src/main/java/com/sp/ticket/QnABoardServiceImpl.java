@@ -74,14 +74,39 @@ public class QnABoardServiceImpl implements QnABoardService{
 	
 	@Override
 	public int updateBoard(QnABoard dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.updateData("tqna.updateBoard", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 	@Override
 	public int deleteBoard(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.deleteData("tqna.deleteBoard", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int readHitCount(int num) {
+		int result=0;
+		
+		try {
+			result=dao.selectOne("tqna.readHitCount", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 

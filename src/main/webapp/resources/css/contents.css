@@ -134,6 +134,20 @@
   white-space: nowrap;
   width: 100% !important; }
 
+.list-group-item:hover {
+    z-index: 2;
+    color: #fff;
+    background-color:rgba(14, 39, 55, 0.7);
+    border-color: rgba(14, 39, 55, 0.7); 
+}
+    
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: rgba(14, 39, 55, 0.7);
+    border-color: rgba(14, 39, 55, 0.7);
+}
+
 /*엄유선  */
 .welcome-slides.noImg:hover .owl-prev, .welcome-slides.noImg:hover .owl-next, .welcome-slides.noImg:focus .owl-prev, .welcome-slides.noImg:focus .owl-next {
 	opacity: inherit;
