@@ -4,7 +4,7 @@
 <mapper namespace="hqna">
 	<insert id="insertHqna" parameterType="com.sp.hqna.Hqna">
 		INSERT INTO question(qnacode, catCode, userIdx, subject, content)
-			VALUES(question_seq.NEXTVAL, 2, #{userIdx}, #{subject}, #{content} )	
+			VALUES(question_seq.NEXTVAL, 2, #{userIdx}, #{subject}, #{content, jdbcType=CLOB})
 	</insert>
 	
 	<sql id="where-list">
@@ -62,8 +62,8 @@
 		UPDATE question SET hitCount=hitCount+1 WHERE qnaCode=#{qnaCode}
 	</update>
 	
-	<select id="readHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
-	SELECT qnaCode, q.userIdx, subject, content, hitCount, created,
+	<select id="readHqna" parameterType="Integer" resultType="com.sp.hqna.Hqna">
+	SELECT qnaCode, u.userName, subject, content, hitCount, created, q.userIdx
 	FROM question q
 	JOIN tb_user u ON u.userIdx=q.userIdx
 	WHERE qnaCode=#{qnaCode}
@@ -71,14 +71,15 @@
 	
 	<select id="preRedaHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 		SELECT tb.*FROM (
-			SELECT qnaCode, subject
+			SELECT qnaCode, subject ,q.userIdx
 			FROM question q
 			JOIN tb_user u ON u.userIdx=q.userIdx
 			<where>
 			<if test="value != null and value !=''">
 				<include refid="where-list"/>
 			</if>
-			AND (qnaCode &gt; #{qnaCode})
+			AND qnaCode &gt; #{qnaCode}  AND catCode=2
+
 			</where>
 				ORDER BY qnaCode ASC
 		)tb WHERE ROWNUM=1
@@ -86,16 +87,20 @@
 	
 	<select id="nextReadHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 		SELECT tb.*FROM (
-			SELECT qnaCode, subject
+			SELECT qnaCode, subject ,q.userIdx
 			FROM question q
 			JOIN tb_user u ON u.userIdx=q.userIdx
 			<where>
-			<if test="value !=null and value !=''">
+			<if test="value != null and value !=''">
 				<include refid="where-list"/>
 			</if>
-			AND(qnaCode &lt; #{qnaCode})
+			AND qnaCode &lt; #{qnaCode} AND catCode=2
 			</where>
-				ORDER BY qnaCode ASC
+				ORDER BY qnaCode DESC
 		)tb WHERE ROWNUM=1
 	</select>
+	
+	<update id="updateHqna" parameterType="com.sp.hqna.Hqna">
+		UPDATE question SET subject=#{subject}, content=#{content, jdbcType=CLOB} WHERE qnaCode=#{qnaCode} 
+	</update>
 </mapper>

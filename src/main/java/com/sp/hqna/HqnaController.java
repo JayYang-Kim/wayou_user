@@ -1,7 +1,6 @@
 package com.sp.hqna;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
@@ -107,56 +107,105 @@ public class HqnaController {
 	}
 	
 	@RequestMapping(value= "/hotel/hqna/created", method=RequestMethod.POST)
-	public String createdSubmit(HttpSession session, Hqna dto) throws Exception {
+	@ResponseBody
+	public Map<String, Object> createdSubmit(HttpSession session, Hqna dto) throws Exception {
 		
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-	
+		
 		dto.setUserIdx(info.getUserIdx());
 		
-		hqnaService.insertHqna(dto);
+		String msg="true";
 		
-		return "redirect:/hotel/hqna/list";
+		try {
+			hqnaService.insertHqna(dto);
+		} catch (Exception e) {
+			msg="false";
+		}
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("msg", msg);
+		
+		return model;
 	}
 	
 	@RequestMapping(value= "/hotel/hqna/article")
 	public String article(
-			@RequestParam int num,
-			@RequestParam String page,
+			@RequestParam int qnaCode,
+			@RequestParam int pageNo,
 			@RequestParam (defaultValue="all") String key,
 			@RequestParam (defaultValue="") String value,
 			HttpSession session,
+			HttpServletRequest req,
 			Model model
 			) throws Exception {
 			
-		value=URLDecoder.decode(value, "UTF-8");
-		String query="page="+page;
-		if(value.length() !=0) {
-			query +="key="+key+"value="+URLDecoder.decode(value, "UTF-8");
-		}
-		
-		hqnaService.updateHitCount(num);
-		
-		Hqna dto=hqnaService.readHqna(num);
+		hqnaService.updateHitCount(qnaCode);
+
+		Hqna dto=hqnaService.readHqna(qnaCode);
+
 		if(dto==null) {
-			return "redirect:hotel/hqna/list?"+query;
+			return hqnaListTab1(pageNo, key, value, req, model);
 		}
 		
 		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
 		
-		Map<String, Object> map = new HashMap<>();
-		map.put("key", key);
+		Map<String, Object> map=new HashMap<>();
+		value=URLDecoder.decode(value, "UTF-8");
 		map.put("value", value);
-		map.put("num", num);
+		map.put("key", key);
+		map.put("qnaCode", qnaCode);
 		
 		Hqna preHqnadto = hqnaService.preReadHqna(map);
-		Hqna nextHqndto = hqnaService.nextReadHqna(map);
+		Hqna nextHqnadto = hqnaService.nextReadHqna(map);
+
+		model.addAttribute("hqna", dto);
+		model.addAttribute("preHqnadto", preHqnadto);
+		model.addAttribute("nextHqnadto", nextHqnadto);
+		
+		return "hotel/hqna/article";
+	}
+	
+	@RequestMapping(value="/hotel/hqna/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int qnaCode,
+			@RequestParam int pageNo,
+			@RequestParam (defaultValue="all") String key,
+			@RequestParam (defaultValue="") String value,
+			HttpSession session,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		SessionInfo info=(SessionInfo)session.getAttribute("member");
+		Hqna dto=hqnaService.readHqna(qnaCode);
+
+		if(dto==null) {
+			return hqnaListTab1(pageNo, key, value, req, model);
+		}
+		
+		if(info.getUserIdx()!=dto.getUserIdx()) {
+			return hqnaListTab1(pageNo, key, value, req, model);
+		}
 		
 		model.addAttribute("dto", dto);
-		model.addAttribute("preHqnadto", preHqnadto);
-		model.addAttribute("nextHqnadto", nextHqndto);
-		model.addAttribute("query", query);
-		model.addAttribute("page", page);		
+		model.addAttribute("mode", "update");
 		
-		return ".hotel.hqna.article";
+		return "hotel/hqna/created";
+		
 	}
+	
+	@RequestMapping(value="/hotel/hqna/update", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateSubmit(Hqna dto, HttpSession session) throws Exception {
+		
+		hqnaService.updateHqna(dto);
+		
+		String state="true";
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		
+		return model;
+		
+	}
+	
 }

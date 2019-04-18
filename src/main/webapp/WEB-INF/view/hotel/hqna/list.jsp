@@ -102,7 +102,6 @@ function ajaxJSON(url, type, query, mode) {
 		}		
 	});
 }
-
 $(function () {
 	listPage(1);
 });
@@ -128,29 +127,25 @@ function reloadHqna() {
 	listPage(1);
 }
 
-function sendHqna(mode) {
-	var f=document.boardForm;
-	
-	if(! f.subject.value) {
-		f.subject.focus();
-		return;
+function HqnaBoard(qnaCode){
+	var id="tabContent1";
+	var url="<%=cp%>/hotel/hqna/article";
+	var query="qnaCode="+qnaCode+"&pageNo="+pageNo;
+	if(value !="") {
+		query+="&key="+key+"&value="+encodeURIComponent(value);
 	}
 	
-	if(! f.content.value) {
-		f.content.focus();
-		return;
+	ajaxHTML(url, "get", query, id);
+}
+
+function updateHqna(qnaCode) {
+	var url="<%=cp%>/hotel/hqna/update";
+	var query="qnaCode="+qnaCode+"&pageNo="+pageNo;
+	if(value !="") {
+		query +="&key="+key+"&value="+encodeURIComponent(value);
 	}
 	
-	if(mode=="created") {
-		key="all"
-		value="";
-		pageNo=1;
-	}
-	
-	var url="<%=cp%>/hotel/hqna/"+mode;
-	var query=new FsormData(f);
-	
-	ajaxJSON(url, "post", query, "created");
+	ajaxHTML(url, "get", query, "tabContent1");
 }
 </script>
 

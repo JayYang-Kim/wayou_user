@@ -5,7 +5,61 @@
 <%
    String cp = request.getContextPath();
 %>
-			<form name="boardForm" method="post" enctype="multipart/form-data"><!--파일업로드 필수 : enctype="multipart/form-data"  -->
+
+<script type="text/javascript">
+
+function ajaxJSON(url, query, mode) {
+	
+	$.ajax({
+		type:"post",
+		url:url,
+		data:query,
+		dataType:"json",
+		success:function(data) {
+			if(data.state=="true"){
+				location.href="<%=cp%>/hotel/hqna/list";				
+			}else{
+				alert("실패했습니다.");
+				$("input[name=subject]").val("");
+				$("textarea[name=content]").val("");
+			}
+		},
+		error:function(e) {
+			console.log(e.toString);
+		}
+	});
+}
+
+
+function sendHqna(mode) {
+	var f=document.boardForm;
+
+	if(! f.subject.value) {
+		f.subject.focus();
+		return;
+	}
+	
+	if(! f.content.value) {
+		f.content.focus();
+		return;
+	}
+	
+	if(mode=="created") {
+		key="all"
+		value="";
+		pageNo=1;
+	}
+	
+	var url="<%=cp%>/hotel/hqna/"+mode;
+	var query = $("form[name=boardForm]").serialize();
+	
+	ajaxJSON(url, query, mode);
+}
+
+</script>
+
+
+			<form name="boardForm" method="post" enctype="multipart/form-data">
 			  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
@@ -36,10 +90,10 @@
 			      <td align="center" >
 			        <button type="button" class="btn" onclick="sendHqna('${mode}');">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="listPage(pageNo)">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="button" class="btn" onclick="listPage(page)">${mode=='update'?'수정취소':'등록취소'}</button>
 			  
 					  <c:if test="${mode=='update'}">
-					         	 <input type="hidden" name="num" value="${dto.num}">
+					         	 <input type="hidden" name="qnaCode" value="${dto.qnaCode}">
 					        	 <input type="hidden" name="page" value="${page}">
 					  </c:if>
 			      </td>

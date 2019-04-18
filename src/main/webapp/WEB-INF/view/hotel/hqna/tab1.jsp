@@ -5,7 +5,6 @@
 <%
    String cp = request.getContextPath();
 %>
-
 		<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px;">
 		   <tr height="35">
 		      <td align="left" width="50%">
@@ -29,7 +28,7 @@
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 		      <td>${hqna.listNum }</td>
 		      <td align="left" style="padding-left: 10px;">
-		               <a href="">${hqna.subject }</a>
+		               <a href="javascript:HqnaBoard('${hqna.qnaCode }')">${hqna.subject }</a>
 		      </td>
 		      <td>${sessionScope.member.userName }</td>
 		      <td>${hqna.created }</td>
