@@ -6,17 +6,6 @@
 %>
 
 <script type="text/javascript">
-function updateBoard(qnaCode) {
-<c:if test="${sessionScope.member.userIdx == dto.userIdx}">
-	var url="<%=cp%>/ticket/qna/update?qnaCode="+qnaCode+"&page=${page}";
-	location.href=url;
-</c:if>
-
-<c:if test="${sessionScope.member.userIdx != dto.userIdx}">
-	alert("게시글을 수정할 수 있는 권한이 없습니다.");
-</c:if>
-}
-
 
 //문의사항 답변
 $(function(){
@@ -59,12 +48,25 @@ $(function(){
 		}
 	});
 	
+	//글수정
 	$("body").on("click", ".btn_update", function(){
 		var qnaCode = $(this).attr("data-qnaCode");
 		
 		var url="<%=cp%>/ticket/qna/update?qnaCode=" + qnaCode + "&page=${page}";
 		location.href=url;
 	});
+	
+	//글삭제
+	$("body").on("click", ".btn_delete", function(){
+		var qnaCode = $(this).attr("data-qnaCode");
+		
+		if(confirm("게시물을 삭제하시겠습니까?")){
+		
+		var url="<%=cp%>/ticket/qna/delete?qnaCode="+qnaCode+"&page=${page}";
+		location.href=url;
+		}
+	});
+	
 });
 
 function searchList() {
@@ -72,14 +74,11 @@ function searchList() {
 	f.submit();
 }
 </script>
-          
+
+      
   <!-- Rooms Area Start -->
   <div class="roberto-rooms-area section-padding-100-0">
       <div class="container">
-          
-               
-
-                
 
 <div class="body-container" style="width: 700px; margin-bottom: 200px;">
     <div class="body-title">
@@ -133,35 +132,19 @@ function searchList() {
 		  <tr class="qnaArticle" style="background-color: #F6F6F6">
 		  	<td colspan="6" style="text-align: left !important;">
 			  	<div style="margin:30px 10px 25px 40px;">
-					<%-- <table style="width: 100%;">
-						<colgroup>
-							<col style="width:140px"/>
-							<col/>
-						</colgroup>
-						<tr height="35">
-							<td><span>Q.</span>${dto.content}</td>
-						</tr>
-						<c:if test="${dto.answerCount != 0}">
-							<tr>
-								<td>A.</td>
-								<td>판매자 답변 | ${dto.answerCreated}</td>
-							</tr>
-							<tr>
-								<td>${dto.answerContent}</td>
-							</tr>
-						</c:if>
-					</table> --%>
 					<div style="margin-bottom: 30px;">
 					<span style="display:inline-block; font-weight: bold;">Q.&nbsp;&nbsp;</span>${dto.content}
 					</div>
 					<div align="right" style="margin-right: 30px;">
 
-					<c:if test="${sessionScope.member.userIdx == dto.userIdx}">
+				<c:if test="${sessionScope.member.userIdx == dto.userIdx && empty dto.answerContent}">
 					<button type="button" class="btn_classic btn_update" style="margin-right:7px; border-radius: 3px;" data-qnaCode='${dto.qnaCode}'>수정</button>
 				<%-- 	<button type="button" class="btn_classic" style="margin-right:7px; border-radius: 3px;" onclick="updateBoard('${dto.qnaCode}')">수정</button> --%>
-					</c:if>
-					<button type="button" class="btn_classic" style="border-radius: 3px;" onclick="deleteBoard('${dto.qnaCode}')">삭제</button>
-					
+				</c:if>
+					<!-- 삭제 - admin 권한추가해야함 -->
+				<c:if test="${sessionScope.member.userIdx == dto.userIdx && empty dto.answerContent}">
+					<button type="button" class="btn_classic btn_delete" style="border-radius: 3px;" data-qnaCode='${dto.qnaCode}'>삭제</button>
+				</c:if>
 					</div>
 					<c:if test="${dto.answerCount != 0}">
 					<div>
@@ -207,12 +190,8 @@ function searchList() {
 		   </tr>
 		</table>
     </div>
-
 </div>
-
-     
 			</div>
-
           </div>
       
   <!-- Rooms Area End -->

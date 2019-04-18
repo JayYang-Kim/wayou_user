@@ -87,8 +87,14 @@ public class QnABoardServiceImpl implements QnABoardService{
 
 	@Override
 	public int deleteBoard(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			result=dao.deleteData("tqna.deleteBoard", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override

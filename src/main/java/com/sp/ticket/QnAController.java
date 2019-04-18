@@ -178,4 +178,15 @@ public class QnAController {
 		return "redirect:/ticket/qna/list?page="+page;
 	}
 	
+	@RequestMapping(value="/ticket/qna/delete")
+	public String delete(
+			@RequestParam int qnaCode,
+			@RequestParam String page
+			) throws Exception {
+		
+		boardService.deleteBoard(qnaCode);
+		
+		return "redirect:/ticket/qna/list?page="+page;
+	}
+	
 }
