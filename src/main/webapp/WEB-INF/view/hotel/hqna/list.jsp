@@ -108,9 +108,9 @@ $(function () {
 	listPage(1);
 });
 
-function  listPage(page) {
+function  listPage2(page) {
 	//페이징
-	pageNo=page; //이렇게 페이지를 담아야 정확하게 몇페이지인지 볼수있음
+	pageNo=page; 
 	
 	var id="tabContent1";
 	var url="<%=cp%>/hotel/hqna/tab1";

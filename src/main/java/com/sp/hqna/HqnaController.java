@@ -210,7 +210,7 @@ public class HqnaController {
 	
 	@RequestMapping(value="/hotel/hqna/delete", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> deleteqna(@RequestParam int qnaCode) throws Exception {
+	public Map<String, Object> deleteHqna(@RequestParam int qnaCode) throws Exception {
 		
 		int result=hqnaService.deleteHqna(qnaCode);
 		
@@ -224,5 +224,19 @@ public class HqnaController {
 		return model;
 	}
 	
-	
+	@RequestMapping(value="/hotel/hqna/listReply")
+	public String listReply(@RequestParam int answerCode, @RequestParam(value="pageNo", defaultValue="1") int current_page, Model model) throws Exception {
+		
+		Map<String, Object> map=new HashMap<>();
+		List<Reply> listReply=hqnaService.listReply(map);
+		for(Reply dto:listReply) {
+			dto.setAnswerContent(myUtil.htmlSymbols(dto.getAnswerContent()));
+		}
+		
+		model.addAttribute("listReply", listReply);
+		model.addAttribute("pageNo", current_page);
+		
+		return "hotel/hqna/listReply";
+		
+	}
 }

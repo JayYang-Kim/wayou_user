@@ -111,7 +111,7 @@
 	<select id="listReply" parameterType="map" resultType="com.sp.hqna.Reply">
 		SELECT a.answerCode, q.qnaCode, answerCreated, answerContent
 		FROM answer a
-		JOIN question q ON q.userIdx=a.userIdx
-		WHERE q.qnaCode=#{qnaCode} AND q.catCode=2
+		JOIN question q ON a.qnaCode=q.qnaCode
+		WHERE q.qnaCode=#{qnaCode}
 	</select>
 </mapper>

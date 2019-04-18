@@ -6,6 +6,36 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+$(function () {
+	listPage(1);
+})
+
+function listPage(page) {
+	var query="qnaCode=${qnaCode}&pageNo="+page;
+	var url="<%=cp%>/hotel/hqna/listReply";
+	
+	$.ajax({
+		type:"get"
+		,url:url
+		,data:query
+		,success:function(data) {
+			$("#listReply").html(data);
+		}
+		,beforeSend:function(e){
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e){
+			if(e.status==403) {
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+</script>
+
 <div class="body-container" style="width: 700px;">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
@@ -70,31 +100,7 @@
 			</tr>
 			</table>
     </div>
+   </div>
     
-    <!-- 여기에 article.jsp추가 넣기 -->
     
         
-        <div>
-            <table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
-            <tr height='30'> 
-	            <td align='left'>
-	            	<span style='font-weight: bold;' >관리자 답변</span>
-	            </td>
-            </tr>
-            <tr>
-               <td style='padding:5px 5px 0px;'>
-                    <textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
-                </td>
-            </tr>
-            <tr>
-               <td align='right'>
-                    <button type='button' class='btn btnSendReply' style='padding:10px 20px;' >댓글 등록</button>
-                </td>
-            </tr>
-            </table>
-            
-            <div id="listReply"></div>
-        </div>
-    
-    
-</div>
