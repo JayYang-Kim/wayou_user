@@ -81,7 +81,7 @@ function sendOk() {
 			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/ticket/qna/list';">${mode=='update'?'수정취소':'등록취소'}</button>
 			        
 			         <c:if test="${mode=='update'}">
-			         	 <input type="hidden" name="num" value="${dto.num}">
+			         	 <input type="hidden" name="qnaCode" value="${dto.qnaCode}">
 			        	 <input type="hidden" name="page" value="${page}">
 			        </c:if>
 			      </td>

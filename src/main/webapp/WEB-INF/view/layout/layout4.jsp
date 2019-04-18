@@ -67,10 +67,10 @@
  <!-- Body -->
  	<div class="container">
  	<div class="row">
-    <div class="col-12 col-lg-4 mr-50 mt-100" style="max-width: 220px;" id="sidebar">
+    <div class="col-12 col-lg-3 mr-50 mt-100" style="max-width: 200px; padding-top: 50px; font-size: 15px;" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-9">
                 <tiles:insertAttribute name="body"/>
         </div>
      </div>

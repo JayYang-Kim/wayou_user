@@ -6,36 +6,71 @@
 %>
 
 <script type="text/javascript">
+function updateBoard(qnaCode) {
+<c:if test="${sessionScope.member.userIdx == dto.userIdx}">
+	var url="<%=cp%>/ticket/qna/update?qnaCode="+qnaCode+"&page=${page}";
+	location.href=url;
+</c:if>
+
+<c:if test="${sessionScope.member.userIdx != dto.userIdx}">
+	alert("게시글을 수정할 수 있는 권한이 없습니다.");
+</c:if>
+}
+
 
 //문의사항 답변
 $(function(){
-	$(".qnaSubject").on("click", function(){
-		var qnaCode = $(this).attr("data-Num");
-		$(".qnaArticle").show();
-		articleAnswer(qnaCode);
-	});
-});
-
-function articleAnswer(qnaCode) {
-	var url="<%=cp%>/ticket/qna/article";
+	$(".qnaArticle").hide();
 	
-	$.ajax({
-		type:"get"
-		,url:url
-		,data:{qnaCode:qnaCode}
-		,success:function(data) {
-			$("#qnaArticle")
+	$(".qnaSubject").on("click", function(){
+		var tr = $(this).closest("tr").next(".qnaArticle");
+		var isHidden = $(this).closest("tr").next(".qnaArticle").is(":hidden");
+		var $this = $(this).closest("tr");
+		if(isHidden) {
+			var qnaCode=$(this).attr("data-Num");
+			var url = "<%=cp%>/ticket/qna/hitCount";
+			var query="qnaCode="+qnaCode;
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"JSON"
+				,success:function(data) {
+					if(data.msg=="true"){
+						var hitCount = data.hitCount;
+						$this.children("td:nth-child(6)").html(hitCount);
+					}
+				}
+			    ,beforeSend:function(e) {
+			    	e.setRequestHeader("AJAX", true);
+			    }
+			    ,error:function(e) {
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+			    	console.log(e.responseText);
+			    }
+			});
+			$(".qnaArticle").hide();
+			tr.show();
+		} else {
+			tr.hide();
 		}
 	});
-}
+	
+	$("body").on("click", ".btn_update", function(){
+		var qnaCode = $(this).attr("data-qnaCode");
+		
+		var url="<%=cp%>/ticket/qna/update?qnaCode=" + qnaCode + "&page=${page}";
+		location.href=url;
+	});
+});
 
 function searchList() {
 	var f = document.searchForm;
 	f.submit();
 }
-
-
-
 </script>
           
   <!-- Rooms Area Start -->
@@ -63,10 +98,10 @@ function searchList() {
 		   </tr>
 		</table>
 		
-		<table class=tb_basic_w>
-		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
+		<table class=tb style="font-size: 15px;">
+		  <tr align="center" bgcolor="#eeeeee" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 		      <th width="60" style="color: #787878;">번호</th>
-		      <th width="70" style="color: #787878;">답변상태</th>
+		      <th width="100" style="color: #787878;">답변상태</th>
 		      <th style="color: #787878;">제목</th>
 		      <th width="100" style="color: #787878;">작성자</th>
 		      <th width="120" style="color: #787878;">작성일</th>
@@ -74,33 +109,84 @@ function searchList() {
 		      
 		  </tr>
 <c:forEach var="dto" items="${list}">		 
-		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
+		  <tr align="center" bgcolor="#ffffff" height="40" style="border-bottom: 1px solid #cccccc;"> 
 		      <td>${dto.listNum}</td>
-		      <td align="left" style="padding-left: 10px;">
-		      	${dto.answerCount == 0 ? '대기' : '답변완료'}
+		      <c:if test="${dto.answerCount == 0 }">
+		      <td style="color: #787878;">
+		      	검토중
 		      </td>
-		      <td class="qnaSubject" data-Num='${dto.qnaCode}'>${dto.subject}</td>
+		      </c:if>
+		      <c:if test="${dto.answerCount != 0 }">
+		      <td style="color: #1cc3b2;">
+		      	답변완료
+		      </td>
+		      </c:if>
+		      
+		      <%-- <td>
+		      	${dto.answerCount == 0 ? '검토중' : '답변완료'}
+		      </td> --%>
+		      <td class="qnaSubject" data-Num='${dto.qnaCode}' style="cursor:pointer;">${dto.subject}</td>
 		      <td>${dto.userName}</td>
 		      <td>${dto.created}</td>
 		      <td>${dto.hitCount}</td>
 		  </tr>
-		  <div id="qnaArticle"></div>
-		 
+		  <tr class="qnaArticle" style="background-color: #F6F6F6">
+		  	<td colspan="6" style="text-align: left !important;">
+			  	<div style="margin:30px 10px 25px 40px;">
+					<%-- <table style="width: 100%;">
+						<colgroup>
+							<col style="width:140px"/>
+							<col/>
+						</colgroup>
+						<tr height="35">
+							<td><span>Q.</span>${dto.content}</td>
+						</tr>
+						<c:if test="${dto.answerCount != 0}">
+							<tr>
+								<td>A.</td>
+								<td>판매자 답변 | ${dto.answerCreated}</td>
+							</tr>
+							<tr>
+								<td>${dto.answerContent}</td>
+							</tr>
+						</c:if>
+					</table> --%>
+					<div style="margin-bottom: 30px;">
+					<span style="display:inline-block; font-weight: bold;">Q.&nbsp;&nbsp;</span>${dto.content}
+					</div>
+					<div align="right" style="margin-right: 30px;">
+
+					<c:if test="${sessionScope.member.userIdx == dto.userIdx}">
+					<button type="button" class="btn_classic btn_update" style="margin-right:7px; border-radius: 3px;" data-qnaCode='${dto.qnaCode}'>수정</button>
+				<%-- 	<button type="button" class="btn_classic" style="margin-right:7px; border-radius: 3px;" onclick="updateBoard('${dto.qnaCode}')">수정</button> --%>
+					</c:if>
+					<button type="button" class="btn_classic" style="border-radius: 3px;" onclick="deleteBoard('${dto.qnaCode}')">삭제</button>
+					
+					</div>
+					<c:if test="${dto.answerCount != 0}">
+					<div>
+					<span style="display:inline-block; font-weight: bold; color: #1cc3b2;">A.&nbsp;&nbsp;</span>${dto.answerContent}
+					<p style="color: #1cc3b2;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${dto.answerCreated}</p>
+					</div>
+					</c:if>
+				</div>
+		  	</td>
+		  </tr>
 </c:forEach>
 		</table>
 		 
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
-		   <tr height="35">
+		   <tr height="40">
 			<td align="center">
 		        ${dataCount==0 ? "등록된 자료가 없습니다." : paging}
 			</td>
 		   </tr>
 		</table>
 		
-		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
+		<table style="width: 100%; margin: 30px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/ticket/qna/list';">새로고침</button>
+		          <button type="button" class="btn_classic" style="font-size: 15px; height: 30px; border-radius: 5px;" onclick="javascript:location.href='<%=cp%>/ticket/qna/list';">새로고침</button>
 		      </td>
 		      <td align="center">
 		          <form name="searchForm" action="<%=cp%>/ticket/qna/list" method="post">
@@ -112,11 +198,11 @@ function searchList() {
 		                  <option value="created"  ${searchKey=="created" ? "selected='selected' " : "" }>등록일</option>
 		            </select>
 		            <input type="text" name="searchValue" class="boxTF" value="${searchValue}">
-		            <button type="button" class="btn" onclick="searchList()">검색</button>
+		            <button type="button" class="btn-white" onclick="searchList()">검색</button>
 		        </form>
 		      </td>
 		      <td align="right" width="100">
-		          <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/ticket/qna/created';">글올리기</button>
+		          <button type="button" class="btn_classic" style="font-size: 15px; height: 30px; border-radius: 5px;" onclick="javascript:location.href='<%=cp%>/ticket/qna/created';">문의작성</button>
 		      </td>
 		   </tr>
 		</table>

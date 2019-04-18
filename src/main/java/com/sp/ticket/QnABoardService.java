@@ -11,5 +11,6 @@ public interface QnABoardService {
 	public int updateHitCount(int num);
 	public int updateBoard(QnABoard dto);
 	public int deleteBoard(int num);
+	public int readHitCount(int num);
 	
 }
