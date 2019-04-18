@@ -13,4 +13,6 @@ public interface HqnaService {
 	public Hqna nextReadHqna(Map<String, Object> map);
 	public int updateHqna(Hqna dto);
 	public int deleteHqna(int qnacode);
+	
+	public List<Reply> listReply(Map<String, Object> map);
 }

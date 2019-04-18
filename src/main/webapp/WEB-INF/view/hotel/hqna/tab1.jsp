@@ -24,15 +24,15 @@
 		      <th width="80" style="color: #787878;">작성일</th>
 		      <th width="60" style="color: #787878;">조회수</th>
 		  </tr>
-<c:forEach var="hqna" items="${list}">	 
+<c:forEach var="dto" items="${list}">	 
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
-		      <td>${hqna.listNum }</td>
+		      <td>${dto.listNum }</td>
 		      <td align="left" style="padding-left: 10px;">
-		               <a href="javascript:HqnaBoard('${hqna.qnaCode }')">${hqna.subject }</a>
+		               <a href="javascript:HqnaBoard('${dto.qnaCode }')">${dto.subject }</a>
 		      </td>
 		      <td>${sessionScope.member.userName }</td>
-		      <td>${hqna.created }</td>
-		      <td>${hqna.hitCount }</td>
+		      <td>${dto.created }</td>
+		      <td>${dto.hitCount }</td>
 		  </tr>
 </c:forEach>	
 		</table>

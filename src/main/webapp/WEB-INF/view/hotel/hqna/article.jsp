@@ -15,22 +15,22 @@
 			<table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			<tr height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="center">
-				   ${hqna.subject }
+				   ${dto.subject }
 			    </td>
 			</tr>
 			
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td width="50%" align="left" style="padding-left: 5px;">
-			       이름 : ${hqna.userName }
+			       이름 : ${dto.userName }
 			    </td>
 			    <td width="50%" align="right" style="padding-right: 5px;">
-			        ${hqna.created } | 조회 ${hqna.hitCount }
+			        ${dto.created } | 조회 ${dto.hitCount }
 			    </td>
 			</tr>
 			
 			<tr>
 			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-			     ${hqna.content }
+			     ${dto.content }
 			   </td>
 			</tr>						
 
@@ -56,12 +56,16 @@
 			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
 			    <td width="300" align="left">
-			          <button type="button" class="btn" onclick="updateHqna('${hqna.qnaCode}')">수정</button>
-			          <button type="button" class="btn" onclick="deleteBoard('${hqna.qnaCode}')">삭제</button>
+			    <c:if test="${sessionScope.member.userIdx==dto.userIdx }">
+			          <button type="button" class="btn" onclick="updateHqna('${dto.qnaCode}')">수정</button>
+			    </c:if>
+			    <c:if test="${sessionScope.member.userIdx==dto.userIdx || sessionScope.member.userIdx=='admin'}">
+			          <button type="button" class="btn" onclick="deleteHqna('${dto.qnaCode}')">삭제</button>
+			    </c:if>
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/hotel/hqna/list?${query }';">리스트</button>
+			        <button type="button" class="btn" onclick="listPage(pageNo)">리스트</button>
 			    </td>
 			</tr>
 			</table>

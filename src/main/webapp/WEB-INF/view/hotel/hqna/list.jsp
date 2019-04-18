@@ -75,7 +75,6 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 }
 
 function ajaxJSON(url, type, query, mode) {
-	
 	$.ajax({
 		type:type
 		,url:url
@@ -83,12 +82,13 @@ function ajaxJSON(url, type, query, mode) {
 		,dataType:"JSON"
 		,success:function(data){
 			if(mode=="delete") {
-				if(data.state=="false"){
+				if(data.state=="flase"){
 					alert("삭제 권한이 없습니다.");
 				}else{
 					listPage(pageNo);
 				}
 			}
+			
 		}
 		,beforeSend:function(e) {
 			e.setRequestHeader("AJAX", true);
@@ -102,6 +102,8 @@ function ajaxJSON(url, type, query, mode) {
 		}		
 	});
 }
+
+
 $(function () {
 	listPage(1);
 });
@@ -146,6 +148,17 @@ function updateHqna(qnaCode) {
 	}
 	
 	ajaxHTML(url, "get", query, "tabContent1");
+}
+
+function deleteHqna(qnaCode) {
+	
+	if(!confirm("글을 삭제하시겠습니까?")){
+		return;
+	}
+	var url="<%=cp%>/hotel/hqna/delete";
+	var query="qnaCode="+qnaCode;
+	
+	ajaxJSON(url, "post", query, "delete");
 }
 </script>
 

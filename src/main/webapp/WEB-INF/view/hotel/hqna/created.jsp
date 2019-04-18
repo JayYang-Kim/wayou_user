@@ -56,6 +56,8 @@ function sendHqna(mode) {
 	ajaxJSON(url, query, mode);
 }
 
+
+
 </script>
 
 
@@ -90,7 +92,7 @@ function sendHqna(mode) {
 			      <td align="center" >
 			        <button type="button" class="btn" onclick="sendHqna('${mode}');">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="btn">다시입력</button>
-			        <button type="button" class="btn" onclick="listPage(page)">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="button" class="btn" onclick="listPage(pageNo)">${mode=='update'?'수정취소':'등록취소'}</button>
 			  
 					  <c:if test="${mode=='update'}">
 					         	 <input type="hidden" name="qnaCode" value="${dto.qnaCode}">

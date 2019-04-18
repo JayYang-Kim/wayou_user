@@ -117,11 +117,30 @@ public class HanaServiceImpl implements HqnaService {
 
 	@Override
 	public int deleteHqna(int qnaCode) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+
+			dao.deleteData("hqna.deleteHqna", qnaCode);
+			result=1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list=null;
+		
+		try {
+			list=dao.selectList("hqna.listReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	
+		return list;
+	}
 
 	
 

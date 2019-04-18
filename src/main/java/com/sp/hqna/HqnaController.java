@@ -158,7 +158,7 @@ public class HqnaController {
 		Hqna preHqnadto = hqnaService.preReadHqna(map);
 		Hqna nextHqnadto = hqnaService.nextReadHqna(map);
 
-		model.addAttribute("hqna", dto);
+		model.addAttribute("dto", dto);
 		model.addAttribute("preHqnadto", preHqnadto);
 		model.addAttribute("nextHqnadto", nextHqnadto);
 		
@@ -207,5 +207,22 @@ public class HqnaController {
 		return model;
 		
 	}
+	
+	@RequestMapping(value="/hotel/hqna/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteqna(@RequestParam int qnaCode) throws Exception {
+		
+		int result=hqnaService.deleteHqna(qnaCode);
+		
+		String state="true";
+		if(result==0) 
+			state="false";
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		
+		return model;
+	}
+	
 	
 }

@@ -103,4 +103,15 @@
 	<update id="updateHqna" parameterType="com.sp.hqna.Hqna">
 		UPDATE question SET subject=#{subject}, content=#{content, jdbcType=CLOB} WHERE qnaCode=#{qnaCode} 
 	</update>
+	
+	<delete id="deleteHqna" parameterType="Integer">
+		DELETE FROM question WHERE qnaCode=#{qnaCode}
+	</delete>
+	
+	<select id="listReply" parameterType="map" resultType="com.sp.hqna.Reply">
+		SELECT a.answerCode, q.qnaCode, answerCreated, answerContent
+		FROM answer a
+		JOIN question q ON q.userIdx=a.userIdx
+		WHERE q.qnaCode=#{qnaCode} AND q.catCode=2
+	</select>
 </mapper>
