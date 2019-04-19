@@ -134,14 +134,11 @@
                                         <li><a href="#">- 나만의 티켓 예약</a></li>
                                         <li><a href="#">- 이벤트</a></li>
                                         <li><a href="#">- 공지사항</a></li>
-                                        <li><a href="<%=cp%>/ticket/qna/list">- 문의사항</a></li>
-                                        <li><a href="#">- FAQ</a></li>
-                                        <li><a href="#">- Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
+                                        <li><a href="<%=cp%>/ticket/qna/list">- 문의사항</a>
+                                        	<ul class="dropdown">
+                                                <li><a href="<%=cp%>/ticket/qna/list">- 질문과 답변</a></li>
+                                                <li><a href="<%=cp%>/ticket/faq/list">- 자주하는 질문</a></li>
+                                                <li><a href="#">- 1:1문의</a></li>
                                             </ul>
                                         </li>
                                     </ul>

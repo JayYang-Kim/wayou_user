@@ -158,9 +158,9 @@ function searchList() {
 </c:forEach>
 		</table>
 		 
-		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
-			<td align="center">
+			<td align="center" style="padding-top:10px;">
 		        ${dataCount==0 ? "등록된 자료가 없습니다." : paging}
 			</td>
 		   </tr>
@@ -171,17 +171,17 @@ function searchList() {
 		      <td align="left" width="100">
 		          <button type="button" class="btn_classic" style="font-size: 15px; height: 30px; border-radius: 5px;" onclick="javascript:location.href='<%=cp%>/ticket/qna/list';">새로고침</button>
 		      </td>
-		      <td align="center">
-		          <form name="searchForm" action="<%=cp%>/ticket/qna/list" method="post">
-		              <select name="searchKey" class="selectField">
+      		<td align="center">
+	          <form name="searchForm" action="<%=cp%>/ticket/qna/list" method="post">
+		              <select name="searchKey" class="select">
 		                  <option value="all" ${searchKey=="all" ? "selected='selected' " : "" }>모두</option>
 		                  <option value="subject"  ${searchKey=="subject" ? "selected='selected' " : "" }>제목</option>
 		                  <option value="userName" ${searchKey=="userName" ? "selected='selected' " : "" }>작성자</option>
 		                  <option value="content"  ${searchKey=="content" ? "selected='selected' " : "" }>내용</option>
 		                  <option value="created"  ${searchKey=="created" ? "selected='selected' " : "" }>등록일</option>
 		            </select>
-		            <input type="text" name="searchValue" class="boxTF" value="${searchValue}">
-		            <button type="button" class="btn-white" onclick="searchList()">검색</button>
+		            <input type="text" name="searchValue" class="form-control t_center" style="width:200px; height: 30px;" value="${searchValue}">
+		            <button type="button" class="btn-black t_center" style="width: 50px; height: 50px; border-radius: 5px;" onclick="searchList()">검색</button>
 		        </form>
 		      </td>
 		      <td align="right" width="100">
