@@ -42,7 +42,7 @@
 			<if test="searchValue != null and searchValue != ''">
 	     	    <include refid="where-list"/>
 	     	</if>
-	     	AND (enabled = 0)
+	     	AND (p.enabled = 0)
 		</where>
 	</select>
 	
@@ -81,14 +81,14 @@
 		            u.roleCode,
 		            u.userId,
 		            u.userName,
-		            TO_CHAR(created, 'YYYY-MM-DD') created, max, enabled, confirmCode
+		            TO_CHAR(created, 'YYYY-MM-DD') created, max, p.enabled, confirmCode
 		        FROM party p
 		        JOIN tb_user u ON p.userIdx = u.userIdx
 		        <where>
 		        	<if test="searchValue != null and searchValue != ''">
 			     	    <include refid="where-list"/>
 			     	</if>
-		        	AND (enabled = 0)
+		        	AND (p.enabled = 0)
 		        </where>
 		        ORDER BY partyCode DESC
 		<![CDATA[
@@ -107,7 +107,7 @@
 		            u.roleCode,
 		            u.userId,
 		            u.userName,
-		            TO_CHAR(created, 'YYYY-MM-DD') created, max, enabled, confirmCode
+		            TO_CHAR(created, 'YYYY-MM-DD') created, max, p.enabled, confirmCode
 		        FROM party p
 		        JOIN tb_user u ON p.userIdx = u.userIdx
 		        <where>
@@ -133,7 +133,7 @@
 		            u.roleCode,
 		            u.userId,
 		            u.userName,
-		            TO_CHAR(p.created, 'YYYY-MM-DD') created, max, enabled, confirmCode
+		            TO_CHAR(p.created, 'YYYY-MM-DD') created, max, p.enabled, confirmCode
 		        FROM party p
 		        JOIN tb_user u ON p.userIdx = u.userIdx
                 JOIN partyPeople pp ON p.partyCode = pp.partyCode
@@ -160,10 +160,10 @@
 		            u.roleCode,
 		            u.userId,
 		            u.userName,
-		            TO_CHAR(created, 'YYYY-MM-DD') created, max, enabled, confirmCode
+		            TO_CHAR(created, 'YYYY-MM-DD') created, max, p.enabled, confirmCode
 		        FROM party p
 		        JOIN tb_user u ON p.userIdx = u.userIdx
-		        WHERE (enabled = 0)
+		        WHERE (p.enabled = 0)
 		        ORDER BY partyCode DESC  
 		<![CDATA[
 		    ) tb WHERE ROWNUM <= 5
@@ -180,7 +180,7 @@
 		    u.roleCode,
 		    u.userId,
 		    u.userName,
-		    TO_CHAR(created, 'YYYY-MM-DD') created, max, enabled, confirmCode,
+		    TO_CHAR(created, 'YYYY-MM-DD') created, max, p.enabled, confirmCode,
 		    NVL(partyPeopleCount, 0) partyPeopleCount
 		FROM party p
 		JOIN tb_user u ON p.userIdx = u.userIdx
@@ -189,7 +189,7 @@
 		    GROUP BY partyCode
 		) pp ON p.partyCode = pp.partyCode
 		WHERE p.partyCode = #{partyCode}
-		AND (enabled = 0)
+		AND (p.enabled = 0)
 	</select>
 	
 	<!-- 이전글 -->
@@ -203,7 +203,7 @@
             		<include refid="where-list"/>
               	</if>
               	AND (partyCode &gt; #{partyCode})
-              	AND (enabled = 0)
+              	AND (p.enabled = 0)
             </where>
 		    ORDER BY created ASC
 		) tb WHERE ROWNUM=1
@@ -220,7 +220,7 @@
             		<include refid="where-list"/>
               	</if>
               	AND (partyCode &lt; #{partyCode})
-              	AND (enabled = 0)
+              	AND (p.enabled = 0)
             </where>
 		    ORDER BY created DESC
 		) tb WHERE ROWNUM=1

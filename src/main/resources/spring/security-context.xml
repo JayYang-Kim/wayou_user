@@ -26,6 +26,8 @@
 		<intercept-url pattern="/index.jsp" access="permitAll" />
 		<intercept-url pattern="/main" access="permitAll" />
 		<intercept-url pattern="/member/login" access="permitAll" />
+		<intercept-url pattern="/member/join" access="permitAll" />
+		<intercept-url pattern="/member/create" access="permitAll" />
 		<intercept-url pattern="/resources/**" access="permitAll" />
 		<!-- <intercept-url pattern="/" access="permitAll" /> -->
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
