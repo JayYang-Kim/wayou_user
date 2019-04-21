@@ -41,14 +41,22 @@ public class MemberController {
 	public String createForm(
 			@ModelAttribute("user")User user
 			) throws Exception{
-		return "member/create";
+		return "member/step1";
 	}
 	
-	@RequestMapping(value="/member/join", method=RequestMethod.POST)
+	@RequestMapping(value="/member/step1", method=RequestMethod.POST)
 	public String createSubmit(
 			@ModelAttribute("user")User user
 			) throws Exception{
-		return "member/create";
+		return "member/step2";
+	}
+
+	
+	@RequestMapping(value="/member/step2", method=RequestMethod.POST)
+	public String create1Submit(
+			@ModelAttribute("user")User user
+			) throws Exception{
+		return "member/complete";
 	}
 	
 	@RequestMapping(value="/member/emailCheck", method=RequestMethod.GET)
@@ -57,10 +65,10 @@ public class MemberController {
 			@RequestParam String email){
 		Map<String, Object> model = new HashMap<>();
 
-		int num=memberService.random();
+		String num=memberService.random();
 		boolean b = memberService.mailSend(email, num);
 		
-		model.put("email", b);
+		model.put("result", b);
 		model.put("securityNum", num);
 		return model;
 	}
@@ -70,7 +78,6 @@ public class MemberController {
 	public Map<String, Object> idCheck(
 			@RequestParam String userId) {
 		Map<String, Object> model= new HashMap<>();
-		System.out.println("==============================================="+userId);
 
 		int result=memberService.idCheck(userId);
 		model.put("result", result);

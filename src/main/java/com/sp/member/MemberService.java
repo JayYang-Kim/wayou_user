@@ -54,12 +54,12 @@ public class MemberService {
 		msg.setHeader("Content-Type", mailType);
 	}
 
-	public boolean mailSend(String email, int num) {
+	public boolean mailSend(String email, String num) {
 		boolean b=false;
 		String sendEmail="wayou1904@gmail.com";
 		String sendName="관리자";
-		String content="WAYOU의 인증번호는  "+num+" 입니다";
 		String subject= "WAYOU의 인증번호 보내드립니다~";
+		String content="WAYOU의 인증번호는  "+num+" 입니다";
 
 		Properties p = new Properties();   
 
@@ -103,9 +103,9 @@ public class MemberService {
 		return b;
 	}
 	
-	public int random () {
+	public String random () {
 		Random random = new Random();
-		int num=0;
+		String num="";
 		for(int i=0; i<4; i++) {
 			num+=random.nextInt(10);
 		}
