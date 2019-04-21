@@ -3,7 +3,6 @@ package com.sp.member;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -52,14 +51,31 @@ public class MemberController {
 		return "member/create";
 	}
 	
-	@RequestMapping(value="/user/emailCheck", method=RequestMethod.GET)
+	@RequestMapping(value="/member/emailCheck", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> emailCheck(
 			@RequestParam String email){
 		Map<String, Object> model = new HashMap<>();
 
-		boolean b = memberService.mailSend(email);
+		int num=memberService.random();
+		boolean b = memberService.mailSend(email, num);
+		
+		model.put("email", b);
+		model.put("securityNum", num);
+		return model;
+	}
+	
+	@RequestMapping(value="/member/idCheck", method=RequestMethod.GET)
+	@ResponseBody
+	public Map<String, Object> idCheck(
+			@RequestParam String userId) {
+		Map<String, Object> model= new HashMap<>();
+		System.out.println("==============================================="+userId);
+
+		int result=memberService.idCheck(userId);
+		model.put("result", result);
 		
 		return model;
 	}
 }
+
