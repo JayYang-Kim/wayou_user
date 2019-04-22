@@ -470,14 +470,14 @@ span.inp_file .btn_file{position:relative;}
 .btn:active,.btn.active{background-image: none;outline: 0;-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);}
 .btn.disabled,.btn[disabled],fieldset[disabled] .btn{pointer-events: none;cursor: not-allowed;filter: alpha(opacity=65);-webkit-box-shadow: none;box-shadow: none;opacity: .65;}
 
-.btn:active, .btn_classic:active, .button:active, .btn_radius:active{transform: scale(0.95);}
+/* .btn:active, .btn_classic:active, .button:active, .btn_radius:active{transform: scale(0.95);}
 .btn:hover, .btn_classic:hover, .button:hover, .btn_radius:hover{
 	font-weight: 500;
     -webkit-box-shadow: 0 2px 40px 8px rgba(15, 15, 15, 0.15);
     box-shadow: 0 2px 40px 8px rgba(15, 15, 15, 0.15);
     background-color: #ffffff;
     color: #c4c4c4;
-}
+} */
 
 /* Button_Color */
 .btn-white{background-color: #fff;border:1px solid #b7b7b7;color: #333;}

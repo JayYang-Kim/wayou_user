@@ -122,4 +122,16 @@ public class MemberService {
 		}
 		return result;
 	}
+	
+	public int insertMember(User user) {
+		int result=0;
+		try {
+			result=dao.insertData("member.insertMember", user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
+
+

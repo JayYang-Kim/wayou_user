@@ -29,6 +29,8 @@
 		<intercept-url pattern="/member/join" access="permitAll" />
 		<intercept-url pattern="/member/step1" access="permitAll" />
 		<intercept-url pattern="/member/step2" access="permitAll" />
+		<intercept-url pattern="/member/step3" access="permitAll" />
+		<intercept-url pattern="/member/complete" access="permitAll" />
 		<intercept-url pattern="/member/idCheck" access="permitAll" />
 		<intercept-url pattern="/member/emailCheck" access="permitAll" />
 		<intercept-url pattern="/resources/**" access="permitAll" />
