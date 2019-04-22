@@ -5,4 +5,8 @@
 	<select id="readLoginInfo" resultType="com.sp.member.User" parameterType="String">
 		select userIdx,userName,userId,userPwd from tb_user where userId=#{userId}
 	</select>
+	
+	<select id="idCheck" resultType="Integer" parameterType="String">
+		select NVL(COUNT(*),0) from tb_user where userId=#{userId}
+	</select>
 </mapper>
