@@ -30,12 +30,8 @@
                         <a href="#"><i class="fa fa-tripadvisor" aria-hidden="true"></i></a>
                         <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                     </div>
-                    <!-- <div class="top-area">
-                        <span>WAYOU - 너도 여행할 수 있어!!</span>
-                    </div> -->
                 </div>
             </div>
-            <!-- 비로그인 -->
             <c:if test="${sessionScope.member == null}">
 	            <div class="col-6 h_mobile">
 	                <div class="top-header-content">
@@ -90,70 +86,38 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                             <ul id="nav">
-                            	<!-- Menu Sample -->
-                            	<%-- <li><a href="<%=cp%>/travel">여행</a>
+                                <li><a href="<%=cp%>/">주문내역</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">- 지역보기</a></li>
-                                        <li><a href="#">- 랜드마크 보기 </a></li>
-                                        <li><a href="#">- 일정 모음</a></li>
-                                        <li><a href="#">- 나만의 일정</a></li>
-                                        <li><a href="#">- 동료 모으기</a></li>
-                                        <li><a href="#">- 일정 만들기</a></li>
-                                        <li><a href="#">- 문의하기</a></li>
-                                        <li><a href="#">- Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li> --%>
-                                <li><a href="<%=cp%>/travel">여행</a>
-                                    <ul class="dropdown">
-                                        <li><a href="<%=cp%>/travel/location">- 지역보기</a></li>
-                                        <li><a href="<%=cp%>/travel/landMark">- 랜드마크 보기 </a></li>
-                                        <li><a href="#">- 일정 모음</a></li>
-                                        <li><a href="<%=cp%>/travel/myplan/list">- 나만의 일정</a></li>
-                                        <li><a href="<%=cp%>/travel/party">- 동료 모으기</a>
+                                        <li><a href="<%=cp%>/">- 전체 주문 내역</a></li>
+                                        <li><a href="<%=cp%>/">- 숙박 </a></li>
+                                        <li><a href="#">- 티켓</a></li>
+                                        <li><a href="<%=cp%>/">- 일정</a></li>
+                                        <li><a href="<%=cp%>/">- 주문취소/교환/반품내역</a>
                                         	<ul class="dropdown">
-                                                <!-- <li><a href="#">- 리스트</a></li> -->
-                                                <li><a href="<%=cp%>/travel/party/create">- 파티 생성</a></li>
-                                                <li><a href="<%=cp%>/travel/party/myList">- 내 파티 리스트</a></li>
-                                                <li><a href="<%=cp%>/travel/party/attendList">- 참가 파티 리스트</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="<%=cp%>/travel/myplan/add">- 일정 만들기</a></li>
-                                        <li><a href="<%=cp%>/travel/contactUs">- 문의하기</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="<%=cp%>/ticket/tmain">티켓몰</a>
-                                    <ul class="dropdown">
-                                        <li><a href="<%=cp%>/ticket/list">- 티켓</a></li>
-                                        <li><a href="#">- 나만의 티켓 예약</a></li>
-                                        <li><a href="#">- 이벤트</a></li>
-                                        <li><a href="#">- 공지사항</a></li>
-                                        <li><a href="<%=cp%>/ticket/qna/list">- 문의사항</a>
-                                        	<ul class="dropdown">
-                                                <li><a href="<%=cp%>/ticket/qna/list">- 질문과 답변</a></li>
-                                                <li><a href="<%=cp%>/ticket/faq/list">- 자주하는 질문</a></li>
-                                                <li><a href="#">- 1:1문의</a></li>
+                                                <li><a href="<%=cp%>/">- 주문 취소</a></li>
+                                                <li><a href="<%=cp%>/">- 교환</a></li>
+                                                <li><a href="<%=cp%>/">- 반품내역</a></li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="<%=cp%>/hotel/hotel/main">숙박</a>
+                                <li><a href="<%=cp%>/">관심상품</a>
                                     <ul class="dropdown">
-                                        <li><a href="<%=cp%>/hotel/hotel/list">- 호텔</a></li>
-                                        <li><a href="<%=cp%>/hotel/hotel/article">- 나만의 호텔 예약</a></li>
-                                        <li><a href="<%=cp%>/hotel/hevent/hevent">- 이벤트</a></li>
-                                        <li><a href="#">- 공지사항</a></li>
-                                        <li><a href="<%=cp%>/hotel/hqna/list">- 문의사항</a></li>
-                                        <li><a href="#">- FAQ</a></li>
+                                        <li><a href="<%=cp%>/">- 장바구니</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">문의사항</a></li>
+                                <li><a href="<%=cp%>/">회원정보</a>
+                                    <ul class="dropdown">
+                                        <li><a href="<%=cp%>/">- 수정 및 탈퇴</a></li>
+                                        <li><a href="<%=cp%>/myPage/step">- 등급확인</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="#">문의사항</a>
+                                        <ul class="dropdown">
+                                        <li><a href="<%=cp%>/">- 문의사항 작성</a></li>
+                                        <li><a href="<%=cp%>/">- 답변 확인</a></li>
+                                    </ul>
+                                </li>
                             </ul>
 
                         <!-- Search -->

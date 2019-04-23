@@ -38,6 +38,7 @@
 	}
  
  function gostep2(){
+	var f=document.stepForm;
 	var cnt = 0;
 		for(i=0; i < stepForm.checkbox.length; i++) {
 			if(stepForm.checkbox[i].checked) cnt++;
@@ -47,7 +48,8 @@
 			return;
 		}
 		
-		stepForm.submit();
+		f.action="<%=cp%>/member/step1";
+		f.submit();
 	}
 </script>
     

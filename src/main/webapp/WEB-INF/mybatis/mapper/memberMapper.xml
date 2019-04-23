@@ -9,4 +9,9 @@
 	<select id="idCheck" resultType="Integer" parameterType="String">
 		select NVL(COUNT(*),0) from tb_user where userId=#{userId}
 	</select>
+	
+	<insert id="insertMember" parameterType="com.sp.member.User">
+		INSERT INTO tb_user(userIdx, rolecode, userId, userPwd, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail, userBirth, identCode, enabled)
+			VALUES(user_seq.NEXTVAL, 1, #{userId}, #{userPwd}, #{userName}, #{postCode}, #{userAddr1}, #{userAddr2}, #{etc}, #{userTel}, #{userEmail}, #{userBirth}, 10, 1)
+	</insert>
 </mapper>

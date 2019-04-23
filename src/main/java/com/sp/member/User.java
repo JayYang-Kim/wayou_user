@@ -6,7 +6,7 @@ public class User {
 	private String userId;
 	private String userPwd;
 	private String userName;
-	private String postCode;
+	private int postCode;
 	private String userAddr1;
 	private String userAddr2;
 	private String etc;
@@ -15,6 +15,7 @@ public class User {
 	private String userCreated_date;
 	private String userModify_date;
 	private int blackCount;
+	private String userBirth;
 	public int getUserIdx() {
 		return userIdx;
 	}
@@ -45,10 +46,11 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getPostCode() {
+
+	public int getPostCode() {
 		return postCode;
 	}
-	public void setPostCode(String postCode) {
+	public void setPostCode(int postCode) {
 		this.postCode = postCode;
 	}
 	public String getUserAddr1() {
@@ -99,4 +101,11 @@ public class User {
 	public void setBlackCount(int blackCount) {
 		this.blackCount = blackCount;
 	}
+	public String getUserBirth() {
+		return userBirth;
+	}
+	public void setUserBirth(String userBirth) {
+		this.userBirth = userBirth;
+	}
+	
 }
