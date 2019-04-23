@@ -181,7 +181,7 @@ function searchList() {
 		                  <option value="created"  ${searchKey=="created" ? "selected='selected' " : "" }>등록일</option>
 		            </select>
 		            <input type="text" name="searchValue" class="form-control t_center" style="width:200px; height: 30px;" value="${searchValue}">
-		            <button type="button" class="btn-black t_center" style="width: 50px; height: 50px; border-radius: 5px;" onclick="searchList()">검색</button>
+		            <button type="button" class="btn-black t_center" style="width: 50px; height: 35px; border-radius: 5px;" onclick="searchList()">검색</button>
 		        </form>
 		      </td>
 		      <td align="right" width="100">
