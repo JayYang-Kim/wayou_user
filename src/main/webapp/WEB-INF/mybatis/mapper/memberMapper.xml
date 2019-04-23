@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	<select id="readLoginInfo" resultType="com.sp.member.User" parameterType="String">
-		select userIdx,userName,userId,userPwd from tb_user where userId=#{userId}
+		select userIdx,userName,userId,userPwd,roleCode from tb_user where userId=#{userId}
 	</select>
 	
 	<select id="idCheck" resultType="Integer" parameterType="String">
