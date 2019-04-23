@@ -7,35 +7,23 @@
 %>
 <style type="text/css">
 	.routeItem {
-		position:relative;
-		float: left;
 		height:200px;
+		width:100%;
 		min-width:300px;
-		max-width:30%;
-		margin-left: 20px;
-		margin-top: 20px;
+		margin-top:10px; 
 		cursor: pointer; 
 	}
-	.routeItem:hover img{
-		top:-50%;
-	}
-	
 	.routeItem img {
+		float:left;
 		height: 100%;
-		position: relative;
-		z-index: 9999;
+		width: 30%; 
 	}
-	.routeItem p {
-		position: absolute;
-		bottom:0px;
-		height: 100px;
-		width:100%;
+	.routeItem div {
+		float: left; 
+		padding-left:20px; 
+		padding-top:15px;
+		width:70%;
 	}
-	
-	.lookup {
-		top:-50%;
-	}
-	
 	.myListContent {
 		padding-top: 100px;
 		-webkit-font-smoothing: antialiased;
@@ -106,7 +94,7 @@
 	
 	.travello {
 	    width: 250px; 
-	    height: 600px;
+	    height: 800px;
 	    overflow: hidden;
 	    margin-top: 50px;
 	}
@@ -119,9 +107,6 @@
 	    line-height: 1;
 	}
 	.travello_container {
-	    position: absolute;
-	    top: 0px;
-	    left: 0px;
 	    width: 100%;
 	    height: 100%;
 	    z-index: 1;
@@ -137,9 +122,6 @@
 	    box-sizing: border-box;
 	}
 	.background_image {
-	    position: absolute;
-	    top: 0;
-	    left: 0;
 	    width: 100%;
 	    height: 100%;
 	    background-repeat: no-repeat;
@@ -162,66 +144,111 @@
 			location.href="<%=cp%>/travel/myplan/add";
 		});
 	});
+	
+	function search(){
+		$(function(){
+			var form = $("#searchRoute");
+			if(!$("#searchRoute input").val()){
+				alert("값을 입력하세요!");
+				return false;
+			}
+			var query = form.serialize();
+			location.href="<%=cp%>/travel/myplan/myList?page=${page}&"+query;
+		});
+	}
 </script>
-<div id="container" style="height: 1300px;">
-	<div style="width: 100%;">
-		<img src="<%=cp%>/resources/images/bg-img/background_tour.jpg" style="width:100%;height:270px;">
-	</div>
-	<div class="myListContent" style="height: 1030px;">
-		
-		<div style="float: left;" align="center" class="col12 col-lg-9" >
-		<button type="button" class="btn btn-black newRoute" style="float: right;">새 경로 작성하기</button>
-			<section class="routeList" style="margin-top: 40px;">
-				<c:forEach var="dto" items="${list}">
-					<div class="routeItem">
-						<img src="<%=cp%>/resource/user/images/travel/seoul.jpg">
-						<p>
-							<input type="hidden" data-locCode="${dto.locCode}" data-workCode="${dto.workCode}" data-dayCount="${dto.dayCount}">
-							<span style="font-size: 20px; font-weight: bold; text-overflow:ellipsis; display: block; overflow: hidden; white-space: nowrap;">${dto.subject}</span>
-							<span>출발일 : ${dto.startDay} | 여행기간 : ${dto.dayCount}(일)</span><br>
-							<span>작성일 : ${dto.created}| 여행지역 : ${dto.locName}</span>
-						</p> 
-					</div>
-				</c:forEach>
-			</section>
-			<div style="clear: both; height: 30px; text-align: center; padding-top: 15px;  margin-bottom: 30px;" align="center">
-				<div>${paging}</div>
-				<div style="height: 42px;" align="center">
-					<select> 
-						<option>일정제목</option>
-						<option>출발일</option>
-						<option>작성일</option> 
-					</select>
-					<input type="text" placeholder="검색어를 입력하세요" style="height: 100%;">
-					<button type="button" class="btn btn-black" style="height: 100%;">검색</button>
-				</div>
-			</div>
-		</div>	
-		<div class="col12 col-lg-3" style="float: left; padding-left: 15px; padding-right:15px;" align="left">
-			<div class="sidebar">
-				<div class="locations">
-					<div class="sidebar_title">지역별 일정</div>
-					<div class="sidebar_list">
-						<ul>
-							<c:forEach var="n" items="${locCategory}">
-								<li><a>${n.locName}</a>(${n.count})</li>
-							</c:forEach>
-							
-						</ul>
-					</div>
-				</div>
-				<div class="travello">		
-					<div class="background_image" style="background-image:url(<%=cp%>/resources/images/bg-img/background_tour.jpg)">
-						<div class="travello_content">
-						<div class="travello_container">
-								<span class="travello_title">여기는 광고 들어갈 자리</span>
-					</div>
-					</div>
-				</div>
-					
-					</div>
-					
-			</div>
-		</div>
-	</div>
+<!-- Breadcrumb Area Start -->
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-center">
+            <div class="col-12">
+                <div class="breadcrumb-content text-center">
+                    <h2 class="page-title">나만의 일정</h2>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- Breadcrumb Area End -->
+
+<!-- Blog Area Start -->
+<div class="roberto-news-area section-padding-100-0">
+    <div class="container">
+    	
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8">
+            	<form id="searchRoute" style="width: 100%;">
+			    	<div class="row justify-content-center box_search">
+				            <div class="col-12 col-sm-3 col-lg-2">
+				            	<select name="searchKey">
+				            		<option value="title" ${searchKey == 'all' ? "selected='selected'" : ""}>일정 제목</option>
+				            		<option value="startDay" ${searchKey == 'startDay' ? "selected='selected'" : ""}>시작일</option>
+				            		<option value="created" ${searchKey == 'created' ? "selected='selected'" : ""}>작성일</option>
+				            	</select>
+				            </div>
+				            <div class="col-12 col-sm-9 col-lg-7">
+				            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요." style="width: 100%;"/>
+				            </div>
+				            <div class="col-12 col-lg-3">
+				            	<button type="button" class="btn roberto-btn" style="width: 100%;" onclick="search()">검색</button>
+				            </div>
+					</div>
+				</form>
+            	
+				
+				<c:if test="${not empty sessionScope.member}">
+	                <div>
+	                	<div class="col-12 text-right">
+		                    <button type="button" class="btn roberto-btn newRoute" style="margin-bottom: 10px; margin-top: 20px;">새 경로 생성하기</button>
+		                </div>
+	                </div>
+                </c:if>
+                <section class="routeList" style="min-height: 700px;">
+					<c:forEach var="dto" items="${list}">
+						<div class="routeItem">
+							<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" style="float: left;">
+							<div style="float: left;">
+								<p>
+									<input type="hidden" data-locCode="${dto.locCode}" data-workCode="${dto.workCode}" data-dayCount="${dto.dayCount}">
+									<span style="font-size: 20px; font-weight: bold; text-overflow:ellipsis; display: block; overflow: hidden; white-space: nowrap;">${dto.subject}</span>
+									<span>여행지역 : ${dto.locName}</span><br>
+									<span>출발일 : ${dto.startDay} | 여행기간 : ${dto.dayCount}(일)</span><br>
+									<span>작성일 : ${dto.created}|</span>
+								</p> 
+							</div>
+						</div>
+						<c:if test="${locCategory==null}">
+							<h3>데이터가 존재하지 않습니다.</h3>
+						</c:if>
+					</c:forEach>
+				</section>
+                <!-- Pagination -->
+                <nav class="roberto-pagination mb-50 text-center" style="margin-top:10px;">
+                	${paging}
+                </nav>
+            </div>
+
+            <div class="col-12 col-sm-12 col-md-12 col-lg-4">
+                <div class="roberto-sidebar-area pl-md-4">
+					<div class="sidebar">
+						<div class="locations">
+							<div class="sidebar_title">지역별 일정</div>
+							<div class="sidebar_list">
+								<ul>
+									<c:forEach var="n" items="${locCategory}">
+										<li class=""><a>${n.locName}</a>(${n.count})</li>
+									</c:forEach>
+								</ul>
+							</div>
+						</div>
+						<div class="travello">		
+							<div class="background_image" style="background-image:url(<%=cp%>/resources/images/bg-img/eduwill.jpg)">
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Blog Area End -->

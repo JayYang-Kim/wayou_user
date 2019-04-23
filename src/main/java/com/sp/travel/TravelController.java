@@ -229,7 +229,7 @@ public class TravelController {
 	@RequestMapping(value="/travel/myplan/myList")
 	public String myList(
 			@RequestParam(value="page",defaultValue="1") int current_page,
-			@RequestParam(value="searchKey", defaultValue="ALL") String searchKey,
+			@RequestParam(value="searchKey", defaultValue="all") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
 			HttpSession session,
 			HttpServletRequest req,
@@ -243,10 +243,13 @@ public class TravelController {
 		String list_url = cp+"/travel/myplan/myList";
 		String article_url = cp+"/travel/myArticle?page="+current_page;
 		
-		if(searchValue.length()!=0) {
+		if(req.getMethod().equalsIgnoreCase("GET")) {
 			searchValue = URLDecoder.decode(searchValue, "utf-8");
-			list_url += "?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchKey, "UTF-8");
-			article_url += "&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchKey, "UTF-8");
+		}
+		
+		if(searchValue.length()!=0) {
+			list_url += "?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+			article_url += "&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
 		}
 		
 		Map<String,Object> map = new HashMap<>();
@@ -255,7 +258,7 @@ public class TravelController {
 		map.put("userIdx", userIdx);
 		
 		int dataCount = travelService.myDataCount(map);
-		int rows = 8;
+		int rows = 4;
 		int total_page = util.pageCount(rows, dataCount);
 		if(current_page > total_page) 
 			current_page = total_page;
@@ -281,6 +284,8 @@ public class TravelController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey", searchKey);
 		
 		return ".travel.myplan.myList";
 	}
