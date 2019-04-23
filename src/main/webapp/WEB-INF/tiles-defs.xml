@@ -37,14 +37,11 @@
 	</definition>
 	<!--순서가 바뀌면 안됨(* 많은것이 위에)-->
 	<definition name=".myP.*.*" extends=".myPageLayout">
-		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}/{3}.jsp"/>
-	</definition>
-	<definition name=".myP.*" extends=".myPageLayout">
 		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}.jsp"/>
 	</definition>
-	<definition name=".myP" extends=".myPageLayout">
-    	  <put-attribute name="body" value="/WEB-INF/view/{1}.jsp" />
-	</definition> 
+	<definition name=".myP.*" extends=".myPageLayout">
+		<put-attribute name="body" value="/WEB-INF/view/{1}.jsp"/>
+	</definition>
 	
 	<definition name=".mainLayout" template="/WEB-INF/view/layout/layout3.jsp">
 	    <put-attribute name="title" value="spring" />

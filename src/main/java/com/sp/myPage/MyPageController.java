@@ -10,7 +10,7 @@ public class MyPageController {
 	@RequestMapping(value="/myPage/main")
 	public String myPage() throws Exception{
 		
-		return "..myP.myPage.main";
+		return ".myP.myPage.main";
 	}
 	
 	@RequestMapping(value="/myPage/step")
