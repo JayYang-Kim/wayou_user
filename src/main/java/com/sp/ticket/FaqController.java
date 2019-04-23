@@ -1,5 +1,6 @@
 package com.sp.ticket;
 
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
@@ -15,32 +16,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.MyUtil;
 
-@Controller("ticket.ticketController")
-public class TicketController {
+@Controller("ticket.FaqController")
+public class FaqController {
 	@Autowired
-	private TicketService ticketService;
+	private FaqBoardService boardService;
 	@Autowired
 	private MyUtil myUtil;
-
 	
-	@RequestMapping(value="/ticket/tmain")
-	public String main() {
-		return ".ticket.tmain";
+	
+	@RequestMapping(value="/ticket/qna/faq")
+	public String qna(Model model) throws Exception {
+		model.addAttribute("subMenu", "1");
+		return ".four.ticket.qna.faq.list";
 	}
 	
-	@RequestMapping(value="/ticket/list")
-	public String list(
-			@RequestParam(value="page", defaultValue="1"        ) int current_page,
+
+	@RequestMapping(value="/ticket/faq/list")
+	public String list (
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			@RequestParam(defaultValue="all") String searchKey,
+			@RequestParam(defaultValue="") String searchValue,
 			HttpServletRequest req,
-			Model model) throws Exception {
+			Model model
+			) throws Exception {
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			searchValue=URLDecoder.decode(searchValue, "UTF-8");
+		}
 		
 		int total_page = 0;
 		int dataCount = 0;
-		int rows = 5;
+		int rows = 10;
 		
 		Map<String, Object> map = new HashMap<>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
 		
-		dataCount=ticketService.dataCount(map);
+		dataCount=boardService.dataCount(map);
 		if(dataCount!=0)
 			total_page=myUtil.pageCount(rows, dataCount);
 		
@@ -52,10 +64,10 @@ public class TicketController {
 		
 		map.put("start", start);
 		map.put("end", end);
-		List<Ticket> list = ticketService.listTicket(map);
+		List<FaqBoard> list = boardService.listBoard(map);
 		
 		int listNum, n=0;
-		for(Ticket dto : list) {
+		for(FaqBoard dto : list) {
 			listNum = dataCount - (start+n-1);
 			dto.setListNum(listNum);
 			n++;
@@ -63,9 +75,15 @@ public class TicketController {
 		
 		String cp = req.getContextPath();
 		String query = "";
-		String listUrl = cp + "/ticket/qna/list";
-		String articleUrl = cp + "ticket/qna/article?page="+current_page;
-
+		String listUrl = cp + "/ticket/faq/list";
+		String articleUrl = cp + "ticket/faq/article?page="+current_page;
+		
+		if(searchValue.length()!=0) {
+			query = "searchKey"+searchKey+"&searchValue"+URLEncoder.encode(searchValue, "UTF-8");
+			
+			listUrl += "?" + query;
+			articleUrl += "&" + query;
+		}
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
@@ -75,17 +93,10 @@ public class TicketController {
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("articleUrl", articleUrl);
-		
-		
-		
-		
-		
-		return ".ticket.list";
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", searchValue);
+	
+		return ".four.ticket.faq.list";
 	}
 	
-	@RequestMapping(value="/ticket/detail")
-	public String detail() {
-		return ".ticket.detail";
-	}
 }
-

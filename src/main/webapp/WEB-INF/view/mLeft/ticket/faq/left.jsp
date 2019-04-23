@@ -9,7 +9,7 @@
 <script type="text/javascript">
 $(function(){
 	var idx="${subMenu}";
-	if(!idx) idx=0;
+	if(!idx) idx=1;
 	var subMenu=$(".list-group-item")[idx];
 	$(subMenu).addClass("active");
 });

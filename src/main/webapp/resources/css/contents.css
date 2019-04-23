@@ -70,7 +70,7 @@
 .roberto-btnn {
   position: relative;
   z-index: 1;
-  min-width: 150px;
+  min-width: 100px;
   height: 46px;
   line-height: 46px;
   font-size: 16px;
@@ -79,7 +79,7 @@
   padding: 0 40px;
   text-align: center;
   text-transform: capitalize;
-  background-color: #2a303b;
+  background-color: rgba(14, 39, 55, 0.7);
   color: #ffffff;
   border: none;
   border-radius: 2px;
@@ -124,7 +124,7 @@
   padding-left: 18px;
   padding-right: 30px;
   position: relative;
-  text-align: left !important;
+  text-align: right !important;
   -webkit-transition: all 0.2s ease-in-out;
   transition: all 0.2s ease-in-out;
   -webkit-user-select: none;
@@ -133,6 +133,20 @@
           user-select: none;
   white-space: nowrap;
   width: 100% !important; }
+
+.list-group-item:hover {
+    z-index: 2;
+    color: #fff;
+    background-color:rgba(14, 39, 55, 0.7);
+    border-color: rgba(14, 39, 55, 0.7); 
+}
+    
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: rgba(14, 39, 55, 0.7);
+    border-color: rgba(14, 39, 55, 0.7);
+}
 
 /*엄유선  */
 .welcome-slides.noImg:hover .owl-prev, .welcome-slides.noImg:hover .owl-next, .welcome-slides.noImg:focus .owl-prev, .welcome-slides.noImg:focus .owl-next {
