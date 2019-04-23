@@ -2,6 +2,7 @@ package com.sp.member;
 
 import java.util.Date;
 import java.util.Properties;
+import java.util.Random;
 
 import javax.mail.Authenticator;
 import javax.mail.Message;
@@ -53,12 +54,12 @@ public class MemberService {
 		msg.setHeader("Content-Type", mailType);
 	}
 
-	public boolean mailSend(String email) {
+	public boolean mailSend(String email, String num) {
 		boolean b=false;
 		String sendEmail="wayou1904@gmail.com";
 		String sendName="관리자";
-		String content="WAYOU의 인증번호는  "+" 입니다";
 		String subject= "WAYOU의 인증번호 보내드립니다~";
+		String content="WAYOU의 인증번호는  "+num+" 입니다";
 
 		Properties p = new Properties();   
 
@@ -96,9 +97,41 @@ public class MemberService {
 			b=true;
 
 		} catch (Exception e) {
-			System.out.println(e.toString());
+			e.printStackTrace();
 		}
 
 		return b;
 	}
+	
+	public String random () {
+		Random random = new Random();
+		String num="";
+		for(int i=0; i<4; i++) {
+			num+=random.nextInt(10);
+		}
+		return num;
+	}
+	
+	
+	public int idCheck(String userId) {
+		int result=0;
+		try {
+			result=dao.selectOne("member.idCheck", userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int insertMember(User user) {
+		int result=0;
+		try {
+			result=dao.insertData("member.insertMember", user);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
+
+
