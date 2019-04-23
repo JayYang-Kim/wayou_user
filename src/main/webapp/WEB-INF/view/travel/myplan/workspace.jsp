@@ -31,7 +31,7 @@
 			drawMap($info.attr("data-lat"),$info.attr("data-lng"));
 		});
 		
-		$("body").on("click",".removeLocation", function(){
+		$("body").on("click",".removeLocation", function(e){
 			if(!confirm("일정에서 삭제하시겠습니까?")){
 				return false;
 			}
@@ -41,6 +41,12 @@
 			}
 			$("#btn_addRouteByDay").css("background","#1cc3b2");
 			$("#btn_addRouteByDay").prop("disabled",false);
+			if($("#landInfo").children("div").length==0){
+				drawMap('${lat}','${lng}');
+				return false;
+			}
+			e.stopPropagation();
+			drawRouteToMap($("#landInfo").children("div"));
 		});
 		
 		
@@ -237,7 +243,7 @@
 			var $selected = $(this);
 			var $lis = $(this).parent().children(".dayBar");
 			
-			$(".btn_addRouteByDay").prop("disabled","disabled");
+			$(".btn_addRouteByDay").prop("disabled",true);
 			
 			$($lis).each(function(){
 				if($(this).hasClass("ldbliActive")){
@@ -252,8 +258,11 @@
 			}
 			current_day = $(this).attr("data-day");
 			listLandmark('${locCode}','All');
-			drawMap('${lat}','${lng}');
+			
 			loadSavedRouteByDay(current_day);
+			if($("#landInfo").children("div").length==0){
+				drawMap('${lat}','${lng}');	
+			}
 			$("#btn_addRouteByDay").text(current_day+"일차 작성완료");
 		});
 		
@@ -346,6 +355,9 @@
 $(function(){
 	$("#landInfo").droppable({
 	    drop: function(event, ui) {
+	    	if($(".dayBar-first").hasClass("ldbliActive")){
+	    		return false;
+	    	}
 	    	var clone = dragObject.clone();
 	    	clone.css("left","0px").css("top","0px");
 	    	clone.find("div[class=next3 ]").text("X");

@@ -111,6 +111,24 @@
 	    margin-top: 50px;
 	}
 	
+	.travello_title {
+	    font-family: "Oswald",sans-serif;
+	    font-size: 48px;
+	    color: #ffffff;
+	    max-width: 210px;
+	    line-height: 1;
+	}
+	.travello_container {
+	    position: absolute;
+	    top: 0px;
+	    left: 0px;
+	    width: 100%;
+	    height: 100%;
+	    z-index: 1;
+	    padding-bottom: 47px;
+	}
+	
+	
 	.myListContent div {
 	    display: block;
 	    position: relative;
@@ -139,14 +157,21 @@
 			location.href="<%=cp%>/travel/myplan/workspace?locCode="+locCode+"&workNum="+workCode+"&dayCount="+dayCount;
 		});
 	});
+	$(function(){
+		$(".newRoute").click(function(){
+			location.href="<%=cp%>/travel/myplan/add";
+		});
+	});
 </script>
 <div id="container" style="height: 1300px;">
 	<div style="width: 100%;">
 		<img src="<%=cp%>/resources/images/bg-img/background_tour.jpg" style="width:100%;height:270px;">
 	</div>
 	<div class="myListContent" style="height: 1030px;">
+		
 		<div style="float: left;" align="center" class="col12 col-lg-9" >
-			<section class="routeList">
+		<button type="button" class="btn btn-black newRoute" style="float: right;">새 경로 작성하기</button>
+			<section class="routeList" style="margin-top: 40px;">
 				<c:forEach var="dto" items="${list}">
 					<div class="routeItem">
 						<img src="<%=cp%>/resource/user/images/travel/seoul.jpg">
@@ -154,7 +179,7 @@
 							<input type="hidden" data-locCode="${dto.locCode}" data-workCode="${dto.workCode}" data-dayCount="${dto.dayCount}">
 							<span style="font-size: 20px; font-weight: bold; text-overflow:ellipsis; display: block; overflow: hidden; white-space: nowrap;">${dto.subject}</span>
 							<span>출발일 : ${dto.startDay} | 여행기간 : ${dto.dayCount}(일)</span><br>
-							<span>작성일 : ${dto.created}</span>
+							<span>작성일 : ${dto.created}| 여행지역 : ${dto.locName}</span>
 						</p> 
 					</div>
 				</c:forEach>
@@ -178,26 +203,24 @@
 					<div class="sidebar_title">지역별 일정</div>
 					<div class="sidebar_list">
 						<ul>
-							<li><a>서울</a>(8)</li>
-							<li><a>인천</a>(8)</li>
-							<li><a>경상북도</a>(8)</li>
-							<li><a>함경도</a>(8)</li>
+							<c:forEach var="n" items="${locCategory}">
+								<li><a>${n.locName}</a>(${n.count})</li>
+							</c:forEach>
+							
 						</ul>
 					</div>
 				</div>
 				<div class="travello">		
-					<div class="background_image" style="background-image:url(<%=cp%>/resources/images/bg-img/background_tour.jpg)"></div><div class="travello_content">
-						<div class="travello_content_inner">
-							<div></div>
-							<div></div>
-						</div>
+					<div class="background_image" style="background-image:url(<%=cp%>/resources/images/bg-img/background_tour.jpg)">
+						<div class="travello_content">
+						<div class="travello_container">
+								<span class="travello_title">여기는 광고 들어갈 자리</span>
 					</div>
-					<div class="travello_container" style="border: 1px solid black">
-						<a href="#">
-							여기는 광고가 들어갈 겁니다.
-						</a>
 					</div>
 				</div>
+					
+					</div>
+					
 			</div>
 		</div>
 	</div>

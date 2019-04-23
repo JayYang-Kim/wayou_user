@@ -255,7 +255,7 @@ public class TravelController {
 		map.put("userIdx", userIdx);
 		
 		int dataCount = travelService.myDataCount(map);
-		int rows = 9;
+		int rows = 8;
 		int total_page = util.pageCount(rows, dataCount);
 		if(current_page > total_page) 
 			current_page = total_page;
@@ -270,6 +270,10 @@ public class TravelController {
 		
 		String paging = util.paging(current_page, total_page, list_url);
 		
+		//작성한 지역과 카운트 가져오기
+		List<LocCategory> locCategory = travelService.locationCategory(userIdx);
+		
+		model.addAttribute("locCategory", locCategory);
 		model.addAttribute("list", list);
 		model.addAttribute("list_url", list_url);
 		model.addAttribute("article_url", article_url);
@@ -280,6 +284,8 @@ public class TravelController {
 		
 		return ".travel.myplan.myList";
 	}
+	
+	
 	
 	
 	

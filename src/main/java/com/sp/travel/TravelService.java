@@ -171,4 +171,14 @@ public class TravelService {
 		}
 		return list;
 	}
+	
+	public List<LocCategory> locationCategory(int userIdx){
+		List<LocCategory> list = null;
+		try {
+			list = dao.selectList("workspace.locationCategory",userIdx);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

@@ -143,8 +143,9 @@
 	<select id="myList" parameterType="map" resultType="com.sp.travel.Workspace">
 		select * from (
 			select tb.*, rownum rnum from (
-				select workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename from workspace w
+				select c.locName, workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename from workspace w
 					join location l on w.locCode = l.locCode
+					join locationCode c on l.locCode=c.locCode
 						<where>
 							<if test="searchValue!=null and searchValue!=''">
 								<include refid="search"/>
@@ -156,6 +157,11 @@
 		) where rnum &gt;=#{start}
 	</select>
 
- 
+ 	<select id="locationCategory" parameterType="Integer" resultType="com.sp.travel.LocCategory">
+ 		select unique locName, count(locName) over(partition by locName) as count
+		from workspace w
+		join locationCode c on w.locCode = c.locCode
+		where userIdx=#{userIdx}
+ 	</select>
 
 </mapper>

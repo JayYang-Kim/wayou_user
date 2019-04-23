@@ -29,10 +29,11 @@
 			<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" class="locImage" draggable="false">
 			<div style="float: left; padding-left: 5px; padding-top: 12px; font-size: 16px;">
 				<span style="padding-left:0px;"><b>${dto.landName}</b></span><br><span style="color: #b3b3b3; font-size: 12px;">${dto.tagCode==1?'역사/종교':(dto.tagCode==2?'숙박':(dto.tagCode=3?'쇼핑':'음식점'))}</span><br>
-			</div>
 			<c:if test="${day=='all'}">
-				<div style="color: #b3b3b3; font-size: 12px; width: 30px;">${dto.day}일차</div>
+				<span style="color: #b3b3b3; font-size: 12px; width: 30px;padding-left: 0;margin-left: 0">${dto.day}일차</span>
 			</c:if>
+			</div>
+
 			<c:if test="${day!='all'}">
 				<div class="next3${isSaved==true?' removeLocation':''}">${isSaved==true?'X':'&gt;'}</div>	
 			</c:if>

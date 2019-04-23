@@ -9,7 +9,16 @@ public class Workspace {
 	private String endDay;
 	private int locCode;
 	private int userIdx;
+	private String locName;
 	
+	
+	
+	public String getLocName() {
+		return locName;
+	}
+	public void setLocName(String locName) {
+		this.locName = locName;
+	}
 	public int getWorkCode() {
 		return workCode;
 	}
