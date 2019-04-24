@@ -15,6 +15,23 @@ public class Landmark {
 	private int tagCode;
 	private int adminIdx;
 	private List<String> saveFilename;
+	private int workNum;
+	private int day;
+	
+	
+	
+	public int getWorkNum() {
+		return workNum;
+	}
+	public void setWorkNum(int workNum) {
+		this.workNum = workNum;
+	}
+	public int getDay() {
+		return day;
+	}
+	public void setDay(int day) {
+		this.day = day;
+	}
 	public int getLandCode() {
 		return landCode;
 	}
