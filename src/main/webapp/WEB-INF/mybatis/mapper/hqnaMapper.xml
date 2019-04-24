@@ -3,7 +3,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hqna">
 	<insert id="insertHqna" parameterType="com.sp.hqna.Hqna">
-		INSERT INTO question(qnacode, catCode, userIdx, subject, content)
+		INSERT INTO question(qnaCode, catCode, userIdx, subject, content)
 			VALUES(question_seq.NEXTVAL, 2, #{userIdx}, #{subject}, #{content} )	
 	</insert>
 	
@@ -41,7 +41,7 @@
 	<select id="listHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-					SELECT qnacode, q.userIdx, subject, hitCount, 
+					SELECT qnaCode, q.userIdx, subject, hitCount, 
 		            TO_CHAR(created, 'YYYY-MM-DD')created, catCode
 		            FROM question q
 		            JOIN tb_user u ON u.userIdx=q.userIdx
@@ -51,7 +51,7 @@
 						</if>		
 		           	AND catCode =2
 					</where>
-		            ORDER BY qnacode DESC
+		            ORDER BY qnaCode DESC
 <![CDATA[
 		    ) tb WHERE ROWNUM <= #{end}
 		) WHERE rnum >= #{start}
@@ -62,14 +62,14 @@
 		UPDATE question SET hitCount=hitCount+1 WHERE qnaCode=#{qnaCode}
 	</update>
 	
-	<select id="readHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
-	SELECT qnaCode, q.userIdx, subject, content, hitCount, created,
+	<select id="readHqna" parameterType="Integer" resultType="com.sp.hqna.Hqna">
+	SELECT qnaCode, u.userName, subject, content, hitCount, created
 	FROM question q
 	JOIN tb_user u ON u.userIdx=q.userIdx
 	WHERE qnaCode=#{qnaCode}
 	</select> 
 	
-	<select id="preRedaHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
+	<select id="preReadHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 		SELECT tb.*FROM (
 			SELECT qnaCode, subject
 			FROM question q
@@ -78,7 +78,7 @@
 			<if test="value != null and value !=''">
 				<include refid="where-list"/>
 			</if>
-			AND (qnaCode &gt; #{qnaCode})
+			AND qnaCode &gt; #{qnaCode}
 			</where>
 				ORDER BY qnaCode ASC
 		)tb WHERE ROWNUM=1
@@ -93,9 +93,21 @@
 			<if test="value !=null and value !=''">
 				<include refid="where-list"/>
 			</if>
-			AND(qnaCode &lt; #{qnaCode})
+			AND qnaCode &lt; #{qnaCode}
 			</where>
-				ORDER BY qnaCode ASC
+				ORDER BY qnaCode DESC
 		)tb WHERE ROWNUM=1
 	</select>
+	
+	<update id="updateHqna" parameterType="com.sp.hqna.Hqna">
+		UPDATE question SET subject=#{subject}, content=#{content, jdbcType=CLOB} WHERE qnaCode=#{qnaCode}
+	</update>
+	
+	<delete id="deleteHqna" parameterType="Integer">
+		DELETE FROM question WHERE qnaCode=#{qnaCode}
+	</delete>
+	
+	<select id="listReply" parameterType="map" resultType="com.sp.hqna.Reply">
+		SELECT answerCode, qnaCode, answerContent, answerCreated, adminIdx FROM answer 	WHERE qnaCode=#{qnaCode}
+	</select>	
 </mapper>
