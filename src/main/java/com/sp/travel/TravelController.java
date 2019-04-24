@@ -231,6 +231,7 @@ public class TravelController {
 			@RequestParam(value="page",defaultValue="1") int current_page,
 			@RequestParam(value="searchKey", defaultValue="all") String searchKey,
 			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam(value="locCode",defaultValue="0") int locCode,
 			HttpSession session,
 			HttpServletRequest req,
 			Model model
@@ -256,7 +257,7 @@ public class TravelController {
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		map.put("userIdx", userIdx);
-		
+		map.put("locCode", locCode);
 		int dataCount = travelService.myDataCount(map);
 		int rows = 4;
 		int total_page = util.pageCount(rows, dataCount);
@@ -265,6 +266,8 @@ public class TravelController {
 		
 		int start = (current_page-1)*rows +1;
 		int end = current_page * rows;
+		
+		System.out.println("dataCount:"+dataCount+",current_page:"+current_page+",start:"+start+",end:"+end+" 가나다라마바사");
 		
 		map.put("start", start);
 		map.put("end", end);
@@ -290,6 +293,97 @@ public class TravelController {
 		return ".travel.myplan.myList";
 	}
 	
+	@RequestMapping(value="/travel/plan/view")
+	public String view(
+			@RequestParam int locCode,
+			@RequestParam int workNum,
+			@RequestParam int dayCount,
+			@RequestParam int userIdx,
+			@RequestParam(value="day",defaultValue="1") int day,
+			Model model
+			) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("userIdx", userIdx);
+		map.put("workCode", workNum);
+		map.put("day", day);
+		
+		Workspace workspace = travelService.readWorkspace(map);
+
+		List<WorkLand> list = travelService.readWorkLand(map);
+		//userName,subject,startDay,endDay,dayCount,userIdx
+		model.addAttribute("workspace", workspace);
+		model.addAttribute("list", list);
+		model.addAttribute("day", day);
+	
+		return ".travel.plan.view";
+	}
+	
+	@RequestMapping(value="/travel/plan/list")
+	public String list() {
+			/*@RequestParam(value="page",defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="all") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam(value="locCode",defaultValue="0") int locCode,
+			HttpSession session,
+			HttpServletRequest req,
+			Model model
+			) throws UnsupportedEncodingException {
+		session = req.getSession();
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		int userIdx = info.getUserIdx();
+		
+		String cp = req.getContextPath();
+		String list_url = cp+"/travel/myplan/myList";
+		String article_url = cp+"/travel/myArticle?page="+current_page;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		}
+		
+		if(searchValue.length()!=0) {
+			list_url += "?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+			article_url += "&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+		}
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		map.put("userIdx", userIdx);
+		map.put("locCode", locCode);
+		int dataCount = travelService.myDataCount(map);
+		int rows = 4;
+		int total_page = util.pageCount(rows, dataCount);
+		if(current_page > total_page) 
+			current_page = total_page;
+		
+		int start = (current_page-1)*rows +1;
+		int end = current_page * rows;
+		
+		System.out.println("dataCount:"+dataCount+",current_page:"+current_page+",start:"+start+",end:"+end+" 가나다라마바사");
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Workspace> list = travelService.myList(map);
+		
+		String paging = util.paging(current_page, total_page, list_url);
+		
+		//작성한 지역과 카운트 가져오기
+		List<LocCategory> locCategory = travelService.locationCategory(userIdx);
+		
+		model.addAttribute("locCategory", locCategory);
+		model.addAttribute("list", list);
+		model.addAttribute("list_url", list_url);
+		model.addAttribute("article_url", article_url);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("page", current_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey", searchKey);
+		*/
+		return ".travel.plan.list";
+	}
 	
 	
 	

@@ -114,7 +114,7 @@
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/travel/location">- 지역보기</a></li>
                                         <li><a href="<%=cp%>/travel/landMark">- 랜드마크 보기 </a></li>
-                                        <li><a href="#">- 일정 모음</a></li>
+                                        <li><a href="<%=cp%>/travel/plan/list">- 일정 모음</a></li>
                                         <li><a href="<%=cp%>/travel/myplan/myList">- 나만의 일정</a></li>
                                         <li><a href="<%=cp%>/travel/party">- 동료 모으기</a>
                                         	<ul class="dropdown">

@@ -40,7 +40,10 @@
 					e.setRequestHeader("AJAX",true);
 				},
 				error:function(e){
-					console.log(e.responseText);
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
 				}
 			});
 		});
@@ -60,7 +63,10 @@
 				e.setRequestHeader("AJAX",true);
 			},
 			error:function(e){
-				console.log(e.responseText);
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
 			}
 			
 		});
@@ -115,7 +121,10 @@
 				},
 				error:function(e){
 					alert("경로 생성에 실패하였습니다. 잠시 후 다시 시도해주세요 ");
-					console.dir(e);
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
 				}
 			});
 		});

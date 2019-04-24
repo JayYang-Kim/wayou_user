@@ -10,9 +10,16 @@ public class Workspace {
 	private int locCode;
 	private int userIdx;
 	private String locName;
+	private String userName;
 	
 	
 	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public String getLocName() {
 		return locName;
 	}

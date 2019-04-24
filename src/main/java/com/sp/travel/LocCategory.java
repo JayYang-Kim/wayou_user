@@ -1,8 +1,17 @@
 package com.sp.travel;
 
 public class LocCategory {
+	private int locCode;
 	private String locName;
 	private int count;
+	
+	
+	public int getLocCode() {
+		return locCode;
+	}
+	public void setLocCode(int locCode) {
+		this.locCode = locCode;
+	}
 	public String getLocName() {
 		return locName;
 	}

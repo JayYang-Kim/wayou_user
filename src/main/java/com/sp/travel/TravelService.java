@@ -181,4 +181,24 @@ public class TravelService {
 		}
 		return list;
 	}
+
+	public Workspace readWorkspace(Map<String, Object> map) {
+		Workspace result=null;
+		try {
+			result = dao.selectOne("workspace.readWorkspace",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<WorkLand> readWorkLand(Map<String, Object> map) {
+		List<WorkLand> list = null;
+		try {
+			list = dao.selectList("workspace.readWorkLand",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 }

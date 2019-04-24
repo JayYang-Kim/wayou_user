@@ -147,6 +147,9 @@
 			<if test="searchValue!=null and searchValue!=''">
 				<include refid="searchDataCount" />
 			</if>
+			<if test="locCode!=0">
+				locCode=#{locCode}
+			</if>
 			and userIdx = #{userIdx}
 		</where>
 	</select>
@@ -154,12 +157,15 @@
 	<select id="myList" parameterType="map" resultType="com.sp.travel.Workspace">
 		select * from (
 			select tb.*, rownum rnum from (
-				select c.locName, w.workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename from workspace w
+				select c.locName, w.workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename, userIdx from workspace w
 					join location l on w.locCode = l.locCode
 					join locationCode c on l.locCode=c.locCode
 						<where>
 							<if test="searchValue!=null and searchValue!=''">
 								<include refid="search"/>
+							</if>
+							<if test="locCode!=0">
+								w.locCode=#{locCode}
 							</if>
 							and userIdx = #{userIdx}
 						</where>
@@ -167,24 +173,30 @@
 			)tb where rownum &lt;= #{end}
 		) where rnum &gt;=#{start}
 	</select>
-<!-- 	<select id="myListByTag" parameterType="map" resultType="com.sp.travel.Workspace">
-		select * from (
-			select tb.*, rownum rnum from (
-				select c.locName, w.workCode, to_char(w.created,'YYYY-MM-DD') created, w.subject, w.dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename from workspace w
-					join location l on w.locCode = l.locCode
-					join locationCode c on l.locCode=c.locCode
-							
-							and userIdx = #{userIdx}
-						order by workCode desc
-			)tb where rownum &lt;= #{end}
-		) where rnum &gt;=#{start}
-	</select> -->
 
  	<select id="locationCategory" parameterType="Integer" resultType="com.sp.travel.LocCategory">
- 		select unique locName, count(locName) over(partition by locName) as count
+ 		select unique locName,w.locCode, count(locName) over(partition by locName) as count
 		from workspace w
 		join locationCode c on w.locCode = c.locCode
 		where userIdx=#{userIdx}
+ 	</select>
+ 	
+ 	<select id="readWorkspace" parameterType="map" resultType="com.sp.travel.Workspace">
+ 		select u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created from workspace w
+ 		join tb_user u on w.userIdx=u.userIdx
+ 		where workCode=#{workCode} and u.userIdx=#{userIdx}
+ 	</select>
+ 	
+ 	<select id="readWorkLand" parameterType="map" resultType="com.sp.travel.WorkLand">
+ 		    select w.landCode, landName, workLandCode, tagName, saveFilename, orderNum 
+			from workland w 
+			join landmark lm on w.landCode=lm.landCode
+			left outer join landmarkfile lmf on w.landCode = lmf.landCode
+			join lndTagCode ltc on lm.tagCode = ltc.tagCode
+			where w.detailCode = 
+			(select detailCode from workspacedetail wd
+			join workspace ws on wd.workCode = ws.workCode where wd.workCode=#{workCode} and userIdx=#{userIdx} and day=#{day})
+			order by ordernum asc
  	</select>
 
 </mapper>

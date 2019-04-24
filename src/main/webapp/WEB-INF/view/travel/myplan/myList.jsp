@@ -136,12 +136,20 @@
 			var locCode = $(this).find("input").attr("data-locCode");
 			var workCode = $(this).find("input").attr("data-workCode");
 			var dayCount = $(this).find("input").attr("data-dayCount");
-			location.href="<%=cp%>/travel/myplan/workspace?locCode="+locCode+"&workNum="+workCode+"&dayCount="+dayCount;
+			var userIdx = $(this).find("input").attr("data-userIdx");
+			location.href="<%=cp%>/travel/plan/view?locCode="+locCode+"&workNum="+workCode+"&dayCount="+dayCount+"&userIdx="+userIdx;
 		});
 	});
 	$(function(){
 		$(".newRoute").click(function(){
 			location.href="<%=cp%>/travel/myplan/add";
+		});
+	});
+	
+	$(function(){
+		$(".routeLocList").click(function(){
+			var locCode= $(this).attr("data-locCode");
+			location.href="<%=cp%>/travel/myplan/myList?locCode="+locCode;
 		});
 	});
 	
@@ -209,7 +217,7 @@
 							<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" style="float: left;">
 							<div style="float: left;">
 								<p>
-									<input type="hidden" data-locCode="${dto.locCode}" data-workCode="${dto.workCode}" data-dayCount="${dto.dayCount}">
+									<input type="hidden" data-locCode="${dto.locCode}" data-workCode="${dto.workCode}" data-dayCount="${dto.dayCount}" data-userIdx="${dto.userIdx}">
 									<span style="font-size: 20px; font-weight: bold; text-overflow:ellipsis; display: block; overflow: hidden; white-space: nowrap;">${dto.subject}</span>
 									<span>여행지역 : ${dto.locName}</span><br>
 									<span>출발일 : ${dto.startDay} | 여행기간 : ${dto.dayCount}(일)</span><br>
@@ -217,9 +225,11 @@
 								</p> 
 							</div>
 						</div>
-						<c:if test="${locCategory==null}">
-							<h3>데이터가 존재하지 않습니다.</h3>
-						</c:if>
+						<c:if test="${empty list}">
+		                	<div class="t_center mt40 mb40">
+		                		<span class="f14 exbold">등록된 여행 일정이 없습니다.</span>
+		                	</div>
+		                </c:if>          
 					</c:forEach>
 				</section>
                 <!-- Pagination -->
@@ -236,7 +246,7 @@
 							<div class="sidebar_list">
 								<ul>
 									<c:forEach var="n" items="${locCategory}">
-										<li class=""><a>${n.locName}</a>(${n.count})</li>
+										<li class="routeLocList" data-locCode="${n.locCode}"><a>${n.locName}</a>(${n.count})</li>
 									</c:forEach>
 								</ul>
 							</div>
