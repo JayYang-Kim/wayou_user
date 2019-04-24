@@ -7,10 +7,15 @@ public interface HqnaService {
 	public int insertHqna(Hqna dto);
 	public List<Hqna> listHqna(Map<String, Object> map);
 	public int dataCount(Map<String, Object> map);
-	public int updateHitCount(int num);
-	public Hqna readHqna(int num);
+	public int updateHitCount(int qnaCode);
+	
+	public Hqna readHqna(int qnaCode);
 	public Hqna preReadHqna(Map<String, Object> map);
 	public Hqna nextReadHqna(Map<String, Object> map);
+	
 	public int updateHqna(Hqna dto);
-	public int deleteHqna(int num);
+	
+	public int deleteHqna(int qnaCode);
+	
+	public List<Reply> listReply(Map<String, Object>map);
 }

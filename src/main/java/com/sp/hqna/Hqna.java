@@ -1,8 +1,7 @@
 package com.sp.hqna;
 
 public class Hqna {
-	private int qnaCode; //listnum
-	private int num;
+	private int qnaCode; //num
 	private int catCode; //카테고리 코드
 	private String subject;
 	private String created;
@@ -13,18 +12,12 @@ public class Hqna {
 	private int userIdx;
 	private int listNum;
 	private int hitCount;
-	 
+	
 	public int getQnaCode() {
 		return qnaCode;
 	}
 	public void setQnaCode(int qnaCode) {
 		this.qnaCode = qnaCode;
-	}
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
 	}
 	public int getCatCode() {
 		return catCode;
@@ -86,5 +79,8 @@ public class Hqna {
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
 	}
+
+	 
+
 	
 }

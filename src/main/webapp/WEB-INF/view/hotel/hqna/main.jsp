@@ -28,7 +28,7 @@ $(function(){
 		  
 		  var url;
 		  if(tab=="1") {
-			  url="<%=cp%>/hotel/hqna/tab1";
+			  url="<%=cp%>/hotel/hqna/listTab1";
 		  } else if(tab=="2") {
 			  url="<%=cp%>/hotel/hqna/tab2";
 		  } else if(tab=="3") {
@@ -103,16 +103,39 @@ function ajaxJSON(url, type, query, mode) {
 	});
 }
 
+function ajaxJSON2(url, query, mode) {
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:query
+		,dataType:"JSON"
+		,success:function(data) {
+			listPage(pageNo);
+		}
+		,beforeSend:function(e) {
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e) {
+			if(e.status==403) {
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+
 $(function () {
 	listPage(1);
 });
 
-function  listPage(page) {
+function listPage(page) {
 	//페이징
 	pageNo=page; //이렇게 페이지를 담아야 정확하게 몇페이지인지 볼수있음
 	
 	var id="tabContent1";
-	var url="<%=cp%>/hotel/hqna/tab1";
+	var url="<%=cp%>/hotel/hqna/listTab1";
 	var query="pageNo="+page;
 	if(value!="") {
 		query +="&key="+key+"&value="+encodeURIComponent(value);
@@ -129,7 +152,7 @@ function reloadHqna() {
 }
 
 function sendHqna(mode) {
-	var f=document.boardForm;
+	var f=document.hqnaForm;
 	
 	if(! f.subject.value) {
 		f.subject.focus();
@@ -148,9 +171,55 @@ function sendHqna(mode) {
 	}
 	
 	var url="<%=cp%>/hotel/hqna/"+mode;
-	var query=new FsormData(f);
+	var query=$("form[name=hqnaForm]").serialize();
 	
-	ajaxJSON(url, "post", query, "created");
+	ajaxJSON2(url, query, mode);
+}
+
+function articleHqna(qnaCode) {
+	var id="tabContent1";
+	var url="<%=cp%>/hotel/hqna/article";
+	var query="qnaCode="+qnaCode+"&pageNo="+pageNo;
+	if(value!="") {
+		query +="&key="+key+"&value="+encodeURIComponent(value);
+	}
+
+	ajaxHTML(url, "get", query, id);
+}
+
+function insertHqna() {
+	var url="<%=cp%>/hotel/hqna/created";
+	$("#tabContent1").load(url);
+}
+
+function updateHqna(qnaCode) {
+
+	var url="<%=cp%>/hotel/hqna/update";
+	var query="qnaCode="+qnaCode+"&pageNo="+pageNo;
+	
+	if( value !="") {
+		query +="&key="+key+"&value="+encodeURIComponent(value);
+	}
+	
+	ajaxHTML(url, "get", query, "tabContent1");
+}
+
+function deleteHqna(qnaCode) {
+	if( !confirm("삭제하시겠습니까?")){
+		return;
+	}
+	
+	var url="<%=cp%>/hotel/hqna/delete";
+	var query="qnaCode="+qnaCode;
+	
+	ajaxJSON(url, "post", query, "delete");
+}
+
+function serchList() {
+	key=$("#key").val();
+	value=$("#value").val();
+	
+	listPage(1);
 }
 </script>
 

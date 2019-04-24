@@ -1,7 +1,6 @@
 package com.sp.hqna;
 
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
@@ -28,13 +28,13 @@ public class HqnaController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/hotel/hqna/list",method=RequestMethod.GET )
+	@RequestMapping(value="/hotel/hqna/main",method=RequestMethod.GET )
 	public String hqnaList() throws Exception {
 		
-		return ".hotel.hqna.list";
+		return ".hotel.hqna.main";
 	}
 	
-	@RequestMapping(value="/hotel/hqna/tab1")
+	@RequestMapping(value="/hotel/hqna/listTab1")
 	public String hqnaListTab1(
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all")String key,
@@ -86,7 +86,7 @@ public class HqnaController {
 		model.addAttribute("key", key);
 		model.addAttribute("value", value);
 		
-		return "hotel/hqna/tab1";
+		return "hotel/hqna/listTab1";
 	}
 	
 	@RequestMapping(value="/hotel/hqna/tab2", method=RequestMethod.POST)
@@ -103,60 +103,142 @@ public class HqnaController {
 	public String createdForm(Model model) throws Exception {
 		model.addAttribute("mode", "created");
 		
-		return ".hotel.hqna.created";
+		return "hotel/hqna/created";
 	}
 	
 	@RequestMapping(value= "/hotel/hqna/created", method=RequestMethod.POST)
-	public String createdSubmit(HttpSession session, Hqna dto) throws Exception {
-		
+	@ResponseBody
+	public Map<String, Object> createdSubmit(HttpSession session, Hqna dto) throws Exception {
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
-	
+		
 		dto.setUserIdx(info.getUserIdx());
 		
-		hqnaService.insertHqna(dto);
+		String state="true";
 		
-		return "redirect:/hotel/hqna/list";
+		int result= hqnaService.insertHqna(dto);
+		if(result==0)
+			state="false";
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		
+		return model;
 	}
 	
 	@RequestMapping(value= "/hotel/hqna/article")
 	public String article(
-			@RequestParam int num,
-			@RequestParam String page,
+			@RequestParam int qnaCode,
+			@RequestParam int pageNo,
 			@RequestParam (defaultValue="all") String key,
 			@RequestParam (defaultValue="") String value,
 			HttpSession session,
+			HttpServletRequest req,
 			Model model
 			) throws Exception {
-			
-		value=URLDecoder.decode(value, "UTF-8");
-		String query="page="+page;
-		if(value.length() !=0) {
-			query +="key="+key+"value="+URLDecoder.decode(value, "UTF-8");
-		}
 		
-		hqnaService.updateHitCount(num);
+		hqnaService.updateHitCount(qnaCode);	
 		
-		Hqna dto=hqnaService.readHqna(num);
+		Hqna dto=hqnaService.readHqna(qnaCode);
+		
 		if(dto==null) {
-			return "redirect:hotel/hqna/list?"+query;
+			return hqnaListTab1(pageNo, key, value, req, model);
 		}
+		
 		
 		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
 		
 		Map<String, Object> map = new HashMap<>();
+		value=URLDecoder.decode(value, "utf-8");
 		map.put("key", key);
 		map.put("value", value);
-		map.put("num", num);
+		map.put("qnaCode", qnaCode);
 		
 		Hqna preHqnadto = hqnaService.preReadHqna(map);
 		Hqna nextHqndto = hqnaService.nextReadHqna(map);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("preHqnadto", preHqnadto);
-		model.addAttribute("nextHqnadto", nextHqndto);
-		model.addAttribute("query", query);
-		model.addAttribute("page", page);		
+		model.addAttribute("nextHqnadto", nextHqndto);	
 		
-		return ".hotel.hqna.article";
+		return "hotel/hqna/article";
+	}
+	
+	
+	@RequestMapping(value="/hotel/hqna/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int qnaCode,
+			@RequestParam int pageNo,
+			@RequestParam (defaultValue="all") String key,
+			@RequestParam (defaultValue="") String value,
+			HttpSession session,
+			HttpServletRequest req,
+			Model model
+			) throws Exception {
+		
+		
+		Hqna dto=hqnaService.readHqna(qnaCode);
+		
+		if(dto==null) {
+			return hqnaListTab1(pageNo, key, value, req, model);
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+				
+		return "hotel/hqna/created";
+	}
+	
+	@RequestMapping(value="/hotel/hqna/update", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> updateSubmit(HttpSession session, Hqna dto) throws Exception {
+
+		hqnaService.updateHqna(dto);
+		
+		String state="true";
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		
+		return model;
+	}
+	
+	@RequestMapping(value="/hotel/hqna/delete", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> deleteHqna(@RequestParam int qnaCode,
+										  HttpSession session) throws Exception {
+		
+		
+		
+		int result=hqnaService.deleteHqna(qnaCode);
+		String state="true";
+		if(result==0)
+			state="false";
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		
+		return model;
+		
+	}
+	
+	@RequestMapping(value="/hotel/hqna/listReply")
+	public String listReply(
+							@RequestParam int qnaCode,
+							Model model ) throws Exception {
+		
+	Map<String, Object> map=new HashMap<>();
+	map.put("qnaCode", qnaCode);
+	
+	
+	List<Reply> listReply=hqnaService.listReply(map);
+	for(Reply dto:listReply) {
+		dto.setAnswerContent(myUtil.htmlSymbols(dto.getAnswerContent()));
+	}
+	
+	model.addAttribute("listReply", listReply);
+
+	
+		return "hotel/hqna/listReply";
+		
 	}
 }

@@ -5,7 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
-			<form name="boardForm" method="post" enctype="multipart/form-data"><!--파일업로드 필수 : enctype="multipart/form-data"  -->
+			<form name="hqnaForm" method="post">
 			  <table style="width: 100%; margin: 20px auto 0px; border-spacing: 0px; border-collapse: collapse;">
 			  <tr align="left" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">제&nbsp;&nbsp;&nbsp;&nbsp;목</td>
@@ -17,7 +17,7 @@
 			  <tr align="left" height="40" style="border-bottom: 1px solid #cccccc;"> 
 			      <td width="100" bgcolor="#eeeeee" style="text-align: center;">작성자</td>
 			      <td style="padding-left:10px;"> 
-			          ${sessionScope.member.userName }
+			          ${sessionScope.member.userName}
 			      </td>
 			  </tr>
 			
@@ -39,8 +39,7 @@
 			        <button type="button" class="btn" onclick="listPage(pageNo)">${mode=='update'?'수정취소':'등록취소'}</button>
 			  
 					  <c:if test="${mode=='update'}">
-					         	 <input type="hidden" name="num" value="${dto.num}">
-					        	 <input type="hidden" name="page" value="${page}">
+					         	 <input type="hidden" name="qnaCode" value="${dto.qnaCode}">
 					  </c:if>
 			      </td>
 			    </tr>
