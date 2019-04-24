@@ -156,6 +156,13 @@ public class HqnaController {
 		Hqna preHqnadto = hqnaService.preReadHqna(map);
 		Hqna nextHqndto = hqnaService.nextReadHqna(map);
 		
+		
+		List<Reply> listReply=hqnaService.listReply(map);
+		for(Reply vo:listReply) {
+			vo.setAnswerContent(myUtil.htmlSymbols(vo.getAnswerContent()));
+		}
+		
+		model.addAttribute("listReply", listReply);		
 		model.addAttribute("dto", dto);
 		model.addAttribute("preHqnadto", preHqnadto);
 		model.addAttribute("nextHqnadto", nextHqndto);	

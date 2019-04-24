@@ -5,17 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 
@@ -52,7 +41,7 @@ var key = "all";
 var value = "";
 
 function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data를 리턴한 jsp에 뿌려주고 해당 jsp의 html을 해당 id자리에 뿌려줌
-	
+
 	$.ajax({ 
 		type:type
 		,url:url
@@ -75,7 +64,6 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 }
 
 function ajaxJSON(url, type, query, mode) {
-	
 	$.ajax({
 		type:type
 		,url:url
@@ -131,6 +119,7 @@ $(function () {
 });
 
 function listPage(page) {
+
 	//페이징
 	pageNo=page; //이렇게 페이지를 담아야 정확하게 몇페이지인지 볼수있음
 	
@@ -152,6 +141,7 @@ function reloadHqna() {
 }
 
 function sendHqna(mode) {
+	alert(mode);
 	var f=document.hqnaForm;
 	
 	if(! f.subject.value) {
@@ -172,7 +162,7 @@ function sendHqna(mode) {
 	
 	var url="<%=cp%>/hotel/hqna/"+mode;
 	var query=$("form[name=hqnaForm]").serialize();
-	
+
 	ajaxJSON2(url, query, mode);
 }
 
@@ -221,11 +211,8 @@ function serchList() {
 	
 	listPage(1);
 }
+
 </script>
-
-</head>
-<body>
-
 	
 <div style="margin: 30px auto; width:60%;">
 	<div role="tabpanel">
@@ -242,5 +229,3 @@ function serchList() {
 	  </div>
     </div>
 </div>	
-</body>
-</html>

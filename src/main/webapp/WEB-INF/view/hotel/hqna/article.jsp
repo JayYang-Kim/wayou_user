@@ -5,37 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
-<script type="text/javascript">
 
-$(function () {
-	listPage(1);
-});
-
-function listPage(page) {
-	var query="qnaCode="+${dto.qnaCode};
-	var url="<%=cp%>/hotel/hqna/listReply";
-	
-	$.ajax({
-		type:"get"
-		,url:url
-		,data:query
-		,success:function(data) {
-			$("#listReply").html(data);
-		}
-	,beforeSend:function(e){
-		e.setRequestHeader("AJAX", true);
-	}
-	,error:function(e) {
-		if(e.status==403) {
-			location.href="<%=cp%>/member/login";
-			return;
-		}
-		console.log(e.responseText);
-	}	
-  });
-}
-
-</script>
 <div class="body-container" style="width: 700px;">
     <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
@@ -112,6 +82,24 @@ function listPage(page) {
             </tr>
             </table>
             
-            <div id="listReply"></div>
+            <div id="listReply">
+            <table style='width: 100%; margin: 10px auto 30px; border-spacing: 0px;'>
+				<tbody id='listReply'>
+					<c:forEach var="vo" items="${listReply }">
+						    <tr height='35' style='background: #eeeeee;'>
+						       <td width='100%' style='padding:5px 5px; border:1px solid #cccccc;'>
+						          ${vo.answerContent }      
+						        </td>
+						    </tr>
+						    <tr height='35'>
+						     	<td width='100%' style='padding:5px 5px;' align="right">
+						    		  <span>${vo.answerCreated }</span>   
+						        </td>  
+						    </tr>
+					</c:forEach>
+			</tbody>
+			</table>
+            
+           </div>
         </div> 
 </div>
