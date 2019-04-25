@@ -74,7 +74,7 @@ public class MemberController {
 		int result=memberService.insertMember(user);
 		
 		if(result==0) {
-			System.out.println("====================실패");
+			//실패 메세지
 		}
 		sessionStatus.setComplete();
 		

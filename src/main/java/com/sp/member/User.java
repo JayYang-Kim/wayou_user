@@ -6,7 +6,7 @@ public class User {
 	private String userId;
 	private String userPwd;
 	private String userName;
-	private int postCode;
+	private String postCode;
 	private String userAddr1;
 	private String userAddr2;
 	private String etc;
@@ -47,10 +47,10 @@ public class User {
 		this.userName = userName;
 	}
 
-	public int getPostCode() {
+	public String getPostCode() {
 		return postCode;
 	}
-	public void setPostCode(int postCode) {
+	public void setPostCode(String postCode) {
 		this.postCode = postCode;
 	}
 	public String getUserAddr1() {
