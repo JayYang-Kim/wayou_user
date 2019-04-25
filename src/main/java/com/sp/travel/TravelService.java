@@ -201,4 +201,14 @@ public class TravelService {
 		}
 		return list;
 	}
+
+	public int countWorkDetail(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.selectOne("workspace.countWorkDetail",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

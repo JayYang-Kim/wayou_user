@@ -27,13 +27,19 @@
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0)
-		FROM ticket
+		FROM ticket t
+		JOIN store s ON t.storeCode=s.storeCode
+		<where>
+			<if test="regionCode != 0">
+				locCode=#{regionCode}
+			</if>
+		</where>
 	</select>
 	
 	<select id="listTicket" parameterType="map" resultType="com.sp.ticket.Ticket">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode
+		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.address1
 		    	FROM ticket t
 		    	JOIN (
 		    			select ticketCode, max(price) as price
@@ -41,11 +47,26 @@
 		    			GROUP BY ticketCode
 				) detail on detail.ticketCode=t.ticketCode
 				JOIN store s ON t.storeCode=s.storeCode
+				<where>
+					<if test="regionCode != 0">
+						locCode=#{regionCode}
+					</if>
+				</where>
 				ORDER BY t.ticketCode DESC
 <![CDATA[				
 	        )tb WHERE ROWNUM <= #{end}
        )WHERE rnum >= #{start}
 ]]>
+	</select>
+	
+	<select id="region" resultType="com.sp.ticket.Ticket">
+		SELECT locCode, locName
+		FROM ticketLocation
+	</select>
+	
+	<select id="category" resultType="com.sp.ticket.Ticket">
+		SELECT categoryCode, categoryName
+		FROM ticketCategory
 	</select>
 
 

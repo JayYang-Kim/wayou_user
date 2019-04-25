@@ -67,11 +67,7 @@
 	        </div>
 	    </div>
 	</section>
-	<!-- Welcome Area End -->
-	  
-	<!-- About Us Area End -->
-	
-	 <!-- Rooms Area Start -->
+
 	 
     <div class="roberto-rooms-area section-padding-100-0">
         <div class="container">
@@ -93,7 +89,7 @@
                                 <h6>Bed: <span>King beds</span></h6>
                                 <h6>Services: <span>Wifi, television ...</span></h6>
                             </div>
-                          	<a href="<%=cp%>/hotel/harticle" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                          	<a href="<%=cp%>/hotel/hotel/article" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
 
@@ -160,9 +156,7 @@
             </div>
         </div>
     </div>
-    <!-- Rooms Area End -->
 
-    <!-- Call To Action Area Start -->
     <section class="roberto-cta-area" style="padding-bottom: 30px;">
         <div class="container">
             <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/1.jpg);">

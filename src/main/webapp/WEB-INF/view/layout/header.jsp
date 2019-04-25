@@ -149,7 +149,7 @@
                                         <li><a href="<%=cp%>/hotel/hotel/article">- 나만의 호텔 예약</a></li>
                                         <li><a href="<%=cp%>/hotel/hevent/hevent">- 이벤트</a></li>
                                         <li><a href="#">- 공지사항</a></li>
-                                        <li><a href="<%=cp%>/hotel/hqna/list">- 문의사항</a></li>
+                                        <li><a href="<%=cp%>/hotel/hqna/main">- 문의사항</a></li>
                                         <li><a href="#">- FAQ</a></li>
                                     </ul>
                                 </li>
