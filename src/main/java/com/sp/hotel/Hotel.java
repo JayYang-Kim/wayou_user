@@ -12,6 +12,10 @@ public class Hotel {
 	private String saveFilename;
 	private int adminIdx;
 	private int locCode;
+	private int listNum;
+	private int price;
+	private int HCount;
+		
 	public int getHotelCode() {
 		return hotelCode;
 	}
@@ -77,6 +81,24 @@ public class Hotel {
 	}
 	public void setLocCode(int locCode) {
 		this.locCode = locCode;
+	}
+	public int getListNum() {
+		return listNum;
+	}
+	public void setListNum(int listNum) {
+		this.listNum = listNum;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public int getHCount() {
+		return HCount;
+	}
+	public void setHCount(int hCount) {
+		HCount = hCount;
 	}
 	
 	

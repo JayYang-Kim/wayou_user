@@ -74,6 +74,7 @@
             <div class="row">
                 <div class="col-12 col-lg-8" >
                     <!-- Single Room Area -->
+                        <c:forEach var="dto" items="${list}">
                     <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                         <!-- Room Thumbnail -->
                         <div class="room-thumbnail">
@@ -81,29 +82,28 @@
                         </div>
                         <!-- Room Content -->
                         <div class="room-content">
-                            <h2>호텔 이름</h2>
-                            <h4>가격 <span>/ Day</span></h4>
+                            <h2>${dto.hName}</h2>
+                            <h4>가격 <span>${dto.price }/ Day</span></h4>
                             <div class="room-feature">
-                                <h6>Size: <span>30 ft</span></h6>
-                                <h6>Capacity: <span>Max persion 5</span></h6>
-                                <h6>Bed: <span>King beds</span></h6>
-                                <h6>Services: <span>Wifi, television ...</span></h6>
+                                <h6>위치<span>${dto.locCode }</span></h6>
+                                <h6>최대인원: <span>${dto.HCount }</span></h6>
+                                <h6>별찍기?: <span>몇점?</span></h6>
                             </div>
                           	<a href="<%=cp%>/hotel/hotel/article" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
+                        </c:forEach>
 
                   
 
                     <!-- Pagination -->
-                    <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="1000ms">
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a></li>
-                        </ul>
-                    </nav>
+					<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+					   <tr height="35">
+						<td align="center">
+					        ${dadtaCount==0?"등록된 자료가 없습니다.": paging}
+						</td>
+					   </tr>
+					</table>
                 </div>
 
                 <div class="col-12 col-lg-4">
@@ -141,14 +141,15 @@
                                  <label style="font-size: 25px; padding-top: 30px;">지역 검색</label>
                                 <div>
                                     <div class="row no-gutters">
-                                    <div class="col-6">                         
-				                        <input type="text" class="form-control" id="input_search" name="input_search"/>	                    
+                                    <div class="col-6" >                         
+				                        <input type="text" class="form-control" id="key" name="key" value="검색하기"/>
+				                          	   	                 
                                     </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group" style="">
-                                <button type="submit" class="btn roberto-btn w-100">Check Available</button>
+                                <button type="submit" class="btn roberto-btn w-100">호텔 찾아보자</button>
                             </div>
                         </form>
                     </div>
@@ -157,7 +158,7 @@
         </div>
     </div>
 
-    <section class="roberto-cta-area" style="padding-bottom: 30px;">
+    <section class="roberto-cta-area" style="padding-bottom: 80px;">
         <div class="container">
             <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/1.jpg);">
                 <div class="row align-items-center">
