@@ -80,6 +80,10 @@ public class TravelService {
 	public List<Landmark> landListByDay(Map<String, Object> map) {
 		List<Landmark> list = null;
 		try {
+			if((Integer)map.get("day")==0) {
+				list = dao.selectList("workspace.landListAllDay", map);
+				return list;
+			}
 			list = dao.selectList("workspace.landListByDay", map);
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -144,5 +148,57 @@ public class TravelService {
 			e.printStackTrace();
 		}
 		return seqNum;
+	}
+	
+	
+
+	public int myDataCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.selectOne("workspace.myDataCount",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public List<Workspace> myList(Map<String, Object> map) {
+		List<Workspace> list = null;
+		try {
+			list = dao.selectList("workspace.myList",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<LocCategory> locationCategory(int userIdx){
+		List<LocCategory> list = null;
+		try {
+			list = dao.selectList("workspace.locationCategory",userIdx);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	public Workspace readWorkspace(Map<String, Object> map) {
+		Workspace result=null;
+		try {
+			result = dao.selectOne("workspace.readWorkspace",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public List<WorkLand> readWorkLand(Map<String, Object> map) {
+		List<WorkLand> list = null;
+		try {
+			list = dao.selectList("workspace.readWorkLand",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

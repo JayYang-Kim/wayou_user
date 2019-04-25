@@ -31,9 +31,9 @@
 			drawMap($info.attr("data-lat"),$info.attr("data-lng"));
 		});
 		
-		$("body").on("click",".removeLocation", function(){
+		$("body").on("click",".removeLocation", function(e){
 			if(!confirm("일정에서 삭제하시겠습니까?")){
-				return;
+				return false;
 			}
 			$(this).parent().remove();
 			if($(this).closest("#landInfo").find("div").size==0){
@@ -41,6 +41,12 @@
 			}
 			$("#btn_addRouteByDay").css("background","#1cc3b2");
 			$("#btn_addRouteByDay").prop("disabled",false);
+			if($("#landInfo").children("div").length==0){
+				drawMap('${lat}','${lng}');
+				return false;
+			}
+			e.stopPropagation();
+			drawRouteToMap($("#landInfo").children("div"));
 		});
 		
 		
@@ -194,7 +200,7 @@
 				success : function(data){
 					if(data.isSuccess){
 						alert("성공적으로 저장되었습니다.");
-						return;
+						return false;
 					}else{
 						alert("저장에 실패하였습니다. 잠시후 다시 시도해주세요");
 					}
@@ -237,6 +243,8 @@
 			var $selected = $(this);
 			var $lis = $(this).parent().children(".dayBar");
 			
+			$(".btn_addRouteByDay").prop("disabled",true);
+			
 			$($lis).each(function(){
 				if($(this).hasClass("ldbliActive")){
 					$(this).removeClass("ldbliActive");
@@ -244,17 +252,31 @@
 				}
 			});
 			$(this).addClass("ldbliActive");
+			if($(this).hasClass("dayBar-first")){
+				$("#btn_addRouteByDay").text("전체 일정 리스트");
+				return false;
+			}
 			current_day = $(this).attr("data-day");
 			listLandmark('${locCode}','All');
-			drawMap('${lat}','${lng}');
+			
 			loadSavedRouteByDay(current_day);
+			if($("#landInfo").children("div").length==0){
+				drawMap('${lat}','${lng}');	
+			}
 			$("#btn_addRouteByDay").text(current_day+"일차 작성완료");
 		});
 		
+		$(".dayBar-first").click(function(){
+			loadSavedRouteByDay(0);
+			return false;
+		});
+		
 		$("#totalComplete").click(function(){
-			if(!confirm("일정 작성을 완료하시겠습니까?(추후 수정 가능)")){
-				return;
+			if(!confirm("일정 작성을 완료하시겠습니까?\n(저장되지 않은 내용은 삭제되며, 이후 수정 가능합니다.)")){
+				return false;
 			}
+			location.href="<%=cp%>/travel/myplan/myList";
+			return false;
 		});
 	});
 	
@@ -268,6 +290,10 @@
 			data:query,
 			success:function(data){
 				$("#landInfo").html(data);
+				if($("#landInfo").children("div").length!=0){
+					drawRouteToMap($("#landInfo").children("div"));
+				}
+				return false;
 			},
 			beforesend:function(e){
 				e.setRequestHeader("AJAX",true);
@@ -285,7 +311,7 @@
 	<div class="row" style="margin-left: 0; margin-right: 0">
 		<div class="leftDayBar" class="col12 col-lg-1" style="background: teal; padding: 0;height: 750px; width: 158px; z-index: 0;">
 				  <ul style="width: 100%;" class="dayBox">
-				  	<li style="width: 100%;" class="dayBar">
+				  	<li style="width: 100%;" class="dayBar dayBar-first">
 				    	<div style="padding-left: 10px; min-height: 30px; color: white; height: 70px; width: 100%; font-size: 16px; padding-top:25px;">전체 일정 보기</div>
 				    </li>
 				  	<c:forEach var="i" begin="1" end="${dayCount}" step="1" >
@@ -293,7 +319,7 @@
 					      <div style="padding-left: 10px;min-height: 30px; color: white; height: 60px; width: 100%; font-size: 16px; padding-top:20px;">${i}일차</div>
 					    </li>
 				    </c:forEach>
-				    <li style="width: 100%;" class="dayBar">
+				    <li style="width: 100%;" class="dayBar dayBar-last">
 				    	<div id="totalComplete" style="padding-left: 10px; min-height: 30px; color: white; height: 70px; width: 100%; font-size: 16px; padding-top:25px;">전체 일정 작성완료</div>
 				    </li>
 				  </ul>
@@ -329,6 +355,9 @@
 $(function(){
 	$("#landInfo").droppable({
 	    drop: function(event, ui) {
+	    	if($(".dayBar-first").hasClass("ldbliActive")){
+	    		return false;
+	    	}
 	    	var clone = dragObject.clone();
 	    	clone.css("left","0px").css("top","0px");
 	    	clone.find("div[class=next3 ]").text("X");

@@ -6,11 +6,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.sp.common.dao.CommonDAO;
 
 @Service("hqna.hqnaService")
-public class HanaServiceImpl implements HqnaService {
+public class HqnaServiceImpl implements HqnaService {
 	
 	@Autowired
 	private CommonDAO dao;
@@ -52,11 +51,11 @@ public class HanaServiceImpl implements HqnaService {
 	}
 
 	@Override
-	public int updateHitCount(int num) {
+	public int updateHitCount(int qnaCode) {
 		int result=0;
 		
 		try {
-			result=dao.selectOne("hqna.updateHitCount", num);
+			result=dao.updateData("hqna.updateHitCount", qnaCode);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,11 +63,11 @@ public class HanaServiceImpl implements HqnaService {
 	}
 
 	@Override
-	public Hqna readHqna(int num) {
+	public Hqna readHqna(int qnaCode) {
 		Hqna dto=null;
 		
 		try {
-			dto=dao.selectOne("hqna.RedaHqna", num);
+			dto=dao.selectOne("hqna.readHqna", qnaCode);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -102,14 +101,41 @@ public class HanaServiceImpl implements HqnaService {
 
 	@Override
 	public int updateHqna(Hqna dto) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result=0;
+		
+		try {
+			dao.updateData("hqna.updateHqna", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public int deleteHqna(int num) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteHqna(int qnaCode) {
+		int result=0;
+		
+		try {
+			
+			dao.deleteData("hqna.deleteHqna", qnaCode);
+			result=1;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public List<Reply> listReply(Map<String, Object> map) {
+		List<Reply> list=null;
+		
+		try {
+			list=dao.selectList("hqna.listReply", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 

@@ -114,8 +114,8 @@
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/travel/location">- 지역보기</a></li>
                                         <li><a href="<%=cp%>/travel/landMark">- 랜드마크 보기 </a></li>
-                                        <li><a href="#">- 일정 모음</a></li>
-                                        <li><a href="<%=cp%>/travel/myplan/list">- 나만의 일정</a></li>
+                                        <li><a href="<%=cp%>/travel/plan/list">- 일정 모음</a></li>
+                                        <li><a href="<%=cp%>/travel/myplan/myList">- 나만의 일정</a></li>
                                         <li><a href="<%=cp%>/travel/party">- 동료 모으기</a>
                                         	<ul class="dropdown">
                                                 <!-- <li><a href="#">- 리스트</a></li> -->
@@ -149,7 +149,7 @@
                                         <li><a href="<%=cp%>/hotel/hotel/article">- 나만의 호텔 예약</a></li>
                                         <li><a href="<%=cp%>/hotel/hevent/hevent">- 이벤트</a></li>
                                         <li><a href="#">- 공지사항</a></li>
-                                        <li><a href="<%=cp%>/hotel/hqna/list">- 문의사항</a></li>
+                                        <li><a href="<%=cp%>/hotel/hqna/main">- 문의사항</a></li>
                                         <li><a href="#">- FAQ</a></li>
                                     </ul>
                                 </li>

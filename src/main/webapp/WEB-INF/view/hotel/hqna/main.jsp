@@ -5,17 +5,6 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
 
@@ -28,7 +17,7 @@ $(function(){
 		  
 		  var url;
 		  if(tab=="1") {
-			  url="<%=cp%>/hotel/hqna/tab1";
+			  url="<%=cp%>/hotel/hqna/listTab1";
 		  } else if(tab=="2") {
 			  url="<%=cp%>/hotel/hqna/tab2";
 		  } else if(tab=="3") {
@@ -52,7 +41,7 @@ var key = "all";
 var value = "";
 
 function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data를 리턴한 jsp에 뿌려주고 해당 jsp의 html을 해당 id자리에 뿌려줌
-	
+
 	$.ajax({ 
 		type:type
 		,url:url
@@ -75,7 +64,6 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 }
 
 function ajaxJSON(url, type, query, mode) {
-	
 	$.ajax({
 		type:type
 		,url:url
@@ -103,16 +91,40 @@ function ajaxJSON(url, type, query, mode) {
 	});
 }
 
+function ajaxJSON2(url, query, mode) {
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:query
+		,dataType:"JSON"
+		,success:function(data) {
+			listPage(pageNo);
+		}
+		,beforeSend:function(e) {
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e) {
+			if(e.status==403) {
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+
 $(function () {
 	listPage(1);
 });
 
-function  listPage(page) {
+function listPage(page) {
+
 	//페이징
 	pageNo=page; //이렇게 페이지를 담아야 정확하게 몇페이지인지 볼수있음
 	
 	var id="tabContent1";
-	var url="<%=cp%>/hotel/hqna/tab1";
+	var url="<%=cp%>/hotel/hqna/listTab1";
 	var query="pageNo="+page;
 	if(value!="") {
 		query +="&key="+key+"&value="+encodeURIComponent(value);
@@ -129,7 +141,8 @@ function reloadHqna() {
 }
 
 function sendHqna(mode) {
-	var f=document.boardForm;
+	alert(mode);
+	var f=document.hqnaForm;
 	
 	if(! f.subject.value) {
 		f.subject.focus();
@@ -148,15 +161,58 @@ function sendHqna(mode) {
 	}
 	
 	var url="<%=cp%>/hotel/hqna/"+mode;
-	var query=new FsormData(f);
-	
-	ajaxJSON(url, "post", query, "created");
+	var query=$("form[name=hqnaForm]").serialize();
+
+	ajaxJSON2(url, query, mode);
 }
+
+function articleHqna(qnaCode) {
+	var id="tabContent1";
+	var url="<%=cp%>/hotel/hqna/article";
+	var query="qnaCode="+qnaCode+"&pageNo="+pageNo;
+	if(value!="") {
+		query +="&key="+key+"&value="+encodeURIComponent(value);
+	}
+
+	ajaxHTML(url, "get", query, id);
+}
+
+function insertHqna() {
+	var url="<%=cp%>/hotel/hqna/created";
+	$("#tabContent1").load(url);
+}
+
+function updateHqna(qnaCode) {
+
+	var url="<%=cp%>/hotel/hqna/update";
+	var query="qnaCode="+qnaCode+"&pageNo="+pageNo;
+	
+	if( value !="") {
+		query +="&key="+key+"&value="+encodeURIComponent(value);
+	}
+	
+	ajaxHTML(url, "get", query, "tabContent1");
+}
+
+function deleteHqna(qnaCode) {
+	if( !confirm("삭제하시겠습니까?")){
+		return;
+	}
+	
+	var url="<%=cp%>/hotel/hqna/delete";
+	var query="qnaCode="+qnaCode;
+	
+	ajaxJSON(url, "post", query, "delete");
+}
+
+function serchList() {
+	key=$("#key").val();
+	value=$("#value").val();
+	
+	listPage(1);
+}
+
 </script>
-
-</head>
-<body>
-
 	
 <div style="margin: 30px auto; width:60%;">
 	<div role="tabpanel">
@@ -173,5 +229,3 @@ function sendHqna(mode) {
 	  </div>
     </div>
 </div>	
-</body>
-</html>
