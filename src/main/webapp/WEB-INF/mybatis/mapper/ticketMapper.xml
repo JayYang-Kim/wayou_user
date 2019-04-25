@@ -33,6 +33,9 @@
 			<if test="regionCode != 0">
 				locCode=#{regionCode}
 			</if>
+			<if test="cateCode != 0">
+				AND s.categoryCode=#{cateCode}
+			</if>
 		</where>
 	</select>
 	
@@ -50,6 +53,9 @@
 				<where>
 					<if test="regionCode != 0">
 						locCode=#{regionCode}
+					</if>
+					<if test="cateCode != 0">
+						AND s.categoryCode=#{cateCode}
 					</if>
 				</where>
 				ORDER BY t.ticketCode DESC

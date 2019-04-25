@@ -31,6 +31,7 @@ public class TicketController {
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="0") int regionCode,
+			@RequestParam(defaultValue="0") int cateCode,
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
@@ -40,6 +41,7 @@ public class TicketController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("regionCode", regionCode);
+		map.put("cateCode", cateCode);
 		
 		dataCount=ticketService.dataCount(map);
 		if(dataCount!=0)
@@ -70,7 +72,7 @@ public class TicketController {
 		String cp = req.getContextPath();
 		String query = "";
 		String listUrl = cp + "/ticket/list";
-		String articleUrl = cp + "ticket/article?page="+current_page+"&regionCode="+regionCode;
+		String articleUrl = cp + "ticket/article?page="+current_page+"&regionCode="+regionCode+"&cateCode="+cateCode;
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
@@ -83,6 +85,7 @@ public class TicketController {
 		model.addAttribute("listRegion", listRegion);
 		model.addAttribute("regionCode", regionCode);
 		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("cateCode", cateCode);
 		
 
 		return ".ticket.list";
