@@ -68,7 +68,9 @@
 	color: #363636;
 	font-weight: bold;
 	font-size: 18px;
-	padding-top: 5px;
+	padding-top: 17px;
+	padding-bottom: 15px; 
+	height:100%;  
 }
 
 .day_route {
@@ -109,6 +111,21 @@
     text-align: center;
     margin-top: 60px;
 }
+.sch_num2 {
+	margin-top:5px;
+	float:left;
+	width:20px;
+	height:20px;
+	font-size:14px;
+	line-height:23px;
+	text-align: center;
+	font-weight: bold;
+	margin: 0 auto;
+	background: #223b68;
+	border-radius: 50%;
+    color: white;
+}
+
 
 .sch_content {
     width: 300px;
@@ -175,7 +192,7 @@
     float: left;
 }
 
-.sch_price {
+.sch_budget {
 	color: #555555;
 	font-size: 13px;
 	font-weight: bold;
@@ -197,7 +214,7 @@
 }
 
 .memo_input {
-	width: 420px;
+	width: 350px;
 	outline: none;
 	resize: none;
 	line-height: 18px;
@@ -235,9 +252,8 @@
     text-decoration: none;
     -webkit-transition: color 0.2s;
 }
+
 </style>
-<script type="text/javascript">
-</script>
 <!-- Breadcrumb Area Start -->
 <div class="breadcrumb-area bg-img bg-overlay jarallax"
 	style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);">
@@ -250,13 +266,15 @@
 					<h2 style="padding-bottom: 5px;">${workspace.subject}</h2>
 					<h6 style="padding-bottom: 15px;">${workspace.startDay}~${workspace.endDay}(${workspace.dayCount}일)</h6>
 					<div
-						style="border: 1px solid white; padding: 10px 5px; width: 300px; height: 40px;"
+						style="border: 1px solid white; padding: 10px 5px; width: 300px; height: 40px; float: left;"
 						class="totMoney">
 						<p style="width: 100px; text-align: center;">필요 경비 :</p>
 						<p style="text-align: right; width: 130px;">10,000,000</p>
 						<p style="width: 50px; text-align: center;">원</p>
 					</div>
+					<button style="float: right" class="btn roberto-btn">수정하기</button>
 				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -267,68 +285,202 @@
 <div class="roberto-news-area section-padding-100-0">
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-12 col-lg-9">
+			<div class="col-12 col-lg-9" id="dailyRoute">
 				<div class="day_info_box">
 					<div class="day_txt">Day ${day}</div>
 					<div class="day_info">
-						<div class="day_info_left">
-							<div class="date">2019.04.18 (목)</div>
-							<div class="day_title">서울이랑당</div>
-						</div>
-						<div class="day_info_right">KRW 12,000</div>
+						<div class="day_info_left"><div class="day_title">${day}일차 여행 경비 : KRW 12,000</div></div>
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>
 				</div>
-
-				<c:forEach var="dto" items="${list}">
-					<div class="day_sch_box">
+				<c:forEach var="dto" items="${list}" varStatus="status">
+					<div class="day_sch_box" data-lat="${dto.lat}" data-lng="${dto.lng}" data-landName="${dto.landName}" data-orderNum="${dto.orderNum}">
 							<div class="day_sch_num">
 								<div class="sch_num">${dto.orderNum}</div>
 							</div>
 							<div class="sch_content" data-landCode="${dto.landCode}" data-workLandCode="${dto.workLandCode}">
-								<img src="${dto.saveFileName}" alt="no image" class="spot_img">
+								<%-- <img src="${dto.saveFileName}" alt="no image" class="spot_img"> --%>
+								<img src="<%=cp%>/resources/images/bg-img/46.jpg" alt="no image" class="spot_img">
 								<div class="spot_content_box">
 									<div class="spot_name" onclick="window.open('http://localhost:9090/wayou/travel');" style="cursor: pointer;">${dto.landName}</div>
 									<div class="spot_info">
 										<div class="landTag">${dto.tagName}</div>
 					 					<div class="clear"></div>
 									</div>
-									<div class="btn_memo" onclick="memoOn();">메모&amp;예산수정</div>
+									<div class="btn_memo">메모&amp;예산수정</div>
 								</div>
 							</div>
 							<div class="sch_add_content">
-								<div class="sch_price" data-srl="1-1">KRW 10,000.00</div>
-								<div class="sch_memo"
-									data-full="안녕하세요ㅂㅈㄷ&nbsp;<span class='memo_more' data-op='min'>닫기</span>"
-									data-min="안녕하세요ㅂㅈㄷ" data-srl="1-1">안녕하세요ㅂㅈㄷ</div>
-								<div class="sch_memo_box" data-srl="1-1">
-									<div class="plan_info_box nleft white">
-										<div class="info_select">
-											<select name="" class="currency sc" data-srl="1-1">
-												<option data="KRW" value="KRW" style="color: #000">KRW</option>
-												<option data="USD" value="USD" style="color: #000">USD</option>
-												<option data="JPY" value="JPY" style="color: #000">JPY</option>
-												<option data="NPR" value="NPR" style="color: #000">NPR</option></select>
-										</div>
-										<input type="text" class="price" value="10000.00" data-srl="1-1">
+								<div class="sch_memo_confirm">
+									<div class="sch_budget" data-currency="${dto.currency}" data-budget="${dto.budget}" data-memo="${dto.memo}">${dto.currency} - <fmt:formatNumber>${dto.budget}</fmt:formatNumber></div>
+										<div class="sch_memo">${dto.memo}</div>
+								</div>
+								<div class="sch_memo_box" style="width: 400px; height: 180px;">
+									<div class="plan_info_box nleft white" style="width: 100%; height:30px; margin-bottom: 5px;">
+										<select name="currency" style="height:30px;">
+											<option value="KRW" ${dto.currency=='KRW'?"selected='selected'":""}>KRW</option>
+											<option value="USD" ${dto.currency=='USD'?"selected='selected'":""}>USD</option>
+											<option value="JPY" ${dto.currency=='JPY'?"selected='selected'":""}>JPY</option>
+											<option value="CNY" ${dto.currency=='CNY'?"selected='selected'":""}>CNY</option>
+										</select>
+										<input type="text" name="budget" placeholder="예산을 입력하세요" style="height: 30px; margin-left: 5px;" value="${dto.budget}">
 									</div>
-									<textarea name="" id="" cols="30" rows="10" class="memo_input"
-										data-srl="1-1">안녕하세요ㅂㅈㄷ</textarea>
-									<div class="memo_save_btn" data-srl="1-1">저장</div>
+									<textarea name="" id="" cols="30" rows="10" class="memo_input">${dto.memo}</textarea>
+									<div class="memo_save_btn" style="margin-top: 5px;">저장</div>
 									<div class="clear"></div>
 								</div>
 							</div>
 							<div class="clear"></div>
 						</div>
+						<c:if test="${status.count!=list.size()}">
+							<div id="distance${status.count}"style="text-align:center; height: 30px; border-left:1px solid #e5e5e5; border-right:1px solid #e5e5e5; padding-top:5px; color: #555555; font-size: 13px; font-weight: bold">↓&nbsp;이동거리 : </div>
+						</c:if>
 				</c:forEach>
 
 				<!-- Pagination -->
-				<nav class="roberto-pagination wow fadeInUp mb-100"
-					data-wow-delay="600ms">${paging}</nav>
+				<nav class="roberto-pagination mb-100" style="text-align: center; margin-top: 20px;">${paging}</nav>
 			</div>
-			<div class="col-12 col-lg-3"></div>
+			<div class="col-12 col-lg-3">
+				<div id="map" style="width: 300px; height:400px;"></div>
+				<div id="explain" style="width: 300px; min-height: 150px;padding:15px 10px; border: 1px solid #e5e5e5"></div>
+			</div>
 		</div>
 	</div>
 </div>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=591cb76973b1a523d68f564d17c08ff0"></script>
+<script type="text/javascript">
+
+	$(function(){
+		$(".nice-select").hide();
+		$("select[name='currency']").css("display","");
+		
+		
+		drawRouteToMap($("#dailyRoute").find(".day_sch_box"));	
+		loadExplain();
+	});
+	
+	$(function(){
+		$("body").on("click",".btn_memo",function(){
+			$(this).closest(".day_sch_box").find(".sch_memo_box").toggle();
+			$(this).closest(".day_sch_box").find(".sch_memo_confirm").toggle();
+		});
+		$("body").on("click",".memo_save_btn",function(){
+			var currency = $(this).parent().find("select[name=currency]").val();
+			var budget = $(this).parent().find("input[type=text]").val();
+			var memo = $(this).parent().find("textarea").val();
+			
+			var query = "currency="+currency+"&budget="+budget+"&memo="+encodeURIComponent(memo);
+			
+			$.ajax({
+				type:"post",
+				url:"<%=cp%>/travel/plan/updateWorkLandDetail",
+				data:query,
+				dataType:"json",
+				success:function(data){
+					
+				},
+				error:function(e){
+					if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+				}
+			});
+		});
+	});
+	
+	function loadExplain(){
+		var objs = $("#dailyRoute").find(".day_sch_box");
+		for(var i=0; i<objs.length; i++){
+			var landName = $(objs[i]).attr("data-landName");
+			var orderNum = $(objs[i]).attr("data-orderNum");
+			var $newDiv = '<div style="height:45px;width:130px;float:left;"><div class="sch_num2">'+orderNum+'</div><p style="width:100px;float:left;padding-top:3px;padding-left:5px;">'+landName+'</p></div>';
+			$("#explain").append($newDiv);
+		}
+	}
+	
+	function drawRouteToMap(objs){
+		
+	    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	    mapOption = {
+	    	center: new daum.maps.LatLng(37.56682, 126.97865),
+	        level : 7
+	    // 지도의 확대 레벨
+	    };
+	 
+	    var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	    var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다 
+	    var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
+	 
+	    // 마커를 표시할 위치와 title 객체 배열입니다
+	    var positions= [];
+	   	for(var i=0; i<objs.length; i++){
+	   		var position = {
+	   			title : $(objs[i]).attr("data-landName"),
+	   			latlng : new daum.maps.LatLng($(objs[i]).attr("data-lat"), $(objs[i]).attr("data-lng")),
+	   			order : $(objs[i]).attr("data-orderNum")
+	   		};
+	   		positions[i] = position;
+	   	}
+	    // 마커 이미지의 이미지 주소입니다
+	    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+	
+	    var linePath;
+	    var lineLine = new daum.maps.Polyline();
+	    var distance;
+	 
+	    for (var i = 0; i < positions.length; i++) {
+	        if (i != 0) {
+	            linePath = [ positions[i - 1].latlng, positions[i].latlng ] //라인을 그리려면 두 점이 있어야하니깐 두 점을 지정했습니다
+	        }
+	        ;
+	        lineLine.setPath(linePath); // 선을 그릴 라인을 세팅합니다
+	 
+	        var drawLine = new daum.maps.Polyline({
+	            map : map, // 선을 표시할 지도입니다 
+	            path : linePath,
+	            strokeWeight : 3, // 선의 두께입니다 
+	            strokeColor : '#db4040', // 선의 색깔입니다
+	            strokeOpacity : 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            strokeStyle : 'solid' // 선의 스타일입니다
+	        });
+	 
+	        distance = Math.round(lineLine.getLength());
+	        displayCircleDot(positions[i].latlng, distance,positions[i].order);
+	        
+	        if(i!=0 && i!=positions.length){
+	        	$("#distance"+(i)).append(distance+"m");
+	        }
+	         
+	    }
+	 
+	    function displayCircleDot(position, distance,order) {
+	        if (distance > 0) {
+	            // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
+	            var distanceOverlay = new daum.maps.CustomOverlay(
+	                    {
+	                        content : '<div><b>'+distance+'m</b><div class="sch_num" style="margin-top:3px;">'+order+'</div></div>',
+	                        position : position,
+	                        yAnchor : 1,
+	                        zIndex : 2
+	                    });
+	 
+	            // 지도에 표시합니다
+	            distanceOverlay.setMap(map);
+	        }else{
+	        	var distanceOverlay = new daum.maps.CustomOverlay(
+	                    {
+	                        content : '<div class="sch_num">'+order+'</div>',
+	                        position : position,
+	                        yAnchor : 1,
+	                        zIndex : 2
+	                    });
+	 
+	            // 지도에 표시합니다
+	            distanceOverlay.setMap(map);
+	        }
+	    }
+	}
+</script>
 <!-- Blog Area End -->
