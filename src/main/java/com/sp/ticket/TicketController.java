@@ -94,7 +94,31 @@ public class TicketController {
 	
 	
 	@RequestMapping(value="/ticket/detail")
-	public String detail() {
+	public String detail(
+			@RequestParam int ticketCode,
+			@RequestParam int page,
+			@RequestParam(defaultValue="0") int regionCode,
+			@RequestParam(defaultValue="0") int cateCode,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		String query="page="+page+"&regionCode="+regionCode+"&cateCode="+cateCode;
+		
+		
+		Ticket dto = ticketService.readTicket(ticketCode);
+		if(dto==null) {
+			return "redirect:/ticket/list"+query;
+		}
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("ticketCode", ticketCode);
+		map.put("regionCode", regionCode);
+		map.put("cateCode", cateCode);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
 		return ".ticket.detail";
 	}
 }

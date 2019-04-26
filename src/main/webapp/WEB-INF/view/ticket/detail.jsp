@@ -13,8 +13,10 @@ $(function(){
 	viewTabContent(id, url);
 	
 	$(".nice-select").css("width", "100%");
-	$(".nice-select .current").html("날짜 선택");
 	$(".nice-select ul.list").css("width", "100%");
+	
+	$(".nice-select.date .current").html("날짜 선택");
+	$(".nice-select.option .current").html("옵션 선택");
 });
 
 $(function(){
@@ -102,64 +104,37 @@ function viewTabContent(id, url) {
 
                         <!-- Newsletter -->
                         <div class="single-widget-area mb-100">
-                            <div class="newsletter-form" style="height: 500px;">
-                            	<!-- <div style="margin-bottom: 10px;">경기도 용인
-                            	<p style="font-size: 20px;">에버랜드 입장권</p></div>
-                            	<div>판매가격:</div>
-                            	<div style="margin-bottom: 10px;">판매기간:</div>
-                            	<div>
-                            	<p>티켓선택</p>
-                            	<p style="text-align: right;">1인당 최대 4개 구매</p>
-                            	</div>
-          						
-          						<div>
-                            	<p><select class="nice-select">
-                            		<option>날짜선택</option>
-                            	</select></p>
-								</div>
-								<div>
-                            	<p style="margin-bottom: 30px;"><select class="nice-select">
-                            		<option>옵션선택</option>
-                            	</select></p>
-                            	</div>
-                            	<div>
-                            	<p>총 상품금액: 50000원</p>
-                            	</div>
-                            </div>	 -->
-                            	
-                            	
+                            <div class="newsletter-form" style="height: 420px;">  	
                             <ul class="detail">
-                            		<li>경기도 용인</li>
-                            		<li style="font-size:20px;">에버랜드 입장권</li>
-                            		<li>판매가격: 50000원</li>
-                            		<li>판매기간: 2019년 1월 14일 ~ 2019년 2월 14일</li>
-                            		<li>티켓선택
+                            		<li style="font-size:18px;">${dto.address1}</li>
+                            		<li style="font-size:25px;">에버랜드 입장권</li>
+                            		<li style="font-size: 23px; margin-top: 10px;">50000원</li>
+                            		<li style="font-size: 15px; margin-top: 10px;">판매기간: 2019년 1월 14일 ~ 2019년 2월 14일</li>
+                            		<li style="font-size: 15px; margin-top: 12px;">티켓선택
                             		<li style="text-align: right">1인당 최대 4개 구매 가능</li>
                             		
-                  					<li>
-                            		<select class="nice-select" style="width: 300px;">
-                            			<option value=""></option>
+                  					<li style="margin-top: 5px;">
+                            		<select class="nice-select date">
+                            			<option value="">2019-05-01</option>
                             			<option value=""></option>
                             		</select>
                             		</li>
                             		
                             		
                             		<li class="clear">
-                            		<select class="nice-select">
-                            		<optgroup label="날짜선택">
+                            		<select class="nice-select option mt3">
                             			<option value="">2019-10-10</option>
-                            			</optgroup>
                             		</select>
                             		</li>
                             		
-                            		<li class="clear">
-                            		총 상품금액 <span>50000원</span>
+                            		<li class="clear" style="margin-top: 30px;">
+                            		
                             		</li>
                             		
-                            		<li class="mb-10 t_center">
-                            		<button type="button" class="btn roberto-btn w-40">카트담기</button>
+                            		<li class="mb-10 t-center">
+                            			<button type="button" class="btn cart-btn" style="width: 130px; margin-top: 20px;">카트담기</button>
                             		
-                            		<button type="button" class="btn roberto-btn w-40">바로구매</button>
+                            			<button type="button" class="btn buy-btn" style="margin-left: 10px; margin-top: 20px;">바로구매</button>
                             		</li>
                             </ul>
 
