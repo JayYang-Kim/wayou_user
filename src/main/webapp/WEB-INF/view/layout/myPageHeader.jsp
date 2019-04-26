@@ -86,7 +86,7 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                             <ul id="nav">
-                                <li><a href="<%=cp%>/">주문내역</a>
+                                <li><a href="<%=cp%>/myPage/main">주문내역</a>
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/">- 전체 주문 내역</a></li>
                                         <li><a href="<%=cp%>/">- 숙박 </a></li>
@@ -101,18 +101,18 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="<%=cp%>/">관심상품</a>
+                                <li><a href="<%=cp%>/myPage/main">관심상품</a>
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/">- 장바구니</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="<%=cp%>/">회원정보</a>
+                                <li><a href="<%=cp%>/myPage/main">회원정보</a>
                                     <ul class="dropdown">
-                                        <li><a href="<%=cp%>/">- 수정 및 탈퇴</a></li>
+                                        <li><a href="<%=cp%>/myPage/check">- 수정 및 탈퇴</a></li>
                                         <li><a href="<%=cp%>/myPage/step">- 등급확인</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">문의사항</a>
+                                <li><a href="<%=cp%>/myPage/main">문의사항</a>
                                         <ul class="dropdown">
                                         <li><a href="<%=cp%>/">- 문의사항 작성</a></li>
                                         <li><a href="<%=cp%>/">- 답변 확인</a></li>
