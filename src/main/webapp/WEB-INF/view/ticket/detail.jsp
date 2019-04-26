@@ -107,9 +107,9 @@ function viewTabContent(id, url) {
                             <div class="newsletter-form" style="height: 420px;">  	
                             <ul class="detail">
                             		<li style="font-size:18px;">${dto.address1}</li>
-                            		<li style="font-size:25px;">에버랜드 입장권</li>
-                            		<li style="font-size: 23px; margin-top: 10px;">50000원</li>
-                            		<li style="font-size: 15px; margin-top: 10px;">판매기간: 2019년 1월 14일 ~ 2019년 2월 14일</li>
+                            		<li style="font-size:25px;">${dto.ticketName}</li>
+                            		<li style="font-size: 23px; margin-top: 10px;">${dto.price}원</li>
+                            		<li style="font-size: 15px; margin-top: 10px;">판매기간: ${dto.sales_start} ~ ${dto.sales_end}</li>
                             		<li style="font-size: 15px; margin-top: 12px;">티켓선택
                             		<li style="text-align: right">1인당 최대 4개 구매 가능</li>
                             		

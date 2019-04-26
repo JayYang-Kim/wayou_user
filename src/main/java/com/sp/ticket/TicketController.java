@@ -70,9 +70,9 @@ public class TicketController {
 		List<Ticket> listCategory = ticketService.listCategory();
 		
 		String cp = req.getContextPath();
-		String query = "";
+		/*String query = "";*/
 		String listUrl = cp + "/ticket/list";
-		String articleUrl = cp + "ticket/article?page="+current_page+"&regionCode="+regionCode+"&cateCode="+cateCode;
+		String articleUrl = cp + "/ticket/detail?page="+current_page+"&regionCode="+regionCode+"&cateCode="+cateCode;
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
@@ -109,6 +109,8 @@ public class TicketController {
 		if(dto==null) {
 			return "redirect:/ticket/list"+query;
 		}
+		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_start());
+		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_end());
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("ticketCode", ticketCode);
