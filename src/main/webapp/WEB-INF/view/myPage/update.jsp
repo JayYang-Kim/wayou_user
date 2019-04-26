@@ -24,13 +24,6 @@
     <script src="<%=cp%>/resources/js/lib/util.js"></script>
     
 
-    <style type="text/css">
-    .layer{position:absolute;top:0;left:0;width:100%;height:100%;text-align:center; background:#f5f6f7}
-	.layer .content{display:inline-block;width: 510px; height:630px;padding: 40px;background:#fff;border-radius: 40px;vertical-align:middle; border:1px solid efefef; margin-top:10px;}
-	.layer .blank{display:inline-block;width:0;height:100%;vertical-align:middle}
-	
-    </style>
-    
  <script type="text/javascript">
    var echeck=0;
    
@@ -47,7 +40,6 @@
 	    	f.action="<%=cp%>/myPage/main";
 	    	f.submit();
 	  }
-   }
    
    
    function securityCheck(){
@@ -224,53 +216,55 @@
 </head>
 
 <body>
-<div class="layer">
-  <div class="content">
+<div class="row">
+<div class="col-3"></div>
+ <div class="col-6" style="margin-top:20px; margin-bottom:30px;">
   	<div style="padding-bottom:20px">
   	<h1>회원 정보 (수정 / 탈퇴)</h1>
   		</div>
+  		<div style="font-size:14px;">&nbsp;<b class="t_blue">*</b>표시된 사항은 수정이 제한됩니다.</div>
   		<form name="updateForm" method="POST">
 			<table class="table left_tbl form_tbl">
 				<colgroup>
 					<col style="width:30%" />
-					<col style="width:50%" />
+					<col style="width:45%" />
 					<col />
 				</colgroup>
 					<tr>
-						<th scope="row"><b class="t_red">*</b> 성함 (Name)</th>
+						<th scope="row"><b class="t_blue">*</b> 성함 (Name)</th>
 						<td colspan="2">
-							<input type="hidden" id="userIdx" name="userIdx" style="width:200px" readonly="readonly" value="${dto.userIdx}"/>
-							<input type="text" id="userName" name="userName" style="width:200px" readonly="readonly" value="${dto.userName}"/>
+							<input type="hidden" id="userIdx" name="userIdx"  readonly="readonly" value="${dto.userIdx}"/>
+							<input type="text" id="userName" name="userName"  readonly="readonly" value="${dto.userName}"/>
 						</td>
 					</tr>	
 					<tr>
-						<th scope="row"><b class="t_red">*</b> 아이디 (ID)</th>
+						<th scope="row"><b class="t_blue">*</b> 아이디 (ID)</th>
 						<td colspan="2">
 							<input  name="userId" type="text" value="${dto.userId}" readonly="readonly">
 						</td>
 					</tr>
 					<tr>
-						<th scope="row"><b class="t_red">*</b> 생년월일 (Birth)</th>
+						<th scope="row"><b class="t_blue">*</b> 생년월일 (Birth)</th>
 						<td colspan="2">
-							<input type="text" id="userBirth" name="userBirth" style="width:200px" readonly="readonly" value="${dto.userBirth}"/>
+							<input type="text" id="userBirth" name="userBirth"  readonly="readonly" value="${dto.userBirth}"/>
 						</td>
 					</tr>					
 					<tr>
 						<th scope="row"><b class="t_red">*</b> 변경할 비밀번호<br>(Password)</th>
-						<td colspan="2">
+						<td colspan="2" style="padding-top: 18px;">
 							<input name="userPwd" type="password" placeholder="PASSWORD">
 						</td>
 					</tr>
 					<tr>
 						<th scope="row"><b class="t_red">*</b> 비밀번호 확인<br>(Password Check)</th>
-						<td colspan="2">
+						<td colspan="2"  style="padding-top: 18px;">
 							<input name="userPwdCheck" type="password" placeholder="PASSWORD">
 						</td>
 					</tr>
 					<tr>
 						<th scope="row"><b class="t_red">*</b> 이메일(Email)</th>
 						<td>
-							<input name="userEmail" type="text" placeholder=" 메일 주소를 정확히 입력해주세요 " style="width:200px" value="${dto.userEmail}">
+							<input name="userEmail" type="text" placeholder=" 메일 주소를 정확히 입력해주세요 "  value="${dto.userEmail}">
 						</td>
 						<td style="text-align:center">
 							<button type="button" onclick="sendEmail()" class='button btn_yellow'>메일 확인</button>
@@ -278,10 +272,10 @@
 					</tr>
 					<tr>
 						<th scope="row"><b class="t_red">*</b> 인증번호<br>(Security Number)</th>
-						<td>
+						<td style="padding-top: 18px;">
 							<input  name="security" type="text">
 						</td>
-						<td style="text-align:center">
+						<td style="text-align:center; padding-top: 18px;">
 							<button type="button" onclick="securityCheck()" class='button btn_yellow'>인증 확인</button>
  		 					<input  name="securityNum" type="hidden">
 						</td>
@@ -289,7 +283,7 @@
 					<tr>
 						<th scope="row"><b class="t_red">*</b> 전화번호 (Tel)</th>
 						<td colspan="2">
-							<input type="text" id="userTel" name="userTel" style="width:200px" placeholder=" - 없이 숫자만 입력하세요" value="${dto.userTel}"/>
+							<input type="text" id="userTel" name="userTel"  placeholder=" - 없이 숫자만 입력하세요" value="${dto.userTel}"/>
 						</td>
 					</tr>
 					<tr>
@@ -303,16 +297,15 @@
 						</td>
 			 		</tr>
 			</table> 
-				<div class="btn_wrap view_btn" style="margin-top:10px">
-					<button type='button' class='button btn_yellow' onclick="back()">돌아가기</button>
-					<button type='button' class='button btn_yellow' onclick="updateSubmit()">완료</button>
+				<div class="btn_wrap view_btn" style="margin-top:20px">
+					<button type='button' class='button btn_yellow' onclick="updateSubmit()" style="margin-right:5px;">수정</button>
 					<button type='button' class='button btn_red' onclick="deleteSubmit()">탈퇴</button>
 				</div>
 
   			</form>
   		</div>
-  </div>
-  <div class="blank"></div>
+ <div class="col-3"></div>
+ </div>
 </body>
 </html>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
