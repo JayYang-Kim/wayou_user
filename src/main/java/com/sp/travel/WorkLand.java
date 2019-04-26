@@ -7,9 +7,45 @@ public class WorkLand {
 	private int workLandCode;
 	private String tagName;
 	private String orderNum;
+	private String lat;
+	private String lng;
+	private int budget;
+	private String currency;
+	private String memo;
 	
 	
 	
+	
+	public int getBudget() {
+		return budget;
+	}
+	public void setBudget(int budget) {
+		this.budget = budget;
+	}
+	public String getCurrency() {
+		return currency;
+	}
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
+	public String getMemo() {
+		return memo;
+	}
+	public void setMemo(String memo) {
+		this.memo = memo;
+	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
 	public String getOrderNum() {
 		return orderNum;
 	}

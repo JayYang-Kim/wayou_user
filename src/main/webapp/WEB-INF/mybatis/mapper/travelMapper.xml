@@ -182,21 +182,26 @@
  	</select>
  	
  	<select id="readWorkspace" parameterType="map" resultType="com.sp.travel.Workspace">
- 		select u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created from workspace w
+ 		select u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, locCode from workspace w
  		join tb_user u on w.userIdx=u.userIdx
  		where workCode=#{workCode} and u.userIdx=#{userIdx}
  	</select>
  	
  	<select id="readWorkLand" parameterType="map" resultType="com.sp.travel.WorkLand">
- 		    select w.landCode, landName, workLandCode, tagName, saveFilename, orderNum 
+ 		    select unique w.landCode, landName, workLandCode, tagName, saveFilename, orderNum,lm.lat,lm.lng, 
+ 		    w.budget, w.currency, w.memo 
 			from workland w 
 			join landmark lm on w.landCode=lm.landCode
-			left outer join landmarkfile lmf on w.landCode = lmf.landCode
+			left outer join (select * from landmarkfile where rownum=1) lmf on w.landCode = lmf.landCode
 			join lndTagCode ltc on lm.tagCode = ltc.tagCode
-			where w.detailCode = 
-			(select detailCode from workspacedetail wd
-			join workspace ws on wd.workCode = ws.workCode where wd.workCode=#{workCode} and userIdx=#{userIdx} and day=#{day})
-			order by ordernum asc
+			where w.detailCode = (
+			select detailCode from workspacedetail wd
+			join workspace ws on wd.workCode = ws.workCode where wd.workCode=#{workCode} and userIdx=#{userIdx} and day=#{day}
+			) order by ordernum asc
+ 	</select>
+ 	
+ 	<select id="countWorkDetail" parameterType="map" resultType="Integer">
+ 		select nvl(count(*),0) from workspacedetail where workCode=#{workCode}
  	</select>
 
 </mapper>
