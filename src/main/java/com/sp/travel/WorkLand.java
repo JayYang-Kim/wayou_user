@@ -10,7 +10,6 @@ public class WorkLand {
 	private String lat;
 	private String lng;
 	private int budget;
-	private String currency;
 	private String memo;
 	
 	
@@ -21,12 +20,6 @@ public class WorkLand {
 	}
 	public void setBudget(int budget) {
 		this.budget = budget;
-	}
-	public String getCurrency() {
-		return currency;
-	}
-	public void setCurrency(String currency) {
-		this.currency = currency;
 	}
 	public String getMemo() {
 		return memo;

@@ -1,4 +1,4 @@
-package com.sp.travel;
+	package com.sp.travel;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -11,7 +11,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.bouncycastle.ocsp.Req;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,7 +67,11 @@ public class TravelController {
 			HttpSession session,
 			Model model
 			) {
-
+		int writerIdx = travelService.readOnlyWorkspace(workNum);
+		
+		if(writerIdx==0 || ((SessionInfo)session.getAttribute("member")).getUserIdx() != writerIdx) {
+			return "redirect:/";
+		}
 		if(lat.length()==0 && lng.length()==0) {
 			Location loc = locInfo(locCode);
 			lat = loc.getLat();
@@ -131,6 +134,7 @@ public class TravelController {
 			isInserted = true;
 		}
 		map.clear();
+		map.put("userIdx",info.getUserIdx());
 		map.put("workNum", seqNum);
 		map.put("locCode", locCode);
 		map.put("lat", lat);
@@ -373,6 +377,7 @@ public class TravelController {
 		Workspace workspace = travelService.readWorkspace(map);
 		List<WorkLand> list = travelService.readWorkLand(map);
 		
+		
 		model.addAttribute("workspace", workspace);
 		model.addAttribute("list", list);
 		model.addAttribute("day", day);
@@ -387,7 +392,36 @@ public class TravelController {
 		return ".travel.plan.list";
 	}
 	
-	
-	
-	
+	@RequestMapping(value="/travel/plan/updateWorkLandDetail",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> updateWorkLandDetail(
+			WorkLand workland
+		) {
+		Map<String,Object> map = new HashMap<>();
+		
+		travelService.updateWorkLandDetail(workland);
+		WorkLand dto = travelService.selectWorkLandBM(workland.getWorkLandCode());				
+		map.put("budget", dto.getBudget());
+		map.put("memo", dto.getMemo());
+		
+		return map;
+	}
+
+	@RequestMapping(value="/travel/plan/updateBudgetByDay",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> updateBudgetByDay(
+			@RequestParam int workCode,
+			@RequestParam int day,
+			@RequestParam int budget
+		) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("workCode", workCode);
+		map.put("day", day);
+		map.put("budget", budget);
+		travelService.updateBudgetByDay(map);
+		int sum = travelService.selectTotBudget(workCode);
+		map.clear();
+		map.put("sum", sum);
+		return map;
+	}
 }

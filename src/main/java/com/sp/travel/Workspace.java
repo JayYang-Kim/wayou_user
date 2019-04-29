@@ -11,9 +11,17 @@ public class Workspace {
 	private int userIdx;
 	private String locName;
 	private String userName;
+	private int budget;
 	
 	
 	
+	
+	public int getBudget() {
+		return budget;
+	}
+	public void setBudget(int budget) {
+		this.budget = budget;
+	}
 	public String getUserName() {
 		return userName;
 	}

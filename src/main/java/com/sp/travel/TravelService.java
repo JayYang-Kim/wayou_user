@@ -211,4 +211,49 @@ public class TravelService {
 		}
 		return result;
 	}
+
+	public void updateWorkLandDetail(WorkLand workland) {
+		try {
+			dao.updateData("workspace.updateWorkLandDetail",workland);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	public WorkLand selectWorkLandBM(int worklandCode) {
+		WorkLand workland = null;
+		try {
+			workland = dao.selectOne("workspace.selectWorkLandBM", worklandCode);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return workland;
+	}
+
+	public void updateBudgetByDay(Map<String,Object> map) {
+		try {
+			dao.updateData("workspace.updateBudgetByDay",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public int selectTotBudget(int workCode) {
+		int result=0;
+		try {
+			result = dao.selectOne("workspace.selectTotBudget",workCode);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	public int readOnlyWorkspace(int workCode) {
+		int result=0;
+		try {
+			result = dao.selectOne("workspace.readOnlyWorkspace",workCode);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
