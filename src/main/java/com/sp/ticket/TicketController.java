@@ -31,6 +31,7 @@ public class TicketController {
 	public String list(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="0") int regionCode,
+			@RequestParam(defaultValue="0") int cateCode,
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
@@ -40,6 +41,7 @@ public class TicketController {
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("regionCode", regionCode);
+		map.put("cateCode", cateCode);
 		
 		dataCount=ticketService.dataCount(map);
 		if(dataCount!=0)
@@ -68,9 +70,9 @@ public class TicketController {
 		List<Ticket> listCategory = ticketService.listCategory();
 		
 		String cp = req.getContextPath();
-		String query = "";
+		/*String query = "";*/
 		String listUrl = cp + "/ticket/list";
-		String articleUrl = cp + "ticket/article?page="+current_page+"&regionCode="+regionCode;
+		String articleUrl = cp + "/ticket/detail?page="+current_page+"&regionCode="+regionCode+"&cateCode="+cateCode;
 		
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
@@ -83,6 +85,7 @@ public class TicketController {
 		model.addAttribute("listRegion", listRegion);
 		model.addAttribute("regionCode", regionCode);
 		model.addAttribute("listCategory", listCategory);
+		model.addAttribute("cateCode", cateCode);
 		
 
 		return ".ticket.list";
@@ -91,7 +94,33 @@ public class TicketController {
 	
 	
 	@RequestMapping(value="/ticket/detail")
-	public String detail() {
+	public String detail(
+			@RequestParam int ticketCode,
+			@RequestParam int page,
+			@RequestParam(defaultValue="0") int regionCode,
+			@RequestParam(defaultValue="0") int cateCode,
+			HttpServletRequest req,
+			Model model) throws Exception {
+		
+		String query="page="+page+"&regionCode="+regionCode+"&cateCode="+cateCode;
+		
+		
+		Ticket dto = ticketService.readTicket(ticketCode);
+		if(dto==null) {
+			return "redirect:/ticket/list"+query;
+		}
+		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_start());
+		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_end());
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("ticketCode", ticketCode);
+		map.put("regionCode", regionCode);
+		map.put("cateCode", cateCode);
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
 		return ".ticket.detail";
 	}
 }

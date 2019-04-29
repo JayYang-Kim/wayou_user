@@ -33,6 +33,9 @@
 			<if test="regionCode != 0">
 				locCode=#{regionCode}
 			</if>
+			<if test="cateCode != 0">
+				AND s.categoryCode=#{cateCode}
+			</if>
 		</where>
 	</select>
 	
@@ -51,6 +54,9 @@
 					<if test="regionCode != 0">
 						locCode=#{regionCode}
 					</if>
+					<if test="cateCode != 0">
+						AND s.categoryCode=#{cateCode}
+					</if>
 				</where>
 				ORDER BY t.ticketCode DESC
 <![CDATA[				
@@ -67,6 +73,19 @@
 	<select id="category" resultType="com.sp.ticket.Ticket">
 		SELECT categoryCode, categoryName
 		FROM ticketCategory
+	</select>
+	
+	<select id="readTicket" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+		SELECT t.ticketCode, ticketName, TO_CHAR(sales_start, 'YYYY"년" MM"월" DD"일"') as sales_start,
+	        TO_CHAR(sales_end, 'YYYY"년" MM"월" DD"일"') as sales_end, s.address1, detail.price
+		FROM ticket t
+		JOIN (
+	    		select ticketcode, max(price) as price
+	    		from ticketDetail
+	    		group by ticketcode
+			) detail on detail.ticketCode=t.ticketcode
+		JOIN store s ON t.storeCode=s.storeCode
+		WHERE t.ticketCode=#{ticketCode}
 	</select>
 
 

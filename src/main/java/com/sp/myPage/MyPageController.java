@@ -40,7 +40,7 @@ public class MyPageController {
 		model.addAttribute("userIdx",userIdx);
 		model.addAttribute("userPwd", userPwd);
 		
-		return "myPage/check";
+		return ".myP.myPage.check";
 	}
 	
 	@RequestMapping(value="/myPage/check", method=RequestMethod.POST)
@@ -50,7 +50,7 @@ public class MyPageController {
 		User dto=myPageService.readUser(userIdx);
 		model.addAttribute("dto",dto);
 		
-		return "myPage/update";
+		return ".myP.myPage.update";
 	}
 	
 	@RequestMapping(value="/myPage/update", method=RequestMethod.POST)

@@ -23,13 +23,6 @@
     <script src="<%=cp%>/resources/js/lib/util-jquery.js"></script>
     <script src="<%=cp%>/resources/js/lib/util.js"></script>
     
-
-    <style type="text/css">
-    .layer{position:absolute;top:0;left:0;width:100%;height:100%;text-align:center; background:#f5f6f7}
-	.layer .content{display:inline-block;width: 510px; height:160px;padding: 40px;background:#fff;border-radius: 40px;vertical-align:middle; border:1px solid efefef; margin-top:150px;}
-	.layer .blank{display:inline-block;width:0;height:100%;vertical-align:middle}
-	
-    </style>
     
  <script type="text/javascript">
 	var n=0;
@@ -65,8 +58,9 @@
 </head>
 
 <body>
-<div class="layer">
-  <div class="content">
+<div class="row">
+<div class="col-4"></div>
+ <div class="col-4" style="margin-top:120px; margin-bottom:100px">
   	<div style="padding-bottom:20px">
   	<h1>비밀번호 재확인</h1>
   		</div>
@@ -74,17 +68,18 @@
 			<table class="table left_tbl form_tbl">
 				<colgroup>
 					<col style="width:30%" />
-					<col style="width:40%" />
+					<col style="width:30%" />
 					<col />
 				</colgroup>			
 					<tr>
 						<th scope="row"><b class="t_red">*</b> 비밀번호<br>(Password)</th>
-						<td colspan="2">
+						<td colspan="2" style="padding-top:18px">
 							<input name="userIdx" type="hidden" value="${userIdx}">
 							<input name="userPwd" type="hidden" value="${userPwd}">
 							<input name="userPwdCheck" type="password" placeholder="PASSWORD" style="width:210px">
 						</td>
-						<td>
+						<td style="padding-top:18px">
+						
 							<button type="button" class='button btn_yellow' onclick="checked()">확인</button>
 						</td>
 					</tr>
@@ -95,7 +90,7 @@
 
   			</form>
   		</div>
-  </div>
-  <div class="blank"></div>
+<div class="col-4"></div>
+</div>
 </body>
 </html>

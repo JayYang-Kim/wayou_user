@@ -23,7 +23,7 @@
 	});
 	
 //지역선택시
-	$(function(){
+	<%-- $(function(){
 		$("body").on("click", ".btn_sendRegion", function(){
 			var form=document.regionSelect;
 			
@@ -35,6 +35,46 @@
 			form.submit();
 		});
 	});
+
+//카테고리 선택시
+	$(function(){
+		$("body").on("click", ".btn_sendCategory", function(){
+			var form=document.categorySelect;
+			
+			var categoryCode = $(this).attr("data-categoryCode");
+			var url="<%=cp%>/ticket/list?categoryCode="+categoryCode;
+			
+			form.action=url;
+			form.submit();
+		});
+	}); --%>
+	
+	 $(function(){
+			$("body").on("click", ".btn_sendRegion", function(){
+				var form=document.searchSelect;
+				
+				var regionCode = $(this).attr("data-locCode");
+				var cateCode = 0;
+				
+				var url="<%=cp%>/ticket/list?regionCode="+regionCode+"&cateCode="+cateCode;
+				
+				form.action=url;
+				form.submit();
+			});
+		});
+	 $(function(){
+		 $("body").on("click", ".btn_sendCategory", function(){
+				var form=document.searchSelect;
+				
+				var regionCode = 0;
+				var cateCode = $(this).attr("data-categoryCode");
+				
+				var url="<%=cp%>/ticket/list?regionCode="+regionCode+"&cateCode="+cateCode;
+				
+				form.action=url;
+				form.submit();
+			}); 
+	 });
 	
 </script>
 
@@ -67,7 +107,7 @@
           <div class="row">
           	  <div class="col-12 col-lg-3 mr-50">
                   <div class="hotel-reservation--area mb-100">
-                      <form name="regionSelect" method="post">
+                      <form name="searchSelect" method="post">
                           <div class="form-group mr-10 mb-30">
                               <label for="regionSearch">지역 검색</label>
                                   <div class="row no-gutters">
@@ -82,14 +122,15 @@
                                   </div>
                                   
                           </div>
-                          
-                          
+                         <!-- </form>  -->
+                         
+                         <!-- <form name="categorySelect" method="post">  -->
                           <div class="form-group mb-30">
                               <label for="guests">카테고리</label>
                               <div class="row">
                                   <div class="col-12">
                                   <c:forEach var="dto_category" items="${listCategory}">	
-										<button class="btn roberto-btnn w-100 mb10" style="font-size: 16px;">${dto_category.categoryName}</button>
+										<button class="btn roberto-btnn w-100 mb10 btn_sendCategory" style="font-size: 16px;" data-categoryCode='${dto_category.categoryCode}'>${dto_category.categoryName}</button>
 									</c:forEach>
                                   </div>
                               </div>
@@ -110,7 +151,7 @@
               </div>
 
           	<div class="col-12 col-lg-8">              
-          		<div class="row" style="font-size: 20px; margin-bottom: 20px; margin-left: 700px;">
+          		<div class="row" style="font-size: 20px; margin-bottom: 20px; margin-left: 650px;">
                		<select name="" class="nice-select">
                			<option value="popular">인기순</option>
                			<option value="review">후기많은순</option>
@@ -118,11 +159,11 @@
                		</select>
 				</div>
 <c:forEach var="dto" items="${list}">          		
-				<div class="row" align="left">
-                  <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms" style="height: 250px;">
+               <div class="single-room-area d-flex align-items-center mb-50" style="height: 300px; border-top: 2px solid #aaaaaa; padding-top: 100px;">
+				<div class="row" align="left" style="width:900px;">
 
-                      <div class="room-thumbnail" style="width: 450px; margin-left: 70px;">
-                          <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" alt="">
+                      <div class="room-thumbnail" style="margin-left: 40px;">
+                          <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" alt="" style="padding-bottom: 50px;">
                       </div>
                       <!-- Room Content -->
                       <div class="room-content" style="margin-top: 1px;">
@@ -133,7 +174,7 @@
                               <div><h6>★★★★★(255)</h6></div>
                               <h6>423개 구매</h6>
                           </div>
-                          <a href="<%=cp%>/ticket/detail" class="btn view-detail-btn">더보기 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                          <a href="${articleUrl}&ticketCode=${dto.ticketCode}" class="btn view-detail-btn">더보기 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                       </div>                     
                   </div>
           		</div>
@@ -147,10 +188,10 @@
                           <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a></li>
                       </ul>
                   </nav> -->
-                 <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="500ms"> 
+                 <nav class="roberto-pagination"> 
                   <table style="width: 100%; margin: 10px auto 50px; border-spacing: 0px;">
 		  			<tr height="40">
-						<td align="center" style="padding-top:10px;">
+						<td align="center" style="padding-top:30px; border-top: 2px solid #aaaaaa;">
 		        			${dataCount==0 ? "등록된 자료가 없습니다." : paging}
 						</td>
 		   			</tr>

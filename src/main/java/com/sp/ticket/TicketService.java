@@ -8,4 +8,5 @@ public interface TicketService {
 	public int dataCount(Map<String, Object> map);
 	public List<Ticket> listRegion();
 	public List<Ticket> listCategory();
+	public Ticket readTicket(int ticketCode);
 }

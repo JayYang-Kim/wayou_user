@@ -62,4 +62,17 @@ public class TicketServiceImpl implements TicketService {
 		return list;
 	}
 
+	@Override
+	public Ticket readTicket(int ticketCode) {
+		Ticket dto = null;
+		
+		try {
+			dto=dao.selectOne("ticket.readTicket", ticketCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
 }
