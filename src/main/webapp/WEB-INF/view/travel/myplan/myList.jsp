@@ -155,10 +155,14 @@
 	
 	function search(){
 		$(function(){
-			var form = $("#searchRoute");
+			var form = $("#searchRoute")
 			if(!$("#searchRoute input").val()){
 				alert("값을 입력하세요!");
 				return false;
+			}
+			var searchKey = form.find("select[name=searchKey]").val();
+			if(searchKey=="startDay" || searchKey=="created"){
+				form.find("input[name=searchValue]").val(form.find("input[name=searchValue]").val().replace(/(\.|\-|\/)/g,""));
 			}
 			var query = form.serialize();
 			location.href="<%=cp%>/travel/myplan/myList?page=${page}&"+query;

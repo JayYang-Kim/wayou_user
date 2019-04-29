@@ -318,7 +318,7 @@
 							</div>
 							<div class="sch_add_content">
 								<div class="sch_memo_confirm">
-									<div class="sch_budget" data-budget="${dto.budget}">KRW - <fmt:formatNumber>${dto.budget}</fmt:formatNumber></div>
+									<div class="sch_budget" data-budget="${dto.budget}">KRW - <fmt:formatNumber>${dto.budget}</fmt:formatNumber> 원</div>
 										<div class="sch_memo">${dto.memo}</div>
 								</div>
 								<div class="sch_memo_box" style="width: 400px; height: 180px;">
@@ -405,7 +405,7 @@
 		for(var i=0; i<budgets.length; i++){
 			sum += parseInt($(budgets[i]).attr("data-budget"));
 		}
-		$(".day_title").html("KRW "+((""+sum).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')));
+		$(".day_title").html("KRW "+((""+sum).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'))+" 원");
 		
 			var query ="day=${day}&workCode=${workspace.workCode}&budget="+sum;
 			

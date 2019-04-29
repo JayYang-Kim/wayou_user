@@ -121,10 +121,13 @@
 			INSTR(subject,#{searchValue}) &gt;= 1
 		</if>
 		<if test="searchKey=='startDay'">
-			to_char(startDay,'YYYY-MM-DD') = #{searchValue}
+			to_char(startDay,'YYYYMMDD') = #{searchValue}
 		</if>
 		<if test="searchKey=='created'">
-			to_char(created,'YYYY-MM-DD') = #{searchValue}
+			to_char(created,'YYYYMMDD') = #{searchValue}
+		</if>
+		<if test="searchKey=='userName'">
+			INSTR(userName,#{searchValue})>0
 		</if>
 	</sql>
 	
@@ -133,10 +136,13 @@
 			INSTR(subject,#{searchValue}) &gt;= 1
 		</if>
 		<if test="searchKey=='startDay'">
-			to_char(startDay,'YYYY-MM-DD') = #{searchValue}
+			to_char(startDay,'YYYYMMDD') = #{searchValue}
 		</if>
 		<if test="searchKey=='created'">
-			to_char(w.created,'YYYY-MM-DD') = #{searchValue}
+			to_char(w.created,'YYYYMMDD') = #{searchValue}
+		</if>
+		<if test="searchKey=='userName'">
+			INSTR(userName,#{searchValue})>0
 		</if>
 	</sql>
 
@@ -148,9 +154,22 @@
 				<include refid="searchDataCount" />
 			</if>
 			<if test="locCode!=0">
-				locCode=#{locCode}
+				and locCode=#{locCode}
 			</if>
 			and userIdx = #{userIdx}
+		</where>
+	</select>
+	<select id="dataCount" parameterType="map"
+		resultType="Integer">
+		select NVL(count(*),0) from workspace w
+		join tb_user u on w.userIdx = u.userIdx
+		<where>
+			<if test="searchValue!=null and searchValue!=''">
+				<include refid="searchDataCount" />
+			</if>
+			<if test="locCode!=0">
+				and locCode=#{locCode}
+			</if>
 		</where>
 	</select>
 
@@ -165,9 +184,28 @@
 								<include refid="search"/>
 							</if>
 							<if test="locCode!=0">
-								w.locCode=#{locCode}
+								and w.locCode=#{locCode}
 							</if>
 							and userIdx = #{userIdx}
+						</where>
+						order by workCode desc
+			)tb where rownum &lt;= #{end}
+		) where rnum &gt;=#{start}
+	</select>
+	<select id="list" parameterType="map" resultType="com.sp.travel.Workspace">
+		select * from (
+			select tb.*, rownum rnum from (
+				select c.locName, w.workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename, u.userIdx, userName from workspace w
+					join location l on w.locCode = l.locCode
+					join locationCode c on l.locCode=c.locCode
+					join tb_user u on w.userIdx = u.userIdx
+						<where>
+							<if test="searchValue!=null and searchValue!=''">
+								<include refid="search"/>
+							</if>
+							<if test="locCode!=0">
+								and w.locCode=#{locCode}
+							</if>
 						</where>
 						order by workCode desc
 			)tb where rownum &lt;= #{end}
@@ -179,6 +217,16 @@
 		from workspace w
 		join locationCode c on w.locCode = c.locCode
 		where userIdx=#{userIdx}
+ 	</select>
+ 	<select id="locationCategory2" resultType="com.sp.travel.LocCategory">
+ 		select unique locName,w.locCode, count(locName) over(partition by locName) as count
+		from workspace w
+		join locationCode c on w.locCode = c.locCode
+		<where>
+			<if test="searchValue!=null and searchValue!=''">
+				<include refid="search"/>
+			</if>
+		</where>
  	</select>
  	<select id="readOnlyWorkspace" parameterType="Integer" resultType="Integer">
  		select userIdx from workspace where workCode=#{workCode}

@@ -171,11 +171,28 @@ public class TravelService {
 		}
 		return list;
 	}
-	
+	public List<Workspace> list(Map<String, Object> map) {
+		List<Workspace> list = null;
+		try {
+			list = dao.selectList("workspace.list",map);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	public List<LocCategory> locationCategory(int userIdx){
 		List<LocCategory> list = null;
 		try {
 			list = dao.selectList("workspace.locationCategory",userIdx);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+	public List<LocCategory> locationCategory(Map<String,Object> map){
+		List<LocCategory> list = null;
+		try {
+			list = dao.selectList("workspace.locationCategory2",map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -251,6 +268,16 @@ public class TravelService {
 		int result=0;
 		try {
 			result = dao.selectOne("workspace.readOnlyWorkspace",workCode);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public int dataCount(Map<String, Object> map) {
+		int result=0;
+		try {
+			result = dao.selectOne("workspace.dataCount",map);
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
