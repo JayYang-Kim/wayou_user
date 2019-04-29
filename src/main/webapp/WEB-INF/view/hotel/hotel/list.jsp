@@ -78,7 +78,9 @@
                     <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                         <!-- Room Thumbnail -->
                         <div class="room-thumbnail">
-                            <img src="<%=cp%>/resources/images/bg-img/43.jpg" alt="">
+                            <%-- <img src="<%=cp%>/resources/images/bg-img/43.jpg" alt=""> --%>
+                            <img src="<%=cp%>/resources/images/${dto.saveFilename}" alt="">
+                            
                         </div>
                         <!-- Room Content -->
                         <div class="room-content">
@@ -116,10 +118,10 @@
                                 <div>
                                     <div class="row no-gutters">
 			                            <div class="col-6 col-md-6 col-lg-6">                              
-			                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
+			                                <input type="date" class="form-control" id="checkin_date1" name="checkin_date1">
 			                            </div>
 			                           	<div class="col-6 col-md-6 col-lg-6">                              
-			                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
+			                                <input type="date" class="form-control" id="checkin_date2" name="checkin_date2">
 			                            </div>
                                     </div>
                                 </div>
@@ -129,10 +131,10 @@
                             
                                     <div class="row no-gutters">
 			                            <div class="col-6 col-md-6 col-lg-6" style="font-size: 20px;">  
-			                           		<input type="checkbox">낮은 가격순                               
+			                           		<input type="checkbox" name="price_order" value="asc" >낮은 가격순                               
 			                            </div>
 			                            <div class="col-6 col-md-6 col-lg-6" style="font-size: 20px;">  
-			                           		<input type="checkbox">높은 가격순                               
+			                           		<input type="checkbox" name="price_order" value="desc">높은 가격순                               
 			                            </div>
                                     </div>
                            
@@ -142,8 +144,7 @@
                                 <div>
                                     <div class="row no-gutters">
                                     <div class="col-6" >                         
-				                        <input type="text" class="form-control" id="key" name="key" value="검색하기"/>
-				                          	   	                 
+				                        <input type="text" class="form-control" id="value" name="value" value="${value}"/>  	   	                 
                                     </div>
                                     </div>
                                 </div>

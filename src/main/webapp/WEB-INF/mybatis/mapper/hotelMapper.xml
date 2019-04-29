@@ -2,17 +2,45 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="hotel">
+
+<!-- 
+<if test="checkin_date1 !=null and checkin_date1='' and checkin_date2 !=null and checkin_date2=''">
+			  	  TO_CHAR(checkin_date1, 'YYYY-MM-DD') &gt; #{checkin_date1} and TO_CHAR(checkin_date2, 'YYYY-MM-DD') &lt;  #{checkin_date2}
+  </if>
+
+ -->
+
 	<select id="listHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
-		 SELECT * FROM (
-		            SELECT ROWNUM rnum, tb.* FROM (
-		         SELECT h.hName, h.address1, newT.hCount, newT.price, h.locCode, h.hotelCode 
-		         FROM hotelInfo h
-		         LEFT OUTER JOIN(
-		            SELECT hotelCode, hCount, min(price) as price
-		            FROM roomInfo
-		            GROUP BY hotelCode, hCount
-		         )newT ON newT.hotelCode=h.hotelCode
-		      
+ SELECT * FROM (
+            SELECT ROWNUM rnum, tb.* FROM (
+         SELECT h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename
+         FROM hotelInfo h
+ 
+         LEFT OUTER JOIN(
+            SELECT hotelCode, hcount, min(price) as price, roomCode
+            FROM roomInfo
+            GROUP BY hotelCode, roomCode, hcount
+         ) newT ON newT.hotelCode=h.hotelCode
+         LEFT OUTER JOIN(
+            select roomcode, saveFilename FROM roomfile
+            WHERE fileCode=(SELECT MAX(fileCode) FROM roomfile)
+         )nf ON nf.roomCode=newT.roomCode      
+
+				
+			 <where>
+		      	<if test="value!=null and value !=''" >
+					(INSTR(h.address1, #{value}) > 0)
+		      	</if>
+			 </where>
+			 
+			 <choose>
+			  <when test="price_order=='desc'"> 
+			   ORDER BY price desc
+			  </when>
+			  <when test="price_order=='asc'"> 
+			   ORDER BY price asc
+			  </when>
+			 </choose>			 
 <![CDATA[
 		      )tb WHERE ROWNUM <=#{end}
 		   )WHERE rnum >=#{start}
@@ -21,6 +49,10 @@
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) FROM hotelInfo
+			 <where>
+		      	<if test="value!=null and value !=''" >
+					(INSTR(address1, #{value}) > 0)
+		      	</if>
+			 </where>
 	</select>
-
 </mapper>

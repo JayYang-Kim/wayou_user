@@ -1,5 +1,6 @@
 package com.sp.hotel;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,23 +31,24 @@ public class HotelController {
 		return ".hotel.hotel.main";
 	}
 	
-	@RequestMapping(value="/hotel/hotel/list",method=RequestMethod.GET )
+	@RequestMapping(value="/hotel/hotel/list" )
 	public String HotelList(@RequestParam (value="page", defaultValue="1") int current_page,
+							@RequestParam (defaultValue="") String value,
+							@RequestParam (defaultValue="") String price_order,
 							HttpServletRequest req,
 							Model model) throws Exception {
 		
-		//파라미터 아직 조건 안걸어서 key, value 안넘겨줌 where-list하면 추가해야됨
-/*		if(req.getMethod().equalsIgnoreCase("GET")) {
+		if(req.getMethod().equalsIgnoreCase("GET")) {
 			value=URLEncoder.encode(value, "utf-8");
 		}
-		*/
+
 		int rows=2;
 		int total_page=0;
 		int dataCount=0;
 		
 		Map<String, Object> map=new HashMap<>();
-		/*map.put("key", key);
-		map.put("value", value);*/
+		map.put("price_order", price_order);
+		map.put("value", value);
 		
 		dataCount=hotelservice.dataCount(map);
 		if(dataCount!=0)
@@ -74,14 +76,14 @@ public class HotelController {
 		String query="";
 		String listUrl=cp+"/hotel/hotel/list";
 		String articleUrl=cp+"/hotel/hotel/aticle?page="+current_page;
-/*		
+	
 		if(value.length()!=0) {
-			query+="key="+key+"value="+URLEncoder.encode(value, "utf-8");
+			query+="value="+URLEncoder.encode(value, "utf-8");
 			
 			listUrl += "?"+query;
 			articleUrl += "&"+query;
 		}
-		*/
+
 		String paging=myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list", list);
@@ -90,8 +92,7 @@ public class HotelController {
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("total_page", total_page);
-/*		model.addAttribute("key", key);
-		model.addAttribute("value", value);*/
+		model.addAttribute("value", value);
 		
 		return ".hotel.hotel.list";
 	}

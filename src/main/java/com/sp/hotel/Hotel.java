@@ -15,7 +15,9 @@ public class Hotel {
 	private int listNum;
 	private int price;
 	private int HCount;
-		
+	private int fileCode;
+	private int roomCode;
+	
 	public int getHotelCode() {
 		return hotelCode;
 	}
@@ -100,6 +102,17 @@ public class Hotel {
 	public void setHCount(int hCount) {
 		HCount = hCount;
 	}
-	
-	
+	public int getFileCode() {
+		return fileCode;
+	}
+	public void setFileCode(int fileCode) {
+		this.fileCode = fileCode;
+	}
+	public int getRoomCode() {
+		return roomCode;
+	}
+	public void setRoomCode(int roomCode) {
+		this.roomCode = roomCode;
+	}
+
 }
