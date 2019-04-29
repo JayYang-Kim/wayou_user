@@ -265,14 +265,17 @@
 					<h5 style="padding-bottom: 20px;">${workspace.userName}의일정</h5>
 					<h2 style="padding-bottom: 5px;">${workspace.subject}</h2>
 					<h6 style="padding-bottom: 15px;">${workspace.startDay}~${workspace.endDay}(${workspace.dayCount}일)</h6>
-					<div
+					<div                   
 						style="border: 1px solid white; padding: 10px 5px; width: 300px; height: 40px; float: left;"
 						class="totMoney">
 						<p style="width: 100px; text-align: center;">필요 경비 :</p>
-						<p style="text-align: right; width: 130px;">10,000,000</p>
+						<p class="totBudget" style="text-align: right; width: 130px;"></p>
 						<p style="width: 50px; text-align: center;">원</p>
 					</div>
-					<button style="float: right" class="btn roberto-btn">수정하기</button>
+					<c:if test="${workspace.userIdx==sessionScope.member.userIdx}">
+						<button style="float: right" class="btn roberto-btn" 
+							onclick="javascript:location.href='<%=cp%>/travel/myplan/workspace?locCode=${workspace.locCode}&workNum=${workspace.workCode}&dayCount=${workspace.dayCount}';">수정하기</button>
+					</c:if>
 				</div>
 				
 			</div>
@@ -289,17 +292,17 @@
 				<div class="day_info_box">
 					<div class="day_txt">Day ${day}</div>
 					<div class="day_info">
-						<div class="day_info_left"><div class="day_title">${day}일차 여행 경비 : KRW 12,000</div></div>
+						<div class="day_info_left"><div class="day_title">${day}일차 여행 경비 : KRW </div></div>
 						<div class="clear"></div>
 					</div>
 					<div class="clear"></div>
 				</div>
 				<c:forEach var="dto" items="${list}" varStatus="status">
-					<div class="day_sch_box" data-lat="${dto.lat}" data-lng="${dto.lng}" data-landName="${dto.landName}" data-orderNum="${dto.orderNum}">
+					<div class="day_sch_box" data-lat="${dto.lat}" data-lng="${dto.lng}" data-landName="${dto.landName}" data-orderNum="${dto.orderNum}" data-worklandCode="${dto.workLandCode}">
 							<div class="day_sch_num">
 								<div class="sch_num">${dto.orderNum}</div>
 							</div>
-							<div class="sch_content" data-landCode="${dto.landCode}" data-workLandCode="${dto.workLandCode}">
+							<div class="sch_content" data-landCode="${dto.landCode}">
 								<%-- <img src="${dto.saveFileName}" alt="no image" class="spot_img"> --%>
 								<img src="<%=cp%>/resources/images/bg-img/46.jpg" alt="no image" class="spot_img">
 								<div class="spot_content_box">
@@ -308,24 +311,22 @@
 										<div class="landTag">${dto.tagName}</div>
 					 					<div class="clear"></div>
 									</div>
-									<div class="btn_memo">메모&amp;예산수정</div>
+									<c:if test="${workspace.userIdx==sessionScope.member.userIdx}">
+										<div class="btn_memo">메모&amp;예산수정</div>
+									</c:if>
 								</div>
 							</div>
 							<div class="sch_add_content">
 								<div class="sch_memo_confirm">
-									<div class="sch_budget" data-currency="${dto.currency}" data-budget="${dto.budget}" data-memo="${dto.memo}">${dto.currency} - <fmt:formatNumber>${dto.budget}</fmt:formatNumber></div>
+									<div class="sch_budget" data-budget="${dto.budget}">KRW - <fmt:formatNumber>${dto.budget}</fmt:formatNumber></div>
 										<div class="sch_memo">${dto.memo}</div>
 								</div>
 								<div class="sch_memo_box" style="width: 400px; height: 180px;">
-									<div class="plan_info_box nleft white" style="width: 100%; height:30px; margin-bottom: 5px;">
-										<select name="currency" style="height:30px;">
-											<option value="KRW" ${dto.currency=='KRW'?"selected='selected'":""}>KRW</option>
-											<option value="USD" ${dto.currency=='USD'?"selected='selected'":""}>USD</option>
-											<option value="JPY" ${dto.currency=='JPY'?"selected='selected'":""}>JPY</option>
-											<option value="CNY" ${dto.currency=='CNY'?"selected='selected'":""}>CNY</option>
-										</select>
-										<input type="text" name="budget" placeholder="예산을 입력하세요" style="height: 30px; margin-left: 5px;" value="${dto.budget}">
+									<div class="plan_info_box nleft white" style="width: 100%; height:50px; margin-bottom: 5px; ">
+									<p>예산</p>
+										<input type="text" name="budget" placeholder="예산을 입력하세요(원)" style="height: 30px;width: 350px;" value="${dto.budget}">
 									</div>
+									<p>메모</p> 
 									<textarea name="" id="" cols="30" rows="10" class="memo_input">${dto.memo}</textarea>
 									<div class="memo_save_btn" style="margin-top: 5px;">저장</div>
 									<div class="clear"></div>
@@ -354,8 +355,7 @@
 	$(function(){
 		$(".nice-select").hide();
 		$("select[name='currency']").css("display","");
-		
-		
+		calDayTotBudget();
 		drawRouteToMap($("#dailyRoute").find(".day_sch_box"));	
 		loadExplain();
 	});
@@ -366,11 +366,13 @@
 			$(this).closest(".day_sch_box").find(".sch_memo_confirm").toggle();
 		});
 		$("body").on("click",".memo_save_btn",function(){
-			var currency = $(this).parent().find("select[name=currency]").val();
 			var budget = $(this).parent().find("input[type=text]").val();
 			var memo = $(this).parent().find("textarea").val();
+			var worklandCode= $(this).closest(".day_sch_box").attr("data-worklandCode");
 			
-			var query = "currency="+currency+"&budget="+budget+"&memo="+encodeURIComponent(memo);
+			var query = "budget="+budget+"&memo="+encodeURIComponent(memo)+"&workLandCode="+worklandCode;
+			
+			var $daySchBox = $(this).closest(".day_sch_box");
 			
 			$.ajax({
 				type:"post",
@@ -378,7 +380,12 @@
 				data:query,
 				dataType:"json",
 				success:function(data){
-					
+					$($daySchBox).find(".sch_budget").attr("data-budget",data.budget);
+					$($daySchBox).find(".sch_budget").html("KRW - "+data.budget);
+					$($daySchBox).find(".sch_memo").html(data.memo);
+					$($daySchBox).find(".sch_memo_box").toggle();
+					$($daySchBox).find(".sch_memo_confirm").toggle();
+					calDayTotBudget();
 				},
 				error:function(e){
 					if(e.status==403) {
@@ -389,6 +396,35 @@
 			});
 		});
 	});
+	
+	
+	
+	function calDayTotBudget(){
+		var sum = 0;
+		var budgets = $("div[class^=sch_budget]");
+		for(var i=0; i<budgets.length; i++){
+			sum += parseInt($(budgets[i]).attr("data-budget"));
+		}
+		$(".day_title").html("KRW "+((""+sum).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')));
+		
+			var query ="day=${day}&workCode=${workspace.workCode}&budget="+sum;
+			
+			$.ajax({
+				type:"post",
+				url:"<%=cp%>/travel/plan/updateBudgetByDay",
+				data:query,
+				dataType:"json",
+				success:function(data){
+					$(".totBudget").html((""+data.sum).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));	
+				},
+				error:function(e){
+					if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+				}
+			});	
+	}
 	
 	function loadExplain(){
 		var objs = $("#dailyRoute").find(".day_sch_box");
@@ -450,7 +486,7 @@
 	        displayCircleDot(positions[i].latlng, distance,positions[i].order);
 	        
 	        if(i!=0 && i!=positions.length){
-	        	$("#distance"+(i)).append(distance+"m");
+	        	$("#distance"+(i)).append((""+distance).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')+"m");
 	        }
 	         
 	    }

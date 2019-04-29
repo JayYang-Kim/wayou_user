@@ -180,28 +180,50 @@
 		join locationCode c on w.locCode = c.locCode
 		where userIdx=#{userIdx}
  	</select>
+ 	<select id="readOnlyWorkspace" parameterType="Integer" resultType="Integer">
+ 		select userIdx from workspace where workCode=#{workCode}
+ 	</select>
  	
  	<select id="readWorkspace" parameterType="map" resultType="com.sp.travel.Workspace">
- 		select u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, locCode from workspace w
+ 		select workCode, u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, locCode from workspace w
  		join tb_user u on w.userIdx=u.userIdx
  		where workCode=#{workCode} and u.userIdx=#{userIdx}
  	</select>
  	
  	<select id="readWorkLand" parameterType="map" resultType="com.sp.travel.WorkLand">
  		    select unique w.landCode, landName, workLandCode, tagName, saveFilename, orderNum,lm.lat,lm.lng, 
- 		    w.budget, w.currency, w.memo 
+ 		    w.budget, w.memo 
 			from workland w 
 			join landmark lm on w.landCode=lm.landCode
 			left outer join (select * from landmarkfile where rownum=1) lmf on w.landCode = lmf.landCode
 			join lndTagCode ltc on lm.tagCode = ltc.tagCode
 			where w.detailCode = (
-			select detailCode from workspacedetail wd
+			select detailCode from workspaceDetail wd
 			join workspace ws on wd.workCode = ws.workCode where wd.workCode=#{workCode} and userIdx=#{userIdx} and day=#{day}
-			) order by ordernum asc
+			) order by orderNum asc
  	</select>
  	
  	<select id="countWorkDetail" parameterType="map" resultType="Integer">
- 		select nvl(count(*),0) from workspacedetail where workCode=#{workCode}
+ 		select nvl(count(*),0) from workspaceDetail where workCode=#{workCode}
+ 	</select>
+ 	
+ 	<select id="readBudgetByDay" parameterType="map" resultType="Integer">
+ 		select budget from workspaceDetail where workCode=#{workCode} and day=#{day}
+ 	</select>
+ 	<select id="readBudgetByWorkCode" parameterType="Integer" resultType="Integer">
+ 		select budget from workspace where workCode=#{workCode}
+ 	</select>
+ 	<update id="updateWorkLandDetail" parameterType="com.sp.travel.WorkLand">
+ 		update workLand set budget=#{budget}, memo=#{memo} where worklandCode=#{workLandCode}
+ 	</update>
+ 	<select id="selectWorkLandBM" parameterType="Integer" resultType="com.sp.travel.WorkLand">
+ 		select budget,memo from workLand where worklandCode=#{worklandCode}
+ 	</select>
+ 	<update id="updateBudgetByDay" parameterType="map">
+ 		update workspaceDetail set budget=#{budget} where workCode=#{workCode} and day=#{day}
+ 	</update>
+ 	<select id="selectTotBudget" parameterType="Integer" resultType="Integer">
+ 		select sum(budget) from workspaceDetail where workCode=#{workCode}
  	</select>
 
 </mapper>

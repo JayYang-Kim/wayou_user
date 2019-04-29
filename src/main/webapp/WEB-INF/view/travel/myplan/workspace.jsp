@@ -305,8 +305,6 @@
 	}
 </script>
 
-
-
 <div id="container">
 	<div class="row" style="margin-left: 0; margin-right: 0">
 		<div class="leftDayBar" class="col12 col-lg-1" style="background: teal; padding: 0;height: 750px; width: 158px; z-index: 0;">
