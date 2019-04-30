@@ -9,4 +9,5 @@ public interface TicketService {
 	public List<Ticket> listRegion();
 	public List<Ticket> listCategory();
 	public Ticket readTicket(int ticketCode);
+	public List<Ticket> readDate(int storeCode);
 }

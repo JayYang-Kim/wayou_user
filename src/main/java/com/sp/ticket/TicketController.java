@@ -96,6 +96,7 @@ public class TicketController {
 	@RequestMapping(value="/ticket/detail")
 	public String detail(
 			@RequestParam int ticketCode,
+			@RequestParam int storeCode,
 			@RequestParam int page,
 			@RequestParam(defaultValue="0") int regionCode,
 			@RequestParam(defaultValue="0") int cateCode,
@@ -109,17 +110,19 @@ public class TicketController {
 		if(dto==null) {
 			return "redirect:/ticket/list"+query;
 		}
-		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_start());
-		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_end());
 		
+		List<Ticket> listDate = ticketService.readDate(storeCode);
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("ticketCode", ticketCode);
 		map.put("regionCode", regionCode);
 		map.put("cateCode", cateCode);
+		map.put("storeCode", storeCode);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
+		model.addAttribute("listDate", listDate);
 		
 		return ".ticket.detail";
 	}
