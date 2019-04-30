@@ -32,6 +32,11 @@
 		left:15px;
 		z-index: 1;
 	}
+	.sidebar_list a {
+		height:24px;
+		padding-top: 5px;
+	}
+	
 	
 </style>
 <script type="text/javascript">
@@ -74,12 +79,31 @@
 	$(function(){
 		$(".locCategory").click(function(){
 			var locCode= $(this).attr("data-locCode");
-			if(${searchValue==''}){
-				location.href="<%=cp%>/travel/plan/list?locCode="+locCode;	
-			}else {
-				location.href="<%=cp%>/travel/plan/list?locCode="+locCode+"&searchKey=${searchKey}&searchValue=${searchValue}";
+			var routeSort = $("#routeSort").val();
+			if(${searchValue==""}){
+				location.href="<%=cp%>/travel/plan/list?locCode="+locCode+"&routeSort="+routeSort;	
+			}else{
+				location.href="<%=cp%>/travel/plan/list?locCode="+locCode+"&routeSort="+routeSort+"&searchKey=${searchKey}&searchValue=${searchValue}";
 			}
 			
+		});
+	});
+	$(function(){
+		$("#routeSort").change(function(){ 
+			var routeSort = $(this).val();
+			if(${locCode==0}){
+				if(${searchValue==""}){
+					location.href="<%=cp%>/travel/plan/list?routeSort="+routeSort;	
+				}else{
+					location.href="<%=cp%>/travel/plan/list?routeSort="+routeSort+"&searchKey=${searchKey}&searchValue=${searchValue}";
+				}	
+			}else{
+				if(${searchValue==""}){
+					location.href="<%=cp%>/travel/plan/list?locCode=${locCode}&routeSort="+routeSort;	
+				}else{
+					location.href="<%=cp%>/travel/plan/list?locCode=${locCode}&routeSort="+routeSort+"&searchKey=${searchKey}&searchValue=${searchValue}";
+				}
+			}
 		});
 	});
 </script>
@@ -126,11 +150,19 @@
 						<c:forEach var="n" items="${locCategory}">
 							<a data-locCode="${n.locCode}" class="locCategory"><span style="font-size: 18px;">${n.locName}(${n.count}) </span></a>
 						</c:forEach>
+						<div style="float:right">
+							<select id="routeSort" name="routeSort">
+								<option value="2" ${routeSort==2?"selected='selected'":''}>전체 경로 보기</option>
+								<option value="0" ${routeSort==0?"selected='selected'":''}>무료만 보기</option>
+								<option value="1" ${routeSort==1?"selected='selected'":''}>유료만 보기</option>
+							</select>
+						</div>
 					</div>
+					
 				</div>
                 <section class="routeList" style="min-height: 700px; padding-left: 20px; padding-right: 20px;">
 					<c:forEach var="dto" items="${list}">
-						<div class="routeItem">
+						<div class="routeItem wow fadeInUp" data-wow-delay="100ms">
 							<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" style="float: left;">
 							<div style="float: left;">
 								<p>
@@ -139,16 +171,16 @@
 									<span>여행지역 : ${dto.locName}</span><br>
 									<span>출발일 : ${dto.startDay} | 여행기간 : ${dto.dayCount}(일)</span><br>
 									<span>작성일 : ${dto.created}</span><br>
-									<span>작성자 : ${dto.userName}</span>
+									<span>작성자 : ${dto.userName} | 공개 여부 : ${dto.pay==1?"유료":"무료"}</span>
 								</p> 
 							</div>
 						</div>
-						<c:if test="${empty list}">
+					</c:forEach>
+					<c:if test="${empty list}">
 		                	<div class="t_center mt40 mb40">
 		                		<span class="f14 exbold">등록된 여행 일정이 없습니다.</span>
 		                	</div>
-		                </c:if>          
-					</c:forEach>
+		            </c:if> 
 				</section>
                 <!-- Pagination -->
                 <nav class="roberto-pagination mb-50 text-center" style="margin-top:10px;">

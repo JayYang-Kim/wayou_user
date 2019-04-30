@@ -170,6 +170,9 @@
 			<if test="locCode!=0">
 				and locCode=#{locCode}
 			</if>
+			<if test="routeSort!=2">
+					and pay=#{routeSort}
+			</if>
 		</where>
 	</select>
 
@@ -195,7 +198,7 @@
 	<select id="list" parameterType="map" resultType="com.sp.travel.Workspace">
 		select * from (
 			select tb.*, rownum rnum from (
-				select c.locName, w.workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename, u.userIdx, userName from workspace w
+				select c.locName, w.workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename, u.userIdx, userName,pay from workspace w
 					join location l on w.locCode = l.locCode
 					join locationCode c on l.locCode=c.locCode
 					join tb_user u on w.userIdx = u.userIdx
@@ -205,6 +208,9 @@
 							</if>
 							<if test="locCode!=0">
 								and w.locCode=#{locCode}
+							</if>
+							<if test="routeSort!=2">
+								and pay=#{routeSort}
 							</if>
 						</where>
 						order by workCode desc
@@ -226,6 +232,9 @@
 			<if test="searchValue!=null and searchValue!=''">
 				<include refid="search"/>
 			</if>
+			<if test="routeSort!=2">
+				and pay=#{routeSort}
+			</if>
 		</where>
  	</select>
  	<select id="readOnlyWorkspace" parameterType="Integer" resultType="Integer">
@@ -233,7 +242,7 @@
  	</select>
  	
  	<select id="readWorkspace" parameterType="map" resultType="com.sp.travel.Workspace">
- 		select workCode, u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, locCode from workspace w
+ 		select workCode, u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, locCode,pay from workspace w
  		join tb_user u on w.userIdx=u.userIdx
  		where workCode=#{workCode} and u.userIdx=#{userIdx}
  	</select>
@@ -271,7 +280,11 @@
  		update workspaceDetail set budget=#{budget} where workCode=#{workCode} and day=#{day}
  	</update>
  	<select id="selectTotBudget" parameterType="Integer" resultType="Integer">
- 		select sum(budget) from workspaceDetail where workCode=#{workCode}
+ 		select nvl(sum(budget),0) from workspaceDetail where workCode=#{workCode}
+ 	</select>
+ 	
+ 	<select id="isPaid" parameterType="map" resultType="Integer">
+ 		select nvl(count(*),0) from paidRoute where userIdx=#{userIdx} and workCode=#{workCode}
  	</select>
 
 </mapper>

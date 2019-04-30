@@ -29,6 +29,15 @@
 		-webkit-font-smoothing: antialiased;
 	}
 	
+	.locations{
+		height: auto;
+		margin-bottom: 30px;
+	}
+	
+	.sidebar_list {
+		min-height: 100px;
+	}
+	
 	.sidebar_title {
     font-family: 'Oswald', sans-serif;
     font-weight: 500;
@@ -43,6 +52,7 @@
         
     .sidebar_list ul{
     	padding-left: 35px;
+    	height: auto;
     }
     
     .sidebar_list ul li:not(:last-child) {
@@ -127,6 +137,10 @@
 	    background-repeat: no-repeat;
 	    background-size: cover;
 	    background-position: center center;
+	}
+	.routeLocList {
+		float:left;
+		width:50px;
 	}
 }
 </style>
@@ -217,7 +231,7 @@
                 </c:if>
                 <section class="routeList" style="min-height: 700px;">
 					<c:forEach var="dto" items="${list}">
-						<div class="routeItem">
+						<div class="routeItem wow fadeInUp" data-wow-delay="100ms">
 							<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" style="float: left;">
 							<div style="float: left;">
 								<p>

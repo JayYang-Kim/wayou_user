@@ -283,4 +283,14 @@ public class TravelService {
 		}
 		return result;
 	}
+
+	public int isPaid(Map<String, Object> checkMap) {
+		int result=0;
+		try {
+			result = dao.selectOne("workspace.isPaid",checkMap);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

@@ -178,7 +178,7 @@
 				<input type="text" name="title" placeholder="여행 일정 제목" style="width: 90%;"><br>
 				<input type="text" id="from" name="startDay" style="margin-top: 10px;width: 90%;" placeholder="출발일"><br>
 				<input type="text" id="to" name='endDay' style="margin-top: 10px;width: 90%;" placeholder="도착일"><br>
-				<div style="margin-top: 15px; text-align: left; width: 90%;"><input type="checkbox" id="pay" name="pay" value="1"><span>유료 경로로 지정하시겠습니까?</span></div> 
+				<input type="checkbox" id="pay" name="pay" value="1"><span>유료 경로로 지정하시겠습니까?</span> 
 		      </form>
 	      </div>
 	      <div class="modal-footer">
