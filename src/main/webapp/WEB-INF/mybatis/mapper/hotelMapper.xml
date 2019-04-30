@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hotel">
+	<select id="listHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
+		 SELECT * FROM (
+		            SELECT ROWNUM rnum, tb.* FROM (
+		         SELECT h.hName, h.address1, newT.hCount, newT.price, h.locCode, h.hotelCode 
+		         FROM hotelInfo h
+		         LEFT OUTER JOIN(
+		            SELECT hotelCode, hCount, min(price) as price
+		            FROM roomInfo
+		            GROUP BY hotelCode, hCount
+		         )newT ON newT.hotelCode=h.hotelCode
+		      
+<![CDATA[
+		      )tb WHERE ROWNUM <=#{end}
+		   )WHERE rnum >=#{start}
+]]>
+	</select>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM hotelInfo
+	</select>
+
+</mapper>

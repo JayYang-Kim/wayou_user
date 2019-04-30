@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ticket">
+
+<sql id="where-list">
+		<choose>
+			<when test="searchKey == 'all' ">
+			(INSTR(subject, #{searchValue}) &gt; 0
+				OR DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0)	
+			</when>
+			<when test="searchKey == 'subject' ">
+			INSTR(subject, #{searchValue}) &gt; 0
+			</when>
+			<when test="searchKey == 'content' ">
+			DBMS_LOB.INSTR(content, #{searchValue}) &gt; 0
+			</when>
+			<when test="searchKey == 'created' ">
+			(TO_CHAR(created, 'YYYYMMDD') = #{searchValue}
+				OR TO_CHAR(created, 'YYYY-MM-DD') = #{searchValue})
+			</when>
+			<otherwise>
+				INSTR(${searchKey}, #{searchValue}) &gt; 0
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<select id="dataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM ticket t
+		JOIN store s ON t.storeCode=s.storeCode
+		<where>
+			<if test="regionCode != 0">
+				locCode=#{regionCode}
+			</if>
+			<if test="cateCode != 0">
+				AND s.categoryCode=#{cateCode}
+			</if>
+		</where>
+	</select>
+	
+	<select id="listTicket" parameterType="map" resultType="com.sp.ticket.Ticket">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.address1
+		    	FROM ticket t
+		    	JOIN (
+		    			select ticketCode, max(price) as price
+		    			FROM ticketDetail
+		    			GROUP BY ticketCode
+				) detail on detail.ticketCode=t.ticketCode
+				JOIN store s ON t.storeCode=s.storeCode
+				<where>
+					<if test="regionCode != 0">
+						locCode=#{regionCode}
+					</if>
+					<if test="cateCode != 0">
+						AND s.categoryCode=#{cateCode}
+					</if>
+				</where>
+				ORDER BY t.ticketCode DESC
+<![CDATA[				
+	        )tb WHERE ROWNUM <= #{end}
+       )WHERE rnum >= #{start}
+]]>
+	</select>
+	
+	<select id="region" resultType="com.sp.ticket.Ticket">
+		SELECT locCode, locName
+		FROM ticketLocation
+	</select>
+	
+	<select id="category" resultType="com.sp.ticket.Ticket">
+		SELECT categoryCode, categoryName
+		FROM ticketCategory
+	</select>
+	
+	<select id="readTicket" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+		SELECT t.ticketCode, ticketName, TO_CHAR(sales_start, 'YYYY"년" MM"월" DD"일"') as sales_start,
+	        TO_CHAR(sales_end, 'YYYY"년" MM"월" DD"일"') as sales_end, s.address1, detail.price, t.storeCode
+		FROM ticket t
+		JOIN (
+	    		select ticketcode, max(price) as price
+	    		from ticketDetail
+	    		group by ticketcode
+			) detail on detail.ticketCode=t.ticketcode
+		JOIN store s ON t.storeCode=s.storeCode
+		WHERE t.ticketCode=#{ticketCode}
+	</select>
+	
+	<select id="readDate" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+		SELECT TO_CHAR(use_start, 'YYYY-MM-DD') as use_start FROM ticket where storeCode=#{storeCode}
+	</select>
+
+
+
+</mapper>

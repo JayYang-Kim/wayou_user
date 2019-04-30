@@ -5,17 +5,37 @@
    String cp = request.getContextPath();
 %>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+ 
 <script type="text/javascript">
+
+//날짜 선택시 옵션
+$(function(){
+	
+	 $("body").on("click", ".btn_sendCategory", function(){
+			var form=document.searchSelect;
+			
+			var date = $("select[name=dateSelect]").val();
+			
+			var url="<%=cp%>/ticket/list?regionCode="+regionCode+"&cateCode="+cateCode;
+			
+			form.action=url;
+			form.submit();
+		}); 
+});
+
+
+
+
 $(function(){
 	var id=$("#tabContent1");
 	var url="tab1.jsp";
 	viewTabContent(id, url);
+	
+	$(".nice-select").css("width", "100%");
+	$(".nice-select ul.list").css("width", "100%");
+	
+	$(".nice-select.date .current").html("날짜 선택");
+	$(".nice-select.option .current").html("옵션 선택");
 });
 
 $(function(){
@@ -45,10 +65,9 @@ function viewTabContent(id, url) {
 }
 </script>
 
-<body>
   
-<!-- 
-    Breadcrumb Area Start
+ 
+
     <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/16.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-end">
@@ -61,8 +80,8 @@ function viewTabContent(id, url) {
             </div>
         </div>
     </div>
-    Breadcrumb Area End
- -->
+
+
  
  
     <!-- Rooms Area Start -->
@@ -82,15 +101,7 @@ function viewTabContent(id, url) {
                                     <div class="carousel-item">
                                         <img src="<%=cp%>/resources/images/bg-img/everland2.jpeg" class="d-block w-100" alt="">
                                     </div>
-                                    <div class="carousel-item">
-                                        <img src="img/bg-img/50.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/bg-img/51.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="img/bg-img/52.jpg" class="d-block w-100" alt="">
-                                    </div>
+                                   
                                 </div>
 
                                 <ol class="carousel-indicators">
@@ -112,41 +123,42 @@ function viewTabContent(id, url) {
 
                         <!-- Newsletter -->
                         <div class="single-widget-area mb-100">
-                            <div class="newsletter-form">
+                            <div class="newsletter-form" style="height: 420px;">  	
                             <ul class="detail">
-                            		<li>경기도 용인</li>
-                            		<li style="font-size:20px;">에버랜드 입장권</li>
-                            		<li>판매가격: 50000원</li>
-                            		<li>판매기간: 2019년 1월 14일 ~ 2019년 2월 14일</li>
-                            		<li>티켓선택
+                            		<li style="font-size:18px;">${dto.address1}</li>
+                            		<li style="font-size:25px;">${dto.ticketName}</li>
+                            		<li style="font-size: 23px; margin-top: 10px;">${dto.price}원</li>
+                            		<li style="font-size: 15px; margin-top: 10px;">판매기간: ${dto.sales_start} ~ ${dto.sales_end}</li>
+                            		<li style="font-size: 15px; margin-top: 12px;">티켓선택
                             		<li style="text-align: right">1인당 최대 4개 구매 가능</li>
                             		
-                  					<li>
-                            		<select class="nice-selectt">
-                            			<option value="">날짜선택</option>
-                            			<option value=""></option>
+                  					<li style="margin-top: 5px;">
+                            		<select class="nice-select date">
+                           		<c:forEach var="dto_date" items="${listDate}">	
+                            			<option name="dateSelect" value="${dto_date.use_start}">${dto_date.use_start}</option>
+                            	</c:forEach>
                             		</select>
                             		</li>
                             		
                             		
-                            		<li>
-                            		<select class="nice-selectt">
-                            			<option value="">옵션선택</option>
+                            		<li class="clear">
+                            		<select class="nice-select option mt3">
+                            			<option value="">2019-10-10</option>
                             		</select>
                             		</li>
                             		
-                            		<li>
-                            		총 상품금액 <span>50000원</span>
+                            		<li class="clear" style="margin-top: 30px;">
+                            		
                             		</li>
                             		
-                            		<li class="mb-10">
-                            		<button type="button" class="btn roberto-btn w-40">카트담기</button>
+                            		<li class="mb-10 t-center">
+                            			<button type="button" class="btn cart-btn" style="width: 130px; margin-top: 20px;">카트담기</button>
                             		
-                            		<button type="button" class="btn roberto-btn w-40">바로구매</button>
+                            			<button type="button" class="btn buy-btn" style="margin-left: 10px; margin-top: 20px;">바로구매</button>
                             		</li>
                             </ul>
 
-                            </div>
+                            
                         </div>
                     
                            <!--  <div class="form-group">
@@ -157,6 +169,7 @@ function viewTabContent(id, url) {
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Rooms Area End -->
 
@@ -181,28 +194,6 @@ function viewTabContent(id, url) {
 			</div>
        	</div>
       
-   
 
-   
-   
-        
-        
 
-     
- 
 
-    <!-- **** All JS Files ***** -->
-    <!-- jQuery 2.2.4 -->
-    <script src="js/jquery.min.js"></script>
-    <!-- Popper -->
-    <script src="js/popper.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="js/bootstrap.min.js"></script>
-    <!-- All Plugins -->
-    <script src="js/roberto.bundle.js"></script>
-    <!-- Active -->
-    <script src="js/default-assets/active.js"></script>
-
-</body>
-
-</html>

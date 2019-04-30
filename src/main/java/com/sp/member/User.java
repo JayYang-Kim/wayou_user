@@ -15,6 +15,7 @@ public class User {
 	private String userCreated_date;
 	private String userModify_date;
 	private int blackCount;
+	private String userBirth;
 	public int getUserIdx() {
 		return userIdx;
 	}
@@ -45,6 +46,7 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 	public String getPostCode() {
 		return postCode;
 	}
@@ -99,4 +101,11 @@ public class User {
 	public void setBlackCount(int blackCount) {
 		this.blackCount = blackCount;
 	}
+	public String getUserBirth() {
+		return userBirth;
+	}
+	public void setUserBirth(String userBirth) {
+		this.userBirth = userBirth;
+	}
+	
 }

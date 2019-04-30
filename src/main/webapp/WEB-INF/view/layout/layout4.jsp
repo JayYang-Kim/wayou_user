@@ -45,7 +45,7 @@
     <header class="header-area">
     	<tiles:insertAttribute name="header"/>
     </header>
-     <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/16.jpg);">
+     <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
        <div class="container h-100">
            <div class="row h-100 align-items-center">
                <div class="col-12">
@@ -67,21 +67,18 @@
  <!-- Body -->
  	<div class="container">
  	<div class="row">
-    <div class="col-12 col-lg-4 mr-50 mt-100" style="max-width: 220px;" id="sidebar">
+    <div class="col-12 col-lg-3 mr-50 mt-100" style="max-width: 200px; padding-top: 50px; font-size: 15px;" id="sidebar">
             <tiles:insertAttribute name="left"/>
         </div>
-        <div class="col-12 col-lg-8">
+        <div class="col-12 col-lg-9">
                 <tiles:insertAttribute name="body"/>
         </div>
      </div>
      </div>  
     <!-- /Body -->
-   
-        
-     
 
     <!-- Footer -->
-    <footer class="footer-area section-padding-80-0">
+    <footer class="footer-area clear">
         <tiles:insertAttribute name="footer"/>
     </footer>
     <!-- /Footer -->

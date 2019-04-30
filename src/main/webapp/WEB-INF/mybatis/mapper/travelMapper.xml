@@ -3,20 +3,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="workspace">
 	<select id="currentWorkSeqNum" resultType="Integer">
-		select workspace_seq.nextval from dual
+		select
+		workspace_seq.nextval from dual
 	</select>
-	
-	
+
+
 	<select id="currentWorkDetailSeqNum" resultType="Integer">
-		select workspacedetail_seq.nextval from dual
+		select
+		workspacedetail_seq.nextval from dual
 	</select>
-	
-	
-	
-	<select id="listLocation" resultType="com.sp.travel.Location" parameterType="String">
+
+
+
+	<select id="listLocation" resultType="com.sp.travel.Location"
+		parameterType="String">
 		select l.loccode,locname,locename,lat,lng,savefilename
-		from location l 
-		join locationcode c 
+		from location l
+		join locationcode c
 		on l.loccode=c.loccode
 		<where>
 			<if test="_parameter!='All'">
@@ -24,61 +27,203 @@
 			</if>
 		</where>
 	</select>
-	
-	<select id="basicInfo" resultType="com.sp.travel.Location" parameterType="Integer">
-		select l.loccode,locname,locename,lat,lng,savefilename, memo 
-		from location l 
-		join locationcode c 
+
+	<select id="basicInfo" resultType="com.sp.travel.Location"
+		parameterType="Integer">
+		select l.loccode,locname,locename,lat,lng,savefilename,
+		memo
+		from location l
+		join locationcode c
 		on l.loccode=c.loccode
 		where l.loccode=#{locCode}
 	</select>
-	
-	<select id="insertWorkspace" parameterType="map" resultType="Integer">
-		insert into workspace(workcode,subject,daycount,startday,endday,loccode,userIdx) 
+
+	<select id="insertWorkspace" parameterType="map"
+		resultType="Integer">
+		insert into
+		workspace(workcode,subject,daycount,startday,endday,loccode,userIdx)
 		values(#{seqNum},#{title},#{dayCount},#{startDay},#{endDay},#{locCode},#{userIdx})
 	</select>
-	
-	<select id="listLandmark" parameterType="Integer" resultType="com.sp.travel.Landmark">
-		select landcode, loccode, landname, lat, lng, tagCode from landmark 
+
+	<select id="listLandmark" parameterType="Integer"
+		resultType="com.sp.travel.Landmark">
+		select landcode, loccode, landname, lat, lng, tagCode from landmark
 		<choose>
 			<when test="landName != 'All'">
-				where instr(landName,#{landName}) >0 and locCode = #{locCode}
+				where instr(landName,#{landName}) >0 and locCode =
+				#{locCode}
 			</when>
 			<otherwise>
 				where locCode = #{locCode}
 			</otherwise>
 		</choose>
 	</select>
-	<select id="listLandmarkByTag" parameterType="Integer" resultType="com.sp.travel.Landmark">
-		select landcode, loccode, landname, lat, lng, tagCode from landmark where locCode=#{locCode} and tagCode=${tagNum}
+	<select id="listLandmarkByTag" parameterType="Integer"
+		resultType="com.sp.travel.Landmark">
+		select landcode, loccode, landname, lat, lng, tagCode from
+		landmark where locCode=#{locCode} and tagCode=${tagNum}
 	</select>
-	
+
 	<insert id="insertWorkDetail" parameterType="map">
-		insert into workspacedetail(detailcode,workcode,day) values(#{seqNum},#{workCode},#{day})
+		insert into
+		workspacedetail(detailcode,workcode,day)
+		values(#{seqNum},#{workCode},#{day})
 	</insert>
-	
+
 	<insert id="insertWorkLand" parameterType="map">
-		insert into workLand(worklandCode,detailcode,ordernum,landcode) values(workland_seq.nextval,#{detailCode},#{orderNum},#{landCode})
+		insert into
+		workLand(worklandCode,detailcode,ordernum,landcode)
+		values(workland_seq.nextval,#{detailCode},#{orderNum},#{landCode})
 	</insert>
-	
+
 	<delete id="deleteWorkLand" parameterType="Integer">
-		delete from workland where detailCode=#{seqNum}
+		delete from workland
+		where detailCode=#{seqNum}
 	</delete>
-	
-	<select id="isDetailExist" parameterType="map" resultType="Integer">
-		select nvl(count(*),0) from workspacedetail where day=#{day} and workCode=#{workCode}
+
+	<select id="isDetailExist" parameterType="map"
+		resultType="Integer">
+		select nvl(count(*),0) from workspacedetail where
+		day=#{day} and workCode=#{workCode}
 	</select>
-	
-	<select id="getDetailCode" parameterType="map" resultType="Integer">
-		select detailCode from workspacedetail where day=#{day} and workCode=#{workCode}
+
+	<select id="getDetailCode" parameterType="map"
+		resultType="Integer">
+		select detailCode from workspacedetail where day=#{day} and
+		workCode=#{workCode}
 	</select>
-	
-	<select id="landListByDay" parameterType="map" resultType="com.sp.travel.Landmark">
-		select wl.landCode, lat, lng, landName, tagCode, savefilename
+
+	<select id="landListByDay" parameterType="map"
+		resultType="com.sp.travel.Landmark">
+		select wl.landCode, lat, lng, landName, tagCode,
+		savefilename
 		from workland wl
 		join landmark lm on wl.landCode = lm.landCode
 		left outer join landmarkfile lmf on wl.landCode = lmf.landCode
-		where wl.detailCode = (select detailCode from workspacedetail where day=#{day} and workCode=#{workCode})
+		where wl.detailCode = 
+		(select detailCode from workspacedetail
+				where day=#{day} and workCode=#{workCode})
 		order by orderNum asc
 	</select>
+	
+	<select id="landListAllDay" parameterType="map" resultType="com.sp.travel.Landmark">
+		select wl.landCode, lat, lng, landName, tagCode,
+		savefilename,day,orderNum
+		from workland wl
+		join landmark lm on wl.landCode = lm.landCode
+		join workspacedetail wsd on wl.detailcode=wsd.detailcode
+		left outer join landmarkfile lmf on wl.landCode = lmf.landCode
+		where workCode=#{workCode} order by day asc, orderNum asc
+	</select>
+
+	<sql id="searchDataCount">
+		<if test="searchKey=='title'">
+			INSTR(subject,#{searchValue}) &gt;= 1
+		</if>
+		<if test="searchKey=='startDay'">
+			to_char(startDay,'YYYY-MM-DD') = #{searchValue}
+		</if>
+		<if test="searchKey=='created'">
+			to_char(created,'YYYY-MM-DD') = #{searchValue}
+		</if>
+	</sql>
+	
+	<sql id="search">
+		<if test="searchKey=='title'">
+			INSTR(subject,#{searchValue}) &gt;= 1
+		</if>
+		<if test="searchKey=='startDay'">
+			to_char(startDay,'YYYY-MM-DD') = #{searchValue}
+		</if>
+		<if test="searchKey=='created'">
+			to_char(w.created,'YYYY-MM-DD') = #{searchValue}
+		</if>
+	</sql>
+
+	<select id="myDataCount" parameterType="map"
+		resultType="Integer">
+		select NVL(count(*),0) from workspace
+		<where>
+			<if test="searchValue!=null and searchValue!=''">
+				<include refid="searchDataCount" />
+			</if>
+			<if test="locCode!=0">
+				locCode=#{locCode}
+			</if>
+			and userIdx = #{userIdx}
+		</where>
+	</select>
+
+	<select id="myList" parameterType="map" resultType="com.sp.travel.Workspace">
+		select * from (
+			select tb.*, rownum rnum from (
+				select c.locName, w.workCode, to_char(w.created,'YYYY-MM-DD') created, subject, dayCount, to_char(startDay,'YYYY-MM-DD') startDay, to_char(endDay,'YYYY-MM-DD') endDay, w.locCode locCode, saveFilename, userIdx from workspace w
+					join location l on w.locCode = l.locCode
+					join locationCode c on l.locCode=c.locCode
+						<where>
+							<if test="searchValue!=null and searchValue!=''">
+								<include refid="search"/>
+							</if>
+							<if test="locCode!=0">
+								w.locCode=#{locCode}
+							</if>
+							and userIdx = #{userIdx}
+						</where>
+						order by workCode desc
+			)tb where rownum &lt;= #{end}
+		) where rnum &gt;=#{start}
+	</select>
+
+ 	<select id="locationCategory" parameterType="Integer" resultType="com.sp.travel.LocCategory">
+ 		select unique locName,w.locCode, count(locName) over(partition by locName) as count
+		from workspace w
+		join locationCode c on w.locCode = c.locCode
+		where userIdx=#{userIdx}
+ 	</select>
+ 	<select id="readOnlyWorkspace" parameterType="Integer" resultType="Integer">
+ 		select userIdx from workspace where workCode=#{workCode}
+ 	</select>
+ 	
+ 	<select id="readWorkspace" parameterType="map" resultType="com.sp.travel.Workspace">
+ 		select workCode, u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, locCode from workspace w
+ 		join tb_user u on w.userIdx=u.userIdx
+ 		where workCode=#{workCode} and u.userIdx=#{userIdx}
+ 	</select>
+ 	
+ 	<select id="readWorkLand" parameterType="map" resultType="com.sp.travel.WorkLand">
+ 		    select unique w.landCode, landName, workLandCode, tagName, saveFilename, orderNum,lm.lat,lm.lng, 
+ 		    w.budget, w.memo 
+			from workland w 
+			join landmark lm on w.landCode=lm.landCode
+			left outer join (select * from landmarkfile where rownum=1) lmf on w.landCode = lmf.landCode
+			join lndTagCode ltc on lm.tagCode = ltc.tagCode
+			where w.detailCode = (
+			select detailCode from workspaceDetail wd
+			join workspace ws on wd.workCode = ws.workCode where wd.workCode=#{workCode} and userIdx=#{userIdx} and day=#{day}
+			) order by orderNum asc
+ 	</select>
+ 	
+ 	<select id="countWorkDetail" parameterType="map" resultType="Integer">
+ 		select nvl(count(*),0) from workspaceDetail where workCode=#{workCode}
+ 	</select>
+ 	
+ 	<select id="readBudgetByDay" parameterType="map" resultType="Integer">
+ 		select budget from workspaceDetail where workCode=#{workCode} and day=#{day}
+ 	</select>
+ 	<select id="readBudgetByWorkCode" parameterType="Integer" resultType="Integer">
+ 		select budget from workspace where workCode=#{workCode}
+ 	</select>
+ 	<update id="updateWorkLandDetail" parameterType="com.sp.travel.WorkLand">
+ 		update workLand set budget=#{budget}, memo=#{memo} where worklandCode=#{workLandCode}
+ 	</update>
+ 	<select id="selectWorkLandBM" parameterType="Integer" resultType="com.sp.travel.WorkLand">
+ 		select budget,memo from workLand where worklandCode=#{worklandCode}
+ 	</select>
+ 	<update id="updateBudgetByDay" parameterType="map">
+ 		update workspaceDetail set budget=#{budget} where workCode=#{workCode} and day=#{day}
+ 	</update>
+ 	<select id="selectTotBudget" parameterType="Integer" resultType="Integer">
+ 		select sum(budget) from workspaceDetail where workCode=#{workCode}
+ 	</select>
+
 </mapper>

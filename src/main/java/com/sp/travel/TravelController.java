@@ -1,12 +1,14 @@
-package com.sp.travel;
+	package com.sp.travel;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 
 @Controller("travel.travelController")
@@ -25,8 +28,11 @@ public class TravelController {
 	@Autowired
 	private TravelService travelService;
 	
+	@Autowired
+	private MyUtil util;
+	
 	@RequestMapping(value="/travel/myplan/add") //일정 만들기 초기화면 호출
-	public String workSpace() {
+	public String add() {
 		return ".travel.myplan.add"; //view단의 add.jsp를 호출 //tiles 형태로 리턴
 	}
 	
@@ -46,17 +52,32 @@ public class TravelController {
 		return "travel/myplan/location/basicInfo";
 	}
 	
+	private Location locInfo(int locCode) {
+		return travelService.getLocation(locCode);
+	}
+	
 	
 	@RequestMapping(value="/travel/myplan/workspace", method=RequestMethod.GET)
 	public String workspace(
 			@RequestParam int locCode,
 			@RequestParam int workNum,
 			@RequestParam int dayCount,
-			@RequestParam String lat,
-			@RequestParam String lng,
+			@RequestParam(defaultValue="") String lat,
+			@RequestParam(defaultValue="") String lng,
 			HttpSession session,
 			Model model
 			) {
+		int writerIdx = travelService.readOnlyWorkspace(workNum);
+		
+		if(writerIdx==0 || ((SessionInfo)session.getAttribute("member")).getUserIdx() != writerIdx) {
+			return "redirect:/";
+		}
+		if(lat.length()==0 && lng.length()==0) {
+			Location loc = locInfo(locCode);
+			lat = loc.getLat();
+			lng = loc.getLng();
+		}
+	
 		model.addAttribute("locCode", locCode);
 		model.addAttribute("lat", lat);
 		model.addAttribute("lng", lng);
@@ -112,8 +133,8 @@ public class TravelController {
 		if(result==1) {
 			isInserted = true;
 		}
-		System.out.println("==================="+seqNum+","+locCode+","+lat+","+lng+","+diff/1000/60/60/24+","+isInserted);
 		map.clear();
+		map.put("userIdx",info.getUserIdx());
 		map.put("workNum", seqNum);
 		map.put("locCode", locCode);
 		map.put("lat", lat);
@@ -157,6 +178,10 @@ public class TravelController {
 		map.put("day", day);
 		map.put("workCode", workNum);
 		List<Landmark> list = travelService.landListByDay(map);
+		
+		if(day==0) {
+			model.addAttribute("day", "all");
+		}
 		model.addAttribute("isSaved", true);
 		model.addAttribute("list", list);
 		return "travel/myplan/landmark/landList";
@@ -206,11 +231,197 @@ public class TravelController {
 		return map;
 	}
 	
-	@RequestMapping(value="/travel/myplan/list")
-	public String myList() {
-		return ".travel.myplan.list";
+	@RequestMapping(value="/travel/myplan/myList")
+	public String myList(
+			@RequestParam(value="page",defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="all") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam(value="locCode",defaultValue="0") int locCode,
+			HttpSession session,
+			HttpServletRequest req,
+			Model model
+			) throws UnsupportedEncodingException {
+		session = req.getSession();
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		int userIdx = info.getUserIdx();
+		
+		String cp = req.getContextPath();
+		String list_url = cp+"/travel/myplan/myList";
+		String article_url = cp+"/travel/myArticle?page="+current_page;
+		
+		if(req.getMethod().equalsIgnoreCase("GET")) {
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+		}
+		
+		if(searchValue.length()!=0) {
+			list_url += "?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+			article_url += "&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+		}
+		
+		Map<String,Object> map = new HashMap<>();
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		map.put("userIdx", userIdx);
+		map.put("locCode", locCode);
+		int dataCount = travelService.myDataCount(map);
+		int rows = 4;
+		int total_page = util.pageCount(rows, dataCount);
+		if(current_page > total_page) 
+			current_page = total_page;
+		
+		int start = (current_page-1)*rows +1;
+		int end = current_page * rows;
+		
+		System.out.println("dataCount:"+dataCount+",current_page:"+current_page+",start:"+start+",end:"+end+" 가나다라마바사");
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Workspace> list = travelService.myList(map);
+		
+		String paging = util.paging(current_page, total_page, list_url);
+		
+		//작성한 지역과 카운트 가져오기
+		List<LocCategory> locCategory = travelService.locationCategory(userIdx);
+		
+		model.addAttribute("locCategory", locCategory);
+		model.addAttribute("list", list);
+		model.addAttribute("list_url", list_url);
+		model.addAttribute("article_url", article_url);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("page", current_page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("searchValue", searchValue);
+		model.addAttribute("searchKey", searchKey);
+		
+		return ".travel.myplan.myList";
 	}
 	
+	@RequestMapping(value="/travel/plan/view")
+	public String view(
+			@RequestParam int locCode,
+			@RequestParam int workNum,
+			@RequestParam int dayCount,
+			@RequestParam int userIdx,
+			@RequestParam(value="day",defaultValue="1") int day,
+			Model model,
+			HttpServletRequest req
+			) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("userIdx", userIdx);
+		map.put("workCode", workNum);
+		map.put("day", day);
+		
+		int dataCount = travelService.countWorkDetail(map);
+		if(day>dataCount) {
+			day = dataCount;
+		}
+		String list_url = req.getContextPath()+"/travel/plan/view?locCode="+locCode+"&workNum="+workNum+"&dayCount="+dayCount+"&userIdx="+userIdx+"&";
+		
+		//페이징 처리
+		StringBuffer sb=new StringBuffer();
+		
+		int numPerBlock=10;
+		int currentPageSetup;
+		int n, page;
+		
+		currentPageSetup=(day/numPerBlock)*numPerBlock;
+		if(day%numPerBlock==0)
+			currentPageSetup=currentPageSetup-numPerBlock;
+		
+		sb.append("<ul class='pagination'>");
+		n=day-numPerBlock;
+		if(dataCount > numPerBlock && currentPageSetup > 0) {
+			sb.append("<li class='page-item'>");
+			sb.append("<a href='"+list_url+"day=1' class=\"page-link\"><i class=\"fa fa-angle-double-left\"></a>");
+			sb.append("</li>");
+			sb.append("<li class='page-item'>");
+			sb.append("<a href='"+list_url+"day="+n+"' class=\"page-link\"><i class=\"fa fa-angle-left\"></i></a>");
+			sb.append("</li>");
+		}
+		
+		// 바로가기
+		page=currentPageSetup+1;
+		while(page<=dataCount && page <=(currentPageSetup+numPerBlock)) {
+			if(page==day) {
+				/*sb.append("<span class='curBox'>"+page+"</span>");*/
+				sb.append("<li class='page-item'>");
+				sb.append("<a href='#' class=\"page-link active\">"+page+"</a>");
+				sb.append("</li>");
+			} else {
+				/*sb.append("<a href='"+list_url+"page="+page+"' class='numBox'>"+page+"</a>");*/
+				sb.append("<li class='page-item'>");
+				sb.append("<a href='"+list_url+"day="+page+"' class=\"page-link\">"+page+"</a>");
+				sb.append("</li>");
+			}
+			
+			
+			page++;
+		}
+		
+		n=day+numPerBlock;
+		if(n>dataCount) n=dataCount;
+		if(dataCount-currentPageSetup>numPerBlock) {
+			
+			sb.append("<li class='page-item'>");
+			sb.append("<a href='"+list_url+"day=1' class=\"page-link\"><i class=\"fa fa-angle-right\"></a>");
+			sb.append("</li>");
+			sb.append("<li class='page-item'>");
+			sb.append("<a href='"+list_url+"day="+n+"' class=\"page-link\"><i class=\"fa fa-angle-double-right\"></i></a>");
+			sb.append("</li>");
+		}
+		sb.append("</ul>");
+		
+		
+		Workspace workspace = travelService.readWorkspace(map);
+		List<WorkLand> list = travelService.readWorkLand(map);
+		
+		
+		model.addAttribute("workspace", workspace);
+		model.addAttribute("list", list);
+		model.addAttribute("day", day);
+		model.addAttribute("paging", sb.toString());
 	
+		return ".travel.plan.view";
+	}
 	
+	@RequestMapping(value="/travel/plan/list")
+	public String list() {
+		
+		return ".travel.plan.list";
+	}
+	
+	@RequestMapping(value="/travel/plan/updateWorkLandDetail",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> updateWorkLandDetail(
+			WorkLand workland
+		) {
+		Map<String,Object> map = new HashMap<>();
+		
+		travelService.updateWorkLandDetail(workland);
+		WorkLand dto = travelService.selectWorkLandBM(workland.getWorkLandCode());				
+		map.put("budget", dto.getBudget());
+		map.put("memo", dto.getMemo());
+		
+		return map;
+	}
+
+	@RequestMapping(value="/travel/plan/updateBudgetByDay",method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> updateBudgetByDay(
+			@RequestParam int workCode,
+			@RequestParam int day,
+			@RequestParam int budget
+		) {
+		Map<String,Object> map = new HashMap<>();
+		map.put("workCode", workCode);
+		map.put("day", day);
+		map.put("budget", budget);
+		travelService.updateBudgetByDay(map);
+		int sum = travelService.selectTotBudget(workCode);
+		map.clear();
+		map.put("sum", sum);
+		return map;
+	}
 }

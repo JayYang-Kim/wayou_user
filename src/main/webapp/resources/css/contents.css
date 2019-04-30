@@ -70,7 +70,112 @@
 .roberto-btnn {
   position: relative;
   z-index: 1;
-  min-width: 150px;
+  min-width: 100px;
+  height: 46px;
+  line-height: 46px;
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0 40px;
+  text-align: center;
+  text-transform: capitalize;
+  background-color: rgba(14, 39, 55, 0.7);
+  color: #ffffff;
+  border: none;
+  border-radius: 2px;
+  -webkit-transition-duration: 500ms;
+  -o-transition-duration: 500ms;
+  transition-duration: 500ms; }
+  .roberto-btn:focus, .roberto-btn:hover {
+    font-weight: 500;
+    -webkit-box-shadow: 0 2px 40px 8px rgba(15, 15, 15, 0.15);
+    box-shadow: 0 2px 40px 8px rgba(15, 15, 15, 0.15);
+    background-color: #ffffff;
+    color: #c4c4c4; }
+  .roberto-btn.btn-2 {
+    min-width: 180px;
+    height: 50px;
+    line-height: 46px;
+    border: 2px solid #1cc3b2;
+    background-color: transparent;
+    color: #ffffff; }
+    .roberto-btn.btn-2:focus, .roberto-btn.btn-2:hover {
+      color: #ffffff;
+      background-color: #1cc3b2; }
+    
+.nice-selectt {
+  -webkit-tap-highlight-color: transparent;
+  background-color: #fff;
+  border-radius: 5px;
+  border: solid 1px #e8e8e8;
+  box-sizing: border-box;
+  clear: both;
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: normal;
+  height: 42px;
+  line-height: 40px;
+  outline: none;
+  padding-left: 18px;
+  padding-right: 30px;
+  position: relative;
+  text-align: right !important;
+  -webkit-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  white-space: nowrap;
+  width: 100% !important; }
+
+.list-group-item:hover {
+    z-index: 2;
+    color: #fff;
+    background-color:rgba(14, 39, 55, 0.7);
+    border-color: rgba(14, 39, 55, 0.7); 
+}
+    
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: rgba(14, 39, 55, 0.7);
+    border-color: rgba(14, 39, 55, 0.7);
+}
+
+.cart-btn {
+  position: relative;
+  z-index: 1;
+  min-width: 45%;
+  height: 46px;
+  line-height: 46px;
+  font-size: 16px;
+  font-weight: 500;
+  display: inline-block;
+  padding: 0 40px;
+  text-align: center;
+  text-transform: capitalize;
+  background-color: white;
+  color: #2a303b;
+  border: none;
+  border-radius: 2px;
+  -webkit-transition-duration: 500ms;
+  -o-transition-duration: 500ms;
+  transition-duration: 500ms; }
+  .roberto-btn:focus, .roberto-btn:hover {
+    font-weight: 500;
+    -webkit-box-shadow: 0 2px 40px 8px rgba(15, 15, 15, 0.15);
+    box-shadow: 0 2px 40px 8px rgba(15, 15, 15, 0.15);
+    background-color: white;
+    color: #c4c4c4; }
+
+.buy-btn {
+  position: relative;
+  z-index: 1;
+  min-width: 45%;
   height: 46px;
   line-height: 46px;
   font-size: 16px;
@@ -101,38 +206,7 @@
     color: #ffffff; }
     .roberto-btn.btn-2:focus, .roberto-btn.btn-2:hover {
       color: #ffffff;
-      background-color: #1cc3b2; }
-    
-.detail ul li {margin-bottom:50px !important;}    
-    
-.nice-selectt {
-  -webkit-tap-highlight-color: transparent;
-  background-color: #fff;
-  border-radius: 5px;
-  border: solid 1px #e8e8e8;
-  box-sizing: border-box;
-  clear: both;
-  cursor: pointer;
-  display: block;
-  float: left;
-  font-family: inherit;
-  font-size: 14px;
-  font-weight: normal;
-  height: 42px;
-  line-height: 40px;
-  outline: none;
-  padding-left: 18px;
-  padding-right: 30px;
-  position: relative;
-  text-align: left !important;
-  -webkit-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  white-space: nowrap;
-  width: 100% !important; }
+      background-color: #1cc3b2; }    
 
 /*엄유선  */
 .welcome-slides.noImg:hover .owl-prev, .welcome-slides.noImg:hover .owl-next, .welcome-slides.noImg:focus .owl-prev, .welcome-slides.noImg:focus .owl-next {

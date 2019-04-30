@@ -15,7 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
@@ -39,7 +39,7 @@ public class QnAController {
 			Model model) throws Exception {
 		
 		model.addAttribute("mode", "created");
-		return ".ticket.qna.created";
+		return ".four.ticket.qna.created";
 	}
 	
 	@RequestMapping(value="/ticket/qna/created", method=RequestMethod.POST)
@@ -125,41 +125,68 @@ public class QnAController {
 		return ".four.ticket.qna.list";
 	}
 	
-	@RequestMapping(value="/ticket/qna/article")
-	public String article(
-			@RequestParam int qnaCode,
-			@RequestParam String page,
-			@RequestParam(defaultValue="all") String searchKey,
-			@RequestParam(defaultValue="") String searchValue,
-			Model model
-			) throws Exception {
+	@RequestMapping(value="/ticket/qna/hitCount", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> hitCount(@RequestParam int qnaCode) throws Exception {
+		Map<String, Object> model = new HashMap<>();
 		
-		searchValue = URLDecoder.decode(searchValue, "UTF-8");
-		String query="page"+page;
-		if(searchValue.length() != 0) {
-			query+="&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+		String msg="true";
+		int result=boardService.updateHitCount(qnaCode);
+		if(result==0) {
+			msg="false";
 		}
 		
-		boardService.updateHitCount(qnaCode);
+		int hitCount=boardService.readHitCount(qnaCode);
 		
-		QnABoard dto = boardService.readBoard(qnaCode);
-		if(dto==null) {
-			return "redirect:/ticket/qna/list";
-		}
+		model.put("msg", msg);
+		model.put("hitCount", hitCount);
 		
-		dto.setContent(myUtil.htmlSymbols(dto.getContent()));
-		
-		Map<String, Object> map = new HashMap<>();
-		map.put("searchKey", searchKey);
-		map.put("searchValue", searchValue);
-		map.put("qnaCode", qnaCode);
-		
-		model.addAttribute("dto", dto);
-		model.addAttribute("page", page);
-		model.addAttribute("query", query);
-		
-		return ".four.ticket.qna.article";
+		return model;
 	}
 	
+	@RequestMapping(value="/ticket/qna/update", method=RequestMethod.GET)
+	public String updateForm(
+			@RequestParam int qnaCode,
+			@RequestParam String page,
+			HttpSession session,
+			Model model) throws Exception{
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		QnABoard dto = boardService.readBoard(qnaCode);
+		System.out.println("성공"+dto.getUserIdx());
+		
+		if(info.getUserIdx()!=dto.getUserIdx()) {
+			return "redirect:/ticket/qna/list?page="+page;
+		}
+		
+		model.addAttribute("dto", dto);
+		model.addAttribute("mode", "update");
+		model.addAttribute("page", page);
+		
+		return ".four.ticket.qna.created";
+	}
+	
+	@RequestMapping(value="/ticket/qna/update", method=RequestMethod.POST)
+	public String updateSubmit(
+			QnABoard dto,
+			@RequestParam String page
+			) throws Exception {
+		
+		boardService.updateBoard(dto);
+		
+		return "redirect:/ticket/qna/list?page="+page;
+	}
+	
+	@RequestMapping(value="/ticket/qna/delete")
+	public String delete(
+			@RequestParam int qnaCode,
+			@RequestParam String page
+			) throws Exception {
+		
+		boardService.deleteBoard(qnaCode);
+		
+		return "redirect:/ticket/qna/list?page="+page;
+	}
 	
 }

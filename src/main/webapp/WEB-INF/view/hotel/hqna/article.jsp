@@ -30,22 +30,17 @@
 			
 			<tr>
 			  <td colspan="2" align="left" style="padding: 10px 5px;" valign="top" height="200">
-			     ${dto.content }
+			     ${dto.content}
 			   </td>
 			</tr>
-			
-			<tr style="border-bottom: 1px solid #cccccc;">
-			  <td colspan="2" align="center" style="padding-bottom: 15px;"  height="40">
-			   		<button type="button" class="btn btnSendBoardLike"><span style="font-family:Wingdings;">C</span>&nbsp;&nbsp;<span id="boardLikeCount">${dto.boardLikeCount }</span></button>
-			   </td>
-			</tr>
+
 						
 
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       이전글 : 
-			       <c:if test="${not empty preReadDto }">
-			       	<a href="<%=cp%>/bbs/article?num=${preReadDto.num}&${query}">${preReadDto.subject }</a>
+			       <c:if test="${not empty preHqnadto }">
+			       	<a href="javascript:articleHqna('${preHqnadto.qnaCode}')">${preHqnadto.subject }</a>
 			       </c:if>
 			    </td>
 			</tr>
@@ -53,8 +48,8 @@
 			<tr height="35" style="border-bottom: 1px solid #cccccc;">
 			    <td colspan="2" align="left" style="padding-left: 5px;">
 			       다음글 :
-			       <c:if test="${not empty nextReadDto }">
-			       	<a href="<%=cp%>/bbs/article?num=${nextReadDto.num}&${query}">${nextReadDto.subject }</a>
+			       <c:if test="${not empty nextHqnadto }">
+			       	<a href="javascript:articleHqna('${nextHqnadto.qnaCode}')">${nextHqnadto.subject }</a>
 			       </c:if>
 			    </td>
 			</tr>
@@ -63,41 +58,48 @@
 			<table style="width: 100%; margin: 0px auto 20px; border-spacing: 0px;">
 			<tr height="45">
 			    <td width="300" align="left">
-			          <button type="button" class="btn" onclick="updateBoard('${dto.num}')">수정</button>
-			          <button type="button" class="btn" onclick="deleteBoard('${dto.num}')">삭제</button>
+			    
+			          <button type="button" class="btn" onclick="updateHqna('${dto.qnaCode}');">수정</button>
+			 
+			
+			          <button type="button" class="btn" onclick="deleteHqna('${dto.qnaCode}');">삭제</button>
+			   
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="javascript:location.href='<%=cp%>/bbs/list?${query }';">리스트</button>
+			        <button type="button" class="btn" onclick="listPage(pageNo)">리스트</button>
 			    </td>
 			</tr>
 			</table>
-    </div>
-    
-    <!-- 여기에 article.jsp추가 넣기 -->
-    
-        
-        <div>
+    </div>  
+    <!-- 관리자 답변  -->
+            <div>
             <table style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
             <tr height='30'> 
 	            <td align='left'>
-	            	<span style='font-weight: bold;' >댓글쓰기</span><span> - 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span>
+	            	<span style='font-weight: bold;' >관리자 답변입니다.</span>
 	            </td>
-            </tr>
-            <tr>
-               <td style='padding:5px 5px 0px;'>
-                    <textarea class='boxTA' style='width:99%; height: 70px;'></textarea>
-                </td>
-            </tr>
-            <tr>
-               <td align='right'>
-                    <button type='button' class='btn btnSendReply' style='padding:10px 20px;' >댓글 등록</button>
-                </td>
             </tr>
             </table>
             
-            <div id="listReply"></div>
-        </div>
-    
-    
+            <div id="listReply">
+            <table style='width: 100%; margin: 10px auto 30px; border-spacing: 0px;'>
+				<tbody id='listReply'>
+					<c:forEach var="vo" items="${listReply }">
+						    <tr height='35' style='background: #eeeeee;'>
+						       <td width='100%' style='padding:5px 5px; border:1px solid #cccccc;'>
+						          ${vo.answerContent }      
+						        </td>
+						    </tr>
+						    <tr height='35'>
+						     	<td width='100%' style='padding:5px 5px;' align="right">
+						    		  <span>${vo.answerCreated }</span>   
+						        </td>  
+						    </tr>
+					</c:forEach>
+			</tbody>
+			</table>
+            
+           </div>
+        </div> 
 </div>

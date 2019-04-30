@@ -5,6 +5,78 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+//지역선택창
+	$(function(){
+		$(".no-gutters").find(".regionSelect").hide();
+	});
+	
+	$("body").on("click", ".input_search", function(){
+		var select = $(this).closest(".no-gutters").find(".regionSelect");
+		var is = $(this).closest(".no-gutters").find(".regionSelect").is(":hidden");
+		
+		if(is) {
+			select.show();
+		} else {
+			select.hide();
+		}
+	});
+	
+//지역선택시
+	<%-- $(function(){
+		$("body").on("click", ".btn_sendRegion", function(){
+			var form=document.regionSelect;
+			
+			var regionCode = $(this).attr("data-locCode");
+			
+			var url="<%=cp%>/ticket/list?regionCode="+regionCode;
+			
+			form.action=url;
+			form.submit();
+		});
+	});
+
+//카테고리 선택시
+	$(function(){
+		$("body").on("click", ".btn_sendCategory", function(){
+			var form=document.categorySelect;
+			
+			var categoryCode = $(this).attr("data-categoryCode");
+			var url="<%=cp%>/ticket/list?categoryCode="+categoryCode;
+			
+			form.action=url;
+			form.submit();
+		});
+	}); --%>
+	
+	 $(function(){
+			$("body").on("click", ".btn_sendRegion", function(){
+				var form=document.searchSelect;
+				
+				var regionCode = $(this).attr("data-locCode");
+				var cateCode = 0;
+				
+				var url="<%=cp%>/ticket/list?regionCode="+regionCode+"&cateCode="+cateCode;
+				
+				form.action=url;
+				form.submit();
+			});
+		});
+	 $(function(){
+		 $("body").on("click", ".btn_sendCategory", function(){
+				var form=document.searchSelect;
+				
+				var regionCode = 0;
+				var cateCode = $(this).attr("data-categoryCode");
+				
+				var url="<%=cp%>/ticket/list?regionCode="+regionCode+"&cateCode="+cateCode;
+				
+				form.action=url;
+				form.submit();
+			}); 
+	 });
+	
+</script>
 
   <!-- Breadcrumb Area Start -->
    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/16.jpg);">
@@ -29,39 +101,41 @@
 
 
 	          
-  <!-- Rooms Area Start -->
+
   <div class="roberto-rooms-area section-padding-100-0">
       <div class="container">
           <div class="row">
-          	  <div class="col-12 col-lg-4 mr-10">
-                  <!-- Hotel Reservation Area -->
+          	  <div class="col-12 col-lg-3 mr-50">
                   <div class="hotel-reservation--area mb-100">
-                      <form action="#" method="post">
+                      <form name="searchSelect" method="post">
                           <div class="form-group mr-10 mb-30">
                               <label for="regionSearch">지역 검색</label>
-                              
                                   <div class="row no-gutters">
                                       <div class="col-12">
-	                        				<input type="text" class="form-control" id="input_search" name="input_search"/>
+	                        				<input type="text" class="form-control input_search"/>
                                       </div>
+                                      <div class="col-12 regionSelect" style="height:200px; padding-top:10px; text-align:center; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black;">
+                                  		<c:forEach var="dto_region" items="${listRegion}">	
+                                  			<button class="btn_classic btn_sendRegion" style="margin: 5px auto 5px; font-size: 13px;" data-locCode='${dto_region.locCode}'>${dto_region.locName}</button>
+                                  		</c:forEach>	
+                        			</div>
                                   </div>
-                             
+                                  
                           </div>
+                         <!-- </form>  -->
+                         
+                         <!-- <form name="categorySelect" method="post">  -->
                           <div class="form-group mb-30">
                               <label for="guests">카테고리</label>
                               <div class="row">
                                   <div class="col-12">
-									<button class="btn roberto-btnn w-100 mb10" style="font-size: 16px;">테마파크</button>
-									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">워터파크</button>
-									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">익스트림</button>
-									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">공연/전시</button>
-									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">키즈</button>
-									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">축제/캠핑</button>
-									<button class="btn roberto-btn w-100 mb10" style="font-size: 16px;">투어/교통</button>
+                                  <c:forEach var="dto_category" items="${listCategory}">	
+										<button class="btn roberto-btnn w-100 mb10 btn_sendCategory" style="font-size: 16px;" data-categoryCode='${dto_category.categoryCode}'>${dto_category.categoryName}</button>
+									</c:forEach>
                                   </div>
                               </div>
                           </div>
-                          <div class="form-group mb-50">
+                         <!--  <div class="form-group mb-50">
                               <div class="slider-range">
                                   <div class="range-price">Max Price: $0 - $3000</div>
                                   <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="3000" data-label-result="Max Price: ">
@@ -70,153 +144,60 @@
                                       <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                                   </div>
                               </div>
-                          </div>
+                          </div> -->
                         
                       </form>
                   </div>
               </div>
 
-          		
-          		
-             
-               <div class="col-12 col-lg-8">
-               <div style="text-align: right; font-size: 20px; margin-bottom: 20px;">인기순</div>
+          	<div class="col-12 col-lg-8">              
+          		<div class="row" style="font-size: 20px; margin-bottom: 20px; margin-left: 650px;">
+               		<select name="" class="nice-select">
+               			<option value="popular">인기순</option>
+               			<option value="review">후기많은순</option>
+               			<option value="sales">판매순</option>
+               		</select>
+				</div>
+<c:forEach var="dto" items="${list}">          		
+               <div class="single-room-area d-flex align-items-center mb-50" style="height: 300px; border-top: 2px solid #aaaaaa; padding-top: 100px;">
+				<div class="row" align="left" style="width:900px;">
 
-                  <!-- Single Room Area -->
-
-                  <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                      <!-- Room Thumbnail -->
-                      <div class="room-thumbnail">
-                          <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" alt="">
+                      <div class="room-thumbnail" style="margin-left: 40px;">
+                          <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" alt="" style="padding-bottom: 50px;">
                       </div>
                       <!-- Room Content -->
-                      <div class="room-content">
-                          <span>경기도 용인</span>
-                          <h2>에버랜드 입장권</h2>
-                          <h4>50000<span>원</span></h4>
+                      <div class="room-content" style="margin-top: 1px;">
+                          <div style="font-size: 18px; margin-bottom: 3px;">${dto.address1}</div>
+                          <h1 style="margin-bottom: 20px;">${dto.ticketName}</h1>
+                          <div><h4>${dto.price}<span>원</span></h4></div>
                           <div class="room-feature">
-                              <h6>Size: <span>★★★★★(255)</span></h6>
-                              <h6>Capacity: <span>423개 구매</span></h6>
-                              <h6>Bed: <span>King beds</span></h6>
-                              <h6>Services: <span>Wifi, television ...</span></h6>
+                              <div><h6>★★★★★(255)</h6></div>
+                              <h6>423개 구매</h6>
                           </div>
-                          <a href="<%=cp%>/ticket/detail" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                      </div>
+                          <a href="${articleUrl}&ticketCode=${dto.ticketCode}&storeCode=${dto.storeCode}" class="btn view-detail-btn">더보기 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                      </div>                     
                   </div>
-
-                  <!-- Single Room Area -->
-                  <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="300ms">
-                      <!-- Room Thumbnail -->
-                      <div class="room-thumbnail">
-                          <img src="img/bg-img/44.jpg" alt="">
-                      </div>
-                      <!-- Room Content -->
-                      <div class="room-content">
-                          <h2>Small Room</h2>
-                          <h4>400$ <span>/ Day</span></h4>
-                          <div class="room-feature">
-                              <h6>Size: <span>30 ft</span></h6>
-                              <h6>Capacity: <span>Max persion 5</span></h6>
-                              <h6>Bed: <span>King beds</span></h6>
-                              <h6>Services: <span>Wifi, television ...</span></h6>
-                          </div>
-                          <a href="#" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-
-                  <!-- Single Room Area -->
-                  <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="500ms">
-                      <!-- Room Thumbnail -->
-                      <div class="room-thumbnail">
-                          <img src="img/bg-img/45.jpg" alt="">
-                      </div>
-                      <!-- Room Content -->
-                      <div class="room-content">
-                          <h2>Premium King Room</h2>
-                          <h4>400$ <span>/ Day</span></h4>
-                          <div class="room-feature">
-                              <h6>Size: <span>30 ft</span></h6>
-                              <h6>Capacity: <span>Max persion 5</span></h6>
-                              <h6>Bed: <span>King beds</span></h6>
-                              <h6>Services: <span>Wifi, television ...</span></h6>
-                          </div>
-                          <a href="#" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-
-                  <!-- Single Room Area -->
-                  <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="700ms">
-                      <!-- Room Thumbnail -->
-                      <div class="room-thumbnail">
-                          <img src="img/bg-img/46.jpg" alt="">
-                      </div>
-                      <!-- Room Content -->
-                      <div class="room-content">
-                          <h2>Room Vip King</h2>
-                          <h4>400$ <span>/ Day</span></h4>
-                          <div class="room-feature">
-                              <h6>Size: <span>30 ft</span></h6>
-                              <h6>Capacity: <span>Max persion 5</span></h6>
-                              <h6>Bed: <span>King beds</span></h6>
-                              <h6>Services: <span>Wifi, television ...</span></h6>
-                          </div>
-                          <a href="#" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-
-                  <!-- Single Room Area -->
-                  <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="900ms">
-                      <!-- Room Thumbnail -->
-                      <div class="room-thumbnail">
-                          <img src="img/bg-img/47.jpg" alt="">
-                      </div>
-                      <!-- Room Content -->
-                      <div class="room-content">
-                          <h2>Royal Room</h2>
-                          <h4>400$ <span>/ Day</span></h4>
-                          <div class="room-feature">
-                              <h6>Size: <span>30 ft</span></h6>
-                              <h6>Capacity: <span>Max persion 5</span></h6>
-                              <h6>Bed: <span>King beds</span></h6>
-                              <h6>Services: <span>Wifi, television ...</span></h6>
-                          </div>
-                          <a href="#" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-                      </div>
-                  </div>
-
-                  <!-- Pagination -->
-                  <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="1000ms">
+          		</div>
+</c:forEach>
+				 <!-- Pagination -->
+                  <!-- <nav class="roberto-pagination wow fadeInUp mb-100" data-wow-delay="1000ms">
                       <ul class="pagination">
                           <li class="page-item"><a class="page-link" href="#">1</a></li>
                           <li class="page-item"><a class="page-link" href="#">2</a></li>
                           <li class="page-item"><a class="page-link" href="#">3</a></li>
                           <li class="page-item"><a class="page-link" href="#">Next <i class="fa fa-angle-right"></i></a></li>
                       </ul>
-                  </nav>
-              </div>
-			</div>
-
-          </div>
+                  </nav> -->
+                 <nav class="roberto-pagination"> 
+                  <table style="width: 100%; margin: 10px auto 50px; border-spacing: 0px;">
+		  			<tr height="40">
+						<td align="center" style="padding-top:30px; border-top: 2px solid #aaaaaa;">
+		        			${dataCount==0 ? "등록된 자료가 없습니다." : paging}
+						</td>
+		   			</tr>
+				</table>
+				</nav>         		
+          	</div>
       </div>
-  <!-- Rooms Area End -->
-	
-
-	
-	<!-- Call To Action Area Start -->
-	<section class="roberto-cta-area pt40 pb40">
-	    <div class="container">
-	        <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/1.jpg);">
-	            <div class="row align-items-center">
-	                <div class="col-12 col-md-7">
-	                    <div class="cta-text mb-50">
-	                        <h2>Contact us now!</h2>
-	                        <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
-	                    </div>
-	                </div>
-	                <div class="col-12 col-md-5 text-right">
-	                    <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</section>
+	</div>
+</div>	
