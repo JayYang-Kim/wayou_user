@@ -174,7 +174,7 @@
                               <div><h6>★★★★★(255)</h6></div>
                               <h6>423개 구매</h6>
                           </div>
-                          <a href="${articleUrl}&ticketCode=${dto.ticketCode}" class="btn view-detail-btn">더보기 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                          <a href="${articleUrl}&ticketCode=${dto.ticketCode}&storeCode=${dto.storeCode}" class="btn view-detail-btn">더보기 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                       </div>                     
                   </div>
           		</div>

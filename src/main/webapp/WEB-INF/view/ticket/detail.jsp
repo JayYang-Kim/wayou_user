@@ -5,8 +5,27 @@
    String cp = request.getContextPath();
 %>
 
-
+ 
 <script type="text/javascript">
+
+//날짜 선택시 옵션
+$(function(){
+	
+	 $("body").on("click", ".btn_sendCategory", function(){
+			var form=document.searchSelect;
+			
+			var date = $("select[name=dateSelect]").val();
+			
+			var url="<%=cp%>/ticket/list?regionCode="+regionCode+"&cateCode="+cateCode;
+			
+			form.action=url;
+			form.submit();
+		}); 
+});
+
+
+
+
 $(function(){
 	var id=$("#tabContent1");
 	var url="tab1.jsp";
@@ -115,8 +134,9 @@ function viewTabContent(id, url) {
                             		
                   					<li style="margin-top: 5px;">
                             		<select class="nice-select date">
-                            			<option value="">2019-05-01</option>
-                            			<option value=""></option>
+                           		<c:forEach var="dto_date" items="${listDate}">	
+                            			<option name="dateSelect" value="${dto_date.use_start}">${dto_date.use_start}</option>
+                            	</c:forEach>
                             		</select>
                             		</li>
                             		
