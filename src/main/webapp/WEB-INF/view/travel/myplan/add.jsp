@@ -97,12 +97,13 @@
 			var title = form.find("input[name='title']").val();
 			var from = form.find("input[name='startDay']").val();
 			var to = form.find("input[name='endDay']").val();
+			var pay = form.find("input[type='checkbox']").val();
 			
 			if(!title || !from || !to){
 				alert("양식을 모두 작성해주세요!");
 				return;
 			}
-			var query = "locCode="+current_locCode+"&lat="+lat+"&lng="+lng+"&title="+title+"&startDay="+from+"&endDay="+to;
+			var query = "locCode="+current_locCode+"&lat="+lat+"&lng="+lng+"&title="+title+"&startDay="+from+"&endDay="+to+"&pay="+pay;
 			$.ajax({
 				type:"post",
 				url : "<%=cp%>/travel/myplan/workspace",
@@ -176,7 +177,8 @@
 		      <form name="createRouteForm">
 				<input type="text" name="title" placeholder="여행 일정 제목" style="width: 90%;"><br>
 				<input type="text" id="from" name="startDay" style="margin-top: 10px;width: 90%;" placeholder="출발일"><br>
-				<input type="text" id="to" name='endDay' style="margin-top: 10px;width: 90%;" placeholder="도착일">
+				<input type="text" id="to" name='endDay' style="margin-top: 10px;width: 90%;" placeholder="도착일"><br>
+				<div style="margin-top: 15px; text-align: left; width: 90%;"><input type="checkbox" id="pay" name="pay" value="1"><span>유료 경로로 지정하시겠습니까?</span></div> 
 		      </form>
 	      </div>
 	      <div class="modal-footer">

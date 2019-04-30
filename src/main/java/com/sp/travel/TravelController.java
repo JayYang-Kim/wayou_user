@@ -95,6 +95,7 @@ public class TravelController {
 		@RequestParam String endDay,
 		@RequestParam String lat,
 		@RequestParam String lng,
+		@RequestParam(value="pay",defaultValue="0") int pay,
 		HttpSession session,
 		Model model
 	) {
@@ -103,6 +104,7 @@ public class TravelController {
 		map.put("title", title);
 		map.put("startDay", startDay);
 		map.put("endDay", endDay);
+		map.put("pay", pay);
 
 		SessionInfo info = (SessionInfo)session.getAttribute("member"); //세션에 Member라는 이름으로 저장된 로그인 사용자 객체를 불러오기
 		map.put("userIdx", info.getUserIdx());

@@ -41,8 +41,8 @@
 	<select id="insertWorkspace" parameterType="map"
 		resultType="Integer">
 		insert into
-		workspace(workcode,subject,daycount,startday,endday,loccode,userIdx)
-		values(#{seqNum},#{title},#{dayCount},#{startDay},#{endDay},#{locCode},#{userIdx})
+		workspace(workcode,subject,daycount,startday,endday,loccode,userIdx,pay)
+		values(#{seqNum},#{title},#{dayCount},#{startDay},#{endDay},#{locCode},#{userIdx},#{pay})
 	</select>
 
 	<select id="listLandmark" parameterType="Integer"
