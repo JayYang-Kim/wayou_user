@@ -480,7 +480,7 @@
 			    	if(e.status==403) {
 			    		location.href="<%=cp%>/member/login";
 			    		return;
-			    	}
+			    	} 
 				}
 			});
 	
