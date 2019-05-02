@@ -16,6 +16,12 @@
 		f.submit();
 	}
 	
+	$(function(){
+		$("#btn_createQna").click(function(){
+			location.href="<%=cp%>/travel/contact/created";
+		});
+	});
+	
 	function listPartyNew() {
 		var url="<%=cp%>/travel/partyNew";
 		var query = "page=${page}";
@@ -92,7 +98,7 @@
 		</form>
 		<div class="row justify-content-center">
 			<div class="col-12 col-lg-12">
-				<button type="button" class="btn roberto-btn">문의사항 작성</button>
+				<button type="button" class="btn roberto-btn" id="btn_createQna">문의사항 작성</button>
 				<table class=tb style="font-size: 15px;margin-top:20px;"> 
 					<tr align="center" bgcolor="#eeeeee" height="40"
 						style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
@@ -172,6 +178,5 @@
 			</div>
 		</div>
 	</div>
-</div>
 </div>
 <!-- Blog Area End -->

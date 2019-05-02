@@ -256,7 +256,7 @@
 .modal {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
+  z-index: 9999; /* Sit on top */
   padding-top: 100px; /* Location of the box */
   left: 0;
   top: 0;
@@ -406,7 +406,7 @@
   <div class="modal-content" style="text-align: center;">
     <p style="font-size: 16px;">결제하지 않은 경로  입니다.<br> 지금 결제하시면 더 편리한 여행이 가능합니다.</p>
     <p style="margin-top:30px; color:white;">
-	    <button class="btn btn-white modalBtn" type="button" >결제하기</button>&nbsp;
+	    <button class="btn btn-white modalBtn paymentBtn" type="button">결제하기</button>&nbsp;
 	    <button class="btn btn-white modalBtn" type="button" onclick="javascript:location.href='<%=cp%>/travel/plan/list';">돌아가기</button>
     </p>
   </div>
@@ -415,9 +415,81 @@
 
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=591cb76973b1a523d68f564d17c08ff0"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript">
 	
 	$(function(){
+		$(".paymentBtn").click(function(){
+			var url = "<%=cp%>/member/info";
+			$.ajax({
+				type:"get",
+				url:url,
+				dataType:"json",
+				success:function(data){
+					var IMP = window.IMP; // 생략가능
+					var sum = 1000;
+					IMP.init(data.storeCode);
+					IMP.request_pay({
+					    pg : 'inicis', // version 1.1.0부터 지원.
+					    pay_method : 'card',
+					    merchant_uid : 'merchant_' + new Date().getTime(),
+					    name : '주문명:결제테스트',
+					    amount : sum,
+					    buyer_email : data.user.email,
+					    buyer_name : data.user.name,
+					    buyer_tel : data.user.tel,
+					    buyer_addr : data.user.addr,
+					    buyer_postcode : data.user.postCode,
+					    m_redirect_url : '<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.locCode}&dayCount=3&userIdx=${workspace.userIdx}'
+					}, function(rsp) {
+					    if ( rsp.success ) {
+					        var msg = '결제가 완료되었습니다.';
+					        //msg += '고유ID : ' + rsp.imp_uid;
+					        //msg += '상점 거래ID : ' + rsp.merchant_uid;
+					        msg += '결제 금액 : ' + rsp.paid_amount;
+					        //msg += '카드 승인번호 : ' + rsp.apply_num;
+					        url = "<%=cp%>/travel/plan/confirm?workCode=${workspace.workCode}";
+					        $.ajax({
+					        	type:"get",
+								url:url,
+								dataType:"json",
+								success:function(){
+									alert("구매해주셔서 감사합니다.");
+								},
+								beforesend:function(e){
+									e.setRequestHeader("AJAX",true);
+								},
+								error:function(e){
+							    	if(e.status==403) {
+							    		location.href="<%=cp%>/member/login";
+							    		return;
+							    	}
+								}
+					        });
+					    } else {
+					        var msg = '결제에 실패하였습니다.';
+					        msg += '에러내용 : ' + rsp.error_msg;
+					    }
+					    alert(msg);
+					});		
+				},
+				beforesend:function(e){
+					e.setRequestHeader("AJAX",true);
+				},
+				error:function(e){
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+				}
+			});
+	
+		});
+	});
+	
+	
+	$(function(){
+		
  		if(!${isPaid}){ 
 			var modal = document.getElementById('myModal');
 			modal.style.display = "block";
