@@ -19,7 +19,7 @@ public class JoinPartyServiceImpl implements JoinPartyService {
 		int result = 0;
 		
 		try {
-			result = dao.insertData("party.insertJoinParty", map);
+			result = dao.insertData("travel.party.insertJoinParty", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -33,7 +33,7 @@ public class JoinPartyServiceImpl implements JoinPartyService {
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("party.dataCountJoinParty", num);
+			result = dao.selectOne("travel.party.dataCountJoinParty", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,7 +46,7 @@ public class JoinPartyServiceImpl implements JoinPartyService {
 		List<JoinParty> list = null;
 		
 		try {
-			list = dao.selectList("party.listJoinParty", map);
+			list = dao.selectList("travel.party.listJoinParty", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,7 +59,7 @@ public class JoinPartyServiceImpl implements JoinPartyService {
 		int result = 0;
 		
 		try {
-			result = dao.updateData("party.updateJoinParty_accept", map);
+			result = dao.updateData("travel.party.updateJoinParty_accept", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -73,7 +73,7 @@ public class JoinPartyServiceImpl implements JoinPartyService {
 		int result = 0;
 		
 		try {
-			result = dao.updateData("party.updateJoinParty_refuse", map);
+			result = dao.updateData("travel.party.updateJoinParty_refuse", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -87,7 +87,7 @@ public class JoinPartyServiceImpl implements JoinPartyService {
 		int result = 0;
 		
 		try {
-			result = dao.updateData("party.updateJoinParty_delete", map);
+			result = dao.updateData("travel.party.updateJoinParty_delete", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

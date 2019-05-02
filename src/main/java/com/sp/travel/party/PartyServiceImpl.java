@@ -19,7 +19,7 @@ public class PartyServiceImpl implements PartyService {
 		int result = 0;
 		
 		try {
-			result = dao.insertData("party.partyInsert", dto);
+			result = dao.insertData("travel.party.partyInsert", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -33,7 +33,7 @@ public class PartyServiceImpl implements PartyService {
 		List<Party> list = null;
 		
 		try {
-			list = dao.selectList("party.listParty", map);
+			list = dao.selectList("travel.party.listParty", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,7 +46,7 @@ public class PartyServiceImpl implements PartyService {
 		List<Party> list = null;
 		
 		try {
-			list = dao.selectList("party.listPartyNew");
+			list = dao.selectList("travel.party.listPartyNew");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,7 +59,7 @@ public class PartyServiceImpl implements PartyService {
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("party.dataCount", map);
+			result = dao.selectOne("travel.party.dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -72,7 +72,7 @@ public class PartyServiceImpl implements PartyService {
 		Party dto = null;
 		
 		try {
-			dto = dao.selectOne("party.detailParty", num);
+			dto = dao.selectOne("travel.party.detailParty", num);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,7 +85,7 @@ public class PartyServiceImpl implements PartyService {
 		Party dto = null;
 		
 		try {
-			dto = dao.selectOne("party.preReadParty", map);
+			dto = dao.selectOne("travel.party.preReadParty", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,7 +98,7 @@ public class PartyServiceImpl implements PartyService {
 		Party dto = null;
 		
 		try {
-			dto = dao.selectOne("party.nextReadParty", map);
+			dto = dao.selectOne("travel.party.nextReadParty", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -111,7 +111,7 @@ public class PartyServiceImpl implements PartyService {
 		int result = 0;
 		
 		try {
-			result = dao.updateData("party.updateParty", dto);
+			result = dao.updateData("travel.party.updateParty", dto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;
@@ -124,8 +124,8 @@ public class PartyServiceImpl implements PartyService {
 		int result = 0;
 		
 		try {
-			dao.deleteData("party.deleteJoinParty", num);
-			dao.deleteData("party.deleteParty", num);
+			dao.deleteData("travel.party.deleteJoinParty", num);
+			dao.deleteData("travel.party.deleteParty", num);
 			result = 1;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,7 +140,7 @@ public class PartyServiceImpl implements PartyService {
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("party.myParty_dataCount", map);
+			result = dao.selectOne("travel.party.myParty_dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -153,7 +153,7 @@ public class PartyServiceImpl implements PartyService {
 		int result = 0;
 		
 		try {
-			result = dao.selectOne("party.attendParty_dataCount", map);
+			result = dao.selectOne("travel.party.attendParty_dataCount", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -166,7 +166,7 @@ public class PartyServiceImpl implements PartyService {
 		List<Party> list = null;
 		
 		try {
-			list = dao.selectList("party.myListParty", map);
+			list = dao.selectList("travel.party.myListParty", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -179,7 +179,7 @@ public class PartyServiceImpl implements PartyService {
 		List<Party> list = null;
 		
 		try {
-			list = dao.selectList("party.attendListParty", map);
+			list = dao.selectList("travel.party.attendListParty", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
