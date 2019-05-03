@@ -293,4 +293,13 @@ public class TravelService {
 		}
 		return result;
 	}
+
+	public void payRoute(Map<String, Object> map) {
+		try {
+			dao.insertData("workspace.payRoute",map);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
 }

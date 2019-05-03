@@ -286,5 +286,9 @@
  	<select id="isPaid" parameterType="map" resultType="Integer">
  		select nvl(count(*),0) from paidRoute where userIdx=#{userIdx} and workCode=#{workCode}
  	</select>
+ 	
+ 	<insert id="payRoute" parameterType="map">
+ 		insert into paidRoute(prcode,userIdx,workCode) values(paidRoute_seq.nextval,#{userIdx},#{workCode})
+ 	</insert>
 
 </mapper>
