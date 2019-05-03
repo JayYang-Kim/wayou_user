@@ -252,8 +252,44 @@
     text-decoration: none;
     -webkit-transition: color 0.2s;
 }
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 9999; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.8); /* Black w/ opacity */
+}
 
+.modal-content {
+    position: relative;
+    top: 45%;
+    background-color: #2a303b;
+    color:white;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #2a303b;
+    width: 500px;
+    height: 150px;
+}
+.modalBtn{
+	border: 1px solid white; 
+	width: 100px;
+	padding-left:10px;
+}
+.modalBtn:hover{
+	border: 1px solid white; 
+	width: 120px;
+	font-weight: bold;
+}
 </style>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- Breadcrumb Area Start -->
 <div class="breadcrumb-area bg-img bg-overlay jarallax"
 	style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);">
@@ -282,6 +318,8 @@
 		</div>
 	</div>
 </div>
+
+
 <!-- Breadcrumb Area End -->
 
 <!-- Blog Area Start -->
@@ -289,6 +327,8 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-12 col-lg-9" id="dailyRoute">
+
+			<c:if test="${list.size()!=0}">			
 				<div class="day_info_box">
 					<div class="day_txt">Day ${day}</div>
 					<div class="day_info">
@@ -297,6 +337,7 @@
 					</div>
 					<div class="clear"></div>
 				</div>
+			</c:if>
 				<c:forEach var="dto" items="${list}" varStatus="status">
 					<div class="day_sch_box" data-lat="${dto.lat}" data-lng="${dto.lng}" data-landName="${dto.landName}" data-orderNum="${dto.orderNum}" data-worklandCode="${dto.workLandCode}">
 							<div class="day_sch_num">
@@ -318,7 +359,7 @@
 							</div>
 							<div class="sch_add_content">
 								<div class="sch_memo_confirm">
-									<div class="sch_budget" data-budget="${dto.budget}">KRW - <fmt:formatNumber>${dto.budget}</fmt:formatNumber></div>
+									<div class="sch_budget" data-budget="${dto.budget}">KRW - <fmt:formatNumber>${dto.budget}</fmt:formatNumber> 원</div>
 										<div class="sch_memo">${dto.memo}</div>
 								</div>
 								<div class="sch_memo_box" style="width: 400px; height: 180px;">
@@ -339,20 +380,126 @@
 						</c:if>
 				</c:forEach>
 
-				<!-- Pagination -->
-				<nav class="roberto-pagination mb-100" style="text-align: center; margin-top: 20px;">${paging}</nav>
+				<c:if test="${list.size()!=0}">
+					<!-- Pagination -->
+					<nav class="roberto-pagination mb-100" style="text-align: center; margin-top: 20px;">${paging}</nav>
+				</c:if>
+				<c:if test="${list.size()==0}">
+					<div class="t_center mt40 mb40">
+                		<span class="f14 exbold">작성자가 경로 일정을 작성 중입니다.</span>
+                	</div>
+				</c:if>
+
+				
 			</div>
 			<div class="col-12 col-lg-3">
 				<div id="map" style="width: 300px; height:400px;"></div>
-				<div id="explain" style="width: 300px; min-height: 150px;padding:15px 10px; border: 1px solid #e5e5e5"></div>
+				<c:if test="${list.size()!=0}">
+					<div id="explain" style="width: 300px; min-height: 150px;padding:15px 10px; border: 1px solid #e5e5e5"></div>
+				</c:if>
 			</div>
 		</div>
 	</div>
 </div>
-<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=591cb76973b1a523d68f564d17c08ff0"></script>
-<script type="text/javascript">
+<div id="myModal" class="modal">
+  <!-- Modal content -->
+  <div class="modal-content" style="text-align: center;">
+    <p style="font-size: 16px;">결제하지 않은 경로  입니다.<br> 지금 결제하시면 더 편리한 여행이 가능합니다.</p>
+    <p style="margin-top:30px; color:white;">
+	    <button class="btn btn-white modalBtn paymentBtn" type="button">결제하기</button>&nbsp;
+	    <button class="btn btn-white modalBtn" type="button" onclick="javascript:location.href='<%=cp%>/travel/plan/list';">돌아가기</button>
+    </p>
+  </div>
 
+</div>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=591cb76973b1a523d68f564d17c08ff0"></script>
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script type="text/javascript">
+	
 	$(function(){
+		$(".paymentBtn").click(function(){
+			var url = "<%=cp%>/member/info";
+			$.ajax({
+				type:"get",
+				url:url,
+				dataType:"json",
+				success:function(data){
+					var IMP = window.IMP; // 생략가능
+					var sum = 1000;
+					IMP.init(data.storeCode);
+					IMP.request_pay({
+					    pg : 'inicis', // version 1.1.0부터 지원.
+					    pay_method : 'card',
+					    merchant_uid : 'merchant_' + new Date().getTime(),
+					    name : '주문명:결제테스트',
+					    amount : sum,
+					    buyer_email : data.user.email,
+					    buyer_name : data.user.name,
+					    buyer_tel : data.user.tel,
+					    buyer_addr : data.user.addr,
+					    buyer_postcode : data.user.postCode,
+					    m_redirect_url : '<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.locCode}&dayCount=3&userIdx=${workspace.userIdx}'
+					}, function(rsp) {
+					    if ( rsp.success ) {
+					        var msg = '결제가 완료되었습니다.';
+					        //msg += '고유ID : ' + rsp.imp_uid;
+					        //msg += '상점 거래ID : ' + rsp.merchant_uid;
+					        msg += '결제 금액 : ' + rsp.paid_amount;
+					        //msg += '카드 승인번호 : ' + rsp.apply_num;
+					        url = "<%=cp%>/travel/plan/confirm?workCode=${workspace.workCode}";
+					        $.ajax({
+					        	type:"get",
+								url:url,
+								dataType:"json",
+								success:function(){
+									alert("구매해주셔서 감사합니다.");
+								},
+								beforesend:function(e){
+									e.setRequestHeader("AJAX",true);
+								},
+								error:function(e){
+							    	if(e.status==403) {
+							    		location.href="<%=cp%>/member/login";
+							    		return;
+							    	}
+								}
+					        });
+					    } else {
+					        var msg = '결제에 실패하였습니다.';
+					        msg += '에러내용 : ' + rsp.error_msg;
+					    }
+					    alert(msg);
+					});		
+				},
+				beforesend:function(e){
+					e.setRequestHeader("AJAX",true);
+				},
+				error:function(e){
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	} 
+				}
+			});
+	
+		});
+	});
+	
+	
+	$(function(){
+		
+ 		if(!${isPaid}){ 
+			var modal = document.getElementById('myModal');
+			modal.style.display = "block";
+			window.onclick = function(event) {
+			  if (event.target == modal) {
+			    modal.style.display = "block";
+			  }
+			}
+		}
+		
 		$(".nice-select").hide();
 		$("select[name='currency']").css("display","");
 		calDayTotBudget();
@@ -405,7 +552,7 @@
 		for(var i=0; i<budgets.length; i++){
 			sum += parseInt($(budgets[i]).attr("data-budget"));
 		}
-		$(".day_title").html("KRW "+((""+sum).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')));
+		$(".day_title").html("KRW "+((""+sum).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'))+" 원");
 		
 			var query ="day=${day}&workCode=${workspace.workCode}&budget="+sum;
 			
