@@ -5,3 +5,7 @@
 <%
    String cp = request.getContextPath();
 %>
+
+<div>
+	<img src="<%=cp%>/resources/images/bg-img/everland-detail.jpg" alt="" style="padding-bottom: 50px;">
+</div>
