@@ -442,7 +442,7 @@
 					    buyer_tel : data.payInfo.userTel,
 					    buyer_addr : data.payInfo.userAddr1 + data.payInfo.userAddr2,
 					    buyer_postcode : data.payInfo.postCode,
-					    m_redirect_url : '<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.locCode}&dayCount=3&userIdx=${workspace.userIdx}'
+					    m_redirect_url : '<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.workCode}&dayCount=3&userIdx=${workspace.userIdx}'
 					}, function(rsp) {
 					    if ( rsp.success ) {
 					        var msg = '결제가 완료되었습니다.';
@@ -458,7 +458,7 @@
 								dataType:"json",
 								success:function(){
 									alert("구매해주셔서 감사합니다.");
-									location.replace("<%=cp%>/travel/plan/view?locCode=${workspace.locCode}&workNum=${workspace.locCode}&dayCount=3&userIdx=${workspace.userIdx}");
+									location.replace("<%=cp%>/travel/plan/view?locCode=${workspace.locCode}&workNum=${workspace.workCode}&dayCount=3&userIdx=${workspace.userIdx}");
 								},
 								beforesend:function(e){
 									e.setRequestHeader("AJAX",true);
@@ -493,7 +493,7 @@
 	
 	
 	$(function(){
-		 
+		  
  		if(!${isPaid}){ 
 			var modal = document.getElementById('myModal');
 			modal.style.display = "block";
