@@ -450,14 +450,15 @@
 					        msg += '상점 거래ID : ' + rsp.merchant_uid;
 					        msg += '결제 금액 : ' + rsp.paid_amount;
 					        msg += '카드 승인번호 : ' + rsp.apply_num;
+					        
 					       url = "<%=cp%>/travel/plan/confirm?workCode=${workspace.workCode}";
 					        $.ajax({
 					        	type:"post",
-								url:url,
+								url:url, 
 								dataType:"json",
 								success:function(){
 									alert("구매해주셔서 감사합니다.");
-									location.replace("<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.locCode}&dayCount=3&userIdx=${workspace.userIdx}");
+									location.replace("<%=cp%>/travel/plan/view?locCode=${workspace.locCode}&workNum=${workspace.locCode}&dayCount=3&userIdx=${workspace.userIdx}");
 								},
 								beforesend:function(e){
 									e.setRequestHeader("AJAX",true);

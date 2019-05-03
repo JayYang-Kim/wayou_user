@@ -145,9 +145,9 @@
 </section>
 <!-- //roberto-about-area -->
 
-<div>
+<%-- <div>
 	<button type="button" class="btn roberto-btn" onclick="btnPayment()">테스트 결제하기</button>
-</div>
+</div> --%>
 
 <div class="colorlib-tour">
 	<div class="container">
