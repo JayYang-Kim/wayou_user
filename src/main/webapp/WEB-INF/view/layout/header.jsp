@@ -74,7 +74,7 @@
             <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                 <!-- Logo -->
-                <div class="logo"><h1><a href="<%=cp%>/main">WAYOU</a></h1></div>
+                <div class="logo"><h1><a href="<%=cp%>/travel">WAYOU</a></h1></div>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">

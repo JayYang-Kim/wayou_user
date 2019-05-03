@@ -7,7 +7,6 @@
 	<!-- 3단 클라이언트 화면 -->
 <tiles-definitions>
 
-
     <!-- 4 단 일반 -->
 	<definition name=".fourLayout" template="/WEB-INF/view/layout/layout4.jsp">
 	    <put-attribute name="title" value="spring" />
@@ -50,6 +49,9 @@
 		<put-attribute name="footer" value="/WEB-INF/view/layout/footer.jsp" />
 	</definition>
 	<!--순서가 바뀌면 안됨(* 많은것이 위에)-->
+	<definition name=".*.*.*.*" extends=".mainLayout">
+		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}/{3}/{4}.jsp"/>
+	</definition>
 	<definition name=".*.*.*" extends=".mainLayout">
 		<put-attribute name="body" value="/WEB-INF/view/{1}/{2}/{3}.jsp"/>
 	</definition>
