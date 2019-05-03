@@ -444,7 +444,7 @@
 					    buyer_postcode : data.payInfo.postCode,
 					    m_redirect_url : '<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.workCode}&dayCount=3&userIdx=${workspace.userIdx}'
 					}, function(rsp) {
-					    if ( rsp.success ) {
+					    if ( rsp.success ) { 
 					        var msg = '결제가 완료되었습니다.';
 					        msg += '고유ID : ' + rsp.imp_uid;
 					        msg += '상점 거래ID : ' + rsp.merchant_uid;
