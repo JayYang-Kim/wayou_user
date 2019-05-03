@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,6 +96,7 @@ public class TravelController {
 		@RequestParam String endDay,
 		@RequestParam String lat,
 		@RequestParam String lng,
+		@RequestParam(value="pay",defaultValue="0") int pay,
 		HttpSession session,
 		Model model
 	) {
@@ -103,6 +105,7 @@ public class TravelController {
 		map.put("title", title);
 		map.put("startDay", startDay);
 		map.put("endDay", endDay);
+		map.put("pay", pay);
 
 		SessionInfo info = (SessionInfo)session.getAttribute("member"); //세션에 Member라는 이름으로 저장된 로그인 사용자 객체를 불러오기
 		map.put("userIdx", info.getUserIdx());
@@ -203,7 +206,6 @@ public class TravelController {
 		map.put("day", day);
 		map.put("workCode", workNum);
 		int isDetailExist = travelService.isDetailExist(map);
-		System.out.println("isDetailExist:"+isDetailExist);
 		boolean isSuccess = true;
 		int seqNum = 0;
 		if(isDetailExist!=1) {
@@ -223,7 +225,6 @@ public class TravelController {
 			map.put("landCode", landCodes.get(i));
 			result2=travelService.insertWorkLand(map);
 			if(result2==0) isSuccess=false;
-			System.out.println(map);
 		}
 		
 		map.clear();
@@ -272,8 +273,6 @@ public class TravelController {
 		int start = (current_page-1)*rows +1;
 		int end = current_page * rows;
 		
-		System.out.println("dataCount:"+dataCount+",current_page:"+current_page+",start:"+start+",end:"+end+" 가나다라마바사");
-		
 		map.put("start", start);
 		map.put("end", end);
 		
@@ -283,7 +282,7 @@ public class TravelController {
 		
 		//작성한 지역과 카운트 가져오기
 		List<LocCategory> locCategory = travelService.locationCategory(userIdx);
-		
+
 		model.addAttribute("locCategory", locCategory);
 		model.addAttribute("list", list);
 		model.addAttribute("list_url", list_url);
@@ -306,7 +305,8 @@ public class TravelController {
 			@RequestParam int userIdx,
 			@RequestParam(value="day",defaultValue="1") int day,
 			Model model,
-			HttpServletRequest req
+			HttpServletRequest req,
+			HttpSession session
 			) {
 		Map<String,Object> map = new HashMap<>();
 		map.put("userIdx", userIdx);
@@ -314,6 +314,7 @@ public class TravelController {
 		map.put("day", day);
 		
 		int dataCount = travelService.countWorkDetail(map);
+		System.out.println("VIews-dataCount : "+dataCount);
 		if(day>dataCount) {
 			day = dataCount;
 		}
@@ -329,9 +330,9 @@ public class TravelController {
 		currentPageSetup=(day/numPerBlock)*numPerBlock;
 		if(day%numPerBlock==0)
 			currentPageSetup=currentPageSetup-numPerBlock;
-		
-		sb.append("<ul class='pagination'>");
 		n=day-numPerBlock;
+		sb.append("<ul class='pagination'>");
+		
 		if(dataCount > numPerBlock && currentPageSetup > 0) {
 			sb.append("<li class='page-item'>");
 			sb.append("<a href='"+list_url+"day=1' class=\"page-link\"><i class=\"fa fa-angle-double-left\"></a>");
@@ -355,8 +356,6 @@ public class TravelController {
 				sb.append("<a href='"+list_url+"day="+page+"' class=\"page-link\">"+page+"</a>");
 				sb.append("</li>");
 			}
-			
-			
 			page++;
 		}
 		
@@ -373,11 +372,27 @@ public class TravelController {
 		}
 		sb.append("</ul>");
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		Map<String,Object> checkMap = new HashMap<>();
+		checkMap.put("userIdx", info.getUserIdx());
+		checkMap.put("workCode", workNum);
+		
+		
 		
 		Workspace workspace = travelService.readWorkspace(map);
+		
+		int isPaid = travelService.isPaid(checkMap);
+		boolean isPaidFlag = true;
+		//유료 경로 이면서 경로 제작자가 아니고 경로를 구매하지 않았으면
+		System.out.println("니니니니니니니니니니니니니니 : "+workspace.getPay()+"/"+info.getUserIdx()+"/"+isPaid);
+		if(workspace.getPay()==1&&info.getUserIdx()!=userIdx&&isPaid==0){
+			isPaidFlag = false;
+		}
 		List<WorkLand> list = travelService.readWorkLand(map);
 		
 		
+		model.addAttribute("isPaid", isPaidFlag);
 		model.addAttribute("workspace", workspace);
 		model.addAttribute("list", list);
 		model.addAttribute("day", day);
@@ -387,9 +402,65 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value="/travel/plan/list")
-	public String list() {
-		
-		return ".travel.plan.list";
+	public String list(
+			@RequestParam(value="page",defaultValue="1") int current_page,
+			@RequestParam(value="searchKey", defaultValue="all") String searchKey,
+			@RequestParam(value="searchValue", defaultValue="") String searchValue,
+			@RequestParam(value="locCode",defaultValue="0") int locCode,
+			@RequestParam(value="routeSort",defaultValue="2") int routeSort,
+			HttpServletRequest req,
+			Model model
+		) throws UnsupportedEncodingException {
+	String cp = req.getContextPath();
+	String list_url = cp+"/travel/myplan/myList";
+	String article_url = cp+"/travel/myArticle?page="+current_page;
+	
+	if(req.getMethod().equalsIgnoreCase("GET")) {
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+	}
+	
+	if(searchValue.length()!=0) {
+		list_url += "?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+		article_url += "&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "UTF-8");
+	}
+	
+	Map<String,Object> map = new HashMap<>();
+	map.put("searchKey", searchKey);
+	map.put("searchValue", searchValue);
+	map.put("locCode", locCode);
+	map.put("routeSort", routeSort);
+	
+	int dataCount = travelService.dataCount(map);
+	int rows = 12;
+	int total_page = util.pageCount(rows, dataCount);
+	if(current_page > total_page) 
+		current_page = total_page;
+	
+	int start = (current_page-1)*rows +1;
+	int end = current_page * rows;
+	map.put("start", start);
+	map.put("end", end);
+	
+	List<Workspace> list = travelService.list(map);
+	
+	String paging = util.paging(current_page, total_page, list_url);
+	
+	//작성한 지역과 카운트 가져오기
+	List<LocCategory> locCategory = travelService.locationCategory(map);
+
+	model.addAttribute("locCategory", locCategory);
+	model.addAttribute("list", list);
+	model.addAttribute("list_url", list_url);
+	model.addAttribute("article_url", article_url);
+	model.addAttribute("dataCount", dataCount);
+	model.addAttribute("total_page", total_page);
+	model.addAttribute("page", current_page);
+	model.addAttribute("paging", paging);
+	model.addAttribute("searchValue", searchValue);
+	model.addAttribute("searchKey", searchKey);
+	model.addAttribute("locCode", locCode);
+	model.addAttribute("routeSort",routeSort);
+	return ".travel.plan.list";
 	}
 	
 	@RequestMapping(value="/travel/plan/updateWorkLandDetail",method=RequestMethod.POST)
@@ -423,5 +494,22 @@ public class TravelController {
 		map.clear();
 		map.put("sum", sum);
 		return map;
+	}
+	
+
+	
+	@PostMapping("/travel/plan/confirm")
+	@ResponseBody
+	public void confirm(
+			@RequestParam int workCode,
+			HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Map<String,Object> map = new HashMap<>();
+		
+		map.put("workCode", workCode);
+		map.put("userIdx", info.getUserIdx());
+		
+		travelService.payRoute(map);
 	}
 }
