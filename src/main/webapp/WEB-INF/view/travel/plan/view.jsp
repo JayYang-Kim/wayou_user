@@ -454,7 +454,7 @@
 					       url = "<%=cp%>/travel/plan/confirm?workCode=${workspace.workCode}";
 					        $.ajax({
 					        	type:"post",
-								url:url,
+								url:url, 
 								dataType:"json",
 								success:function(){
 									alert("구매해주셔서 감사합니다.");
