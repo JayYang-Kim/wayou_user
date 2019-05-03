@@ -37,5 +37,43 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return result;
 	}
+
+	@Override
+	public List<Hotel> readHotel(int hotelCode) {
+		List<Hotel> dto=null;
+		
+		try {
+			dto=dao.selectList("hotel.readHotel", hotelCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
+
+	@Override
+	public int detailCount(Map<String, Object> map) {
+		int result=0;
+		
+		try {
+			result=dao.selectOne("hotel.detailCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public Hotel readHotelMax(int hotelCode) {
+		Hotel maxdto=null;
+		
+		try {
+			maxdto=dao.selectOne("hotel.readHotelMax", hotelCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return maxdto;
+	}
+	
+	
 	
 }
