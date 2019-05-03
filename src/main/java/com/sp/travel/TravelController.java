@@ -500,7 +500,7 @@ public class TravelController {
 	
 	@PostMapping("/travel/plan/confirm")
 	@ResponseBody
-	public void confirm(
+	public Map<String,Object> confirm(
 			@RequestParam int workCode,
 			HttpSession session
 			) {
@@ -511,5 +511,7 @@ public class TravelController {
 		map.put("userIdx", info.getUserIdx());
 		
 		travelService.payRoute(map);
+		
+		return map;
 	}
 }

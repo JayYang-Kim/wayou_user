@@ -20,10 +20,10 @@
                     <tbody>
               			<tr>
 							<th scope="row">
-                                <span class="ic_ref">환불</span>
+                                <span class="">환불</span>
                              </th>
                              <td>
-                   				<ol class="lst_order">
+                   				<ol class="">
                                     <li><em>와유 > 마이페이지 &gt; 구매내역 페이지에서 환불 요청</em></li>
                                     <li>
                                       <em>택배기사 반품 상품 수거(일부 화불/설치 상품 제외) OR 편의점에서 반품 접수</em>
