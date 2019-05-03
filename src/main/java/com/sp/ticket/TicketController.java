@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.MyUtil;
@@ -96,6 +97,7 @@ public class TicketController {
 	@RequestMapping(value="/ticket/detail")
 	public String detail(
 			@RequestParam int ticketCode,
+			@RequestParam int storeCode,
 			@RequestParam int page,
 			@RequestParam(defaultValue="0") int regionCode,
 			@RequestParam(defaultValue="0") int cateCode,
@@ -109,19 +111,33 @@ public class TicketController {
 		if(dto==null) {
 			return "redirect:/ticket/list"+query;
 		}
-		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_start());
-		System.out.println("뭐ㅇㄹ올어ㅗㄻㅇ;니;ㅏ렁"+dto.getSales_end());
 		
+		List<Ticket> listDate = ticketService.readDate(storeCode);
+
 		Map<String, Object> map = new HashMap<>();
 		map.put("ticketCode", ticketCode);
 		map.put("regionCode", regionCode);
 		map.put("cateCode", cateCode);
+		map.put("storeCode", storeCode);
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
+		model.addAttribute("listDate", listDate);
 		
 		return ".ticket.detail";
+	}
+	
+	@RequestMapping(value="/ticket/tab3", method=RequestMethod.POST)
+	public String tab3 (
+			@RequestParam int storeCode,
+			Model model
+			) throws Exception {
+		Ticket dto = ticketService.readStore(storeCode);
+		
+		model.addAttribute("dto", dto);
+		
+		return "ticket/tab3";
 	}
 }
 

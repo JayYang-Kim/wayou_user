@@ -77,7 +77,7 @@
 	
 	<select id="readTicket" parameterType="Integer" resultType="com.sp.ticket.Ticket">
 		SELECT t.ticketCode, ticketName, TO_CHAR(sales_start, 'YYYY"년" MM"월" DD"일"') as sales_start,
-	        TO_CHAR(sales_end, 'YYYY"년" MM"월" DD"일"') as sales_end, s.address1, detail.price
+	        TO_CHAR(sales_end, 'YYYY"년" MM"월" DD"일"') as sales_end, s.address1, detail.price, t.storeCode
 		FROM ticket t
 		JOIN (
 	    		select ticketcode, max(price) as price
@@ -86,6 +86,16 @@
 			) detail on detail.ticketCode=t.ticketcode
 		JOIN store s ON t.storeCode=s.storeCode
 		WHERE t.ticketCode=#{ticketCode}
+	</select>
+	
+	<select id="readDate" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+		SELECT TO_CHAR(use_start, 'YYYY-MM-DD') as use_start FROM ticket where storeCode=#{storeCode}
+	</select>
+	
+	<select id="readStore" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+		SELECT storeCode, storeName, address1, address2, tel, notice, name, email, cancel_notice
+		FROM store
+		WHERE storeCode=#{storeCode}
 	</select>
 
 

@@ -74,7 +74,7 @@
             <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                 <!-- Logo -->
-                <div class="logo"><h1><a href="<%=cp%>/main">WAYOU</a></h1></div>
+                <div class="logo"><h1><a href="<%=cp%>/travel">WAYOU</a></h1></div>
 
                 <!-- Navbar Toggler -->
                 <div class="classy-navbar-toggler">
@@ -125,7 +125,9 @@
                                             </ul>
                                         </li>
                                         <li><a href="<%=cp%>/travel/myplan/add">- 일정 만들기</a></li>
-                                        <li><a href="<%=cp%>/travel/contactUs">- 문의하기</a></li>
+                                        <li><a href="<%=cp%>/travel/notice/list">- 공지사항</a></li>
+                                        <li><a href="<%=cp%>/travel/contact">- 문의하기</a></li>
+                                        <li><a href="<%=cp%>/travel/event/list">- 이벤트</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="<%=cp%>/ticket/tmain">티켓몰</a>
