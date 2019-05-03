@@ -91,7 +91,7 @@
                                 <h6>최대인원: <span>${dto.HCount }</span></h6>
                                 <h6>별찍기?: <span>몇점?</span></h6>
                             </div>
-                          	<a href="<%=cp%>/hotel/hotel/article" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                          	<a href="${articleUrl}&hotelCode=${dto.hotelCode}" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                         </div>
                     </div>
                         </c:forEach>

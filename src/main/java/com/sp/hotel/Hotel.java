@@ -17,6 +17,11 @@ public class Hotel {
 	private int HCount;
 	private int fileCode;
 	private int roomCode;
+	private String information;
+	private String notice;
+	private String cancel_notice;
+	private String roomName;
+	private int roomTypeCode;
 	
 	public int getHotelCode() {
 		return hotelCode;
@@ -114,5 +119,37 @@ public class Hotel {
 	public void setRoomCode(int roomCode) {
 		this.roomCode = roomCode;
 	}
+	public String getInformation() {
+		return information;
+	}
+	public void setInformation(String information) {
+		this.information = information;
+	}
+	public String getNotice() {
+		return notice;
+	}
+	public void setNotice(String notice) {
+		this.notice = notice;
+	}
+	public String getCancel_notice() {
+		return cancel_notice;
+	}
+	public void setCancel_notice(String cancel_notice) {
+		this.cancel_notice = cancel_notice;
+	}
+	public String getRoomName() {
+		return roomName;
+	}
+	public void setRoomName(String roomName) {
+		this.roomName = roomName;
+	}
+	public int getRoomTypeCode() {
+		return roomTypeCode;
+	}
+	public void setRoomTypeCode(int roomTypeCode) {
+		this.roomTypeCode = roomTypeCode;
+	}
+	
+
 
 }

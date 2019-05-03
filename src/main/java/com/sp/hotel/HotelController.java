@@ -35,6 +35,7 @@ public class HotelController {
 	public String HotelList(@RequestParam (value="page", defaultValue="1") int current_page,
 							@RequestParam (defaultValue="") String value,
 							@RequestParam (defaultValue="") String price_order,
+							@RequestParam (defaultValue="0") int hotelCode,
 							HttpServletRequest req,
 							Model model) throws Exception {
 		
@@ -75,7 +76,7 @@ public class HotelController {
 		String cp=req.getContextPath();
 		String query="";
 		String listUrl=cp+"/hotel/hotel/list";
-		String articleUrl=cp+"/hotel/hotel/aticle?page="+current_page;
+		String articleUrl=cp+"/hotel/hotel/article?page="+current_page;
 	
 		if(value.length()!=0) {
 			query+="value="+URLEncoder.encode(value, "utf-8");
@@ -93,12 +94,42 @@ public class HotelController {
 		model.addAttribute("paging", paging);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("value", value);
+		model.addAttribute("hotelCode", hotelCode);
 		
 		return ".hotel.hotel.list";
 	}
 	
-	@RequestMapping(value="/hotel/hotel/article", method=RequestMethod.GET )
-	public String Harticle() {
+	@RequestMapping(value="/hotel/hotel/article")
+	public String Harticle(@RequestParam int hotelCode,
+						   @RequestParam int page,
+						   HttpServletRequest req,
+						   Model model
+						   ) throws Exception {
+		
+
+		String query="page="+page+"&hotelCode="+hotelCode;
+		
+		Hotel maxDto=hotelservice.readHotelMax(hotelCode);
+		
+		
+		List<Hotel> list = hotelservice.readHotel(hotelCode);
+		if(list == null) {
+			return "redirect:/hotel/hotel/list?"+query;
+		}
+		
+		for(Hotel dto : list) {
+			dto.setInformation(myUtil.htmlSymbols(dto.getInformation()));
+			dto.setCancel_notice(myUtil.htmlSymbols(dto.getCancel_notice()));
+			dto.setNotice(myUtil.htmlSymbols(dto.getNotice()));
+		}
+		
+
+		model.addAttribute("maxDto", maxDto);
+		model.addAttribute("hotelCode", hotelCode);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
 		return ".hotel.hotel.article";
 	}
 	
