@@ -437,7 +437,7 @@
 					    merchant_uid : 'merchant_' + new Date().getTime(),
 					    name : '주문명:결제테스트',
 					    amount : 100,
-					    buyer_email : data.payInfo.userEmail,
+	 				    buyer_email : data.payInfo.userEmail,
 					    buyer_name : data.payInfo.userName,
 					    buyer_tel : data.payInfo.userTel,
 					    buyer_addr : data.payInfo.userAddr1 + data.payInfo.userAddr2,
