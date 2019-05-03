@@ -12,10 +12,13 @@ public class Workspace {
 	private String locName;
 	private String userName;
 	private int budget;
-	
-	
-	
-	
+	private int pay;
+	public int getPay() {
+		return pay;
+	}
+	public void setPay(int pay) {
+		this.pay = pay;
+	}
 	public int getBudget() {
 		return budget;
 	}

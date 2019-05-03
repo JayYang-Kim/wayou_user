@@ -6,5 +6,8 @@ import java.util.Map;
 public interface HotelService {
 	public List<Hotel> listHotel(Map<String , Object>map);
 	public int dataCount(Map<String, Object> map);
-
+	
+	public List<Hotel> readHotel(int hotelCode);
+	public int detailCount(Map<String, Object>map);
+	public Hotel readHotelMax(int hotelCode);
 }

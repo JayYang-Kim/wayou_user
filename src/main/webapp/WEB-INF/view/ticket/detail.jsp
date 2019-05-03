@@ -47,11 +47,11 @@ $(function(){
 		  
 		  var url;
 		  if(tab=="1") {
-			  url="tab1.jsp";
+			  url="<%=cp%>/ticket/tab1";
 		  } else if(tab=="2") {
-			  url="tab2.jsp";
+			  url="<%=cp%>/ticket/tab2";
 		  } else if(tab=="3") {
-			  url="tab3.jsp";
+			  url="<%=cp%>/ticket/tab3";
 		  }
 		  
 		  viewTabContent(id, url);
@@ -59,10 +59,50 @@ $(function(){
 });
 
 function viewTabContent(id, url) {
-	$.post(url, {}, function(data){
+	var storeCode = ${dto.storeCode};
+	
+	$.post(url, {storeCode : storeCode}, function(data){		
 		  id.html(data);
-	  });
+	}); 
 }
+
+
+function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data를 리턴한 jsp에 뿌려주고 해당 jsp의 html을 해당 id자리에 뿌려줌
+
+	$.ajax({ 
+		type:type
+		,url:url
+		,data:query
+		,success:function(data){
+			$("#"+id).html(data);
+		
+		}
+		,beforeSend:function(e) {
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e) {
+			if(e.status==403){  
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}		
+	});
+}
+
+/* $(function () {
+	tab1();
+}); */
+
+<%-- function tab3(storeCode) {
+	var id="tabContent3";
+	var url="<%=cp%>/ticket/tab3";
+	var query="storeCode="+storeCode;
+	
+	ajaxHTML(url, "get", query, id);
+} --%>
+
+
 </script>
 
   
@@ -73,8 +113,8 @@ function viewTabContent(id, url) {
             <div class="row h-100 align-items-end">
                 <div class="col-12">
                     <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
-                        <h2 class="room-title">Room View Sea</h2>
-                        <h2 class="room-price">$180 <span>/ Per Night</span></h2>
+                        <h2 class="room-title">ticket</h2>
+                       <!--  <h2 class="room-price">$180 <span>/ Per Night</span></h2> -->
                     </div>
                 </div>
             </div>
@@ -143,7 +183,8 @@ function viewTabContent(id, url) {
                             		
                             		<li class="clear">
                             		<select class="nice-select option mt3">
-                            			<option value="">2019-10-10</option>
+                            			<option value="">성인</option>
+                            			<option value="">청소년</option>
                             		</select>
                             		</li>
                             		
@@ -178,7 +219,7 @@ function viewTabContent(id, url) {
             <div class="row align-items-center mb-100">
 				<div style="margin: 30px auto; width: 100%;">
 					<div role="tabpanel">
-	  					<ul id="myTab" class="nav nav-tabs" role="tablist">
+	  					<ul id="myTab" class="tabmenu" role="tablist">
 	      					<li role="presentation"  class="active"><a href="#tabContent1" aria-controls="1" role="tab" data-toggle="tab">상품설명</a></li>
 	      					<li role="presentation"><a href="#tabContent2" aria-controls="2" role="tab" data-toggle="tab">상품리뷰</a></li>
 	      					<li role="presentation"><a href="#tabContent3" aria-controls="3" role="tab" data-toggle="tab">환불규정/상품고시</a></li>

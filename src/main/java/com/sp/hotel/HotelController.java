@@ -1,5 +1,6 @@
 package com.sp.hotel;
 
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,23 +31,25 @@ public class HotelController {
 		return ".hotel.hotel.main";
 	}
 	
-	@RequestMapping(value="/hotel/hotel/list",method=RequestMethod.GET )
+	@RequestMapping(value="/hotel/hotel/list" )
 	public String HotelList(@RequestParam (value="page", defaultValue="1") int current_page,
+							@RequestParam (defaultValue="") String value,
+							@RequestParam (defaultValue="") String price_order,
+							@RequestParam (defaultValue="0") int hotelCode,
 							HttpServletRequest req,
 							Model model) throws Exception {
 		
-		//파라미터 아직 조건 안걸어서 key, value 안넘겨줌 where-list하면 추가해야됨
-/*		if(req.getMethod().equalsIgnoreCase("GET")) {
+		if(req.getMethod().equalsIgnoreCase("GET")) {
 			value=URLEncoder.encode(value, "utf-8");
 		}
-		*/
+
 		int rows=2;
 		int total_page=0;
 		int dataCount=0;
 		
 		Map<String, Object> map=new HashMap<>();
-		/*map.put("key", key);
-		map.put("value", value);*/
+		map.put("price_order", price_order);
+		map.put("value", value);
 		
 		dataCount=hotelservice.dataCount(map);
 		if(dataCount!=0)
@@ -73,15 +76,15 @@ public class HotelController {
 		String cp=req.getContextPath();
 		String query="";
 		String listUrl=cp+"/hotel/hotel/list";
-		String articleUrl=cp+"/hotel/hotel/aticle?page="+current_page;
-/*		
+		String articleUrl=cp+"/hotel/hotel/article?page="+current_page;
+	
 		if(value.length()!=0) {
-			query+="key="+key+"value="+URLEncoder.encode(value, "utf-8");
+			query+="value="+URLEncoder.encode(value, "utf-8");
 			
 			listUrl += "?"+query;
 			articleUrl += "&"+query;
 		}
-		*/
+
 		String paging=myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list", list);
@@ -90,14 +93,43 @@ public class HotelController {
 		model.addAttribute("page", current_page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("total_page", total_page);
-/*		model.addAttribute("key", key);
-		model.addAttribute("value", value);*/
+		model.addAttribute("value", value);
+		model.addAttribute("hotelCode", hotelCode);
 		
 		return ".hotel.hotel.list";
 	}
 	
-	@RequestMapping(value="/hotel/hotel/article", method=RequestMethod.GET )
-	public String Harticle() {
+	@RequestMapping(value="/hotel/hotel/article")
+	public String Harticle(@RequestParam int hotelCode,
+						   @RequestParam int page,
+						   HttpServletRequest req,
+						   Model model
+						   ) throws Exception {
+		
+
+		String query="page="+page+"&hotelCode="+hotelCode;
+		
+		Hotel maxDto=hotelservice.readHotelMax(hotelCode);
+		
+		
+		List<Hotel> list = hotelservice.readHotel(hotelCode);
+		if(list == null) {
+			return "redirect:/hotel/hotel/list?"+query;
+		}
+		
+		for(Hotel dto : list) {
+			dto.setInformation(myUtil.htmlSymbols(dto.getInformation()));
+			dto.setCancel_notice(myUtil.htmlSymbols(dto.getCancel_notice()));
+			dto.setNotice(myUtil.htmlSymbols(dto.getNotice()));
+		}
+		
+
+		model.addAttribute("maxDto", maxDto);
+		model.addAttribute("hotelCode", hotelCode);
+		model.addAttribute("list", list);
+		model.addAttribute("page", page);
+		model.addAttribute("query", query);
+		
 		return ".hotel.hotel.article";
 	}
 	
