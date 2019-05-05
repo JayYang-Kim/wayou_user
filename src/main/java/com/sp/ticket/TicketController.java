@@ -139,10 +139,7 @@ public class TicketController {
 	
 	
 	@RequestMapping(value="/ticket/tab2", method=RequestMethod.POST)
-	public String tab2 (
-			@RequestParam int storeCode,
-			Model model
-			) throws Exception {
+	public String tab2 () throws Exception {
 		return "ticket/tab2";
 	}
 	

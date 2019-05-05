@@ -8,55 +8,9 @@
 <link rel="stylesheet" href="<%=cp%>/resources/css/travel.css">
 
 <script type="text/javascript">
-	function btnPayment() {
-		var info = ${sessionScope.member.userIdx};
-		var url = "<%=cp%>/payInfo";
-		var query = "userIdx=" + info;
-	
-		$.ajax({
-			type:"get"
-			,url:url
-			,data:query
-			,success:function(data) {
-				IMP.init(data.payInfo.storeCode);
-				
-				IMP.request_pay({
-				    pg : 'inicis', // version 1.1.0부터 지원.
-				    pay_method : 'card',
-				    merchant_uid : 'merchant_' + new Date().getTime(),
-				    name : '주문명:결제테스트',
-				    amount : 100,
-				    buyer_email : data.payInfo.userEmail,
-				    buyer_name : data.payInfo.userName,
-				    buyer_tel : data.payInfo.userTel,
-				    buyer_addr : data.payInfo.userAddr1 + data.payInfo.userAddr2,
-				    buyer_postcode : data.payInfo.postCode
-				}, function(rsp) {
-				    if ( rsp.success ) {
-				        var msg = '결제가 완료되었습니다.';
-				        msg += '고유ID : ' + rsp.imp_uid;
-				        msg += '상점 거래ID : ' + rsp.merchant_uid;
-				        msg += '결제 금액 : ' + rsp.paid_amount;
-				        msg += '카드 승인번호 : ' + rsp.apply_num;
-				    } else {
-				        var msg = '결제에 실패하였습니다.';
-				        msg += '에러내용 : ' + rsp.error_msg;
-				    }
-				    alert(msg);
-				});
-			}
-		    ,beforeSend:function(e) {
-		    	e.setRequestHeader("AJAX", true);
-		    }
-		    ,error:function(e) {
-		    	if(e.status==403) {
-		    		location.href="<%=cp%>/member/login";
-		    		return;
-		    	}
-		    	console.log(e.responseText);
-		    }
-		});
-	}
+	$(function(){
+		
+	});
 </script>
 
 <section class="welcome-area">
