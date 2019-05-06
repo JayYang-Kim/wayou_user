@@ -8,61 +8,15 @@
 <link rel="stylesheet" href="<%=cp%>/resources/css/travel.css">
 
 <script type="text/javascript">
-	function btnPayment() {
-		var info = ${sessionScope.member.userIdx};
-		var url = "<%=cp%>/payInfo";
-		var query = "userIdx=" + info;
-	
-		$.ajax({
-			type:"get"
-			,url:url
-			,data:query
-			,success:function(data) {
-				IMP.init(data.payInfo.storeCode);
-				
-				IMP.request_pay({
-				    pg : 'inicis', // version 1.1.0부터 지원.
-				    pay_method : 'card',
-				    merchant_uid : 'merchant_' + new Date().getTime(),
-				    name : '주문명:결제테스트',
-				    amount : 100,
-				    buyer_email : data.payInfo.userEmail,
-				    buyer_name : data.payInfo.userName,
-				    buyer_tel : data.payInfo.userTel,
-				    buyer_addr : data.payInfo.userAddr1 + data.payInfo.userAddr2,
-				    buyer_postcode : data.payInfo.postCode
-				}, function(rsp) {
-				    if ( rsp.success ) {
-				        var msg = '결제가 완료되었습니다.';
-				        msg += '고유ID : ' + rsp.imp_uid;
-				        msg += '상점 거래ID : ' + rsp.merchant_uid;
-				        msg += '결제 금액 : ' + rsp.paid_amount;
-				        msg += '카드 승인번호 : ' + rsp.apply_num;
-				    } else {
-				        var msg = '결제에 실패하였습니다.';
-				        msg += '에러내용 : ' + rsp.error_msg;
-				    }
-				    alert(msg);
-				});
-			}
-		    ,beforeSend:function(e) {
-		    	e.setRequestHeader("AJAX", true);
-		    }
-		    ,error:function(e) {
-		    	if(e.status==403) {
-		    		location.href="<%=cp%>/member/login";
-		    		return;
-		    	}
-		    	console.log(e.responseText);
-		    }
-		});
-	}
+	$(function(){
+		
+	});
 </script>
 
 <section class="welcome-area">
 	<div class="welcome-slides owl-carousel">
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/16.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg01.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg01.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -70,9 +24,9 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Hotel &amp; Resort</h6>
-	                            <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Roberto</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">WAYOU &amp; 여행정보</h6>
+	                            <h2 data-animation="fadeInLeft" data-delay="500ms">국내 여행정보 확인</h2>
+	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -81,7 +35,7 @@
 	    </div>
 	
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/17.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg02.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg02.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -89,9 +43,9 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">Hotel &amp; Resort</h6>
-	                            <h2 data-animation="fadeInUp" data-delay="500ms">Welcome To Roberto</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
+	                            <h6 data-animation="fadeInUp" data-delay="200ms">WAYOU &amp; 여행일정</h6>
+	                            <h2 data-animation="fadeInUp" data-delay="500ms">나만의 여행 일정 계획</h2>
+	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -100,7 +54,7 @@
 	    </div>
 	
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/18.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/18.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg03.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg03.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -108,9 +62,9 @@
                     <!-- Welcome Text -->
                         <div class="col-12">
                             <div class="welcome-text text-center">
-                                <h6 data-animation="fadeInDown" data-delay="200ms">Hotel &amp; Resort</h6>
-                                <h2 data-animation="fadeInDown" data-delay="500ms">Welcome To Roberto</h2>
-                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
+                                <h6 data-animation="fadeInDown" data-delay="200ms">WAYOU &amp; 여행동료 모으기</h6>
+                                <h2 data-animation="fadeInDown" data-delay="500ms">여행동료 모으기</h2>
+                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">바로가기</a>
                             </div>
                         </div>
                     </div>
@@ -145,100 +99,34 @@
 </section>
 <!-- //roberto-about-area -->
 
-<%-- <div>
-	<button type="button" class="btn roberto-btn" onclick="btnPayment()">테스트 결제하기</button>
-</div> --%>
-
 <div class="colorlib-tour">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-				<h2>Popular Destination</h2>
-				<p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+				<h2>추천 여행정보</h2>
+				<p>WAYOU에서 추천드리는 여행정보입니다. 여행일정 작성할때 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
 	</div>
 	<div class="tour-wrap">
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Athens, Greece</h2>
-				<span class="city">Athens, Greece</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-2.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Family Tour in Thailand</h2>
-				<span class="city">Athens, Greece</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-3.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Family Tour in Philippines</h2>
-				<span class="city">Lipa, Philippines</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-4.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Family Tour in Greece</h2>
-				<span class="city">Athens, Greece</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-5.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Family Tour in Greece</h2>
-				<span class="city">Athens, Greece</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-6.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Family Tour in Greece</h2>
-				<span class="city">Athens, Greece</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-7.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Family Tour in Greece</h2>
-				<span class="city">Athens, Greece</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
-		<a href="#" class="tour-entry animate-box">
-			<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-8.jpg);">
-			</div>
-			<span class="desc">
-				<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-				<h2>Family Tour in Greece</h2>
-				<span class="city">Athens, Greece</span>
-				<span class="price">$450</span>
-			</span>
-		</a>
+		<c:forEach var="listLocation" items="${listLocation}">
+			<a href="#" class="tour-entry animate-box">
+				<%-- <div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);"> --%>
+				<c:if test="${not empty listLocation.saveFilename}">
+					<div class="tour-img" style="background-image: url(/wadmin/uploads/location/${listLocation.saveFilename});">
+				</c:if>
+				<c:if test="${empty listLocation.saveFilename}">
+					<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);">
+				</c:if>
+				</div>
+				<span class="desc">
+					<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> ${listLocation.locationReplyCount} (댓글수)</p>
+					<h2>${listLocation.locName}</h2>
+					<span class="city">${listLocation.memo}</span>
+					<span class="price">관광명소 : ${listLocation.landCount}(개)</span>
+				</span>
+			</a>
+		</c:forEach>
 	</div>
 </div>
 
@@ -246,88 +134,33 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-				<h2>Most Popular Travel Countries</h2>
-				<p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+				<h2>추천 관광명소</h2>
+				<p>WAYOU에서 추천드리는 관광명소입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="f-tour">
-					<div class="row row-pb-md">
-						<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-12">
 							<div class="row">
-								<div class="col-md-6 animate-box">
-									<a  href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
-										<div class="desc">
-											<h3>Rome - 5 Days</h3>
-											<p class="price"><span>$120</span> <small>/ person</small></p>
-										</div>
-									</a>
-								</div>
-								<div class="col-md-6 animate-box">
-									<a  href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-2.jpg);">
-										<div class="desc">
-											<h3>Rome - 5 Days</h3>
-											<p class="price"><span>$120</span> <small>/ person</small></p>
-										</div>
-									</a>
-								</div>
-								<div class="col-md-6 animate-box">
-									<a  href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-3.jpg);">
-										<div class="desc">
-											<h3>Rome - 5 Days</h3>
-											<p class="price"><span>$120</span> <small>/ person</small></p>
-										</div>
-									</a>
-								</div>
-								<div class="col-md-6 animate-box">
-									<a  href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-4.jpg);">
-										<div class="desc">
-											<h3>Rome - 5 Days</h3>
-											<p class="price"><span>$120</span> <small>/ person</small></p>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 animate-box">
-							<div class="desc">
-								<div class="row">
-									<div class="col-md-12">
-										<h3>Italy, Europe</h3>
-										<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia.</p><br>
+								<c:forEach var="listLandMark" items="${listLandMark}">
+									<div class="col-md-3 animate-box">
+										<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
+										<c:if test="${not empty listLandMark.saveFilename}">
+											<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${listLandMark.saveFilename});">
+										</c:if>
+										<c:if test="${empty listLandMark.saveFilename}">
+											<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
+										</c:if>
+											<div class="desc">
+												<h3>${listLandMark.landName}</h3>
+												<p class="price"><small>지역 : ${listLandMark.locName}(${listLandMark.loceName})</small></p>
+												<p class="price"><small>댓글수 : ${listLandMark.landReplyCount}(개)</small></p>
+											</div>
+										</a>
 									</div>
-									<div class="col-md-12">
-										<h4>Best Tours City</h4>
-										<div class="row">
-											<div class="col-md-4 col-sm-4 col-xs-4">
-												<ul>
-													<li><a href="#">Rome</a></li>
-													<li><a href="#">Milan</a></li>
-													<li><a href="#">Genoa</a></li>
-													<li><a href="#">Verona</a></li>
-												</ul>
-											</div>
-											<div class="col-md-4 col-sm-4 col-xs-4">
-												<ul>
-													<li><a href="#">Venice</a></li>
-													<li><a href="#">Bologna</a></li>
-													<li><a href="#">Trieste</a></li>
-													<li><a href="#">Florence</a></li>
-												</ul>
-											</div>
-											<div class="col-md-4 col-sm-4 col-xs-4">
-												<ul>
-													<li><a href="#">Palermo</a></li>
-													<li><a href="#">Siena</a></li>
-													<li><a href="#">San Marino</a></li>
-													<li><a href="#">Naples</a></li>
-												</ul>
-											</div>
-										</div>
-										<p><a href="tours.html" class="btn btn-primary">View All Places</a></p>
-									</div>
-								</div>
+								</c:forEach>
 							</div>
 						</div>
 					</div>
@@ -341,65 +174,33 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-				<h2>Recommended Hotels</h2>
-				<p>We love to tell our successful far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+				<h2>추천 여행일정</h2>
+				<p>WAYOU에서 추천드리는 여행일정입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12 animate-box">
 				<div>
-					<div class="item">
-						<div class="hotel-entry">
-							<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
-								<p class="price"><span>$120</span><small> /night</small></p>
-							</a>
-							<div class="desc">
-								<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-								<h3><a href="#">Hotel Edison</a></h3>
-								<span class="place">New York, USA</span>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+					<c:forEach var="listWorkspace" items="${listWorkspace}">
+						<div class="item">
+							<div class="hotel-entry">
+								<c:if test="${not empty listWorkspace.saveFilename}">
+									<a href="hotels.html" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${listWorkspace.saveFilename});">
+								</c:if>
+								<c:if test="${empty listWorkspace.saveFilename}">
+									<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
+								</c:if>
+									<p class="price"><span>${listWorkspace.locName}</span><small>(${listWorkspace.loceName})</small></p>
+								</a>
+								<div class="desc">
+									<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
+									<h3><a href="#">${listWorkspace.subject}</a></h3>
+									<span class="place">${listWorkspace.userId}(${listWorkspace.userName})</span>
+									<p>숙박일자 : ${listWorkspace.dayCount}(일) / 출발일 : ${listWorkspace.startDay}</p>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="item">
-						<div class="hotel-entry">
-							<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-2.jpg);">
-								<p class="price"><span>$120</span><small> /night</small></p>
-							</a>
-							<div class="desc">
-								<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-								<h3><a href="#">Hotel Edison</a></h3>
-								<span class="place">New York, USA</span>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="hotel-entry">
-							<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-3.jpg);">
-								<p class="price"><span>$120</span><small> /night</small></p>
-							</a>
-							<div class="desc">
-								<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-								<h3><a href="#">Hotel Edison</a></h3>
-								<span class="place">New York, USA</span>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</div>
-					</div>
-					<div class="item">
-						<div class="hotel-entry">
-							<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-4.jpg);">
-								<p class="price"><span>$120</span><small> /night</small></p>
-							</a>
-							<div class="desc">
-								<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p>
-								<h3><a href="#">Hotel Edison</a></h3>
-								<span class="place">New York, USA</span>
-								<p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-							</div>
-						</div>
-					</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>
@@ -412,9 +213,9 @@
         <div class="row">
             <!-- Section Heading -->
 	        <div class="col-12">
-	            <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
-	                <h6>Our Blog</h6>
-	                <h2>Latest News &amp; Event</h2>
+	            <div class="section-heading text-center wow">
+	                <h6>WAYOU 퀵 메뉴</h6>
+	                <h2>WAYOU를 통해서 여행일정을 쉽게 계획하세요.</h2>
 	            </div>
 	        </div>
   		</div>
@@ -422,49 +223,31 @@
     	<div class="row">
         	<!-- Single Post Area -->
         	<div class="col-12 col-md-6 col-lg-4">
-            	<div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-                	<a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/2.jpg" alt=""></a>
-	                <!-- Post Meta -->
-	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
-	                    <a href="#" class="post-catagory">Event</a>
-	                </div>
+            	<div class="single-post-area mb-100 wow">
+                	<a href="<%=cp%>/travel/location" class="post-thumbnail"><img src="<%=cp%>/resources/images/travel/main/quick01.png" alt="여행정보"></a>
                 	<!-- Post Title -->
-                	<a href="#" class="post-title">Learn How To Motivate Yourself</a>
-                	<p>How many free autoresponders have you tried? And how many emails did you get through using them?</p>
-                	<a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                	<h3 class="post-title bold t_center">여행정보</h3>
+                	<p class="f13">국내 도시, 관광명소, 역사/종교, 숙박, 쇼핑, 음식점 정보를 확인하시고 여행정보를 확인해보세요.</p>
             	</div>
         	</div>
 
 	        <!-- Single Post Area -->
 	        <div class="col-12 col-md-6 col-lg-4">
-	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="500ms">
-	                <a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/3.jpg" alt=""></a>
-	                <!-- Post Meta -->
-	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
-	                    <a href="#" class="post-catagory">Event</a>
-	                </div>
+	            <div class="single-post-area mb-100 wow">
+	                <a href="<%=cp%>/travel/plan/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/travel/main/quick02.png" alt="여행일정"></a>
 	                <!-- Post Title -->
-	                <a href="#" class="post-title">What If Let You Run The Hubble</a>
-	                <p>My point here is that if you have no clue for the answers above you probably are not operating a followup.</p>
-	                <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                <h3 class="post-title bold t_center">여행일정</h3>
+	                <p class="f13">국내에 등록되어 있는 여행정보를 확인하고 나만의 일정을 계획하고, 유료 일정을 생성하여 나만의 일정을 공유해보세요.</p>
 	            </div>
 	        </div>
 
         	<!-- Single Post Area -->
         	<div class="col-12 col-md-6 col-lg-4">
-            	<div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="700ms">
-                	<a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/4.jpg" alt=""></a>
-                	<!-- Post Meta -->
-                	<div class="post-meta">
-                    	<a href="#" class="post-date">Jan 02, 2019</a>
-                    	<a href="#" class="post-catagory">Event</a>
-                	</div>
+            	<div class="single-post-area mb-100 wow">
+                	<a href="<%=cp%>/travel/party" class="post-thumbnail"><img src="<%=cp%>/resources/images/travel/main/quick03.png" alt="여행동료"></a>
                 	<!-- Post Title -->
-                    <a href="#" class="post-title">Six Pack Abs The Big Picture</a>
-                    <p>Some good steps to take to ensure you are getting what you need out of a autoresponder include…</p>
-                    <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+                    <h3 class="post-title bold t_center">여행동료 모으기</h3>
+                    <p class="f13">혼자가는 여행은 이제 그만 여행동료 모으기를 이용하여 동료를 모아보세요.</p>
                 </div>
             </div>
         </div>

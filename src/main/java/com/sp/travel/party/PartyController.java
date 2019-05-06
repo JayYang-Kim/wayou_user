@@ -131,7 +131,7 @@ public class PartyController {
 	public String party_list(Model model) {
 		model.addAttribute("mode", "create");
 		
-		return ".party.create";
+		return ".travel.party.create";
 	}
 	
 	@RequestMapping(value="/travel/party/create", method = RequestMethod.POST)
