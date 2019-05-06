@@ -36,6 +36,9 @@
     <script src="<%=cp%>/resources/js/lib/util-jquery.js"></script>
     <script src="<%=cp%>/resources/js/lib/util.js"></script>
     <script src="<%=cp%>/resources/js/lib/jquery-ui-1.12.1.min.js"></script>
+    
+    <!-- 결제모듈 js -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>

@@ -91,6 +91,12 @@
 	<select id="readDate" parameterType="Integer" resultType="com.sp.ticket.Ticket">
 		SELECT TO_CHAR(use_start, 'YYYY-MM-DD') as use_start FROM ticket where storeCode=#{storeCode}
 	</select>
+	
+	<select id="readStore" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+		SELECT storeCode, storeName, address1, address2, tel, notice, name, email, cancel_notice
+		FROM store
+		WHERE storeCode=#{storeCode}
+	</select>
 
 
 

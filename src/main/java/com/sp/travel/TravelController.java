@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -492,6 +493,25 @@ public class TravelController {
 		int sum = travelService.selectTotBudget(workCode);
 		map.clear();
 		map.put("sum", sum);
+		return map;
+	}
+	
+
+	
+	@PostMapping("/travel/plan/confirm")
+	@ResponseBody
+	public Map<String,Object> confirm(
+			@RequestParam int workCode,
+			HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Map<String,Object> map = new HashMap<>();
+		
+		map.put("workCode", workCode);
+		map.put("userIdx", info.getUserIdx());
+		
+		travelService.payRoute(map);
+		
 		return map;
 	}
 }

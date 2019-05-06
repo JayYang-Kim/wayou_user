@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sp.common.MyUtil;
@@ -125,6 +126,18 @@ public class TicketController {
 		model.addAttribute("listDate", listDate);
 		
 		return ".ticket.detail";
+	}
+	
+	@RequestMapping(value="/ticket/tab3", method=RequestMethod.POST)
+	public String tab3 (
+			@RequestParam int storeCode,
+			Model model
+			) throws Exception {
+		Ticket dto = ticketService.readStore(storeCode);
+		
+		model.addAttribute("dto", dto);
+		
+		return "ticket/tab3";
 	}
 }
 

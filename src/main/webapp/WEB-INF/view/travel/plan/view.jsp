@@ -420,41 +420,45 @@
 	
 	$(function(){
 		$(".paymentBtn").click(function(){
-			var url = "<%=cp%>/member/info";
+			var url = "<%=cp%>/payInfo";
+			var data = "userIdx=${sessionScope.member.userIdx}";
 			$.ajax({
 				type:"get",
 				url:url,
+				data:data,
 				dataType:"json",
 				success:function(data){
 					var IMP = window.IMP; // 생략가능
 					var sum = 1000;
-					IMP.init(data.storeCode);
+					IMP.init(data.payInfo.storeCode);
 					IMP.request_pay({
 					    pg : 'inicis', // version 1.1.0부터 지원.
 					    pay_method : 'card',
 					    merchant_uid : 'merchant_' + new Date().getTime(),
 					    name : '주문명:결제테스트',
-					    amount : sum,
-					    buyer_email : data.user.email,
-					    buyer_name : data.user.name,
-					    buyer_tel : data.user.tel,
-					    buyer_addr : data.user.addr,
-					    buyer_postcode : data.user.postCode,
-					    m_redirect_url : '<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.locCode}&dayCount=3&userIdx=${workspace.userIdx}'
+					    amount : 100,
+	 				    buyer_email : data.payInfo.userEmail,
+					    buyer_name : data.payInfo.userName,
+					    buyer_tel : data.payInfo.userTel,
+					    buyer_addr : data.payInfo.userAddr1 + data.payInfo.userAddr2,
+					    buyer_postcode : data.payInfo.postCode,
+					    m_redirect_url : '<%=cp%>/travel/plan/view?${workspace.locCode}=2&workNum=${workspace.workCode}&dayCount=3&userIdx=${workspace.userIdx}'
 					}, function(rsp) {
-					    if ( rsp.success ) {
+					    if ( rsp.success ) { 
 					        var msg = '결제가 완료되었습니다.';
-					        //msg += '고유ID : ' + rsp.imp_uid;
-					        //msg += '상점 거래ID : ' + rsp.merchant_uid;
+					        msg += '고유ID : ' + rsp.imp_uid;
+					        msg += '상점 거래ID : ' + rsp.merchant_uid;
 					        msg += '결제 금액 : ' + rsp.paid_amount;
-					        //msg += '카드 승인번호 : ' + rsp.apply_num;
-					        url = "<%=cp%>/travel/plan/confirm?workCode=${workspace.workCode}";
+					        msg += '카드 승인번호 : ' + rsp.apply_num;
+					        
+					       url = "<%=cp%>/travel/plan/confirm?workCode=${workspace.workCode}";
 					        $.ajax({
-					        	type:"get",
-								url:url,
+					        	type:"post",
+								url:url, 
 								dataType:"json",
 								success:function(){
 									alert("구매해주셔서 감사합니다.");
+									location.replace("<%=cp%>/travel/plan/view?locCode=${workspace.locCode}&workNum=${workspace.workCode}&dayCount=3&userIdx=${workspace.userIdx}");
 								},
 								beforesend:function(e){
 									e.setRequestHeader("AJAX",true);
@@ -489,7 +493,7 @@
 	
 	
 	$(function(){
-		
+		  
  		if(!${isPaid}){ 
 			var modal = document.getElementById('myModal');
 			modal.style.display = "block";

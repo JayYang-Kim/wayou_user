@@ -10,4 +10,5 @@ public interface TicketService {
 	public List<Ticket> listCategory();
 	public Ticket readTicket(int ticketCode);
 	public List<Ticket> readDate(int storeCode);
+	public Ticket readStore(int storeCode);
 }
