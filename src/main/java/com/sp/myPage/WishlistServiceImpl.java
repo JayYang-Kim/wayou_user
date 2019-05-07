@@ -48,21 +48,21 @@ public class WishlistServiceImpl implements WishlistService {
 
 
 	@Override
-	public List<Wishlist> list1Wish(Map<String, Object> map) throws Exception {
-		List<Wishlist> list = dao.selectList("wish.listWish1",map);
-		return list;
+	public List<Wishlist> listdhWish(Map<String, Object> map) throws Exception {
+		List<Wishlist> listdh = dao.selectList("wish.listWishdh",map);
+		return listdh;
 	}
 
 	@Override
-	public List<Wishlist> list2Wish(Map<String, Object> map) throws Exception {
-		List<Wishlist> list = dao.selectList("wish.listWish2",map);
-		return list;
+	public List<Wishlist> listdtWish(Map<String, Object> map) throws Exception {
+		List<Wishlist> listdt = dao.selectList("wish.listWishdt",map);
+		return listdt;
 	}
 
 	@Override
-	public List<Wishlist> list3Wish(Map<String, Object> map) throws Exception {
-		List<Wishlist> list = dao.selectList("wish.listWish3",map);
-		return list;
+	public List<Wishlist> listdtrWish(Map<String, Object> map) throws Exception {
+		List<Wishlist> listdtr = dao.selectList("wish.listWishdtr",map);
+		return listdtr;
 	}
 
 }

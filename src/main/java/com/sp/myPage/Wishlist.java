@@ -8,7 +8,9 @@ public class Wishlist {
 	private int odCode;
 	private int productCode;
 	private int amount;
+	private String amount1;
 	private int totalprice;
+	private String totalprice1;
 	private int listNum;
 	public int getUserIdx() {
 		return userIdx;
@@ -63,6 +65,18 @@ public class Wishlist {
 	}
 	public void setPrice1(String price1) {
 		this.price1 = price1;
+	}
+	public String getAmount1() {
+		return amount1;
+	}
+	public void setAmount1(String amount1) {
+		this.amount1 = amount1;
+	}
+	public String getTotalprice1() {
+		return totalprice1;
+	}
+	public void setTotalprice1(String totalprice1) {
+		this.totalprice1 = totalprice1;
 	}
 	
 	

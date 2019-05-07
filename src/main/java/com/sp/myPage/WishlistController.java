@@ -21,76 +21,80 @@ import com.sp.member.SessionInfo;
 
 @Controller(value="myP.wishlistController")
 public class WishlistController {
-	@Autowired
-	private MyUtil myUtil;
-	
-	@Autowired
-	private WishlistService wish;
-	
+   @Autowired
+   private MyUtil myUtil;
+   
+   @Autowired
+   private WishlistService wish;
+   
    @RequestMapping(value="/myPage/wishlist/list")
+   public String listWish() {
+      
+      return ".myPage.wishlist.list";
+   }
+   @RequestMapping(value="/myPage/wishlist/list2")
    @ResponseBody
    public Map<String, Object> listWish(
-		   HttpSession session
-		   ){
+         HttpSession session
+         )throws Exception{
       SessionInfo info = (SessionInfo)session.getAttribute("member");
       int userIdx=info.getUserIdx();
-	   
+   
       int dataCount=0;
       int dataCount1=0;
       int dataCount2=0;
       int dataCount3=0;
-      
-      try {
-         dataCount1=wish.dataCount1(userIdx);
-         dataCount2=wish.dataCount2(userIdx);
-         dataCount3=wish.dataCount3(userIdx);   
-      } catch (Exception e) {
-         e.printStackTrace();
-      }
-      
+
+      dataCount1=wish.dataCount1(userIdx);
+      dataCount2=wish.dataCount2(userIdx);
+      dataCount3=wish.dataCount3(userIdx);   
+
+  
       dataCount=dataCount1+dataCount2+dataCount3;
       int listNum=0;
       int n=1;
-      
+  
       Map<String, Object> map = new HashMap<>();
       map.put("userIdx", userIdx);
-      
-      Map<String, Object> model=new HashMap<>();
-      try {
-         List<Wishlist> list1 = wish.list1Wish(map);
-         List<Wishlist> list2 = wish.list2Wish(map);
-         List<Wishlist> list3 = wish.list3Wish(map);
-         for(Wishlist dto : list1) {
+  
+
+      List<Wishlist> listdh = wish.listdhWish(map);
+      List<Wishlist> listdt = wish.listdtWish(map);
+      List<Wishlist> listdtr = wish.listdtrWish(map);
+         
+      for(Wishlist dto : listdh) {
             dto.setPrice1(NumberFormat.getInstance().format(dto.getPrice()));
-            dto.setTotalprice(dto.getAmount()*dto.getPrice());
+            dto.setAmount1(NumberFormat.getInstance().format(dto.getAmount()));
+            dto.setTotalprice1(NumberFormat.getInstance().format(dto.getAmount()*dto.getPrice()));
             listNum=n;
             n++;
             dto.setListNum(listNum);
-         }
-         
-         for(Wishlist dto : list2) {
-            dto.setPrice1(NumberFormat.getInstance().format(dto.getPrice()));
-            dto.setTotalprice(dto.getAmount()*dto.getPrice());
-            listNum=n;
-            n++;         
-            dto.setListNum(listNum);
-         }
-         
-         for(Wishlist dto : list3) {
-            dto.setPrice1(NumberFormat.getInstance().format(dto.getPrice()));
-            dto.setTotalprice(dto.getAmount()*dto.getPrice());
-            listNum=n;
-            n++;         
-            dto.setListNum(listNum);
-            
-            model.put("dataCount", dataCount);
-            model.put("list1", list1);
-            model.put("list2", list2);
-            model.put("list3", list3);
-         }
-      } catch (Exception e) {
-         e.printStackTrace();
       }
+     
+      for(Wishlist dto : listdt) {
+         dto.setPrice1(NumberFormat.getInstance().format(dto.getPrice()));
+         dto.setAmount1(NumberFormat.getInstance().format(dto.getAmount()));
+         dto.setTotalprice1(NumberFormat.getInstance().format(dto.getAmount()*dto.getPrice()));
+         listNum=n;
+         n++;         
+         dto.setListNum(listNum);
+      }
+     
+      for(Wishlist dto : listdtr) {
+         dto.setPrice1(NumberFormat.getInstance().format(dto.getPrice()));
+         dto.setAmount1(NumberFormat.getInstance().format(dto.getAmount()));
+         dto.setTotalprice1(NumberFormat.getInstance().format(dto.getAmount()*dto.getPrice()));
+          listNum=n;
+          n++;         
+          dto.setListNum(listNum);
+      }
+      Map<String, Object> model=new HashMap<>();
+      
+      model.put("dataCount", dataCount);
+      model.put("listdh", listdh);
+      model.put("listdt", listdt);
+      model.put("listdtr", listdtr);
+
       return model;
    }
 
