@@ -35,102 +35,75 @@
     <![endif]-->
     
     <script type="text/javascript">
-    	function sendOk() {
-    		var f = document.login_form;
-    		var msg = "* 아이디와 비밀번호를 입력해주세요.";
-    		
-    		if(!$("input[name='userId']").val()){    			
-    			$("input[name='userId']").focus().css("outline-color","#df4442");
-    			
-    			var out = "<span class='t_red f14'>" + msg + "</span>";
-    			
-				$("#loginMsg").html(out).addClass("mt30");
-				
-    			return false;
-    		}
-    		
-    		if(!$("input[name='userPwd']").val()){
-    			$("input[name='userPwd']").focus().css("outline-color","#df4442");
-    			
-				var out = "<span class='t_red f14'>" + msg + "</span>";
-    			
-				$("#loginMsg").html(out).addClass("mt30");
-    			
-    			return false;
-    		}
-    		
-    		return true;
+    $(function(){
+    	$("#login_notice").hide();
+    	
+    	var msg = "${msg}";
+    	if(msg != "") {
+    		$("#login_notice").find(".memo_notice").html(msg);
+   			$("#login_notice").fadeIn(2000);
+   			$("input[name='userId']").focus();
+   			return false;
     	}
+    	
+    });
+    function sendOk(){
+   		var f = document.login_form;
+   	
+   		if(!$("input[name='userId']").val()){
+   			$("#login_notice").find(".memo_notice").html("아이디를 입력해주세요.");
+   			$("#login_notice").fadeIn(2000);
+   			$("input[name='userId']").focus();
+   			return false;
+   		}
+   		
+   		if(!$("input[name='userPwd']").val()) {
+   			$("#login_notice").find(".memo_notice").html("비밀번호를 입력해주세요.");
+   			$("#login_notice").fadeIn(2000);
+   			$("input[name='userPwd']").focus();
+   			return false;
+   		}
+   		
+   		return true;
+   	}
     </script>
 </head>
 
 <body>
-    <!-- Wrap -->
-    <div id="wrap" class="login_wrap">
-        <!-- Header -->
-        <!-- <header>
-            <div class="login_header">
-                <h1 class="title">
-                    <a href="main.html">WAYOU | 관리자</a>
-                </h1>
+	<article class="main_wrap">
+		<div class="inner">
+			<h3>로그인</h3>
+			<form name="login_form" action="<%=cp%>/member/login" method="post" onsubmit="return sendOk();">
+				<ul>
+					<li>
+						<label for="userId">아이디 / ID</label>
+						<input type="text" name="userId" id="txt_id" class="boxTf" autocomplete="off" autofocus/>
+					</li>
+					<li>
+						<label for="userPw">비밀번호 / Password</label>
+						<input type="password" name="userPwd" id="txt_pwd" class="boxTf" autocomplete="off" autofocus/>
+					</li>
+					<%-- <li class="login_check mt20">
+						<label class="checkbox-wrap">
+							<input type="checkbox" id="id_save">
+							<i class="check-icon"></i>
+						</label>
+						<label for="id_save">아이디저장</label>
+					</li> --%>
+					<li style="margin-top:40px">
+						<button type="submit" class="btn_login btn-block"><strong>로그인</strong></button>
+					</li>
+				</ul>
+			</form>
+			<div class="login_info">
+            	<a href="#">아이디 찾기</a><span class="bar">|</span> 
+                <a href="#">비밀번호 찾기</a><span class="bar">|</span> 
+                <a href="<%=cp%>/member/join">회원가입</a>
             </div>
-        </header> -->
-        <!-- //Header -->
-        
-        <!-- container -->
-        <div id="container" class="login_container">
-            <!-- contents -->
-            <div class="register">
-                <form name="login_form" action="<%=cp%>/member/login" method="post" onsubmit="return sendOk();">
-                    <fieldset>
-                        <div class="box_login">
-                            <h3 class="title">로그인</h3>
-                            <div class="mt30">
-                                <label for="txt_id">아이디</label>
-                                <div>
-                                    <input type="text" name="userId" id="txt_id" class="boxTf" autocomplete="off" autofocus/>
-                                </div>
-                            </div>
-                            <div class="mt30">
-                                <label for="txt_pwd">비밀번호</label>
-                                <div>
-                                    <input type="password" name="userPwd" id="txt_pwd" class="boxTf" autocomplete="off" autofocus/>
-                                </div>
-                            </div>
-                            <div class="mt30">
-                                <label class="checkbox">
-                                    <input name="checkbox" type="checkbox" value="saveId"/>
-                                    <span class="lbl">아이디 저장</span>
-                                </label>
-                            </div>
-                            <div id="loginMsg"></div>
-                            <div class="mt30">
-                                <button type="submit" class="btn_login">로그인</button><br>
-                                <p>${msg}</p>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form>
-                <div class="login_info">
-                    <a href="#">아이디 찾기</a><span class="bar">|</span> 
-                    <a href="#">비밀번호 찾기</a><span class="bar">|</span> 
-                    <a href="<%=cp%>/member/join.do">회원가입</a>
-                </div>
-            </div>
-            <!-- //contents -->
-        </div>
-        <!-- //container -->
-        
-        <!-- Footer -->
-        <footer class="clear login">
-            <div class="box_footer">
-                <div class="copyright">
-                    <p>Copyright (c) (주)WAYOU. All rights reserved.</p>
-                </div>
-            </div>
-        </footer>
-        <!-- //Footer -->
-    </div>
-    <!-- //Wrap -->
+			<footer id="login_notice">
+				<img src="<%=cp%>/resources/images/common/icon_notice2.png" class="icon_notice"><span class="memo_notice">아이디 및 패스워드를 확인해주세요.</span>
+			</footer>
+		</div>
+	</article>
 </body>
 </html>

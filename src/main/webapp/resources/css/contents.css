@@ -43,6 +43,8 @@
 .comment_area .comment-content .comment-meta button.like {display: inline-block;padding: 5px 25px 3px;font-size: 12px;font-weight: 600;border: 1px solid #ebebeb;text-transform: uppercase;border-radius: 30px;}
 .comment_area .comment-content .comment-meta button.like:focus, .comment_area .comment-content .comment-meta button.like:hover {border-color: #1cc3b2;background-color: #1cc3b2;color: #ffffff;}
 
+.tr_locationList .post-content p{height:130px;overflow:hidden;text-overflow:ellipsis;}
+
 /* min0 */
 .single-project-slide.height{height:500px;}
 

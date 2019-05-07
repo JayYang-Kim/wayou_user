@@ -5,12 +5,10 @@
    String cp = request.getContextPath();
 %>
 
-<%-- <link rel="stylesheet" href="<%=cp%>/resources/css/travel.css"> --%>
-
 <section class="welcome-area">
 	<div class="welcome-slides owl-carousel">
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/16.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg01.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg01.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -18,9 +16,9 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Hotel &amp; Resort</h6>
-	                            <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Roberto</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">WAYOU &amp; 여행정보</h6>
+	                            <h2 data-animation="fadeInLeft" data-delay="500ms">국내 여행정보 확인</h2>
+	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -29,7 +27,7 @@
 	    </div>
 	
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/17.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg02.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg02.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -37,9 +35,9 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">Hotel &amp; Resort</h6>
-	                            <h2 data-animation="fadeInUp" data-delay="500ms">Welcome To Roberto</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
+	                            <h6 data-animation="fadeInUp" data-delay="200ms">WAYOU &amp; 여행일정</h6>
+	                            <h2 data-animation="fadeInUp" data-delay="500ms">나만의 여행 일정 계획</h2>
+	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -48,7 +46,7 @@
 	    </div>
 	
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/18.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/18.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg03.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg03.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -56,9 +54,9 @@
                     <!-- Welcome Text -->
                         <div class="col-12">
                             <div class="welcome-text text-center">
-                                <h6 data-animation="fadeInDown" data-delay="200ms">Hotel &amp; Resort</h6>
-                                <h2 data-animation="fadeInDown" data-delay="500ms">Welcome To Roberto</h2>
-                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
+                                <h6 data-animation="fadeInDown" data-delay="200ms">WAYOU &amp; 여행동료 모으기</h6>
+                                <h2 data-animation="fadeInDown" data-delay="500ms">여행동료 모으기</h2>
+                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">바로가기</a>
                             </div>
                         </div>
                     </div>
@@ -100,74 +98,25 @@
             <div class="col-12 col-lg-8">
 
                 <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                    <!-- Post Thumbnail -->
-                    <div class="post-thumbnail">
-                        <a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/bg-img/24.jpg" alt=""></a>
-                    </div>
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/location/view" class="post-title">Cdc Issues Health Alert Notice For Travelers To Usa From Hon</a>
-                        <p>A round-the-world trip remains the world’s greatest journey. For two out of every three people, this is the ultimate travel experience, according to recent research...</p>
-                    </div>
-                </div>
-				
-				<!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                    <!-- Post Thumbnail -->
-                    <div class="post-thumbnail">
-                        <a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/bg-img/24.jpg" alt=""></a>
-                    </div>
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/location/view" class="post-title">Cdc Issues Health Alert Notice For Travelers To Usa From Hon</a>
-                        <p>A round-the-world trip remains the world’s greatest journey. For two out of every three people, this is the ultimate travel experience, according to recent research...</p>
-                    </div>
-                </div>
-                
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                    <!-- Post Thumbnail -->
-                    <div class="post-thumbnail">
-                        <a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/bg-img/24.jpg" alt=""></a>
-                    </div>
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/location/view" class="post-title">Cdc Issues Health Alert Notice For Travelers To Usa From Hon</a>
-                        <p>A round-the-world trip remains the world’s greatest journey. For two out of every three people, this is the ultimate travel experience, according to recent research...</p>
-                    </div>
-                </div>
-                
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                    <!-- Post Thumbnail -->
-                    <div class="post-thumbnail">
-                        <a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/bg-img/24.jpg" alt=""></a>
-                    </div>
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/location/view" class="post-title">Cdc Issues Health Alert Notice For Travelers To Usa From Hon</a>
-                        <p>A round-the-world trip remains the world’s greatest journey. For two out of every three people, this is the ultimate travel experience, according to recent research...</p>
-                    </div>
-                </div>
-                
-                <!-- Single Blog Post Area -->
-                <div class="single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
-                    <!-- Post Thumbnail -->
-                    <div class="post-thumbnail">
-                        <a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/bg-img/24.jpg" alt=""></a>
-                    </div>
-                    <!-- Post Content -->
-                    <div class="post-content">
-                        <!-- Post Title -->
-                        <a href="<%=cp%>/travel/location/view" class="post-title">Cdc Issues Health Alert Notice For Travelers To Usa From Hon</a>
-                        <p>A round-the-world trip remains the world’s greatest journey. For two out of every three people, this is the ultimate travel experience, according to recent research...</p>
-                    </div>
-                </div>
+                <c:forEach var="listLocation" items="${listLocation}">
+	                <div class="tr_locationList single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+	                    <!-- Post Thumbnail -->
+	                    <div class="post-thumbnail">
+	                    	<c:if test="${not empty listLocation.saveFilename}">
+	                    		<a href="<%=cp%>/travel/location/view"><img src="/wadmin/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
+	                    	</c:if>
+	                    	<c:if test="${empty listLocation.saveFilename}">
+	                    		<a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
+	                    	</c:if>
+	                    </div>
+	                    <!-- Post Content -->
+	                    <div class="post-content">
+	                        <!-- Post Title -->
+	                        <a href="<%=cp%>/travel/location/view" class="post-title">${listLocation.locName}(${listLocation.loceName})</a>
+	                        <p>${listLocation.memo}</p>
+	                    </div>
+	                </div>
+                </c:forEach>
             </div>
 
             <div class="col-12 col-sm-8 col-md-6 col-lg-4">
