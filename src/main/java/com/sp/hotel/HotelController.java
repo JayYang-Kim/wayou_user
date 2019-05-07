@@ -138,18 +138,16 @@ public class HotelController {
 	
 	@RequestMapping(value="/hotel/hotel/insertReview", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, Object> insertReview(@RequestParam Map<String, Object> reqMap,
+	public Map<String, Object> insertReview(Hotel dto,
 			HttpSession session) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		//dto.setUserIdx(info.getUserIdx());
 		
-		reqMap.put("userIdx", info.getUserIdx());
-		reqMap.put("kind", 1);
-		
+		dto.setUserIdx(info.getUserIdx());
+			
 		String state="true";
 		
 		try {
-			int result = hotelservice.insertReview(reqMap);
+			int result = hotelservice.insertReview(dto);
 			
 			if(result==0) {
 				state="false";
@@ -163,4 +161,46 @@ public class HotelController {
 		
 		return model;
 	}
+	
+	@RequestMapping(value="/hotel/hotel/hotelReview")
+	public String listReview(@RequestParam int hotelCode,
+										  @RequestParam (value="pageNo", defaultValue="1") int current_page,
+										  Model model) throws Exception{
+		
+		int rows=5;
+		int total_page;
+		int dataCount=0;
+		
+		Map<String, Object> map=new HashMap<>();
+		map.put("hotelCode", hotelCode);
+		
+		dataCount=hotelservice.reviewDataCount(map);
+		total_page=myUtil.pageCount(rows, dataCount);
+		if(current_page>total_page) {
+			current_page=total_page;
+		}
+		
+		int start=(current_page-1)*rows+1;
+		int end=current_page*rows;
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Review> listReview=hotelservice.listReview(map);
+		for(Review dto : listReview) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		model.addAttribute("listReview", listReview);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "hotel/hotel/hotelReview";		
+	}
+	
+	
 }

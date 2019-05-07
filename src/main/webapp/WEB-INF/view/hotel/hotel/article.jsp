@@ -4,6 +4,31 @@
 <%
    String cp = request.getContextPath();
 %>
+<style type="text/css">
+div {
+	border: none;
+}
+.star {
+	font-size: 0;
+	letter-spacing: -4px;
+}
+.star a {
+	font-size: 20px;
+	text-align: center;
+	letter-spacing: 0;
+	display: inline-block;
+	margin-left: 3px;
+	color: #cccccc;
+	text-decoration: none;
+}
+.star a:first-child {
+	margin-left: 0;
+}
+.star a.on {
+	color: #F2CB61;
+}
+</style>
+
 <script type="text/javascript">
 
 
@@ -12,8 +37,8 @@ function page() {
 }
 
 function listPage(page) {
-
-	var query="hotelCode=${dto.hotelCode}&pageNo="+page;
+	var hotelCode="${hotelCode}";
+	var query="hotelCode="+hotelCode+"&pageNo="+page;
 	var url="<%=cp%>/hotel/hotel/hotelReview";
 	
 	$.ajax({
@@ -86,6 +111,8 @@ $(function() {
 	});
 	
 });
+
+
 </script>
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: none;" data-jarallax-original-styles="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
         <div class="container h-100">
@@ -228,7 +255,7 @@ $(function() {
                     	    <textarea class="boxTF" style="width: 80%; font-size: 20px; text-align: left;"></textarea>
 						
 						<div class="" style="display: inline-block;">						
-						<c:if test="${dto.kind==null}">
+						<c:if test="${dto.star==null}">
 							<p style="font-size: 20px; text-align: center; ">호텔 별점주기</p>
 							<p class="star" style="font-size: 25px; text-align: center; ">					  
 								<a href="#">★</a> 
@@ -238,23 +265,23 @@ $(function() {
 								<a href="#">★</a>
 							</p>
 						</c:if>
-						<c:if test="${dto.kind!=null}">
+						<c:if test="${dto.star!=null}">
 						<p class="star">
-							<c:forEach var="dto" begin="1" end="${dto.kind}">
+							<c:forEach var="dto" begin="1" end="${dto.star}">
 								<a class="on" href="#">★</a> 
 							</c:forEach>
-							<c:forEach var="dto" begin="1" end="${5-dto.kind}">
+							<c:forEach var="dto" begin="1" end="${5-dto.star}">
 							
 								<a href="#">★</a> 
 							</c:forEach>
 						</p>
 						</c:if>
 						</div>										
-							<input type="hidden" name="score" id="score" value="${dto.kind}" readonly="readonly">
+							<input type="hidden" name="score" id="score" value="${dto.star}" readonly="readonly">
 						</div>	
                    	</div >
 						<div style="padding: 10px 70px; 30px;">
-							<button type="button" style="float:right; text-align: right; font-size: 20px; border: 2px solid black; padding: 10px;" class="btnSendReview" >후기 등록하기</button>
+							<button type="button" style="float:right; text-align: right; font-size: 20px; border: 2px solid black; " class="btnSendReview" >후기 등록하기</button>
                    		</div>
                       </div>
                         <div id="listReview"></div>

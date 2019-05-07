@@ -75,16 +75,16 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	   public int insertReview(Map<String, Object> reqMap) throws Exception {
+	   public int insertReview(Hotel dto) throws Exception {
 	      int result=0;
 	      
 	      try {
-	         int seq_star = dao.selectOne("hotel.seq_star");
+/*	         int seq_star = dao.selectOne("hotel.seq_star");*/
 	         
-	         reqMap.put("starCode", seq_star);
+/*	         reqMap.put("starCode", seq_star);*/
 	         
-	         dao.insertData("hotel.insertReview1", reqMap); // STAR INSERT 부분
-	         dao.insertData("hotel.insertReview2", reqMap); // HREVIEW INSERT 부분
+	         dao.insertData("hotel.insertReview1", dto); // STAR INSERT 부분
+
 	         
 	         result = 1;
 	      } catch (Exception e) {
@@ -95,16 +95,31 @@ public class HotelServiceImpl implements HotelService {
 	   }
 
 	@Override
-	public List<Review> listReview(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public int reviewDataCount(Map<String, Object> map) {
+		int result=0;
+		
+		try {
+			result=dao.selectOne("hotel.reviewDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public int reviewDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Review> listReview(Map<String, Object> map) {
+		List<Review> list=null;
+		
+		try {
+			list=dao.selectList("hotel.listReview", map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
+
 	
 	
 	
