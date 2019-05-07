@@ -25,6 +25,10 @@
 		
 		<intercept-url pattern="/index.jsp" access="permitAll" />
 		<intercept-url pattern="/main" access="permitAll" />
+		<intercept-url pattern="/travel" access="permitAll" />
+		<intercept-url pattern="/travel/location" access="permitAll" />
+		<intercept-url pattern="/travel/party" access="permitAll" />
+		<intercept-url pattern="/travel/party/view" access="permitAll" />	
 		<intercept-url pattern="/member/login" access="permitAll" />
 		<intercept-url pattern="/member/join" access="permitAll" />
 		<intercept-url pattern="/member/step1" access="permitAll" />
