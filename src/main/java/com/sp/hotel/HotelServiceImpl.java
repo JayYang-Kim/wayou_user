@@ -73,6 +73,24 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return maxdto;
 	}
+
+	@Override
+	public int insertReview(Review dto) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Review> listReview(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int reviewDataCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 	

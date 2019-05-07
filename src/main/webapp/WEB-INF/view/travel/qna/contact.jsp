@@ -7,50 +7,71 @@
 %>
 
 <script type="text/javascript">
-	$(function(){
-		listPartyNew();
-	});
-
-	function sendSearch() {
-		var f = document.search_form;
-		f.submit();
-	}
+$(function(){
+	$(".qnaArticle").hide();
 	
-	$(function(){
-		$("#btn_createQna").click(function(){
-			location.href="<%=cp%>/travel/contact/created";
-		});
-	});
-	
-	function listPartyNew() {
-		var url="<%=cp%>/travel/partyNew";
-		var query = "page=${page}";
-	
-		var searchValue = "${searchValue}";
-		if(searchValue != "") {
-			query += "&searchKey=${searchKey}&searchValue=${searchValue}"; 
-		}
-		
-		$.ajax({
-			type:"get"
-			,url:url
-			,data:query
-			,success:function(data) {
-				$("#listPartyNew").html(data);
-			}
-		    ,beforeSend:function(e) {
-		    	e.setRequestHeader("AJAX", true);
-		    }
-		    ,error:function(e) {
-		    	if(e.status==403) {
-		    		location.href="<%=cp%>/member/login";
-					return;
+	$(".qnaSubject").on("click", function(){
+		var tr = $(this).closest("tr").next(".qnaArticle");
+		var isHidden = $(this).closest("tr").next(".qnaArticle").is(":hidden");
+		var $this = $(this).closest("tr");
+		if(isHidden) {
+			var qnaCode=$(this).attr("data-Num");
+			var url = "<%=cp%>/ticket/qna/hitCount";
+			var query="qnaCode="+qnaCode;
+			$.ajax({
+				type:"post"
+				,url:url
+				,data:query
+				,dataType:"JSON"
+				,success:function(data) {
+					if(data.msg=="true"){
+						var hitCount = data.hitCount;
+						$this.children("td:nth-child(6)").html(hitCount);
+					}
 				}
-				console.log(e.responseText);
-			}
-		});
+			    ,beforeSend:function(e) {
+			    	e.setRequestHeader("AJAX", true);
+			    }
+			    ,error:function(e) {
+			    	if(e.status==403) {
+			    		location.href="<%=cp%>/member/login";
+			    		return;
+			    	}
+			    	console.log(e.responseText);
+			    }
+			});
+			$(".qnaArticle").hide();
+			tr.show();
+		} else {
+			tr.hide();
+		}
+	});
+	
+	//글수정
+	$("body").on("click", ".btn_update", function(){
+		var qnaCode = $(this).attr("data-qnaCode");
+		
+		var url="<%=cp%>/ticket/qna/update?qnaCode=" + qnaCode + "&page=${page}";
+		location.href=url;
+	});
+	
+	//글삭제
+	$("body").on("click", ".btn_delete", function(){
+		var qnaCode = $(this).attr("data-qnaCode");
+		
+		if(confirm("게시물을 삭제하시겠습니까?")){
+		
+		var url="<%=cp%>/ticket/qna/delete?qnaCode="+qnaCode+"&page=${page}";
+		location.href=url;
+		}
+	});
+	
+});
 
-	}
+function searchList() {
+	var f = document.searchForm;
+	f.submit();
+}
 </script>
 
 <!-- Breadcrumb Area Start -->
@@ -98,7 +119,7 @@
 		</form>
 		<div class="row justify-content-center">
 			<div class="col-12 col-lg-12">
-				<button type="button" class="btn roberto-btn" id="btn_createQna">문의사항 작성</button>
+				<button type="button" class="btn roberto-btn" id="btn_createQna" onclick="javascript:location.href='<%=cp%>/travel/contact/created'">문의사항 작성</button>
 				<table class=tb style="font-size: 15px;margin-top:20px;"> 
 					<tr align="center" bgcolor="#eeeeee" height="40"
 						style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
@@ -173,8 +194,7 @@
 				</c:if>
 
 				<!-- Pagination -->
-				<nav class="roberto-pagination wow fadeInUp mb-100"
-					data-wow-delay="600ms">${paging}</nav>
+				<nav class="roberto-pagination mb-100" style="margin-top:20px; text-align: center;">${paging}</nav>
 			</div>
 		</div>
 	</div>
