@@ -8,7 +8,49 @@
 <style>
 
 </style>
+<script type="text/javascript" src="<%=cp%>/resource/jquery/js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	   listWish();
+	});
+
+	function listWish(){
+	   var url="<%=cp%>/myPage/wishlist/list";
+	   $.ajax({
+	      type:"GET",
+	      url:url,
+	      dataType:"json",
+	      success:function(data){
+	         printWish(data);
+	      },beforeSend:function(jqXHR){
+	         jqXHR.setRequestHeader("AJAX", true);
+	      },error:function(x,e){ if(x.status==0){ alert('You are offline!!n Please Check Your Network.'); }else if(x.status==404){ alert('Requested URL not found.'); }else if(x.status==500){ alert('Internel Server Error.'); }else if(e=='parsererror'){ alert('Error.nParsing JSON Request failed.'); }else if(e=='timeout'){ alert('Request Time out.'); }else { alert('Unknow Error.n'+x.responseText); } }
+	   });
+	};
+
+	   function printWish(data){
+	      var dataCount=data.dataCount;
+	      var out="";
+	      
+	   if(dataCount!=0){
+	      for(var i=0; i<data.list1.length; i++){
+	      var listNum = data.list1[i].listNum;
+	      var amount=data.list1[i].amount;
+	      var price=data.list1[i].price;
+	      var totalprice=data.list1[i].totalprice;
+	      
+	      out+=" <tr>";
+	      out+=" <td style='text-align:center'>"+listNum+"</td>";
+	      out+=" <td style='text-align:center'>"+상품명+"</td>";
+	      out+=" <td style='text-align:center'>"+amount+"</td>";
+	      out+=" <td style='text-align:center'>"+price+"원</td>";
+	      out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice+"원</td>";
+	      out+=" <td style='text-align:center'>"+없음+"</td>";
+	      out+=" </tr>";
+	      }
+	   }
+	   $("#listWishBody").html(out);
+	}
 
 </script>
 
@@ -45,43 +87,14 @@
 				<td style="text-align:center; font-weight: bold;">소계금액</td>
 				<td style="text-align:center; font-weight: bold;">배송비</td>
 			</tr>
-			<c:forEach var="dto" items="${list3}">
-				<tr>
-					<td style="text-align:center">${dto.listNum}</td>
-					<td style="text-align:center">상품명</td>
-					<td style="text-align:center">${dto.amount}</td>
-					<td style="text-align:center">${dto.price1}원</td>
-					<td style="text-align:center; color:#DA6464;">${dto.totalprice}원</td>
-					<td style="text-align:center">없음</td>
-				</tr>
-			</c:forEach>
-			<c:forEach var="dto" items="${list2}">
-				<tr>
-					<td style="text-align:center">${dto.listNum}</td>
-					<td style="text-align:center">상품명</td>
-					<td style="text-align:center">${dto.amount}</td>
-					<td style="text-align:center">${dto.price1}원</td>
-					<td style="text-align:center; color:#DA6464;">${dto.totalprice}원</td>
-					<td style="text-align:center">없음</td>
-				</tr>
-			</c:forEach>
-			<c:forEach var="dto" items="${list1}">
-				<tr>
-					<td style="text-align:center">${dto.listNum}</td>
-					<td style="text-align:center">상품명</td>
-					<td style="text-align:center">${dto.amount}</td>
-					<td style="text-align:center">${dto.price1}원</td>
-					<td style="text-align:center; color:#DA6464;">${dto.totalprice}원</td>
-					<td style="text-align:center">없음</td>
-				</tr>
-			</c:forEach>
+				<tbody id="listWishBody"></tbody>
 				</table>
 				<table class="table left_tbl">
 					<tr>
 						<tr>
 					</tr>
 				</table>
-			<c:if test="${dataCount==0}">
+			<c:if test="">
                 	<div class="t_center mt40 mb40">
                 		<span class="f14 exbold">등록된 상품이 없습니다.</span>
                 	</div>

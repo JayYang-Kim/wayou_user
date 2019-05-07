@@ -14,17 +14,17 @@
 	</select>
 	
 	<select id="listWish1" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
-		SELECT productCode, amount, price, wishCode FROM tb_user u
+		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
    		 JOIN wishlistcode_dh dh ON dh.userIdx = u.userIdx
        	 WHERE u.userIdx = #{userIdx}
 	</select>
 	<select id="listWish2" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
-		SELECT productCode, amount, price, wishCode FROM tb_user u
+		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
    		 JOIN wishlistcode_dt dt ON dt.userIdx = u.userIdx
        	 WHERE u.userIdx = #{userIdx}
 	</select>
 	<select id="listWish3" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
-		SELECT productCode, amount, price, wishCode FROM tb_user u
+		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
    		 JOIN wishlistcode_dtr dtr ON dtr.userIdx = u.userIdx
        	 WHERE u.userIdx = #{userIdx}
 	</select>
