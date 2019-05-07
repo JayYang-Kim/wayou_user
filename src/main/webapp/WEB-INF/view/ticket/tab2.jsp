@@ -6,6 +6,7 @@
    String cp = request.getContextPath();
 %>
 
+
 <div class="roberto-rooms-area section-padding-100-0">
 	<div class="container">
 		<div class="row">
@@ -13,9 +14,46 @@
 				<table
 					style='width: 100%; margin: 15px auto 0px; border-spacing: 0px;'>
 					<tr height='30'>
-						<td align='left'><span style='font-weight: bold;'>댓글쓰기</span><span>
-								- 타인을 비방하거나 개인정보를 유출하는 글의 게시를 삼가 주세요.</span></td>
+						<td align='left'><span style='font-weight: bold;'>후기 작성하기</span></td>
 					</tr>
+					<tr>
+					<div>
+
+				<form name="ReviewForm" method="post">
+
+					<div class="t_center mt30">
+						<span style="display: inline-block; width: 20%;">기업 총 평점</span>
+						<div class="p30" style="display: inline-block; width: 70%;">
+						<c:if test="${dto.star==null}">
+							<p class="star">					  
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a>
+							</p>
+						</c:if>
+						<c:if test="${dto.star!=null}">
+						<p class="star">
+							<c:forEach var="dto" begin="1" end="${dto.star}">
+								<a class="on" href="#">★</a> 
+							</c:forEach>
+							<c:forEach var="dto" begin="1" end="${5-dto.star}">
+							
+								<a href="#">★</a> 
+							</c:forEach>
+						</p>
+						</c:if>
+						</div>
+
+
+						<input type="hidden" name="score" id="score" value="${dto.star}"
+							readonly="readonly">
+
+
+					</div>
+					</tr>
+					
 					<tr>
 						<td style='padding: 5px 5px 0px;'><textarea class='boxTA'
 								style='width: 99%; height: 70px;'></textarea></td>
@@ -29,86 +67,6 @@
 				</table>
 
 				<div id="listReview"></div>
-			</div>
-
-			<div class="col-12 col-lg-8">
-				<!-- Room Review -->
-				<div class="room-review-area mb-100">
-					<h4>Room Review</h4>
-
-					<!-- Single Review Area -->
-					<div class="single-room-review-area d-flex align-items-center">
-						<div class="reviwer-thumbnail">
-							<img alt="" src="<%=cp%>/resources/images/bg-img/53.jpg">
-						</div>
-						<div class="reviwer-content">
-							<div
-								class="reviwer-title-rating d-flex align-items-center justify-content-between">
-								<div class="reviwer-title">
-									<span>27 Aug 2019</span>
-									<h6>Brandon Kelley</h6>
-								</div>
-								<div class="reviwer-rating">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i>
-								</div>
-							</div>
-							<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-								amet, consectetur, adipisci velit, sed quia non numquam eius
-								modi tempora.</p>
-						</div>
-					</div>
-
-					<!-- Single Review Area -->
-					<div class="single-room-review-area d-flex align-items-center">
-						<div class="reviwer-thumbnail">
-							<img alt="" src="<%=cp%>/resources/images/bg-img/54.jpg">
-						</div>
-						<div class="reviwer-content">
-							<div
-								class="reviwer-title-rating d-flex align-items-center justify-content-between">
-								<div class="reviwer-title">
-									<span>27 Aug 2019</span>
-									<h6>Sounron Masha</h6>
-								</div>
-								<div class="reviwer-rating">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i>
-								</div>
-							</div>
-							<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-								amet, consectetur, adipisci velit, sed quia non numquam eius
-								modi tempora.</p>
-						</div>
-					</div>
-
-					<!-- Single Review Area -->
-					<div class="single-room-review-area d-flex align-items-center">
-						<div class="reviwer-thumbnail">
-							<img alt="" src="<%=cp%>/resources/images/bg-img/55.jpg">
-						</div>
-						<div class="reviwer-content">
-							<div
-								class="reviwer-title-rating d-flex align-items-center justify-content-between">
-								<div class="reviwer-title">
-									<span>27 Aug 2019</span>
-									<h6>Amada Lyly</h6>
-								</div>
-								<div class="reviwer-rating">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i>
-								</div>
-							</div>
-							<p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit
-								amet, consectetur, adipisci velit, sed quia non numquam eius
-								modi tempora.</p>
-						</div>
-					</div>
-
-				</div>
 			</div>
 		</div>
 	</div>

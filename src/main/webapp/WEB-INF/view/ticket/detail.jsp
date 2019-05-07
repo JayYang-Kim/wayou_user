@@ -52,15 +52,19 @@ $(function(){
 			  url="<%=cp%>/ticket/tab3";
 		  }
 		  
-		  viewTabContent(id, url);
+		  viewTabContent(id, url, tab);
 	});	
 });
 
-function viewTabContent(id, url) {
+function viewTabContent(id, url, tab) {
 	var storeCode = ${dto.storeCode};
 	
 	$.post(url, {storeCode : storeCode}, function(data){		
 		  id.html(data);
+
+		  if(tab=="2")
+			  listPage(1);
+		  
 	}); 
 }
 
@@ -88,17 +92,28 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 	});
 }
 
-/* $(function () {
-	tab1();
-}); */
 
-<%-- function tab3(storeCode) {
-	var id="tabContent3";
-	var url="<%=cp%>/ticket/tab3";
-	var query="storeCode="+storeCode;
+function listPage(page) {
+	var storeCode = ${dto.storeCode};
+	var query = "storeCode="+storeCode+"&pageNo="+page;
+	var url = "<%=cp%>/ticket/listReview";
 	
-	ajaxHTML(url, "get", query, id);
-} --%>
+	$.ajax({
+		type:"get"
+		,url:url
+		,data:query
+		,success:function(data) {
+			$("#listReview").html(data);
+		}
+		,error:function(e) {
+			if(e.status==403) {
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
 
 $(function(){
 	$("body").on("click", ".btnSendReview", function(){

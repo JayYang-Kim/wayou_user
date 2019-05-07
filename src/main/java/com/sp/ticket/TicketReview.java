@@ -1,12 +1,15 @@
 package com.sp.ticket;
 
 public class TicketReview {
+	private int reviewNum;
 	private int reviewCode;
 	private int storeCode;
 	private int star;
 	private String content;
 	private String created;
 	private int userIdx;
+	private String userName;
+	
 	
 	
 	public int getReviewCode() {
@@ -44,6 +47,18 @@ public class TicketReview {
 	}
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
+	}
+	public int getReviewNum() {
+		return reviewNum;
+	}
+	public void setReviewNum(int reviewNum) {
+		this.reviewNum = reviewNum;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	

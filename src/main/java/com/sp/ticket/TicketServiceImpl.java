@@ -122,4 +122,17 @@ public class TicketServiceImpl implements TicketService {
 		return list;
 	}
 
+	@Override
+	public int reviewCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result=dao.selectOne("ticket.reviewCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 }

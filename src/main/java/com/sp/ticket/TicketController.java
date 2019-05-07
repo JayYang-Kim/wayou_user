@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
+import com.sp.hotel.Review;
 import com.sp.member.SessionInfo;
 
 @Controller("ticket.ticketController")
@@ -161,6 +162,48 @@ public class TicketController {
 		model.put("state", state);
 		return model;
 	}
+	
+	@RequestMapping(value="/ticket/listReview")
+	public String listReview(
+			@RequestParam int storeCode,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			Model model
+			) throws Exception {
+		
+		int rows = 5;
+		int total_page;
+		int reviewCount = 0;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("storeCode", storeCode);
+		
+		reviewCount = ticketService.reviewCount(map);
+		total_page = myUtil.pageCount(rows, reviewCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+		int start = (current_page-1)*rows+1;
+		int end = current_page*rows;
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<TicketReview> listReview = ticketService.listReview(map);
+		for(TicketReview dto : listReview) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		model.addAttribute("listReview", listReview);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+	
+		return "ticket/listReview";
+	}
+	
 	
 	@RequestMapping(value="/ticket/tab3", method=RequestMethod.POST)
 	public String tab3 (

@@ -14,5 +14,6 @@ public interface TicketService {
 	
 	public int insertReview(TicketReview dto);
 	public List<TicketReview> listReview (Map<String, Object> map);
+	public int reviewCount (Map<String, Object> map);
 	
 }
