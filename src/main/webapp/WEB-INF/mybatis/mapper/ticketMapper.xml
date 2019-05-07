@@ -97,7 +97,9 @@
 		FROM store
 		WHERE storeCode=#{storeCode}
 	</select>
-
-
-
+	
+	<insert id="insertReview" parameterType="com.sp.ticket.TicketReview">
+	INSERT INTO storeReview (reviewCode, storeCode, star, content, userIdx)
+	VALUES (storeReview_seq.NEXTVAL, #{storeCode}, 4.5, #{content, jdbcType=CLOB}, #{userIdx})
+	</insert>
 </mapper>

@@ -23,12 +23,10 @@ $(function(){
 		}); 
 });
 
-
-
-
 $(function(){
 	var id=$("#tabContent1");
-	var url="tab1.jsp";
+	var url="<%=cp%>/ticket/tab1";
+	/* var url="tab1.jsp"; */
 	viewTabContent(id, url);
 	
 	$(".nice-select").css("width", "100%");
@@ -102,13 +100,76 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 	ajaxHTML(url, "get", query, id);
 } --%>
 
+$(function(){
+	$("body").on("click", ".btnSendReview", function(){
+		var storeCode = ${dto.storeCode};
+		var $tb = $(this).closest("table");
+		var content = $tb.find("textarea").val().trim();
+		if(!content) {
+			$tb.find("textarea").focus();
+			return;
+		}
+		content = encodeURIComponent(content);
+		
+		var query = "storeCode="+storeCode+"&content="+content;
+		var url = "<%=cp%>/ticket/insertReview";
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				$tb.find("textarea").val("");
+			}
+		 	,error:function(e) {
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+		    	console.log(e.responseText);
+		    }
+		});
+	});
+	
+	<%-- $(".btnSendReview").click(function(){
+		var storeCode = ${dto.storeCode};
+		var $tb = $(this).closest("table");
+		var content = $tb.find("textarea").val().trim();
+		if(! content) {
+			$tb.find("textarea").focus();
+			return;
+		}
+		content = encodeURIComponent(content);
+		
+		var query = "storeCode="+storeCode+"&content="+content;
+		var url = "<%=cp%>/ticket/insertReview";
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				$tb.find("textarea").val("");
+			}
+		 	,error:function(e) {
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+		    	console.log(e.responseText);
+		    }
+		});
+	}); --%>
+});
 
 </script>
 
   
  
 
-    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(img/bg-img/16.jpg);">
+    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-end">
                 <div class="col-12">
@@ -220,7 +281,7 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 				<div style="margin: 30px auto; width: 100%;">
 					<div role="tabpanel">
 	  					<ul id="myTab" class="tabmenu" role="tablist">
-	      					<li role="presentation"  class="active"><a href="#tabContent1" aria-controls="1" role="tab" data-toggle="tab">상품설명</a></li>
+	      					<li role="presentation active"><a href="#tabContent1" aria-controls="1" role="tab" data-toggle="tab">상품설명</a></li>
 	      					<li role="presentation"><a href="#tabContent2" aria-controls="2" role="tab" data-toggle="tab">상품리뷰</a></li>
 	      					<li role="presentation"><a href="#tabContent3" aria-controls="3" role="tab" data-toggle="tab">환불규정/상품고시</a></li>
 	  					</ul>

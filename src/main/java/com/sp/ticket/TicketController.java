@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
+import com.sp.member.SessionInfo;
 
 @Controller("ticket.ticketController")
 public class TicketController {
@@ -126,6 +129,37 @@ public class TicketController {
 		model.addAttribute("listDate", listDate);
 		
 		return ".ticket.detail";
+	}
+	
+	@RequestMapping(value="/ticket/tab1", method=RequestMethod.POST)
+	public String tab1 (
+			) throws Exception {
+		return "ticket/tab1";
+	}
+	
+	
+	@RequestMapping(value="/ticket/tab2", method=RequestMethod.POST)
+	public String tab2 () throws Exception {
+		return "ticket/tab2";
+	}
+	
+	@RequestMapping(value="/ticket/insertReview", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReview(
+			TicketReview dto,
+			HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		dto.setUserIdx(info.getUserIdx());
+		
+		int result=ticketService.insertReview(dto);
+		String state="true";
+		if(result==0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
 	}
 	
 	@RequestMapping(value="/ticket/tab3", method=RequestMethod.POST)

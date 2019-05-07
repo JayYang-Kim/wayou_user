@@ -11,4 +11,8 @@ public interface TicketService {
 	public Ticket readTicket(int ticketCode);
 	public List<Ticket> readDate(int storeCode);
 	public Ticket readStore(int storeCode);
+	
+	public int insertReview(TicketReview dto);
+	public List<TicketReview> listReview (Map<String, Object> map);
+	
 }
