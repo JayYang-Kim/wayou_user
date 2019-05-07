@@ -5,7 +5,7 @@
 	String cp=request.getContextPath();
 %>
 
-<table style='width: 100%; margin: 10px auto 30px; border-spacing: 0px;'>
+<%-- <table style='width: 100%; margin: 10px auto 30px; border-spacing: 0px;'>
 	<tbody id='listReply'>
 <c:forEach var="dto" items="${listReply }">
 	    <tr height='35' style='background: #eeeeee;'>
@@ -21,3 +21,4 @@
 </c:forEach>
 	</tbody>
 </table>
+ --%>

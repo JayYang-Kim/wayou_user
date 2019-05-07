@@ -11,7 +11,7 @@ public interface HotelService {
 	public int detailCount(Map<String, Object>map);
 	public Hotel readHotelMax(int hotelCode);
 	
-	public int insertReview(Review dto);
+	public int insertReview(Map<String, Object> reqMap) throws Exception;
 	public List<Review> listReview(Map <String, Object> map);
 	public int reviewDataCount(Map <String, Object> map);
 	
