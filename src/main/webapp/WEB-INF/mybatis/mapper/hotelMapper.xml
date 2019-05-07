@@ -77,11 +77,18 @@
                 WHERE h.hotelCode=#{hotelCode}
 	</select>
 	
-	<insert id="insertHReview" parameterType="com.sp.hotel.Hotel">
-		INSERT INTO STAR(starCode, kind, clean, service, location_satis  ) 
-				VALUES (star_seq.NEXTVAL, #{kind}, #{clean}, #{service}, #{location_satis})
+	<select id="seq_star" resultType="Integer">
+		SELECT star_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertReview1" parameterType="map">
+		INSERT INTO STAR(starCode, kind, clean, service, location_satis) 
+				VALUES (#{starCode}, #{kind}, #{clean, jdbcType=NUMERIC}, #{service, jdbcType=NUMERIC}, #{location_satis, jdbcType=NUMERIC})
 	</insert>
 	
-	
-	
+		<insert id="insertReview2" parameterType="map">
+		INSERT INTO HREVIEW(HotelCode, ReviewNum, StarCode, Content, created, userIdx) 
+				VALUES (#{hotelCode}, hReview_seq.NEXTVAL, #{starCode}, #{Content , jdbcType=CLOB}, SYSDATE, #{userIdx})
+	</insert>
+		
 </mapper>

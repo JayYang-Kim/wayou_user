@@ -39,6 +39,7 @@ public class HqnaController {
 			@RequestParam(value="pageNo", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all")String key,
 			@RequestParam(defaultValue="") String value,
+	
 			HttpServletRequest req,
 			Model model) throws Exception {
 		
@@ -65,6 +66,7 @@ public class HqnaController {
 		
 		map.put("start", start);
 		map.put("end", end);
+
 		
 		
 		List<Hqna> list=hqnaService.listHqna(map);
@@ -77,6 +79,7 @@ public class HqnaController {
 		}
 			
 		String paging=myUtil.pagingMethod(current_page, total_page, "listPage");
+		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("dataCount", dataCount);
@@ -187,6 +190,7 @@ public class HqnaController {
 		
 		if(dto==null) {
 			return hqnaListTab1(pageNo, key, value, req, model);
+	
 		}
 		
 		model.addAttribute("dto", dto);

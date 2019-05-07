@@ -20,6 +20,7 @@
 		<table style="width: 100%; margin: 0px auto; border-spacing: 0px; border-collapse: collapse;">
 		  <tr align="center" bgcolor="#eeeeee" height="35" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;"> 
 		      <th width="60" style="color: #787878;">번호</th>
+		       <th width="60" style="color: #787878;">답변여부</th>
 		      <th style="color: #787878;">제목</th>
 		      <th width="100" style="color: #787878;">작성자</th>
 		      <th width="80" style="color: #787878;">작성일</th>
@@ -28,6 +29,17 @@
 <c:forEach var="dto" items="${list}">	 
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 		      <td>${dto.listNum }</td>
+		      <!--여기 답변 수정해야됨 -->
+		      <c:if test="${vo.answerContent == 0}">
+		      <td style="color: #787878;">
+		      	검토중
+		      </td>
+		      </c:if>
+		       <c:if test="${vo.answerContent != 0 }">
+		      <td style="color: #1cc3b2;">
+		      	답변완료
+		      </td>
+		      </c:if>
 		      <td align="left" style="padding-left: 10px;">
 		               <a href="javascript:articleHqna('${dto.qnaCode}')">${dto.subject }</a>
 		      </td>
