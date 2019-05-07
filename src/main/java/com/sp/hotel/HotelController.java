@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,8 +14,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
+import com.sp.member.SessionInfo;
 
 @Controller("hotel.hotelController")
 public class HotelController {
@@ -133,4 +136,31 @@ public class HotelController {
 		return ".hotel.hotel.article";
 	}
 	
+	@RequestMapping(value="/hotel/hotel/insertReview", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReview(@RequestParam Map<String, Object> reqMap,
+			HttpSession session) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		//dto.setUserIdx(info.getUserIdx());
+		
+		reqMap.put("userIdx", info.getUserIdx());
+		reqMap.put("kind", 1);
+		
+		String state="true";
+		
+		try {
+			int result = hotelservice.insertReview(reqMap);
+			
+			if(result==0) {
+				state="false";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		Map<String, Object> model=new HashMap<>();
+		model.put("state", state);
+		
+		return model;
+	}
 }
