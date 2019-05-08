@@ -11,7 +11,7 @@
  -->
 
 	<select id="listHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
- SELECT * FROM (
+		 SELECT * FROM (
             SELECT ROWNUM rnum, tb.* FROM (
          SELECT h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename
          FROM hotelInfo h
@@ -77,5 +77,18 @@
                 WHERE h.hotelCode=#{hotelCode}
 	</select>
 	
-
+	<select id="seq_star" resultType="Integer">
+		SELECT star_seq.NEXTVAL FROM dual
+	</select>
+	
+	<insert id="insertReview1" parameterType="map">
+		INSERT INTO STAR(starCode, kind, clean, service, location_satis) 
+				VALUES (#{starCode}, #{kind}, #{clean, jdbcType=NUMERIC}, #{service, jdbcType=NUMERIC}, #{location_satis, jdbcType=NUMERIC})
+	</insert>
+	
+		<insert id="insertReview2" parameterType="map">
+		INSERT INTO HREVIEW(HotelCode, ReviewNum, StarCode, Content, created, userIdx) 
+				VALUES (#{hotelCode}, hReview_seq.NEXTVAL, #{starCode}, #{Content , jdbcType=CLOB}, SYSDATE, #{userIdx})
+	</insert>
+		
 </mapper>

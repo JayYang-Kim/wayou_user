@@ -41,6 +41,36 @@
 	</select>
 	
 	<update id="updateHitCount" parameterType="Integer">
-		update travelEvent set hitCount = hitCount+1 where eventCount=#{eventCode}
+		update travelEvent set hitCount = hitCount+1 where eventCode=#{eventCode}
 	</update>
+	
+	<select id="eventArticle" parameterType="Integer" resultType="com.sp.travel.Event">
+		select eventCode, subject, content, adminIdx, created, startDate, endDate from travelEvent where eventCode=#{eventCode}
+	</select>
+	
+	<select id="eventFiles" parameterType="Integer" resultType="com.sp.travel.EventFile">
+		select fileCode, saveFilename from travelEventFile where eventCode=#{eventCode}
+	</select>
+	
+	<insert id="insertReply" parameterType="com.sp.travel.EventReply">
+		insert into travelEventReply(replyCode, eventCode, content, userIdx) values(TRAVELEVENTREPLY_SEQ.nextval,#{eventCode},#{content},#{userIdx})
+	</insert>
+	
+	<select id="eventReplys" parameterType="map" resultType="com.sp.travel.EventReply">
+		select * from(
+			select tb.*, rownum rnum from (
+				select replyCode, eventCode, content, ter.userIdx, userName, created 
+					from traveleventreply ter
+					join tb_user u on ter.userIdx = u.userIdx
+					where eventCode=#{eventCode}
+					order by replyCode desc
+			)tb where rownum &lt;=#{end}
+		)where rnum &gt;=#{start}
+	</select>
+	<select id="replyCount" parameterType="Integer" resultType="Integer">
+		select NVL(COUNT(*),0) from travelEventreply where eventCode=#{eventCode}
+	</select>
+	<delete id="deleteReply" parameterType="com.sp.travel.EventReply">
+		delete from travelEventReply where replyCode=#{replyCode}
+	</delete>
 </mapper>

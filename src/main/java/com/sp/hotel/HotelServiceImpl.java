@@ -73,6 +73,38 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return maxdto;
 	}
+
+	@Override
+	   public int insertReview(Map<String, Object> reqMap) throws Exception {
+	      int result=0;
+	      
+	      try {
+	         int seq_star = dao.selectOne("hotel.seq_star");
+	         
+	         reqMap.put("starCode", seq_star);
+	         
+	         dao.insertData("hotel.insertReview1", reqMap); // STAR INSERT 부분
+	         dao.insertData("hotel.insertReview2", reqMap); // HREVIEW INSERT 부분
+	         
+	         result = 1;
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         throw e;
+	      }
+	      return result;
+	   }
+
+	@Override
+	public List<Review> listReview(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int reviewDataCount(Map<String, Object> map) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 	

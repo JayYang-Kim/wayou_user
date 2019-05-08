@@ -41,32 +41,55 @@ public class EventServiceImpl implements EventService{
 
 	@Override
 	public Event eventArticle(int eventCode) {
-		// TODO Auto-generated method stub
-		return null;
+		Event event = null;
+		try {
+			event = sqlsession.selectOne("travelEvent.eventArticle",eventCode);
+		}catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return event;
 	}
 
 	@Override
 	public List<EventFile> eventFiles(int eventCode) {
-		// TODO Auto-generated method stub
-		return null;
+		List<EventFile> list = null;
+		try {
+			list = sqlsession.selectList("travelEvent.eventFiles",eventCode);
+		}catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return list;
 	}
 
 	@Override
-	public List<EventReply> eventReplys(int eventCode) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EventReply> eventReplys(Map<String, Object> map) {
+		List<EventReply> list = null;
+		try {
+			list = sqlsession.selectList("travelEvent.eventReplys", map);
+		}catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return list;
 	}
 
 	@Override
 	public int replyCount(int eventCode) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = 0;
+		try {
+			result = sqlsession.selectOne("travelEvent.replyCount", eventCode);
+		}catch (Exception e) {
+			logger.error(e.toString());
+		}
+		return result;
 	}
 
 	@Override
 	public void insertReply(EventReply reply) {
-		// TODO Auto-generated method stub
-		
+		try {
+			sqlsession.insert("travelEvent.insertReply",reply);
+		}catch (Exception e) {
+			logger.error(e.toString());
+		}
 	}
 
 	@Override
@@ -77,14 +100,21 @@ public class EventServiceImpl implements EventService{
 
 	@Override
 	public void deleteReply(EventReply reply) {
-		// TODO Auto-generated method stub
+		try {
+			sqlsession.delete("travelEvent.deleteReply",reply);
+		}catch (Exception e) {
+			logger.error(e.toString());
+		}
 		
 	}
 
 	@Override
 	public void updateHitCount(int eventCode) {
-		// TODO Auto-generated method stub
-		
+		try {
+			sqlsession.selectList("travelEvent.updateHitCount",eventCode);
+		}catch (Exception e) {
+			logger.error(e.toString());
+		}
 	}
 
 }

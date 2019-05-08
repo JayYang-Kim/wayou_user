@@ -15,7 +15,7 @@ public interface EventService {
 	public void updateHitCount(int eventCode);
 	
 	//댓글 처리
-	public List<EventReply> eventReplys(int eventCode);
+	public List<EventReply> eventReplys(Map<String, Object> map);
 	public int replyCount(int eventCode);
 	public void insertReply(EventReply reply);
 	public void updateReply(EventReply reply);

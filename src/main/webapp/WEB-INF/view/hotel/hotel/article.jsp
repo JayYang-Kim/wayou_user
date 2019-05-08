@@ -4,7 +4,89 @@
 <%
    String cp = request.getContextPath();
 %>
+<script type="text/javascript">
 
+
+function page() {
+	listPage(1);
+}
+
+function listPage(page) {
+
+	var query="hotelCode=${dto.hotelCode}&pageNo="+page;
+	var url="<%=cp%>/hotel/hotel/hotelReview";
+	
+	$.ajax({
+		type:"get"
+		,url : url
+		,data:query
+		,success:function(data) {
+			$("#listReview").html(data);
+		}
+		,beforeSend:function(e) {
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e) {
+			if(e.status==403) {
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+$(function () {
+	$(".btnSendReview").click(function () {
+		var hotelCode = "${hotelCode}";
+		var content = $(".boxTF").val().trim();
+		
+		if(!content) {
+			$(".boxTF").focus();
+			return;
+		}
+		content=encodeURIComponent(content);
+		
+		var query="hotelCode="+hotelCode+"&content="+content; 
+		var url="<%=cp%>/hotel/hotel/insertReview";
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data){
+				if(data.state == "true") {
+					$(".boxTF").val("");
+					listPage(1);
+				}
+			}
+			,beforeSend:function(e) {
+				e.setRequestHeader("AJAX", true);
+			}
+			,error:function(e) {
+				if(e.status==403){
+					location.href="<%=cp%>/member/login";
+					return;
+				}
+				console.log(e.responseText);
+			}		
+		});
+	});
+});
+
+$(function() {
+	$(".star a").click(function() {
+		var b = $(this).hasClass("on");
+		$(this).parent().children("a").removeClass("on");
+		$(this).addClass("on").prevAll("a").addClass("on");
+		if (b)
+			$(this).removeClass("on");
+		var s = $(".star .on").length;
+		$("#score").val(s);
+	});
+	
+});
+</script>
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: none;" data-jarallax-original-styles="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-end">
@@ -95,7 +177,7 @@
                    </div>
                </div>
 
-             
+            
                     <!-- Room Service -->
                     <div class="room-service mb-50">
                         <h4>Room Services</h4>
@@ -120,78 +202,62 @@
                                 </span>    
                          </h6>
                             <h6>이용정보: <span>${dto.information }</span></h6>
-                            <h6>Services: <span>Wifi, television ...</span></h6>
+                            <h6>Services: <span>Wifi, television ... </span></h6>
+                           <div class="form-group" style="margin-top: 40px;">
+                               <button type="submit" class="btn roberto-btn w-100">예약하기</button>
+                           </div>
                         </div>
 					</div>
     			</c:forEach>
              </div>
+             
+             <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; padding: 15px 0px;" >
+                   <div class="reviwer-thumbnail">
+                       <%-- <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt=""> --%>
+                   </div>
 
+               </div>
 
                     <!-- Room Review -->
                     <div class="room-review-area mb-100">
                         <!-- <h4>Room Review</h4> -->
-                        <div style="border-bottom: 2px solid gray; font-size: 35px; ">Hotel Review</div>
-					
-                        <!-- Single Review Area -->
-                        <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px;" >
-                            <div class="reviwer-thumbnail">
-                                <%-- <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt=""> --%>
-                            </div>
-                            <div class="reviwer-content">
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title" >
-                                        <span>작성자 &nbsp; &nbsp; 작성날짜</span>
-                                        <!-- <h6>Amada Lyly</h6> -->
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">친절도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">청결도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">편의성 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">위치만족도 ★★★★★</div>
-                                    </div>
-                                </div>
-                                 <p>후기내용</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Review Area -->
-                        <div class="single-room-review-area d-flex align-items-center">
-                            <div class="reviwer-thumbnail">
-                                <%-- <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt=""> --%>
-                            </div>
-                            <div class="reviwer-content">
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title">
-                                        <span>작성자 &nbsp; &nbsp; 작성날짜</span>
-                                        <!-- <h6>Amada Lyly</h6> -->
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">친절도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">청결도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">편의성 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">위치만족도 ★★★★★</div>
-                                    </div>
-                                </div>
-                                 <p>후기내용</p>
-                            </div>
-                        </div>
-
-                        <!-- Single Review Area -->
-                        <div class="single-room-review-area d-flex align-items-center">
-                            <div class="reviwer-thumbnail">
-                                <%-- <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt=""> --%>
-                            </div>
-                            <div class="reviwer-content">
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title">
-                                        <span>작성자 &nbsp; &nbsp; 작성날짜</span>
-                                        <!-- <h6>Amada Lyly</h6> -->
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">친절도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">청결도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">편의성 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">위치만족도 ★★★★★</div>
-                                    </div>
-                                </div>
-                                 <p>후기내용</p>
-                            </div>
-                        </div>
-
+                        <div style="font-size: 35px; ">
+                        Hotel Review
+                        <div>
+                   	      <div class="" style="" >
+                    	    <textarea class="boxTF" style="width: 80%; font-size: 20px; text-align: left;"></textarea>
+						
+						<div class="" style="display: inline-block;">						
+						<c:if test="${dto.kind==null}">
+							<p style="font-size: 20px; text-align: center; ">호텔 별점주기</p>
+							<p class="star" style="font-size: 25px; text-align: center; ">					  
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a>
+							</p>
+						</c:if>
+						<c:if test="${dto.kind!=null}">
+						<p class="star">
+							<c:forEach var="dto" begin="1" end="${dto.kind}">
+								<a class="on" href="#">★</a> 
+							</c:forEach>
+							<c:forEach var="dto" begin="1" end="${5-dto.kind}">
+							
+								<a href="#">★</a> 
+							</c:forEach>
+						</p>
+						</c:if>
+						</div>										
+							<input type="hidden" name="score" id="score" value="${dto.kind}" readonly="readonly">
+						</div>	
+                   	</div >
+						<div style="padding: 10px 70px; 30px;">
+							<button type="button" style="float:right; text-align: right; font-size: 20px; border: 2px solid black; padding: 10px;" class="btnSendReview" >후기 등록하기</button>
+                   		</div>
+                      </div>
+                        <div id="listReview"></div>
                     </div>
                 </div>
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.main">
+	<select id="recommendLocation" resultType="com.sp.travel.main.Main">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT l.locCode, lc.locName, l.memo, NVL(lm.count, 0) AS landCount, NVL(starNum, 0) AS avgStarNum, NVL(replyCount, 0) AS replyCount,
+		            CASE
+		                WHEN enable = 1 THEN '활성화'
+		                WHEN enable = 0 THEN '비활성화'
+		            END AS enable, l.adminIdx, saveFilename
+		        FROM location l
+		        JOIN locationCode lc
+		            ON l.locCode = lc.locCode
+		        LEFT OUTER JOIN (
+		            SELECT locCode, COUNT(*) AS count
+		            FROM landmark
+		            GROUP BY locCode
+		        ) lm
+		            ON lm.locCode = l.locCode
+		        LEFT OUTER JOIN (
+		            SELECT locCode, AVG(starNum) AS starNum, COUNT(*) AS replyCount
+		            FROM locationCommunity
+		            GROUP BY locCode
+		        ) lcm
+		            ON lcm.locCode = l.locCode
+		        WHERE enable = 1
+		        ORDER BY replyCount DESC, l.locCode ASC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= 8
+		) WHERE rnum >= 1
+	]]>
+	</select>
+	
+	<select id="recommendLandmark" resultType="com.sp.travel.main.Main">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT lm.landCode, lm.locCode, lc.locName, loceName, lm.landName, lm.memo,
+		            TO_CHAR(lm.created, 'YYYY-MM-DD') created, lm.tagCode, ltc.tagName, lm.adminIdx, lf.saveFilename, NVL(lmc.landReplyCount, 0) AS landReplyCount
+		        FROM landMark lm
+		        JOIN locationCode lc
+		            ON lm.locCode = lc.locCode
+		        JOIN lndtagCode ltc
+		            ON lm.tagCode = ltc.tagCode
+		        LEFT OUTER JOIN (
+		            SELECT landCode, MIN(fileCode) AS fileCode, MIN(saveFilename) AS saveFilename
+		            FROM landmarkFile
+		            GROUP BY landCode
+		        ) lf ON lf.landCode = lm.landCode
+		        LEFT OUTER JOIN (
+		            SELECT Count(replyNum) AS landReplyCount, landCode
+		            FROM landmarkCommunity
+		            GROUP BY landCode
+		        ) lmc ON lmc.landCode = lm.landCode
+		        ORDER BY landReplyCount DESC, lm.landCode ASC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= 8
+		) WHERE rnum >= 1
+	]]>
+	</select>
+	
+	<select id="recommendWorkspace" resultType="com.sp.travel.main.Main">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT w.workCode, w.subject, w.dayCount, 
+				    TO_CHAR(w.startDay, 'YYYY-MM-DD') startDay, w.locCode, lc.locName, lc.loceName, w.userIdx, tu.userId, tu.userName, l.saveFilename, w.created
+				FROM workspace w
+				JOIN location l
+				    ON w.locCode = l.locCode
+				JOIN locationCode lc
+				    ON w.locCode = lc.locCode
+				JOIN tb_user tu
+				    ON w.userIdx = tu.userIdx
+				ORDER BY w.created DESC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= 6
+		) WHERE rnum >= 1
+	]]>
+	</select>
+</mapper>

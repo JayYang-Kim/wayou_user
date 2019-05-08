@@ -589,12 +589,95 @@ public class TravelController {
 		return	".travel.event.list";
 	}
 	
+	
 	@GetMapping("/travel/event/article")
 	public String eventArticle(
-			@RequestParam(value="code") int eventCode
-			) {
+			@RequestParam(value="code") int eventCode,
+			@RequestParam(defaultValue="1", value="page") int current_page,
+			@RequestParam(defaultValue="", value="searchKey") String searchKey,
+			@RequestParam(defaultValue="", value="searchValue") String searchValue,
+			Model model
+			){
+		try {
+			Event event = eventService.eventArticle(eventCode);
+			event.setFiles(eventService.eventFiles(eventCode));
+			eventService.updateHitCount(eventCode);
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+			String query = "page="+current_page+"&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+			
+			event.setStartDate(event.getStartDate().substring(0, 10));
+			event.setEndDate(event.getEndDate().substring(0, 10));
+			
+			model.addAttribute("event", event);
+			model.addAttribute("query", query);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "redirect:/travel/event/list?page="+current_page+"&searchKey="+searchKey+"&searchValue="+searchValue;
+		}
+
 		return ".travel.event.article";
 	}
 	
+	@PostMapping("/travel/event/insertReply")
+	@ResponseBody
+	public void insertReply(
+				EventReply reply,
+				HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		reply.setUserIdx(info.getUserIdx());
+		eventService.insertReply(reply);
+	}
 	
+	@GetMapping("/travel/event/replyList")
+	public String replyList(
+			@RequestParam int eventCode,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			Model model
+			) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		int rows = 5;
+		int dataCount = eventService.replyCount(eventCode);
+		int total_page = util.pageCount(rows, dataCount);
+		
+		int start = (current_page-1)*rows+1;
+		int end = current_page*rows;
+		
+		map.put("eventCode", eventCode);
+		map.put("start", start);
+		map.put("end", end);
+	
+		List<EventReply> list = eventService.eventReplys(map);
+		String methodName = "replyList";
+		String paging = util.pagingMethod(current_page, total_page, methodName);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "travel/event/replyList";
+	}
+	
+	@PostMapping("/travel/event/deleteReply")
+	@ResponseBody
+	public Map<String,Object> deleteReply(
+			EventReply reply,
+			HttpSession session
+			){		
+		Map<String,Object> map = new HashMap<>();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(reply.getUserIdx() != info.getUserIdx()) {
+			map.put("isDeleted", false);
+			return map;
+		}
+		eventService.deleteReply(reply);
+		map.put("isDeleted", true);
+		return map;
+	}
 }

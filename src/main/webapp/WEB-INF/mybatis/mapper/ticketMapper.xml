@@ -97,7 +97,29 @@
 		FROM store
 		WHERE storeCode=#{storeCode}
 	</select>
-
-
-
+	
+	<insert id="insertReview" parameterType="com.sp.ticket.TicketReview">
+	INSERT INTO storeReview (reviewCode, storeCode, star, content, userIdx)
+	VALUES (storeReview_seq.NEXTVAL, #{storeCode}, 4.5, #{content, jdbcType=CLOB}, #{userIdx})
+	</insert>
+	
+	<select id="listReview" parameterType="map" resultType="com.sp.ticket.TicketReview">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+				SELECT reviewCode, storeCode, star, content, TO_CHAR(created, 'YYYY-MM-DD') as created, u.userName
+				FROM storeReview s
+				JOIN tb_user u ON s.useridx = u.userIdx
+				WHERE storeCode = #{storeCode}
+				ORDER BY reviewCode DESC
+	<![CDATA[				
+		        )tb WHERE ROWNUM <= #{end}
+	       )WHERE rnum >= #{start}
+	]]>			
+	</select>
+	
+	<select id="reviewCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM storeReview
+		WHERE storeCode=#{storeCode}
+	</select>
 </mapper>

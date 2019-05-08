@@ -5,6 +5,7 @@ public class EventReply {
 	private int eventCode;
 	private String content;
 	private int userIdx;
+	private String userName;
 	private String created;
 	
 	
@@ -31,6 +32,13 @@ public class EventReply {
 	}
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getCreated() {
 		return created;
