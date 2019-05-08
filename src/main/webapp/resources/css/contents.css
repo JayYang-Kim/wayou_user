@@ -44,6 +44,7 @@
 .comment_area .comment-content .comment-meta button.like:focus, .comment_area .comment-content .comment-meta button.like:hover {border-color: #1cc3b2;background-color: #1cc3b2;color: #ffffff;}
 
 .tr_locationList .post-content p{height:130px;overflow:hidden;text-overflow:ellipsis;}
+.single-recent-post .post-content .recommendList_memo{height: 80px;overflow: hidden;text-overflow: ellipsis;font-size: 14px;}
 
 /* min0 */
 .single-project-slide.height{height:500px;}
@@ -209,7 +210,7 @@
     .roberto-btn.btn-2:focus, .roberto-btn.btn-2:hover {
       color: #ffffff;
       background-color: #1cc3b2; }    
-
+      
 /*엄유선  */
 .welcome-slides.noImg:hover .owl-prev, .welcome-slides.noImg:hover .owl-next, .welcome-slides.noImg:focus .owl-prev, .welcome-slides.noImg:focus .owl-next {
 	opacity: inherit;

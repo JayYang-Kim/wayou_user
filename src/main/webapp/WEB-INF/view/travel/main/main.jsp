@@ -108,7 +108,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="tour-wrap">
+	<div class="tour-wrap" style="margin-bottom:40px;">
 		<c:forEach var="listLocation" items="${listLocation}">
 			<a href="#" class="tour-entry animate-box">
 				<%-- <div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);"> --%>
@@ -127,6 +127,9 @@
 				</span>
 			</a>
 		</c:forEach>
+	</div>
+	<div class="t_center">
+		<button class="btn_classic btn-white" style="width:300px;height:50px;">여행정보 모두보기</button>
 	</div>
 </div>
 
@@ -179,7 +182,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-12 animate-box">
+			<div class="col-md-12 animate-box" style="margin-bottom:40px;">
 				<div>
 					<c:forEach var="listWorkspace" items="${listWorkspace}">
 						<div class="item">
@@ -203,6 +206,9 @@
 					</c:forEach>
 				</div>
 			</div>
+		</div>
+		<div class="t_center">
+			<button class="btn_classic btn-white" style="width:300px;height:50px;">여행일정 모두보기</button>
 		</div>
 	</div>
 </div>

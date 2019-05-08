@@ -27,4 +27,14 @@ public class LocationController {
 	public String locationView() {
 		return ".travel.location.location";
 	}
+	
+	// 추천 여행일정(지역) AJAX HTML 출력
+	@RequestMapping(value="/travel/location/recommendLocation")
+	public String recommendLocation(Model model) throws Exception {
+		List<Location> list = locationService.recommendLocation();
+		
+		model.addAttribute("list", list);
+		
+		return "travel/location/recommendList";
+	}
 }

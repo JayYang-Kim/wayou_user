@@ -5,6 +5,35 @@
    String cp = request.getContextPath();
 %>
 
+<script type="text/javascript">
+	$(function(){
+		listRecommendLocation();
+	});
+
+	function listRecommendLocation() {
+		var url="<%=cp%>/travel/location/recommendLocation";
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,success:function(data) {
+				$("#recommendLocation_layout").html(data);
+			}
+		    ,beforeSend:function(e) {
+		    	e.setRequestHeader("AJAX", true);
+		    }
+		    ,error:function(e) {
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+		    	console.log(e.responseText);
+		    }
+		});
+		
+	}
+</script>
+
 <section class="welcome-area">
 	<div class="welcome-slides owl-carousel">
 	    <!-- Single Welcome Slide -->
@@ -103,16 +132,16 @@
 	                    <!-- Post Thumbnail -->
 	                    <div class="post-thumbnail">
 	                    	<c:if test="${not empty listLocation.saveFilename}">
-	                    		<a href="<%=cp%>/travel/location/view"><img src="/wadmin/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
+	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="/wadmin/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
 	                    	</c:if>
 	                    	<c:if test="${empty listLocation.saveFilename}">
-	                    		<a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
+	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
 	                    	</c:if>
 	                    </div>
 	                    <!-- Post Content -->
 	                    <div class="post-content">
 	                        <!-- Post Title -->
-	                        <a href="<%=cp%>/travel/location/view" class="post-title">${listLocation.locName}(${listLocation.loceName})</a>
+	                        <a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}" class="post-title">${listLocation.locName}(${listLocation.loceName})</a>
 	                        <p>${listLocation.memo}</p>
 	                    </div>
 	                </div>
@@ -125,90 +154,7 @@
                     <div class="single-widget-area mb-100">
                         <h4 class="widget-title mb-30">추천 지역</h4>
 
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Thumb -->
-                            <div class="post-thumb">
-                                <a href="single-blog.html"><img src="<%=cp%>/resources/images/bg-img/29.jpg" alt=""></a>
-                            </div>
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Proven Techniques Help You Herbal Breast</a>
-                            </div>
-                        </div>
-
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Thumb -->
-                            <div class="post-thumb">
-                                <a href="single-blog.html"><img src="<%=cp%>/resources/images/bg-img/30.jpg" alt=""></a>
-                            </div>
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Cooking On A George Foreman Grill</a>
-                            </div>
-                        </div>
-
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Thumb -->
-                            <div class="post-thumb">
-                                <a href="single-blog.html"><img src="<%=cp%>/resources/images/bg-img/31.jpg" alt=""></a>
-                            </div>
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Selecting The Right Hotel</a>
-                            </div>
-                        </div>
-
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Thumb -->
-                            <div class="post-thumb">
-                                <a href="single-blog.html"><img src="<%=cp%>/resources/images/bg-img/32.jpg" alt=""></a>
-                            </div>
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Comment Importance Of Human Life</a>
-                            </div>
-                        </div>
-                        
-                        <!-- Single Recent Post -->
-                        <div class="single-recent-post d-flex">
-                            <!-- Thumb -->
-                            <div class="post-thumb">
-                                <a href="single-blog.html"><img src="<%=cp%>/resources/images/bg-img/32.jpg" alt=""></a>
-                            </div>
-                            <!-- Content -->
-                            <div class="post-content">
-                                <!-- Post Meta -->
-                                <div class="post-meta">
-                                    <a href="#" class="post-author">Jan 29, 2019</a>
-                                    <a href="#" class="post-tutorial">Event</a>
-                                </div>
-                                <a href="single-blog.html" class="post-title">Comment Importance Of Human Life</a>
-                            </div>
-                        </div>
+                        <div id="recommendLocation_layout"></div>
                     </div>
                 </div>
             </div>
