@@ -132,16 +132,16 @@
 	                    <!-- Post Thumbnail -->
 	                    <div class="post-thumbnail">
 	                    	<c:if test="${not empty listLocation.saveFilename}">
-	                    		<a href="<%=cp%>/travel/location/view"><img src="/wadmin/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
+	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="/wadmin/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
 	                    	</c:if>
 	                    	<c:if test="${empty listLocation.saveFilename}">
-	                    		<a href="<%=cp%>/travel/location/view"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
+	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
 	                    	</c:if>
 	                    </div>
 	                    <!-- Post Content -->
 	                    <div class="post-content">
 	                        <!-- Post Title -->
-	                        <a href="<%=cp%>/travel/location/view" class="post-title">${listLocation.locName}(${listLocation.loceName})</a>
+	                        <a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}" class="post-title">${listLocation.locName}(${listLocation.loceName})</a>
 	                        <p>${listLocation.memo}</p>
 	                    </div>
 	                </div>
