@@ -45,12 +45,13 @@ function listWish(){
          
          out+=" <tr data-Type='1' data-wishCode="+wishCode+">";
          out+=" <td style='text-align:center'>"+listNum+"</td>";
+         out+=" <td style='text-align:center'>"+'사진'+"</td>";
          out+=" <td style='text-align:center'>"+'상품명'+"</td>";
-         out+=" <td style='text-align:center'><input class='upInput' style='border:none; width:20px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px'>수정</button></td>";
+         out+=" <td style='text-align:center'><input class='upInput' style='border:none; width:45px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px; margin-top:0px'>수정</button></td>";
          out+=" <td style='text-align:center'>"+price1+"원</td>";
          out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
          out+=" <td style='text-align:center'>"+'없음'+"</td>";
-         out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20'>삭제</button></td>";
+         out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px; margin-top:0px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20' style='margin-top:0px'>삭제</button></td>";
          out+=" </tr>";
          }
          for(var i=0; i<data.listdt.length; i++){
@@ -62,24 +63,26 @@ function listWish(){
              var price1=data.listdt[i].price1;
              var totalprice1=data.listdt[i].totalprice1;
              totalprice+=(amount*price);
-
+             var totalprice2=(""+totalprice).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+			alert(totalprice2);
              out+=" <tr data-Type='2' data-wishCode="+wishCode+">";
              out+=" <td style='text-align:center'>"+listNum+"</td>";
+             out+=" <td style='text-align:center'>"+'사진'+"</td>";
              out+=" <td style='text-align:center'>"+'상품명'+"</td>";
-             out+=" <td style='text-align:center'><input class='update_amount' style='border:none; width:20px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px'>수정</button></td>";
+             out+=" <td style='text-align:center'><input class='update_amount' style='border:none; width:45px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px; margin-top:0px'>수정</button></td>";
              out+=" <td style='text-align:center'>"+price1+"원</td>";
              out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
              out+=" <td style='text-align:center'>"+'없음'+"</td>";
-             out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20'>삭제</button></td>";
+             out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px; margin-top:0px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20' style='margin-top:0px'>삭제</button></td>";
              out+=" </tr>";
          }
 
 	         out+=" <tr style='border:2px solid;'>";
-	         out+=" <td colspan='5' style='font-weight:bold; font-size:14px; text-align:center;'>"+'합&nbsp;&nbsp;계'+"</td>";
-	         out+=" <td colspan='2' style='font-weight:bold; font-size:14px; text-align:center;'>"+totalprice+"원</td>";
+	         out+=" <td colspan='6' style='font-weight:bold; font-size:14px; text-align:center;'>"+'합&nbsp;&nbsp;계'+"</td>";
+	         out+=" <td colspan='2' style='font-weight:bold; font-size:14px; text-align:center;'>"+totalprice2+"원</td>";
 	         out+=" </tr>";
 	         out+=" <tr style='border:none;'>";
-	         out+=" <td colspan='5'></td>";
+	         out+=" <td colspan='6'></td>";
 	         out+=" <td colspan='2' style='font-weight:bold; font-size:14px; text-align:center; border:none'><button type='button' class='Allorder_confirm button btn_red h30 m20' style='margin-right:10px'>전체 주문하기</button></td>";
 	         out+=" </tr>";
          
@@ -183,17 +186,18 @@ function listWish(){
       <h3 style="text-align:center; padding-bottom:20px">My Wish List</h3>
       <table class="table left_tbl">
       <colgroup>
-         <col style="width:15%"/>
+         <col style="width:5%"/>
+         <col />
+         <col />
          <col />
          <col style="width:10%"/>
-         <col />
-         <col />
          <col style="width:10%"/>
-         <col />
+         <col style="width:10%"/>
+         <col style="width:20%"/>    
       </colgroup>
          <tr style="border-bottom:2px solid">
             <td style="text-align:center; font-weight: bold;">번호</td>
-            <td style="text-align:center; font-weight: bold;">상품명</td>
+            <td colspan="2" style="text-align:center; font-weight: bold;">상품명</td>
             <td style="text-align:center; font-weight: bold;">수량</td>
             <td style="text-align:center; font-weight: bold;">상품금액</td>
             <td style="text-align:center; font-weight: bold;">소계금액</td>
