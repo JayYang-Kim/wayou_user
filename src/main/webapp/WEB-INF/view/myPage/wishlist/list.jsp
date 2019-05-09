@@ -63,8 +63,6 @@ function listWish(){
              var price1=data.listdt[i].price1;
              var totalprice1=data.listdt[i].totalprice1;
              totalprice+=(amount*price);
-             var totalprice2=(""+totalprice).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
-			alert(totalprice2);
              out+=" <tr data-Type='2' data-wishCode="+wishCode+">";
              out+=" <td style='text-align:center'>"+listNum+"</td>";
              out+=" <td style='text-align:center'>"+'사진'+"</td>";
@@ -79,7 +77,7 @@ function listWish(){
 
 	         out+=" <tr style='border:2px solid;'>";
 	         out+=" <td colspan='6' style='font-weight:bold; font-size:14px; text-align:center;'>"+'합&nbsp;&nbsp;계'+"</td>";
-	         out+=" <td colspan='2' style='font-weight:bold; font-size:14px; text-align:center;'>"+totalprice2+"원</td>";
+	         out+=" <td colspan='2' style='font-weight:bold; font-size:14px; text-align:center;'>"+(""+totalprice).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')+"원</td>";
 	         out+=" </tr>";
 	         out+=" <tr style='border:none;'>";
 	         out+=" <td colspan='6'></td>";
@@ -131,9 +129,9 @@ function listWish(){
     		$(this).siblings("input").css("border","1px solid");
     	}else{
            	var amount=$(this).siblings("input").val();
-           	alert(amount);
-        	var wishCode=$(".update_confirm").closest("tr").attr("data-wishCode");
-        	var dataType=$(".update_confirm").closest("tr").attr("data-Type");
+        	var wishCode=$(this).closest("tr").attr("data-wishCode");
+           	alert(wishCode);
+        	var dataType=$(this).closest("tr").attr("data-Type");
         	var query="dataType="+dataType+"&amount="+amount+"&wishCode="+wishCode;
         	var url="<%=cp%>/myPage/wishlist/update";
         	$.ajax({
