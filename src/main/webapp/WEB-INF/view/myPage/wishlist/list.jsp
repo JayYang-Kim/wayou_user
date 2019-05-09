@@ -34,18 +34,19 @@ function listWish(){
          
       if(dataCount!=0){
          for(var i=0; i<data.listdh.length; i++){
-         var amount=data.listdh[i].amount;
-         var price=data.listdh[i].price;
-         var listNum = data.listdh[i].listNum;
-         var amount1=data.listdh[i].amount1;
-         var price1=data.listdh[i].price1;
-         var totalprice1=data.listdh[i].totalprice1;
-         totalprice+=(amount*price);
+			 var wishCode=data.listdh[i].wishCode;
+	         var amount=data.listdh[i].amount;
+	         var price=data.listdh[i].price;
+	         var listNum = data.listdh[i].listNum;
+	         var amount1=data.listdh[i].amount1;
+	         var price1=data.listdh[i].price1;
+	         var totalprice1=data.listdh[i].totalprice1;
+	         totalprice+=(amount*price);
          
-         out+=" <tr>";
+         out+=" <tr data-Type='1' data-wishCode="+wishCode+">";
          out+=" <td style='text-align:center'>"+listNum+"</td>";
          out+=" <td style='text-align:center'>"+'상품명'+"</td>";
-         out+=" <td style='text-align:center'>"+amount1+"<button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:20px'>변경</button></td>";
+         out+=" <td style='text-align:center'><input class='upInput' style='border:none; width:20px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px'>수정</button></td>";
          out+=" <td style='text-align:center'>"+price1+"원</td>";
          out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
          out+=" <td style='text-align:center'>"+'없음'+"</td>";
@@ -53,6 +54,7 @@ function listWish(){
          out+=" </tr>";
          }
          for(var i=0; i<data.listdt.length; i++){
+			 var wishCode=data.listdt[i].wishCode;
              var amount=data.listdt[i].amount;
              var price=data.listdt[i].price;
              var listNum = data.listdt[i].listNum;
@@ -61,35 +63,17 @@ function listWish(){
              var totalprice1=data.listdt[i].totalprice1;
              totalprice+=(amount*price);
 
-             out+=" <tr>";
+             out+=" <tr data-Type='2' data-wishCode="+wishCode+">";
              out+=" <td style='text-align:center'>"+listNum+"</td>";
              out+=" <td style='text-align:center'>"+'상품명'+"</td>";
-             out+=" <td style='text-align:center'>"+amount1+"<button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:20px'>변경</button></td>";
+             out+=" <td style='text-align:center'><input class='update_amount' style='border:none; width:20px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px'>수정</button></td>";
              out+=" <td style='text-align:center'>"+price1+"원</td>";
              out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
              out+=" <td style='text-align:center'>"+'없음'+"</td>";
              out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20'>삭제</button></td>";
              out+=" </tr>";
          }
-         for(var i=0; i<data.listdtr.length; i++){
-             var amount=data.listdtr[i].amount;
-             var price=data.listdtr[i].price;
-             var listNum = data.listdtr[i].listNum;
-             var amount1=data.listdtr[i].amount1;
-             var price1=data.listdtr[i].price1;
-             var totalprice1=data.listdtr[i].totalprice1;
-             totalprice+=(amount*price);
 
-             out+=" <tr>";
-             out+=" <td style='text-align:center'>"+listNum+"</td>";
-             out+=" <td style='text-align:center'>"+'상품명'+"</td>";
-             out+=" <td style='text-align:center'>"+amount1+"<button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:20px'>변경</button></td>";
-             out+=" <td style='text-align:center'>"+price1+"원</td>";
-             out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
-             out+=" <td style='text-align:center'>"+'없음'+"</td>";
-             out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20'>삭제</button></td>";
-             out+=" </tr>";
-         }
 	         out+=" <tr style='border:2px solid;'>";
 	         out+=" <td colspan='5' style='font-weight:bold; font-size:14px; text-align:center;'>"+'합&nbsp;&nbsp;계'+"</td>";
 	         out+=" <td colspan='2' style='font-weight:bold; font-size:14px; text-align:center;'>"+totalprice+"원</td>";
@@ -103,19 +87,26 @@ function listWish(){
       $("#listWishBody").html(out);
    }
     
-    function deleteGuest(num, page) {
-    	if(! confirm("삭제 하시겠습니까 ?")){
-    		return;
-    	}
-    	var query="num="+num;
-    	var url="<%=cp%>/guest/delete";
+    $("body").on("click", ".delete_confirm",function(){
+    	var dataType=$(this).closest("tr").attr("data-Type");
+    	var wishCode=$(this).closest("tr").attr("data-wishCode");
+    	var query="dataType="+dataType+"&wishCode="+wishCode;
+    	var url="<%=cp%>/myPage/wishlist/delete";
     	$.ajax({
     		type:"POST"
     		,url:url
     		,data:query
     		,dataType:"json"
     		,success:function(data){
-    			listPage(page);
+    			var status=data.status;
+    			layerShow('#popup');
+				var title = $(".pop_wrap").find("h1"); 
+				var content = $(".pop_wrap .pop_cont p:first-child");
+				var btn = $(".pop_wrap .pop_cont p.t_center");
+				
+				title.html("Wishlist");
+				content.html(status);
+				listWish();
     		},
     		beforeSend:function(jqXHR){
     			jqXHR.setRequestHeader("AJAX", true);
@@ -128,7 +119,50 @@ function listWish(){
     			console.log(jqXHR.responseText);
     		}
     	});
-    }
+    });
+    
+    $("body").on("click", ".update_confirm",function(){
+    	if($(this).siblings("input").attr("readonly")=='readonly'){//t수정눌러쓴데 read가 true. 인데 false
+    		$(this).html("수정완료");
+    		$(this).siblings("input").attr("readonly",false);
+    		$(this).siblings("input").css("border","1px solid");
+    	}else{
+           	var amount=$(this).siblings("input").val();
+           	alert(amount);
+        	var wishCode=$(".update_confirm").closest("tr").attr("data-wishCode");
+        	var dataType=$(".update_confirm").closest("tr").attr("data-Type");
+        	var query="dataType="+dataType+"&amount="+amount+"&wishCode="+wishCode;
+        	var url="<%=cp%>/myPage/wishlist/update";
+        	$.ajax({
+        		type:"POST"
+        		,url:url
+        		,data:query
+        		,dataType:"json"
+        		,success:function(data){
+        			var status=data.status;
+        			layerShow('#popup');
+    				var title = $(".pop_wrap").find("h1"); 
+    				var content = $(".pop_wrap .pop_cont p:first-child");
+    				var btn = $(".pop_wrap .pop_cont p.t_center");
+    				
+    				title.html("Wishlist");
+    				content.html(status);
+    				listWish();
+        		},
+        		beforeSend:function(jqXHR){
+        			jqXHR.setRequestHeader("AJAX", true);
+        		},
+        		error:function(jqXHR){
+        			if(jqXHR.status==403){
+        				location.href="<%=cp%>/member/login";
+        				return;
+        			}
+        			console.log(jqXHR.responseText);
+        		}
+        	});   		
+    	}
+    	
+    });
 </script>
 
 <!-- Breadcrumb Area Start -->

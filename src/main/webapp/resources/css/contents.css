@@ -210,31 +210,7 @@
     .roberto-btn.btn-2:focus, .roberto-btn.btn-2:hover {
       color: #ffffff;
       background-color: #1cc3b2; }    
-
-
-div {
-	border: none;
-}
-.star {
-	font-size: 0;
-	letter-spacing: -4px;
-}
-.star a {
-	font-size: 50px;
-	letter-spacing: 0;
-	display: inline-block;
-	margin-left: 3px;
-	color: #cccccc;
-	text-decoration: none;
-}
-.star a:first-child {
-	margin-left: 0;
-}
-.star a.on {
-	color: #F2CB61;
-}
-
-
+      
 /*엄유선  */
 .welcome-slides.noImg:hover .owl-prev, .welcome-slides.noImg:hover .owl-next, .welcome-slides.noImg:focus .owl-prev, .welcome-slides.noImg:focus .owl-next {
 	opacity: inherit;

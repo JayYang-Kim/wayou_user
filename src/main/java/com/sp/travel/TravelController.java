@@ -47,7 +47,7 @@ public class TravelController {
 		name = URLDecoder.decode(name, "utf-8");
 		List<Location> list = travelService.locList(name);
 		model.addAttribute("list", list);
-		return "travel/myplan/location/locList"; //일반형태로 리턴
+		return "travel/myplan/location/locList";
 	}
 	
 	

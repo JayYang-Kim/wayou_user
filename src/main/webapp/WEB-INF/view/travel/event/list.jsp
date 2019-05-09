@@ -68,7 +68,7 @@
 						</tr>
 					</c:forEach>
 				</table>
-
+ 
 				<c:if test="${empty list}">
 					<div class="t_center mt40 mb40">
 						<span class="f14 exbold">등록된 이벤트가 없습니다.</span>
