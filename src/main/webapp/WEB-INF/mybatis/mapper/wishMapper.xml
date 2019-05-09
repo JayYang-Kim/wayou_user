@@ -9,9 +9,6 @@
 	<select id="dataCount2" parameterType="Integer" resultType="Integer">
 		SELECT COUNT(*) FROM wishlistcode_dt WHERE userIdx = #{userIdx}
 	</select>
-	<select id="dataCount3" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*) FROM wishlistcode_dtr WHERE userIdx = #{userIdx}
-	</select>
 	
 	<select id="listWishdh" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
 		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
@@ -23,9 +20,18 @@
    		 JOIN wishlistcode_dt dt ON dt.userIdx = u.userIdx
        	 WHERE u.userIdx = #{userIdx}
 	</select>
-	<select id="listWishdtr" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
-		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
-   		 JOIN wishlistcode_dtr dtr ON dtr.userIdx = u.userIdx
-       	 WHERE u.userIdx = #{userIdx}
-	</select>
+	
+	<delete id="deleteWishdh" parameterType="Integer">
+		DELETE FROM wishlistcode_dh	WHERE wishCode = #{wishCode}
+	</delete>
+	<delete id="deleteWishdt" parameterType="Integer">
+		DELETE FROM wishlistcode_dt	WHERE wishCode = #{wishCode}
+	</delete>
+	
+	<delete id="updateWishdh" parameterType="Map">
+		UPDATE wishlistcode_dh SET amount=#{amount} WHERE wishCode=#{wishCode}
+	</delete>
+	<delete id="updateWishdt" parameterType="Map">
+		UPDATE wishlistcode_dt SET amount=#{amount} WHERE wishCode=#{wishCode}
+	</delete>
 </mapper>

@@ -34,18 +34,6 @@ public class WishlistServiceImpl implements WishlistService {
 		}
 		return dataCount2;
 	}
-	
-	@Override
-	public int dataCount3(int userIdx) throws Exception {
-		int dataCount3=0;
-		try {		
-			dataCount3 = dao.selectOne("wish.dataCount3", userIdx);		
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dataCount3;
-	}
-
 
 	@Override
 	public List<Wishlist> listdhWish(Map<String, Object> map) throws Exception {
@@ -60,9 +48,49 @@ public class WishlistServiceImpl implements WishlistService {
 	}
 
 	@Override
-	public List<Wishlist> listdtrWish(Map<String, Object> map) throws Exception {
-		List<Wishlist> listdtr = dao.selectList("wish.listWishdtr",map);
-		return listdtr;
+	public int deleteWishdh(int wishCode) throws Exception {
+		int result=0;
+		try {
+			dao.deleteData("wish.deleteWishdh", wishCode);
+			result=1;
+		} catch (Exception e) {
+		}
+		return result;
 	}
+	
+	@Override
+	public int deleteWishdt(int wishCode) throws Exception {
+		int result=0;
+		try {
+			dao.deleteData("wish.deleteWishdt", wishCode);
+			result=1;
+		} catch (Exception e) {
+		}
+		return result;
+	}
+
+	@Override
+	public int updateWishdh(Map<String, Object> map) throws Exception {
+		int result=0;
+		try {
+			dao.deleteData("wish.updateWishdh", map);
+			result=1;
+		} catch (Exception e) {
+		}
+		return result;
+	}
+	
+	@Override
+	public int updateWishdt(Map<String, Object> map) throws Exception {
+		int result=0;
+		try {
+			dao.deleteData("wish.updateWishdt", map);
+			result=1;
+		} catch (Exception e) {
+		}
+		return result;
+	}
+
+
 
 }
