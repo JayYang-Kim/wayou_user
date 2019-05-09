@@ -13,8 +13,8 @@
         <div class="row h-100 align-items-end">
             <div class="col-12">
                 <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
-                    <h2 class="room-title">Room View Sea</h2>
-                    <h2 class="room-price">$180 <span>/ Per Night</span></h2>
+                    <h2 class="room-title">${readLocation.locName}(${readLocation.loceName})</h2>
+                    <%-- <h2 class="room-price">$180 <span>/ Per Night</span></h2> --%>
                 </div>
             </div>
         </div>
@@ -35,49 +35,21 @@
 							data-ride="carousel">
 							<div class="carousel-inner">
 								<div class="carousel-item active">
-									<img src="<%=cp%>/resources/images/bg-img/48.jpg"
-										class="d-block w-100" alt="">
-								</div>
-								<div class="carousel-item">
-									<img src="<%=cp%>/resources/images/bg-img/49.jpg"
-										class="d-block w-100" alt="">
-								</div>
-								<div class="carousel-item">
-									<img src="<%=cp%>/resources/images/bg-img/50.jpg"
-										class="d-block w-100" alt="">
-								</div>
-								<div class="carousel-item">
-									<img src="<%=cp%>/resources/images/bg-img/51.jpg"
-										class="d-block w-100" alt="">
-								</div>
-								<div class="carousel-item">
-									<img src="<%=cp%>/resources/images/bg-img/52.jpg"
-										class="d-block w-100" alt="">
+									<c:if test="${not empty readLocation.saveFilename}">
+										<img src="/wadmin/uploads/location/${readLocation.saveFilename}" class="d-block w-100" alt="">
+									</c:if>
+									<c:if test="${empty readLocation.saveFilename}">
+										<img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
+									</c:if>
 								</div>
 							</div>
 
-							<ol class="carousel-indicators">
+							<%-- <ol class="carousel-indicators">
 								<li data-target="#room-thumbnail--slide" data-slide-to="0"
 									class="active"><img
 									src="<%=cp%>/resources/images/bg-img/48.jpg"
 									class="d-block w-100" alt=""></li>
-								<li data-target="#room-thumbnail--slide" data-slide-to="1">
-									<img src="<%=cp%>/resources/images/bg-img/49.jpg"
-									class="d-block w-100" alt="">
-								</li>
-								<li data-target="#room-thumbnail--slide" data-slide-to="2">
-									<img src="<%=cp%>/resources/images/bg-img/50.jpg"
-									class="d-block w-100" alt="">
-								</li>
-								<li data-target="#room-thumbnail--slide" data-slide-to="3">
-									<img src="<%=cp%>/resources/images/bg-img/51.jpg"
-									class="d-block w-100" alt="">
-								</li>
-								<li data-target="#room-thumbnail--slide" data-slide-to="4">
-									<img src="<%=cp%>/resources/images/bg-img/52.jpg"
-									class="d-block w-100" alt="">
-								</li>
-							</ol>
+							</ol> --%>
 						</div>
 					</div>
 				</div>
@@ -155,19 +127,19 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="row">
-								<c:forEach var="listLandMark" items="${listLandMark}">
+								<c:forEach var="recommendLandmak" items="${recommendLandmak}">
 									<div class="col-md-3 animate-box">
 										<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
-										<c:if test="${not empty listLandMark.saveFilename}">
-											<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${listLandMark.saveFilename});">
+										<c:if test="${not empty recommendLandmak.saveFilename}">
+											<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${recommendLandmak.saveFilename});">
 										</c:if>
-										<c:if test="${empty listLandMark.saveFilename}">
+										<c:if test="${empty recommendLandmak.saveFilename}">
 											<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
 										</c:if>
 											<div class="desc">
-												<h3>${listLandMark.landName}</h3>
-												<p class="price"><small>지역 : ${listLandMark.locName}(${listLandMark.loceName})</small></p>
-												<p class="price"><small>댓글수 : ${listLandMark.landReplyCount}(개)</small></p>
+												<h3>${recommendLandmak.landName}</h3>
+												<p class="price"><small>지역 : ${recommendLandmak.locName}(${recommendLandmak.loceName})</small></p>
+												<p class="price"><small>댓글수 : ${recommendLandmak.landReplyCount}(개)</small></p>
 											</div>
 										</a>
 									</div>
@@ -197,22 +169,22 @@
 		<div class="row">
 			<div class="col-md-12 animate-box" style="margin-bottom:40px;">
 				<div>
-					<c:forEach var="listWorkspace" items="${listWorkspace}">
+					<c:forEach var="recommendWorkspace" items="${recommendWorkspace}">
 						<div class="item">
 							<div class="hotel-entry">
-								<c:if test="${not empty listWorkspace.saveFilename}">
-									<a href="hotels.html" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${listWorkspace.saveFilename});">
+								<c:if test="${not empty recommendWorkspace.saveFilename}">
+									<a href="hotels.html" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${recommendWorkspace.saveFilename});">
 								</c:if>
 								<c:if test="${empty listWorkspace.saveFilename}">
 									<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
 								</c:if>
-									<p class="price"><span>${listWorkspace.locName}</span><small>(${listWorkspace.loceName})</small></p>
+									<p class="price"><span>${recommendWorkspace.locName}</span><small>(${recommendWorkspace.loceName})</small></p>
 								</a>
 								<div class="desc">
 									<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
-									<h3><a href="#">${listWorkspace.subject}</a></h3>
-									<span class="place">${listWorkspace.userId}(${listWorkspace.userName})</span>
-									<p>숙박일자 : ${listWorkspace.dayCount}(일) / 출발일 : ${listWorkspace.startDay}</p>
+									<h3><a href="#">${recommendWorkspace.subject}</a></h3>
+									<span class="place">${recommendWorkspace.userId}(${recommendWorkspace.userName}) / ${recommendWorkspace.pay == 0 ? '무료' : '유료'}</span>
+									<p>숙박일자 : ${recommendWorkspace.dayCount}(일) / 출발일 : ${recommendWorkspace.startDay}</p>
 								</div>
 							</div>
 						</div>

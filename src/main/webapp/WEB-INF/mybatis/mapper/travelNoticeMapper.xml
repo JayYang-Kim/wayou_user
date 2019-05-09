@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travelNotice">
+	<sql id="search">
+		<if test="searchKey=='all'">
+			INSTR(SUBJECT,#{searchValue}) &gt; 0 or INSTR(CONTENT,#{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(SUBJECT,#{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			INSTR(CONTENT,#{searchValue}) &gt; 0
+		</if>
+	</sql>
+		<select id="noticeList" parameterType="map" resultType="com.sp.travel.Notice">
+		select * from (
+			select tb.*, rownum rnum from(
+				select noticode, subject, content, tn.adminIdx,adminName, tn.created, hitCount
+				from travelNotice tn
+				join admin a on tn.adminIdx=a.adminIdx
+				<if test="searchKey!=''">
+					<where>
+						<include refid="search"/>
+					</where>
+				</if>
+				order by notiCode desc
+			)tb where rownum &lt;= #{end}
+		) where rnum &gt;= #{start}
+		
+	</select>
+	
+	<select id="noticeCount" parameterType="map" resultType="Integer">
+		select NVL(count(*),0) from travelNotice
+		<if test="searchKey!=''">
+			<where>
+				<include refid="search"/>
+			</where>
+		</if>
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		update travelNotice set hitCount = hitCount+1 where notiCode=#{notiCode}
+	</update>
+	
+	<select id="readNotice" parameterType="Integer" resultType="com.sp.travel.Notice">
+		select noticode, subject, content, tn.adminidx,adminName ,tn.created, hitCount from travelNotice tn
+		join admin a on tn.adminIdx=a.adminIdx where notiCode=#{notiCode}
+	</select>
+	<select id="readFiles" parameterType="Integer" resultType="com.sp.travel.NoticeFile">
+		select filecode, noticode, savefilename, originalfilename from travelNoticeFile where notiCode=#{notiCode}
+	</select>
+	
+</mapper>

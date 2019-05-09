@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller("travel.location.locationController")
 public class LocationController {
-	
 	@Autowired
 	private LocationService locationService;
 	
@@ -23,11 +23,6 @@ public class LocationController {
 		return ".travel.location.list";
 	}
 	
-	@RequestMapping(value="/travel/location/view")
-	public String locationView() {
-		return ".travel.location.location";
-	}
-	
 	// 추천 여행일정(지역) AJAX HTML 출력
 	@RequestMapping(value="/travel/location/recommendLocation")
 	public String recommendLocation(Model model) throws Exception {
@@ -36,5 +31,24 @@ public class LocationController {
 		model.addAttribute("list", list);
 		
 		return "travel/location/recommendList";
+	}
+	
+	@RequestMapping(value="/travel/location/view")
+	public String locationView(@RequestParam int locCode,
+			Model model) throws Exception {
+		Location readLocation = locationService.readLocation(locCode);
+		
+		if(readLocation == null) {
+			return "redirect:/travel";
+		}
+		
+		List<Location> recommendLandmak = locationService.recommendLandmak(locCode);
+		List<Location> recommendWorkspace = locationService.recommendWorkspace(locCode);
+		
+		model.addAttribute("readLocation", readLocation);
+		model.addAttribute("recommendLandmak", recommendLandmak);
+		model.addAttribute("recommendWorkspace", recommendWorkspace);
+		
+		return ".travel.location.location";
 	}
 }
