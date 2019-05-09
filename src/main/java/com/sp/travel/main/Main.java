@@ -33,6 +33,7 @@ public class Main {
 	private String subject;
 	private int dayCount;
 	private String startDay;
+	private int pay;
 	
 	public int getLocCode() {
 		return locCode;
@@ -183,5 +184,11 @@ public class Main {
 	}
 	public void setStartDay(String startDay) {
 		this.startDay = startDay;
+	}
+	public int getPay() {
+		return pay;
+	}
+	public void setPay(int pay) {
+		this.pay = pay;
 	}
 }

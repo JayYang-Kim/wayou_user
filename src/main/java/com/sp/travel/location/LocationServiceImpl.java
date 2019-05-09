@@ -39,4 +39,43 @@ public class LocationServiceImpl implements LocationService {
 		return list;
 	}
 
+	@Override
+	public Location readLocation(int locCode) throws Exception {
+		Location dto = null;
+		
+		try {
+			dto = dao.selectOne("travel.location.readLocation", locCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return dto;
+	}
+
+	@Override
+	public List<Location> recommendLandmak(int locCode) throws Exception {
+		List<Location> list = null;
+		
+		try {
+			list = dao.selectList("travel.location.recommendLandmark", locCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<Location> recommendWorkspace(int locCode) throws Exception {
+		List<Location> list = null;
+		
+		try {
+			list = dao.selectList("travel.location.recommendWorkspace", locCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 }

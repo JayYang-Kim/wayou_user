@@ -198,7 +198,7 @@
 								<div class="desc">
 									<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
 									<h3><a href="#">${listWorkspace.subject}</a></h3>
-									<span class="place">${listWorkspace.userId}(${listWorkspace.userName})</span>
+									<span class="place">${listWorkspace.userId}(${listWorkspace.userName}) / (${listWorkspace.pay == 0 ? '무료' : '유료'})</span>
 									<p>숙박일자 : ${listWorkspace.dayCount}(일) / 출발일 : ${listWorkspace.startDay}</p>
 								</div>
 							</div>

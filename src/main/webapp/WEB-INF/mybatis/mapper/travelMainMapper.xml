@@ -65,7 +65,7 @@
 	<select id="recommendWorkspace" resultType="com.sp.travel.main.Main">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT w.workCode, w.subject, w.dayCount, 
+		        SELECT w.workCode, w.subject, w.dayCount, w.pay,
 				    TO_CHAR(w.startDay, 'YYYY-MM-DD') startDay, w.locCode, lc.locName, lc.loceName, w.userIdx, tu.userId, tu.userName, l.saveFilename, w.created
 				FROM workspace w
 				JOIN location l
