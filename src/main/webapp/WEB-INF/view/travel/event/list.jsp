@@ -79,7 +79,7 @@
 				<nav class="roberto-pagination mb-100" style="margin-top:20px; text-align: center;">${paging}</nav>
 			</div>
 		</div>
-	</div>
+	</div>   
 </div>
 <script>
 	function sendSearch(){
