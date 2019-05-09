@@ -71,6 +71,6 @@
 		select NVL(COUNT(*),0) from travelEventreply where eventCode=#{eventCode}
 	</select>
 	<delete id="deleteReply" parameterType="com.sp.travel.EventReply">
-		delete from travelEventReply where replyCode=#{replyCode}
+		delete from travelEventReply where replyCode=${replyCode}
 	</delete>
 </mapper>

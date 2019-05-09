@@ -11,7 +11,7 @@
 		<div class="row h-100 align-items-center">
 			<div class="col-12">
 				<div class="breadcrumb-content text-center">
-					<h2 class="page-title">이벤트</h2>
+					<h2 class="page-title">공지사항</h2>
 				</div>
 			</div>
 		</div>
@@ -36,8 +36,7 @@
 					</select>
 				</div>
 				<div class="col-12 col-sm-9 col-lg-8">
-					<input type="text" name="searchValue" class="form-control"
-						value="${searchValue}" placeholder="검색어를 입력해주세요." />
+					<input type="text" name="searchValue" class="form-control" placeholder="검색어를 입력해주세요." />
 				</div>
 				<div class="col-12 col-lg-2">
 					<button type="button" class="btn roberto-btn"
@@ -55,23 +54,22 @@
 						<th width="100" style="color: #787878;">작성자</th>
 						<th width="120" style="color: #787878;">작성일</th>
 						<th width="60" style="color: #787878;">조회수</th>
-
 					</tr>
 					<c:forEach var="dto" items="${list}">
 						<tr align="center" bgcolor="#ffffff" height="40"
 							style="border-bottom: 1px solid #cccccc;">
 							<td>${dto.listNum}</td>
-							<td style="cursor: pointer;"><a href="<%=cp%>/travel/event/article?code=${dto.eventCode}">${dto.subject}<b> ${dto.isNew?'(진행중)':'(종료)'}</b></a></td>
+							<td style="cursor: pointer;"><a href="<%=cp%>/travel/notice/article?notiCode=${dto.notiCode}">${dto.subject}</a></td>
 							<td>${dto.adminName}</td>
 							<td>${dto.created}</td>
 							<td>${dto.hitCount}</td>
 						</tr>
 					</c:forEach>
-				</table>
+				</table> 
 
 				<c:if test="${empty list}">
 					<div class="t_center mt40 mb40">
-						<span class="f14 exbold">등록된 이벤트가 없습니다.</span>
+						<span class="f14 exbold">등록된 공지사항이 없습니다.</span>
 					</div>
 				</c:if>
 
@@ -80,7 +78,7 @@
 			</div>
 		</div>
 	</div>
-</div>
+</div> 
 <script>
 	function sendSearch(){
 		if(!$("input[name=searchValue]").val()){
@@ -90,6 +88,6 @@
 		var searchKey = $("select[name=searchKey]").val();
 		var searchValue=$("input[name=searchValue]").val();
 		$("input[name=searchValue]").val("");
-		location.href="<%=cp%>/travel/event/list?searchKey="+searchKey+"&searchValue="+encodeURIComponent(searchValue);
+		location.href="<%=cp%>/travel/notice/list?searchKey="+searchKey+"&searchValue="+encodeURIComponent(searchValue);
 	}
 </script>
