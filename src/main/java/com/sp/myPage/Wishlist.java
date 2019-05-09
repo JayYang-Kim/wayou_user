@@ -12,6 +12,7 @@ public class Wishlist {
 	private int totalprice;
 	private String totalprice1;
 	private int listNum;
+	private int wishCode;
 	public int getUserIdx() {
 		return userIdx;
 	}
@@ -77,6 +78,12 @@ public class Wishlist {
 	}
 	public void setTotalprice1(String totalprice1) {
 		this.totalprice1 = totalprice1;
+	}
+	public int getWishCode() {
+		return wishCode;
+	}
+	public void setWishCode(int wishCode) {
+		this.wishCode = wishCode;
 	}
 	
 	

@@ -46,6 +46,13 @@
 .tr_locationList .post-content p{height:130px;overflow:hidden;text-overflow:ellipsis;}
 .single-recent-post .post-content .recommendList_memo{height: 80px;overflow: hidden;text-overflow: ellipsis;font-size: 14px;}
 
+.box_star div{float:left;}
+.box_star div.title{height: 45px;line-height: 45px;margin-right: 10px;font-size: 14px;}
+.box_star .star {margin-bottom: 10px;letter-spacing: -4px;}
+.box_star .star a {font-size: 30px;letter-spacing: 0;display: inline-block;margin-left: 3px;color: #cccccc;text-decoration: none;}
+.box_star .star a:first-child {margin-left: 0;}
+.box_star .star a.on {color: #F2CB61;}
+
 /* min0 */
 .single-project-slide.height{height:500px;}
 

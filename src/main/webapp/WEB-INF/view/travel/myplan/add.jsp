@@ -137,7 +137,7 @@
 <div id="container">
 	<div class="row" style="margin-left: 0; margin-right: 0">
 		<div class="col12 col-lg-2" id="navBar">
-			<div class="workspace-title" align="center">
+			<div class="workspace-title" align="center" style="background: gray;">
 				<h6 style="color: white;">여행할 도시를 선택해 주세요</h6>
 				<input type="text" style="height:31px; width: 90%; margin-top: 5px;" id="locSearch">
 			</div>
