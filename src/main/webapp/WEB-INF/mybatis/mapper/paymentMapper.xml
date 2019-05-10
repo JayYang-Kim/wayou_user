@@ -14,4 +14,18 @@
 		FROM tb_user
 		WHERE userIdx = #{userIdx}
 	</select>
+	
+	<insert id="insertOrder" parameterType="com.sp.payment.Payment">
+		INSERT INTO order_master(orderCode, userIdx, orderDate, name, receiveType, memo, totalMoney, separate)
+			VALUES(orderCode_seq.NEXTVAL, #{userIdx}, SYSDATE, #{name}, #{receiveType}, #{memo}, #{totalMoney}, #{separate}) 
+	</insert>
+	
+	<select id="checkPurchase" parameterType="Integer">
+		SELECT separate, cardName, confirmNum, confirmMoney, ,confirmDate, odCode, orderCode,  productCode, amount, price 
+		FROM tb_pay_master tpm
+		WHERE payCode = #{orderCode}
+		JOIN order_dh dh ON tpm.payCode = dh.orderCode
+		JOIN order_dt dt ON tpm.payCode = dt.orderCode
+		JOIN order_dtr dtr ON tpm.payCode = dtr.orderCode
+	</select>
 </mapper>

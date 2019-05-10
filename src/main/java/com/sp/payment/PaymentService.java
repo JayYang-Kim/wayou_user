@@ -26,4 +26,15 @@ public class PaymentService {
 		
 		return dto;
 	}
+	
+	public int insertOrder (Payment dto) {
+		int result=0;
+		
+		try {
+			result=dao.insertData("payment.insertOrder", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }
