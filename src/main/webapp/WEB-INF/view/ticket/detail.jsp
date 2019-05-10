@@ -5,24 +5,55 @@
    String cp = request.getContextPath();
 %>
 
+<style type="text/css">
+div {
+	border: none;
+}
+.star {
+	font-size: 0;
+	letter-spacing: -4px;
+}
+
+.star2 {
+	font-size: 0;
+	letter-spacing: -4px;
+}
+
+.star a {
+	font-size: 35px;
+	letter-spacing: 0;
+	display: inline-block;
+	margin-left: 3px;
+	color: #cccccc;
+	text-decoration: none;
+}
+
+.star2 a {
+	font-size: 20px;
+	letter-spacing: 0;
+	display: inline-block;
+	margin-left: 3px;
+	color: #cccccc;
+	text-decoration: none;
+}
+.star a:first-child {
+	margin-left: 0;
+}
+.star a.on {
+	color: #F2CB61;
+}
+
+.star2 a:first-child {
+	margin-left: 0;
+}
+.star2 a.on {
+	color: #F2CB61;
+}
+</style>
  
+
 <script type="text/javascript">
-
-//날짜 선택시 옵션
-$(function(){
-	
-	 $("body").on("click", ".btn_sendCategory", function(){
-			var form=document.searchSelect;
-			
-			var date = $("select[name=dateSelect]").val();
-			
-			var url="<%=cp%>/ticket/list?regionCode="+regionCode+"&cateCode="+cateCode;
-			
-			form.action=url;
-			form.submit();
-		}); 
-});
-
+//티켓 옵션 선택
 $(function(){
 	var id=$("#tabContent1");
 	var url="<%=cp%>/ticket/tab1";
@@ -34,8 +65,65 @@ $(function(){
 	
 	$(".nice-select.date .current").html("날짜 선택");
 	$(".nice-select.option .current").html("옵션 선택");
+/* 	$(".nice-select.option ul").empty(); */
 });
 
+//날짜 선택
+$("body").on("click", ".nice-select.date ul li", function(){
+	$(".nice-select.option ul").empty();
+	$(".nice-select.option .current").html("옵션 선택");
+	
+	var date = $(this).attr("data-value");
+	var storeCode = ${dto.storeCode};
+	var query = "storeCode="+storeCode+"&date="+date;
+	var url = "<%=cp%>/ticket/readOption";
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			for(var i=0; i<data.listOption.length; i++) {
+				if(data.listOption[i].ticketDetailName==null) {
+					var html = "<li data-value='soldout' class='option'>soldout</li>"
+					$(".nice-select.option ul").append(html);
+					return false;
+					}
+				var ticketDetailName = data.listOption[i].ticketDetailName;
+				var price = data.listOption[i].price;
+				var count = data.listOption[i].count;
+				var html = "<li data-name='"+ticketDetailName+"' data-value='"+price+"' data-count='"+count+"' class='option'>"+ticketDetailName+"&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+price+"원&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+count+"개 남음</li>"
+				$(".nice-select.option ul").append(html);
+			}
+		}
+	 	,error:function(e) {
+	    	if(e.status==403) {
+	    		location.href="<%=cp%>/member/login";
+	    		return;
+	    	}
+	    	console.log(e.responseText);
+	    }
+	});
+});
+
+//옵션 선택
+$("body").on("click", ".nice-select.option ul li", function(){
+	var selectedDate = $("#selectedDate option:selected").val();
+	var selectedName = $(this).attr("data-name");
+	var selectedPrice = $(this).attr("data-value");
+	var selectedCount = $(this).attr("data-count");
+
+	var html = "<span>"+ticketDetailName+"&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+selectedPrice+"원&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+selectedCount+"개 남음</span>"
+	
+	$(this).closest("ul.detail").find(".buy_list").html(html);
+	
+	/* var html2 = "<span>"+totalPrice+"</span>"
+	$(this).closest("ul.detail").find(".total_price").html(html2); */
+});
+
+
+//탭 메뉴
 $(function(){
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		  // alert(e.target); // newly activated tab
@@ -92,7 +180,7 @@ function ajaxHTML(url, type, query, id) {//url에 query를갖고 처리한 data�
 	});
 }
 
-
+//후기 리스트
 function listPage(page) {
 	var storeCode = ${dto.storeCode};
 	var query = "storeCode="+storeCode+"&pageNo="+page;
@@ -115,6 +203,20 @@ function listPage(page) {
 	});
 }
 
+//후기 별점
+$(function() {
+	$("body").on("click", ".star a", function(){
+		var b = $(this).hasClass("on");
+		$(this).parent().children("a").removeClass("on");
+		$(this).addClass("on").prevAll("a").addClass("on");
+		if (b)
+			$(this).removeClass("on");
+		var s = $(".star .on").length;
+		$("#score").val(s);
+		});
+	});
+
+//후기 작성
 $(function(){
 	$("body").on("click", ".btnSendReview", function(){
 		var storeCode = ${dto.storeCode};
@@ -125,8 +227,9 @@ $(function(){
 			return;
 		}
 		content = encodeURIComponent(content);
+		var star = $("#score").val().trim();
 		
-		var query = "storeCode="+storeCode+"&content="+content;
+		var query = "storeCode="+storeCode+"&content="+content+"&star="+star;
 		var url = "<%=cp%>/ticket/insertReview";
 		
 		$.ajax({
@@ -136,6 +239,11 @@ $(function(){
 			,dataType:"json"
 			,success:function(data) {
 				$tb.find("textarea").val("");
+				$("#score").val(0);
+				$(".star").children("a").removeClass("on");
+				listPage(1);
+				
+				
 			}
 		 	,error:function(e) {
 		    	if(e.status==403) {
@@ -147,36 +255,6 @@ $(function(){
 		});
 	});
 	
-	<%-- $(".btnSendReview").click(function(){
-		var storeCode = ${dto.storeCode};
-		var $tb = $(this).closest("table");
-		var content = $tb.find("textarea").val().trim();
-		if(! content) {
-			$tb.find("textarea").focus();
-			return;
-		}
-		content = encodeURIComponent(content);
-		
-		var query = "storeCode="+storeCode+"&content="+content;
-		var url = "<%=cp%>/ticket/insertReview";
-		
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,dataType:"json"
-			,success:function(data) {
-				$tb.find("textarea").val("");
-			}
-		 	,error:function(e) {
-		    	if(e.status==403) {
-		    		location.href="<%=cp%>/member/login";
-		    		return;
-		    	}
-		    	console.log(e.responseText);
-		    }
-		});
-	}); --%>
 });
 
 </script>
@@ -249,24 +327,26 @@ $(function(){
                             		<li style="text-align: right">1인당 최대 4개 구매 가능</li>
                             		
                   					<li style="margin-top: 5px;">
-                            		<select class="nice-select date">
+                            		<select class="nice-select date" id="selectedDate" name="selectedDate">
                            		<c:forEach var="dto_date" items="${listDate}">	
-                            			<option name="dateSelect" value="${dto_date.use_start}">${dto_date.use_start}</option>
+                            			<option value="${dto_date.use_start}">${dto_date.use_start}</option>
                             	</c:forEach>
                             		</select>
                             		</li>
                             		
                             		
                             		<li class="clear">
-                            		<select class="nice-select option mt3">
-                            			<option value="">성인</option>
-                            			<option value="">청소년</option>
+                            		<select class="nice-select option mt3"  id="selectedOption" name="selectedOption">
                             		</select>
                             		</li>
                             		
                             		<li class="clear" style="margin-top: 30px;">
-                            		
+                            			<p class="buy_list"></p>
                             		</li>
+                            		
+                            	<!-- 	<li class="clear" style="margin-top: 30px;">
+                            			총 상품금액<p class="total_price"></p> 원
+                            		</li> -->
                             		
                             		<li class="mb-10 t-center">
                             			<button type="button" class="btn cart-btn" style="width: 130px; margin-top: 20px;">카트담기</button>
