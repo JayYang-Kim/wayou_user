@@ -93,7 +93,7 @@
 	</select>
 	
 	<select id="readOption" parameterType="map" resultType="com.sp.ticket.Ticket">
-		SELECT TO_CHAR(use_start, 'YYYY-MM-DD') as use_start, ticketdetail.ticketDetailName, ticketdetail.price, ticketdetail.count
+		SELECT ticketDetail.ticketDetailCode, TO_CHAR(use_start, 'YYYY-MM-DD') as use_start, ticketdetail.ticketDetailName, ticketdetail.price, ticketdetail.count
 		FROM ticket
 		LEFT OUTER JOIN ticketDetail ON ticket.ticketCode=ticketDetail.ticketCode
 		WHERE storeCode=#{storeCode} AND use_start=#{date}
@@ -129,4 +129,9 @@
 		FROM storeReview
 		WHERE storeCode=#{storeCode}
 	</select>
+	
+	<insert id="insertWishlist" parameterType="com.sp.ticket.Ticket">
+	INSERT INTO wishlistcode_dt (wishCode, userIdx, productCode, amount, price)
+	VALUES (wishCode_dt_seq.NEXTVAL, #{userIdx}, #{ticketDetailCode}, #{buyCount}, #{price})
+	</insert>
 </mapper>

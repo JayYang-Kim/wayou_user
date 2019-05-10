@@ -216,7 +216,24 @@
     color: #ffffff; }
     .roberto-btn.btn-2:focus, .roberto-btn.btn-2:hover {
       color: #ffffff;
-      background-color: #1cc3b2; }    
+      background-color: #1cc3b2; }
+      
+.newsletter-formm {
+  padding: 40px 30px;
+  background-color: #e8f1f8;
+  border-radius: 4px; }
+  .newsletter-form h5 {
+    font-size: 22px; }
+  .newsletter-formm input {
+    height: 30px;
+    width: 40px;
+    border: 1px solid #ebebeb;
+    background-color: #ffffff;
+    color: #636a76;
+    font-size: 13px; }
+    .newsletter-formm input:focus {
+      box-shadow: none;
+      border-color: #1cc3b2; }
 <<<<<<< HEAD
 
 

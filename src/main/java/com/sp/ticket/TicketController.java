@@ -228,5 +228,38 @@ public class TicketController {
 		
 		return model;
 	}
+	
+	/*
+	@RequestMapping(value="/myPage/wishList/list" , method= RequestMethod.GET)
+	@ResponseBody
+	public String go (
+	
+			) {
+		
+		return "myPage/wishList/list";
+	}
+	*/
+	
+	@RequestMapping(value="/myPage/wishList/list3" )
+	@ResponseBody
+	public Map<String, Object> insertWishlist (
+			Ticket dto,
+			HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		dto.setUserIdx(info.getUserIdx());
+		
+		int result=ticketService.insertWishlist(dto);
+		
+		String state="true";
+		if(result==0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		
+		return model;
+	}
 }
 

@@ -93,7 +93,8 @@ $("body").on("click", ".nice-select.date ul li", function(){
 				var ticketDetailName = data.listOption[i].ticketDetailName;
 				var price = data.listOption[i].price;
 				var count = data.listOption[i].count;
-				var html = "<li data-name='"+ticketDetailName+"' data-value='"+price+"' data-count='"+count+"' class='option'>"+ticketDetailName+"&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+price+"원&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+count+"개 남음</li>"
+				var ticketDetailCode = data.listOption[i].ticketDetailCode;
+				var html = "<li data-detailCode='"+ticketDetailCode+"' data-name='"+ticketDetailName+"' data-value='"+price+"' data-count='"+count+"' class='option'>"+ticketDetailName+"&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+price+"원&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+count+"개 남음</li>"
 				$(".nice-select.option ul").append(html);
 			}
 		}
@@ -109,17 +110,65 @@ $("body").on("click", ".nice-select.date ul li", function(){
 
 //옵션 선택
 $("body").on("click", ".nice-select.option ul li", function(){
+
 	var selectedDate = $("#selectedDate option:selected").val();
 	var selectedName = $(this).attr("data-name");
 	var selectedPrice = $(this).attr("data-value");
 	var selectedCount = $(this).attr("data-count");
+	var selectedCode = $(this).attr("data-detailCode");
+	var totalPrice = 0;
+	totalPrice += (1*selectedPrice);
+	
+	var out="";
+	out += "<li class='clear' style='margin-top: 50px; padding-top: 20px; padding-bottom: 20px; background-color: #f8f8f8'>";
+	out += "<p style='margin-left: 20px; font-size: 15px; margin-right: 20px;'>";
+	out += "<span id='ssCode' data-ssCode='"+selectedCode+"'>"+selectedName+"&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp"+selectedCount+"개 남음</span>";
+	out += "<span style='float:right;'><button type='button' class='button deleteSel'>x</button></span>";
+	out += "</p>";
+	out += "<p style='margin-top: 25px; margin-left: 20px; margin-right: 20px;'>";
+	out += "<span><button type='button' class='button'>-</button><input type='text' id='ssBuyCount' value='1'><button type='button' class='button' maxcount='4'>+</button></span>";
+	out += "<span style='float:right; font-weight: bold; font-size: 15px;' id='ssPrice' data-ssPrice='"+selectedPrice+"'>"+selectedPrice+"원</span>";
+	out += "</p></li>";
 
-	var html = "<span>"+ticketDetailName+"&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+selectedPrice+"원&nbsp&nbsp&nbsp | &nbsp&nbsp&nbsp"+selectedCount+"개 남음</span>"
+	$("#buy_list").html(out);
 	
-	$(this).closest("ul.detail").find(".buy_list").html(html);
+	var html = "<span style='float:right; margin-right: 5px; font-weight: bold; font-size: 20px;' id='ttPrice' data-total='"+totalPrice+"'>"+totalPrice+"</span>";
 	
-	/* var html2 = "<span>"+totalPrice+"</span>"
-	$(this).closest("ul.detail").find(".total_price").html(html2); */
+	$(this).closest("ul.detail").find(".total_price").html(html);
+	
+});
+
+$("body").on("click", ".deleteSel", function(){
+	$("#buy_list").empty();
+	/* var totalPrice=$(this).closest("ul.detail").find(".ttPrice").attr("data-total"); */
+	var totalPrice=$("#ttPrice").attr("data-total");
+	var selectedPrice=$("#ssPrice").attr("data-ssPrice");
+	alert(selectedPrice);
+});
+
+$("body").on("click", ".cart-btn", function(){
+	var price = $("#ssPrice").attr("data-ssPrice");
+	var buyCount = $("#ssBuyCount").val();
+	var ticketDetailCode = $("#ssCode").attr("data-ssCode");
+	var query = "ticketDetailCode="+ticketDetailCode+"&price="+price+"&buyCount="+buyCount;
+	var url = "<%=cp%>/myPage/wishList/list3";
+	
+	$.ajax({
+		type:"post"
+		,url:url
+		,data:query
+		,dataType:"json"
+		,success:function(data) {
+			 location.href="<%=cp%>/myPage/wishlist/list";
+		}
+	 	,error:function(e) {
+	    	if(e.status==403) {
+	    		location.href="<%=cp%>/member/login";
+	    		return;
+	    	}
+	    	console.log(e.responseText);
+	    }
+	});
 });
 
 
@@ -317,7 +366,7 @@ $(function(){
 
                         <!-- Newsletter -->
                         <div class="single-widget-area mb-100">
-                            <div class="newsletter-form" style="height: 420px;">  	
+                            <div class="newsletter-formm">  	
                             <ul class="detail">
                             		<li style="font-size:18px;">${dto.address1}</li>
                             		<li style="font-size:25px;">${dto.ticketName}</li>
@@ -340,15 +389,14 @@ $(function(){
                             		</select>
                             		</li>
                             		
+                            		<li class="clear" id="buy_list">
+									</li>
+                            		
                             		<li class="clear" style="margin-top: 30px;">
-                            			<p class="buy_list"></p>
+                            			<span style="font-size: 15px;">총 상품금액</span><span style="float:right; font-size: 15px;">원</span><span class="total_price" style="float:right; font-weight: bold; font-size: 20px;">0</span>
                             		</li>
                             		
-                            	<!-- 	<li class="clear" style="margin-top: 30px;">
-                            			총 상품금액<p class="total_price"></p> 원
-                            		</li> -->
-                            		
-                            		<li class="mb-10 t-center">
+                            		<li class="clear mb-10 t-center">
                             			<button type="button" class="btn cart-btn" style="width: 130px; margin-top: 20px;">카트담기</button>
                             		
                             			<button type="button" class="btn buy-btn" style="margin-left: 10px; margin-top: 20px;">바로구매</button>
