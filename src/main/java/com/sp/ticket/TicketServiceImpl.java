@@ -135,4 +135,15 @@ public class TicketServiceImpl implements TicketService {
 		return result;
 	}
 
+	@Override
+	public List<Ticket> readOption(Map<String, Object> map) {
+		List<Ticket> list = null;
+		try {
+			list=dao.selectList("ticket.readOption", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

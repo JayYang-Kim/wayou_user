@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
-import com.sp.hotel.Review;
 import com.sp.member.SessionInfo;
 
 @Controller("ticket.ticketController")
@@ -215,6 +214,19 @@ public class TicketController {
 		model.addAttribute("dto", dto);
 		
 		return "ticket/tab3";
+	}
+	
+	@RequestMapping(value="/ticket/readOption", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> readOption (
+			@RequestParam Map<String, Object> paramMap
+			) {
+		
+		List<Ticket> list = ticketService.readOption(paramMap);
+		Map<String, Object> model = new HashMap<>();
+		model.put("listOption", list);
+		
+		return model;
 	}
 }
 

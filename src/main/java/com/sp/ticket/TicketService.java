@@ -10,6 +10,7 @@ public interface TicketService {
 	public List<Ticket> listCategory();
 	public Ticket readTicket(int ticketCode);
 	public List<Ticket> readDate(int storeCode);
+	public List<Ticket> readOption(Map<String, Object> map);
 	public Ticket readStore(int storeCode);
 	
 	public int insertReview(TicketReview dto);

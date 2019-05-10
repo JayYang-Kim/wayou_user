@@ -37,6 +37,11 @@ public class Location {
 	private String startDay;
 	private int pay;
 	
+	// 커뮤니티
+	private int replyCode;
+	private int starNum;
+	private String content;
+	
 	public int getLocCode() {
 		return locCode;
 	}
@@ -204,5 +209,23 @@ public class Location {
 	}
 	public void setPay(int pay) {
 		this.pay = pay;
+	}
+	public int getReplyCode() {
+		return replyCode;
+	}
+	public void setReplyCode(int replyCode) {
+		this.replyCode = replyCode;
+	}
+	public int getStarNum() {
+		return starNum;
+	}
+	public void setStarNum(int starNum) {
+		this.starNum = starNum;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

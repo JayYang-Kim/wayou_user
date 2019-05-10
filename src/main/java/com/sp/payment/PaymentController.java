@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 import com.sp.member.SessionInfo;
 
@@ -29,6 +30,21 @@ public class PaymentController {
 		model.put("payInfo", dto);
 		
 		return model;
+	}
+		
+	@RequestMapping(value="/payment/order")
+	public String payment() throws Exception {
+		return ".payment.order";
+	}
+	
+	@RequestMapping(value="/payment/complete")
+	public String paymentComplete() throws Exception {
+		return ".payment.complete";
+	}
+	
+	@RequestMapping(value="/payment/history")
+	public String paymentHistory() throws Exception {
+		return ".payment.history";
 	}
 	
 	@RequestMapping(value="/payment/orderMenu", method=RequestMethod.GET)
