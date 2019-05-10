@@ -11,33 +11,28 @@
 		    <div class="reviwer-thumbnail">
 		        <img src="<%=cp%>/resources/images/common/defaultImg.jpeg" alt="">
 		    </div>
-		    <div class="reviwer-content" data-replyNum="${reply.replyCode}" data-userIdx="${reply.userIdx}">
+		    <div class="reviwer-content w100p" data-replyNum="${reply.replyCode}" data-userIdx="${reply.userIdx}">
 		        <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
 		            <div class="reviwer-title">
 		                <span>${reply.created}</span>
 		                <h6>${reply.userId}(${reply.userName})</h6>
 		            </div>
-		            <div class="reviwer-rating">
+		            <div class="reviwer-rating" style="position:relative;top:12px;">
 		            	<c:forEach begin="1" end="${reply.starNum}">
 		            		<i class="fa fa-star"></i>
 		            	</c:forEach>
-		                 
-		                <!-- <i class="fa fa-star"></i>
-		                <i class="fa fa-star"></i>
-		                <i class="fa fa-star"></i>
-		                <i class="fa fa-star"></i> -->
 		            </div>
 		        </div>
 		        <p>${reply.content}</p>
 		        <c:if test="${reply.userIdx == sessionScope.member.userIdx}">
-					<div class="mt10">
+					<div class="mt10 f_right">
 						<button class="btn_deleteReply button btn_blk">삭제</button>
 					</div>
 				</c:if>
 		    </div>
 		</div>
 	</c:forEach>
-	<div class="t_center">
+	<div class="t_center mb30">
 		${paging}
 	</div>
 </c:if>

@@ -104,7 +104,7 @@
 	</select>
 	
 	<select id="replyCount" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*) locationCommunity WHERE locCode = #{locCode}
+		SELECT COUNT(*) FROM locationCommunity WHERE locCode = #{locCode}
 	</select>
 	
 	<select id="listReply" parameterType="map" resultType="com.sp.travel.location.Location">

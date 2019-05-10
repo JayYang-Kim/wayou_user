@@ -49,7 +49,6 @@
 	}
 	
 	$("body").on("click",".btn_addReply",function(){
-		alert(starCount);
 		var $content = $(this).closest(".roberto-contact-form").find("textarea");
 		if(!$content.val()){
 			alert("내용을 입력해주세요.");
@@ -59,8 +58,7 @@
 		
 		var url = "<%=cp%>/travel/location/reply/insert";
 		var query="locCode=${readLocation.locCode}&starNum=" + starCount + "&content=" + $content.val();
-		
-		alert(query);
+	
 		$.ajax({
 			type:"post",
 			url:url,
