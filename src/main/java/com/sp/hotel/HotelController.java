@@ -115,6 +115,7 @@ public class HotelController {
 						   @RequestParam int page,
 						   @RequestParam (defaultValue="") String checkin,
 						   @RequestParam (defaultValue="") String checkout,
+						   
 						   HttpServletRequest req,
 						   Model model
 						   ) throws Exception {
@@ -125,6 +126,8 @@ public class HotelController {
 		
 		
 		Hotel maxDto=hotelservice.readHotelMax(hotelCode);
+		
+		
 		
 		Map<String, Object> map=new HashMap<>();
 		map.put("hotelCode", hotelCode);
@@ -216,26 +219,22 @@ public class HotelController {
 		return "hotel/hotel/hotelReview";		
 	}
 	
-	@RequestMapping(value="/wishlist/list", method=RequestMethod.POST)
-	public Map<String, Object> insertReserveHotel (Hotel dto 
-											, HttpSession session) throws Exception{
+	@RequestMapping(value="/myPage/wishlist/list4")
+	public String insertReserveHotel (Hotel dto,
+			Hotel dto2
+									, HttpSession session) throws Exception{
 													
 		SessionInfo info=(SessionInfo)session.getAttribute("member");
 		dto.setUserIdx(info.getUserIdx());
 		
+		
+		Hotel readhotel=hotelservice.readHotel2(dto2);
+		
 		int result=hotelservice.insertReserveHotel(dto);
+		System.out.println(result+"===================");
 		
 		
-			String state="true";
-			
-			if(result==0) {
-				state="false";
-			}
-			
-			Map<String, Object> model=new HashMap<>();
-			model.put("state", state);
-					
-		return model;		
+		return  "redirect:/myPage/wishlist/list";	
 	}
 	
 }
