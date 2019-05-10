@@ -7,31 +7,33 @@
 %>
 
 
-<div class="col-12 col-lg-8">
+<div class="col-12 col-lg-12">
 	<!-- Room Review -->
-	<div class="room-review-area mb-100">
-		<h4>상품 후기</h4>
+	<div class="room-review-area mt-100 mb-100">
+		<h5 style="font-weight: bold; margin-bottom: 3px;">상품 리뷰</h5>
+		<div><hr style="border: solid 1px #aaaaaa;"></div>
 
-		<!-- Single Review Area -->
-<c:forEach var="vo" items="${listReview}">	
+<c:forEach var="vo" items="${listReview}">
 		<div class="single-room-review-area d-flex align-items-center">
 			<div class="reviwer-thumbnail">
 				<img alt="" src="<%=cp%>/resources/images/bg-img/53.jpg">
 			</div>
 			<div class="reviwer-content">
-				<div
-					class="reviwer-title-rating d-flex align-items-center justify-content-between">
+				<div>
 					<div class="reviwer-title">
 						<span>${vo.created}</span>
 						<h6>${vo.userName}</h6>
 					</div>
-					<div class="reviwer-rating">
-						<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-							class="fa fa-star"></i>
+					<div>
+                        <p class="star2">
+                           <c:forEach var="dto" begin="1" end="${vo.star}">
+                              <a class="on">★</a>
+                           </c:forEach>
+                        </p>
 					</div>
+					<div style="font-size: 20px;">${vo.content}</div>
 				</div>
-				<p>${vo.content}</p>
+				
 			</div>
 		</div>
 </c:forEach>
