@@ -163,15 +163,14 @@ function listWish(){
     	}
     });
     
-    $("body").on("click", ".order_confirm",function(){
-    	var amount=$(this).closest("tr").attr("data-amount");
-    	var price=$(this).closest("tr").attr("data-price");
+    $("body").on("click", ".order_confirm", function(){
     	var wishCode=$(this).closest("tr").attr("data-wishCode");
     	var dataType=$(this).closest("tr").attr("data-Type");
-		var totalprice=(amount*price);
-		var url="<%=cp%>/payment/orderMenu";
-		var query="?amount="+amount+"&price="+price+"&orderCode="+wichCode+"&price="+price;
+		var query="?wishCode="+wishCode+"&dataType="+dataType;
         	 location.href="<%=cp%>/payment/orderMenu"+query;	
+    });
+    $("body").on("click", ".Allorder_confirm", function(){
+        	 location.href="<%=cp%>/payment/AllorderMenu";	
     });
 </script>
 

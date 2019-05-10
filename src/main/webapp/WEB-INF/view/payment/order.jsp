@@ -97,7 +97,7 @@
 		<div class="col-md-12">
 			<div class="order_complate">
 				<div class="mt20 mb40 t_center">
-					<h1><strong class="t_red">김아무개님</strong> <strong class="t_red">주문</strong>내역 리스트</h1>
+					<h1><strong class="t_red">${dto.userName}님</strong> <strong class="t_red">주문</strong>내역 리스트</h1>
 				</div>
 				
 				<h5 class="cont_tit tit2">주문 리스트</h5>
@@ -119,16 +119,16 @@
 					<tfoot>
 						<tr>
 							<th scope="row" colspan="2" class="f14">합계</th>
-							<td><strong class="f18">35,300</strong></td>
-							<td><strong class="f20 t_red">30,000</strong></td>
+							<td><strong class="f18">${dto.price}</strong></td>
+							<td><strong class="f20 t_red">${dto.price*dto.amount}</strong></td>
 						</tr>
 					</tfoot>
 					<tbody>
 						<tr>
 							<td class="t_left">디즈니랜드 45박 46일 </td>
-							<td class="t_gray">2</td>
-							<td><strong>800,000</strong></td>
-							<td><strong>1,600,000</strong></td>
+							<td class="t_gray">${dto.amount}</td>
+							<td><strong>${dto.price}</strong></td>
+							<td><strong>${dto.price*dto.amount}</strong></td>
 						</tr>
 					</tbody>
 				</table>
@@ -151,7 +151,7 @@
 									<th scope="row"><label for="d_name" style="margin-bottom:0;">주문자 정보</label></th>
 									<td class="t_left">
 										<div>
-											<span class="line30">김아무개</span>
+											<span class="line30">${dto.userName }</span>
 										</div>
 									</td>
 								</tr>								
@@ -161,7 +161,7 @@
 									<th scope="row"><label for="d_phone" style="margin-bottom:0;">연락처</label></th>
 									<td class="t_left">
 										<div>
-											<span class="line30">010-1234-1234</span>
+											<span class="line30">${dto.userTel}</span>
 										</div>
 									</td>
 								</tr>
@@ -171,7 +171,7 @@
 									<th scope="row">주소</th>
 									<td class="t_left">
 										<div>
-											<span class="line30">서울 어딘가</span>
+											<span class="line30">${dto.postCode}<br>${dto.userAddr1}<br>${dto.userAddr2 }<br>${dto.etc }</span>
 										</div>
 									</td>
 								</tr>
