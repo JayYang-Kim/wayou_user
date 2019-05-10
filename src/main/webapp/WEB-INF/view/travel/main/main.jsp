@@ -102,107 +102,136 @@
 <div class="colorlib-tour">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+			<div class="col-md-12 text-center colorlib-heading animate-box">
 				<h2>추천 여행정보</h2>
 				<p>WAYOU에서 추천드리는 여행정보입니다. 여행일정 작성할때 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
 	</div>
-	<div class="tour-wrap">
-		<c:forEach var="listLocation" items="${listLocation}">
-			<a href="#" class="tour-entry animate-box">
-				<%-- <div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);"> --%>
-				<c:if test="${not empty listLocation.saveFilename}">
-					<div class="tour-img" style="background-image: url(/wadmin/uploads/location/${listLocation.saveFilename});">
-				</c:if>
-				<c:if test="${empty listLocation.saveFilename}">
-					<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);">
-				</c:if>
-				</div>
-				<span class="desc">
-					<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> ${listLocation.locationReplyCount} (댓글수)</p>
-					<h2>${listLocation.locName}</h2>
-					<span class="city">${listLocation.memo}</span>
-					<span class="price">관광명소 : ${listLocation.landCount}(개)</span>
-				</span>
-			</a>
-		</c:forEach>
+	<c:if test="${not empty listLocation}">
+		<div class="tour-wrap" style="margin-bottom:40px;">
+			<c:forEach var="listLocation" items="${listLocation}">
+				<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}" class="tour-entry animate-box">
+					<%-- <div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);"> --%>
+					<c:if test="${not empty listLocation.saveFilename}">
+						<div class="tour-img" style="background-image: url(/wadmin/uploads/location/${listLocation.saveFilename});">
+					</c:if>
+					<c:if test="${empty listLocation.saveFilename}">
+						<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);">
+					</c:if>
+					</div>
+					<span class="desc">
+						<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> ${listLocation.locationReplyCount} (댓글수)</p>
+						<h2>${listLocation.locName}</h2>
+						<span class="city">${listLocation.memo}</span>
+						<span class="price">관광명소 : ${listLocation.landCount}(개)</span>
+					</span>
+				</a>
+			</c:forEach>
+		</div>
+	</c:if>
+	<div class="t_center">
+		<c:if test="${not empty listLocation}">
+			<button class="btn_classic btn-white" onclick="location.href='<%=cp%>/travel/location'" style="width:300px;height:50px;">여행정보 모두보기</button>
+		</c:if>
+		<c:if test="${empty listLocation}">
+			<div>등록된 여행정보가 없습니다.</div>
+		</c:if>
 	</div>
 </div>
 
 <div class="colorlib-tour colorlib-light-grey">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+			<div class="col-md-12 text-center colorlib-heading animate-box">
 				<h2>추천 관광명소</h2>
 				<p>WAYOU에서 추천드리는 관광명소입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="f-tour">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="row">
-								<c:forEach var="listLandMark" items="${listLandMark}">
-									<div class="col-md-3 animate-box">
-										<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
-										<c:if test="${not empty listLandMark.saveFilename}">
-											<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${listLandMark.saveFilename});">
-										</c:if>
-										<c:if test="${empty listLandMark.saveFilename}">
-											<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
-										</c:if>
-											<div class="desc">
-												<h3>${listLandMark.landName}</h3>
-												<p class="price"><small>지역 : ${listLandMark.locName}(${listLandMark.loceName})</small></p>
-												<p class="price"><small>댓글수 : ${listLandMark.landReplyCount}(개)</small></p>
-											</div>
-										</a>
-									</div>
-								</c:forEach>
+		<c:if test="${not empty listLandMark}">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="f-tour">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<c:forEach var="listLandMark" items="${listLandMark}">
+										<div class="col-md-3 animate-box">
+											<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
+											<c:if test="${not empty listLandMark.saveFilename}">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${listLandMark.saveFilename});">
+											</c:if>
+											<c:if test="${empty listLandMark.saveFilename}">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
+											</c:if>
+												<div class="desc">
+													<h3>${listLandMark.landName}</h3>
+													<p class="price"><small>지역 : ${listLandMark.locName}(${listLandMark.loceName})</small></p>
+													<p class="price"><small>댓글수 : ${listLandMark.landReplyCount}(개)</small></p>
+												</div>
+											</a>
+										</div>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</c:if>
+		<c:if test="${empty listLandMark}">
+			<div class="row">
+				<div class="col-md-12 t_center">
+					<div>등록된 관광명소가 없습니다.</div>
+				</div>
+			</div>
+		</c:if>
 	</div>
 </div>
 
 <div id="colorlib-hotel">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
+			<div class="col-md-12 text-center colorlib-heading animate-box">
 				<h2>추천 여행일정</h2>
 				<p>WAYOU에서 추천드리는 여행일정입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12 animate-box">
-				<div>
-					<c:forEach var="listWorkspace" items="${listWorkspace}">
-						<div class="item">
-							<div class="hotel-entry">
-								<c:if test="${not empty listWorkspace.saveFilename}">
-									<a href="hotels.html" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${listWorkspace.saveFilename});">
-								</c:if>
-								<c:if test="${empty listWorkspace.saveFilename}">
-									<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
-								</c:if>
-									<p class="price"><span>${listWorkspace.locName}</span><small>(${listWorkspace.loceName})</small></p>
-								</a>
-								<div class="desc">
-									<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
-									<h3><a href="#">${listWorkspace.subject}</a></h3>
-									<span class="place">${listWorkspace.userId}(${listWorkspace.userName})</span>
-									<p>숙박일자 : ${listWorkspace.dayCount}(일) / 출발일 : ${listWorkspace.startDay}</p>
+		<c:if test="${not empty listWorkspace}">
+			<div class="row">
+				<div class="col-md-12 animate-box" style="margin-bottom:40px;">
+					<div>
+						<c:forEach var="listWorkspace" items="${listWorkspace}">
+							<div class="item">
+								<div class="hotel-entry">
+									<c:if test="${not empty listWorkspace.saveFilename}">
+										<a href="<%=cp%>/travel/plan/view?locCode=${listWorkspace.locCode}&workNum=${listWorkspace.workCode}&dayCount=${listWorkspace.dayCount}&userIdx=${listWorkspace.userIdx}" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${listWorkspace.saveFilename});">
+									</c:if>
+									<c:if test="${empty listWorkspace.saveFilename}">
+										<a href="<%=cp%>/travel/plan/view?locCode=${listWorkspace.locCode}&workNum=${listWorkspace.workCode}&dayCount=${listWorkspace.dayCount}&userIdx=${listWorkspace.userIdx}" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
+									</c:if>
+										<p class="price"><span>${listWorkspace.locName}</span><small>(${listWorkspace.loceName})</small></p>
+									</a>
+									<div class="desc">
+										<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
+										<h3><a href="#">${listWorkspace.subject}</a></h3>
+										<span class="place">${listWorkspace.userId}(${listWorkspace.userName}) / (${listWorkspace.pay == 0 ? '무료' : '유료'})</span>
+										<p>숙박일자 : ${listWorkspace.dayCount}(일) / 출발일 : ${listWorkspace.startDay}</p>
+									</div>
 								</div>
 							</div>
-						</div>
-					</c:forEach>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
+		</c:if>
+		<div class="t_center">
+			<c:if test="${not empty listWorkspace}">
+				<button class="btn_classic btn-white" style="width:300px;height:50px;">여행일정 모두보기</button>
+			</c:if>
+			<c:if test="${empty listWorkspace}">
+				<div>등록된 여행일정이 없습니다.</div>
+			</c:if>
 		</div>
 	</div>
 </div>

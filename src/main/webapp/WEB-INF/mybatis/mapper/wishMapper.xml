@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="wish">
+
+	<select id="dataCount1" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM wishlistcode_dh WHERE userIdx = #{userIdx}
+	</select>
+	<select id="dataCount2" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM wishlistcode_dt WHERE userIdx = #{userIdx}
+	</select>
+	
+	<select id="listWishdh" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
+		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
+   		 JOIN wishlistcode_dh dh ON dh.userIdx = u.userIdx
+       	 WHERE u.userIdx = #{userIdx}
+	</select>
+	<select id="listWishdt" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
+		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
+   		 JOIN wishlistcode_dt dt ON dt.userIdx = u.userIdx
+       	 WHERE u.userIdx = #{userIdx}
+	</select>
+	
+	<delete id="deleteWishdh" parameterType="Integer">
+		DELETE FROM wishlistcode_dh	WHERE wishCode = #{wishCode}
+	</delete>
+	<delete id="deleteWishdt" parameterType="Integer">
+		DELETE FROM wishlistcode_dt	WHERE wishCode = #{wishCode}
+	</delete>
+	
+	<delete id="updateWishdh" parameterType="Map">
+		UPDATE wishlistcode_dh SET amount=#{amount} WHERE wishCode=#{wishCode}
+	</delete>
+	<delete id="updateWishdt" parameterType="Map">
+		UPDATE wishlistcode_dt SET amount=#{amount} WHERE wishCode=#{wishCode}
+	</delete>
+</mapper>
