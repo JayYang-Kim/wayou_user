@@ -30,12 +30,12 @@
 		  <tr align="center" bgcolor="#ffffff" height="35" style="border-bottom: 1px solid #cccccc;"> 
 		      <td>${dto.listNum }</td>
 		      <!--여기 답변 수정해야됨 -->
-		      <c:if test="${vo.answerContent == 0}">
+     		  <c:if test="${dto.answerCount == 0 }">
 		      <td style="color: #787878;">
 		      	검토중
 		      </td>
 		      </c:if>
-		       <c:if test="${vo.answerContent != 0 }">
+			  <c:if test="${dto.answerCount != 0 }">
 		      <td style="color: #1cc3b2;">
 		      	답변완료
 		      </td>

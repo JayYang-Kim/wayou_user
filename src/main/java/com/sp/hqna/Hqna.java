@@ -12,6 +12,8 @@ public class Hqna {
 	private int userIdx;
 	private int listNum;
 	private int hitCount;
+	private int answerCount; 
+	
 	
 	public int getQnaCode() {
 		return qnaCode;
@@ -78,6 +80,12 @@ public class Hqna {
 	}
 	public void setHitCount(int hitCount) {
 		this.hitCount = hitCount;
+	}
+	public int getAnswerCount() {
+		return answerCount;
+	}
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
 	}
 
 	 

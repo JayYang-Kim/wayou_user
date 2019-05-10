@@ -18,9 +18,8 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Hotel &amp; Resort</h6>
-	                            <h2 data-animation="fadeInLeft" data-delay="500ms">Welcome To Roberto</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
+	                            <h2 data-animation="fadeInLeft" data-delay="500ms">호텔</h2>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Home > hotel</h6>
 	                        </div>
 	                    </div>
 	                </div>
@@ -37,9 +36,8 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">Hotel &amp; Resort</h6>
-	                            <h2 data-animation="fadeInUp" data-delay="500ms">Welcome To Roberto</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
+	                           	<h2 data-animation="fadeInLeft" data-delay="500ms">호텔</h2>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Home > hotel</h6>
 	                        </div>
 	                    </div>
 	                </div>
@@ -56,9 +54,8 @@
 	                    <!-- Welcome Text -->
 	                        <div class="col-12">
 	                            <div class="welcome-text text-center">
-	                                <h6 data-animation="fadeInDown" data-delay="200ms">Hotel &amp; Resort</h6>
-	                                <h2 data-animation="fadeInDown" data-delay="500ms">Welcome To Roberto</h2>
-	                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
+	                            <h2 data-animation="fadeInLeft" data-delay="500ms">호텔</h2>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Home > &nbsp; hotel</h6>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -131,10 +128,10 @@
                             
                                     <div class="row no-gutters">
 			                            <div class="col-6 col-md-6 col-lg-6" style="font-size: 20px;">  
-			                           		<input type="checkbox" name="price_order" value="asc" >낮은 가격순                               
+			                           		<input type="checkbox" name="price_order1" value="asc" >낮은 가격순                               
 			                            </div>
 			                            <div class="col-6 col-md-6 col-lg-6" style="font-size: 20px;">  
-			                           		<input type="checkbox" name="price_order" value="desc">높은 가격순                               
+			                           		<input type="checkbox" name="price_order2" value="desc">높은 가격순                               
 			                            </div>
                                     </div>
                            
