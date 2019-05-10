@@ -146,4 +146,15 @@ public class TicketServiceImpl implements TicketService {
 		return list;
 	}
 
+	@Override
+	public int insertWishlist(Ticket dto) {
+		int result=0;
+		try {
+			result=dao.insertData("ticket.insertWishlist", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }
