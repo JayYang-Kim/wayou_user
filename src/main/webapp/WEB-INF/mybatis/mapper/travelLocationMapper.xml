@@ -102,4 +102,34 @@
 		) WHERE rnum >= 1
 	]]>
 	</select>
+	
+	<select id="replyCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM locationCommunity WHERE locCode = #{locCode}
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.sp.travel.location.Location">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT replyCode, locCode, lc.userIdx, tu.userId, tu.userName, starNum, content,
+		            TO_CHAR(created, 'YYYY-MM-DD') AS created
+		        FROM locationCommunity lc
+		        JOIN tb_user tu
+		            ON lc.userIdx = tu.userIdx
+		        WHERE locCode = #{locCode}
+		        ORDER BY replyCode DESC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<insert id="insertReply" parameterType="com.sp.travel.location.Location">
+		INSERT INTO locationCommunity(replyCode, locCode, userIdx, starNum, content)
+			VALUES(LOCATIONCOMMUNITY_SEQ.NEXTVAL, #{locCode}, #{userIdx}, #{starNum}, #{content})
+	</insert>
+	
+	<delete id="deleteReply" parameterType="Integer">
+		DELETE FROM locationCommunity WHERE replyCode = #{replyCode}
+	</delete>
 </mapper>

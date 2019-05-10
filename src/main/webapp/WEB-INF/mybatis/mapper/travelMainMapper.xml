@@ -5,7 +5,7 @@
 	<select id="recommendLocation" resultType="com.sp.travel.main.Main">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT l.locCode, lc.locName, l.memo, NVL(lm.count, 0) AS landCount, NVL(starNum, 0) AS avgStarNum, NVL(replyCount, 0) AS replyCount,
+		        SELECT l.locCode, lc.locName, l.memo, NVL(lm.count, 0) AS landCount, NVL(starNum, 0) AS avgStarNum, NVL(replyCount, 0) AS locationReplyCount,
 		            CASE
 		                WHEN enable = 1 THEN '활성화'
 		                WHEN enable = 0 THEN '비활성화'
@@ -26,7 +26,7 @@
 		        ) lcm
 		            ON lcm.locCode = l.locCode
 		        WHERE enable = 1
-		        ORDER BY replyCount DESC, l.locCode ASC
+		        ORDER BY locationReplyCount DESC, l.locCode ASC
 		    ) tb
 	<![CDATA[
 		    WHERE ROWNUM <= 8
