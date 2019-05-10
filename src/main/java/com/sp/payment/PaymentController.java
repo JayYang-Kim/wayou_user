@@ -7,21 +7,21 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.stereotype.Controller;
 
 import com.sp.member.SessionInfo;
 
-@RestController("payment.paymentController")
+@Controller("payment.paymentController")
 public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
 	
 	@RequestMapping(value="/payInfo")
+	@ResponseBody
 	public Map<String, Object> pgInfo(@RequestParam int userIdx) {
 		
 		Payment dto = paymentService.payInfo(userIdx);
@@ -30,11 +30,6 @@ public class PaymentController {
 		model.put("payInfo", dto);
 		
 		return model;
-	}
-		
-	@RequestMapping(value="/payment/order")
-	public String payment() throws Exception {
-		return ".payment.order";
 	}
 	
 	@RequestMapping(value="/payment/complete")
@@ -49,26 +44,39 @@ public class PaymentController {
 	
 	@RequestMapping(value="/payment/orderMenu", method=RequestMethod.GET)
 	public String orderMenu(
-			@RequestParam int amount,
-			@RequestParam int price,
-			@RequestParam int totalprice,
-			@RequestParam int WishCode,
+			@RequestParam int wishCode,
 			@RequestParam int dataType,
 			HttpSession session,
 			Model model) throws Exception{
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Payment dto = new Payment();
-		dto=paymentService.payInfo(info.getUserIdx());
-		dto.setAmount(amount);
-		dto.setPrice(totalprice);
-		dto.setTotalMoney(totalprice);
-		dto.setOdCode(WishCode);
+		dto.setUserIdx(info.getUserIdx());
+		dto.setWishCode(wishCode);
 		dto.setDataType(dataType);
 		
 		model.addAttribute("dto",dto);
+		if(dataType==2) {
+			dto=paymentService.readOrder_dt(dto);
+		}
+		if(dataType==1) {
+			dto=paymentService.readOrder_dh(dto);
+		}
 		
+		model.addAttribute("dto",dto);
+		return ".payment.order";
+	}
+	@RequestMapping(value="/payment/AllorderMenu", method=RequestMethod.GET)
+	public String AllorderMenu(
+			HttpSession session,
+			Model model) throws Exception{
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		Payment dto = new Payment();
+		dto.setUserIdx(info.getUserIdx());
 		
-		return "";
+			dto=paymentService.readOrder_dt(dto);
+		
+		model.addAttribute("dto",dto);
+		return ".payment.order";
 	}
 	
 	@RequestMapping(value="/payment/orderMenu", method=RequestMethod.POST)

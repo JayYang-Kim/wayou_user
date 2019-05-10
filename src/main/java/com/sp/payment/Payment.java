@@ -13,6 +13,7 @@ public class Payment {
 	private String postCode;
 	private String userAddr1;
 	private String userAddr2;
+	private String etc;
 	private String userTel;
 	private String userEmail;
 	
@@ -31,6 +32,7 @@ public class Payment {
 	private int productCode;
 	private int amount;
 	private int price;
+	private int wishCode;
 	
 	//order Master DB용
 	private String orderDate;
@@ -214,6 +216,18 @@ public class Payment {
 	}
 	public void setDataType(int dataType) {
 		this.dataType = dataType;
+	}
+	public int getWishCode() {
+		return wishCode;
+	}
+	public void setWishCode(int wishCode) {
+		this.wishCode = wishCode;
+	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
 	}
 	
 	

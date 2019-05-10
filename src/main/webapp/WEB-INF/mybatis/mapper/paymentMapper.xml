@@ -10,7 +10,7 @@
 	</select>
 	
 	<select id="selectUserInfo" parameterType="Integer" resultType="com.sp.payment.Payment">
-		SELECT userIdx, userId, userName, postCode, userAddr1, userAddr2, userTel, userEmail 
+		SELECT userIdx, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail 
 		FROM tb_user
 		WHERE userIdx = #{userIdx}
 	</select>
@@ -27,5 +27,20 @@
 		JOIN order_dh dh ON tpm.payCode = dh.orderCode
 		JOIN order_dt dt ON tpm.payCode = dt.orderCode
 		JOIN order_dtr dtr ON tpm.payCode = dtr.orderCode
+	</select>
+	
+	<select id="readOrder_dt" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
+		select tu.userIdx, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail, dt.wishCode, productCode, amount, dt.price 
+		FROM wishlistCode_dt dt
+		JOIN ticketdetail t ON t.ticketdetailcode = dt.productcode
+		JOIN tb_user tu ON tu.userIdx = dt.userIdx
+		WHERE dt.userIdx =#{userIdx} and wishCode = #{wishCode}
+	</select>
+	<select id="readOrder_dh" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
+		select tu.userIdx, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail, wishCode, productCode, amount, price 
+		FROM wishlistCode_dh dh
+		JOIN roominfo ri ON ri.roomCode = dt.productcode
+		JOIN tb_user tu ON tu.userIdx = dt.userIdx
+		WHERE dh.userIdx = #{userIdx} and wishCode = #{wishCode}
 	</select>
 </mapper>
