@@ -39,11 +39,11 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public List<Hotel> readHotel(int hotelCode) {
+	public List<Hotel> readHotel(Map<String , Object>map) {
 		List<Hotel> dto=null;
 		
 		try {
-			dto=dao.selectList("hotel.readHotel", hotelCode);
+			dto=dao.selectList("hotel.readHotel", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,21 +75,13 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	   public int insertReview(Hotel dto) throws Exception {
+	   public int insertReview(Review dto) {
 	      int result=0;
 	      
 	      try {
-/*	         int seq_star = dao.selectOne("hotel.seq_star");*/
-	         
-/*	         reqMap.put("starCode", seq_star);*/
-	         
-	         dao.insertData("hotel.insertReview1", dto); // STAR INSERT 부분
-
-	         
-	         result = 1;
+	         result=dao.insertData("hotel.insertReview1", dto); // STAR INSERT 부분      
 	      } catch (Exception e) {
 	         e.printStackTrace();
-	         throw e;
 	      }
 	      return result;
 	   }
@@ -118,6 +110,19 @@ public class HotelServiceImpl implements HotelService {
 		}
 		
 		return list;
+	}
+
+	@Override
+	public int insertReserveHotel(Hotel dto) {
+		int result=0;
+		
+		try {
+			result=dao.insertData("hotel.insertReserveHotel", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	

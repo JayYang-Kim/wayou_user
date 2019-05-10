@@ -13,6 +13,7 @@ public class Review {
 	private int location_satis;
 	private int reviewLike;
 	private int star;
+	private String userName;
 	
 	
 	
@@ -87,5 +88,11 @@ public class Review {
 	}
 	public void setStar(int star) {
 		this.star = star;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

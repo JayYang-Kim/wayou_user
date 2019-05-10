@@ -25,6 +25,9 @@ public class Hotel {
 	private int star;
 	private int userIdx;
 	private String content;
+	private String userName;
+	private String checkin;
+	private String checkout;
 	
 	
 	
@@ -171,6 +174,24 @@ public class Hotel {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getCheckin() {
+		return checkin;
+	}
+	public void setCheckin(String checkin) {
+		this.checkin = checkin;
+	}
+	public String getCheckout() {
+		return checkout;
+	}
+	public void setCheckout(String checkout) {
+		this.checkout = checkout;
 	}
 
 

@@ -16,7 +16,7 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Welcome To wayou</h6>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">호텔</h6>
 	                            <h2 data-animation="fadeInLeft" data-delay="500ms">Hotel</h2>
 	                          
 	                        </div>
