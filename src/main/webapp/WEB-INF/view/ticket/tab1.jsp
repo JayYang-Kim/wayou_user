@@ -7,5 +7,5 @@
 %>
 
 <div>
-	<img src="<%=cp%>/resources/images/bg-img/everland-detail.jpg" alt="" style="padding-bottom: 50px;">
+	<img src="<%=cp%>/resources/images/bg-img/everland-detail.jpg" alt="" style="padding-left: 200px; padding-top: 50px; padding-bottom: 50px;">
 </div>
