@@ -39,6 +39,12 @@ public class Ticket {
 	private int price;					//가격
 	private int count;					//수량
 	
+	private int wishCode;				//위시리스트코드	
+	private int buyCount;				//구매수량
+	private int userIdx;				//유저
+	
+	
+	
 	
 	public int getStoreCode() {
 		return storeCode;
@@ -231,6 +237,25 @@ public class Ticket {
 	}
 	public void setListNum(int listNum) {
 		this.listNum = listNum;
+	}
+	public int getWishCode() {
+		return wishCode;
+	}
+	public void setWishCode(int wishCode) {
+		this.wishCode = wishCode;
+	}
+
+	public int getUserIdx() {
+		return userIdx;
+	}
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
+	public int getBuyCount() {
+		return buyCount;
+	}
+	public void setBuyCount(int buyCount) {
+		this.buyCount = buyCount;
 	}
 	
 	

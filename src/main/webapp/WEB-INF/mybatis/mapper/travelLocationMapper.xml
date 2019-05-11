@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.location">
+	<select id="listLocation" resultType="com.sp.travel.location.Location">
+		SELECT l.locCode, lc.locName, lc.loceName, memo, enable, adminIdx, saveFilename
+		FROM location l
+		JOIN locationCode lc
+		    ON l.locCode = lc.locCode
+		WHERE enable = 1
+		ORDER BY l.locCode ASC
+	</select>
+	
+	<select id="recommendLocation" resultType="com.sp.travel.location.Location">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT l.locCode, lc.locName, lc.loceName, memo, enable, adminIdx, saveFilename, NVL(lcm.locationReplyCount, 0) AS locationReplyCount , NVL(lcm.avgStarNum, 0) AS avgStarNum
+		        FROM location l
+		        JOIN locationCode lc
+		            ON l.locCode = lc.locCode
+		        LEFT OUTER JOIN (
+		            SELECT COUNT(*) AS locationReplyCount, locCode, AVG(starNum) AS avgStarNum
+		            FROM locationCommunity
+		            GROUP BY locCode
+		        ) lcm ON lcm.locCode = l.locCode
+		        WHERE l.enable = 1
+		        ORDER BY lcm.avgStarNum DESC, lcm.locationReplyCount DESC, l.locCode ASC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= 5
+		) WHERE rnum >= 1
+	]]>
+	</select>
+	
+	<select id="readLocation" parameterType="Integer" resultType="com.sp.travel.location.Location">
+		SELECT l.locCode, lc.locName, lc.loceName, l.lat, l.lng, l.memo, NVL(lm.count, 0) AS landCount, NVL(starNum, 0) AS locAvgStarNum, NVL(replyCount, 0) AS locReplyCount, l.enable, l.adminIdx, saveFilename,
+		    TO_CHAR(l.created, 'YYYY-MM-DD') created
+		FROM location l
+		JOIN locationCode lc
+		    ON l.locCode = lc.locCode
+		LEFT OUTER JOIN (
+		    SELECT locCode, COUNT(*) AS count
+		    FROM landmark
+		    GROUP BY locCode
+		) lm
+		    ON lm.locCode = l.locCode
+		LEFT OUTER JOIN (
+		    SELECT locCode, AVG(starNum) AS starNum, COUNT(*) AS replyCount
+		    FROM locationCommunity
+		    GROUP BY locCode
+		) lcm
+		    ON lcm.locCode = l.locCode
+		WHERE l.locCode = #{locCode} AND enable = 1
+	</select>
+	
+	<select id="recommendLandmark" parameterType="Integer" resultType="com.sp.travel.location.Location">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT lm.landCode, lm.locCode, lc.locName, loceName, lm.landName, lm.memo,
+		            TO_CHAR(lm.created, 'YYYY-MM-DD') created, lm.tagCode, ltc.tagName, lm.adminIdx, lf.saveFilename, NVL(lmc.landReplyCount, 0) AS landReplyCount
+		        FROM landMark lm
+		        JOIN locationCode lc
+		            ON lm.locCode = lc.locCode
+		        JOIN lndtagCode ltc
+		            ON lm.tagCode = ltc.tagCode
+		        LEFT OUTER JOIN (
+		            SELECT landCode, MIN(fileCode) AS fileCode, MIN(saveFilename) AS saveFilename
+		            FROM landmarkFile
+		            GROUP BY landCode
+		        ) lf ON lf.landCode = lm.landCode
+		        LEFT OUTER JOIN (
+		            SELECT Count(replyNum) AS landReplyCount, landCode
+		            FROM landmarkCommunity
+		            GROUP BY landCode
+		        ) lmc ON lmc.landCode = lm.landCode
+		        WHERE lm.locCode = #{locCode}
+		        ORDER BY landReplyCount DESC, lm.landCode ASC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= 8
+		) WHERE rnum >= 1
+	]]>
+	</select>
+	
+	<select id="recommendWorkspace" parameterType="Integer" resultType="com.sp.travel.location.Location">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT w.workCode, w.subject, w.dayCount, w.pay,
+				    TO_CHAR(w.startDay, 'YYYY-MM-DD') startDay, w.locCode, lc.locName, lc.loceName, w.userIdx, tu.userId, tu.userName, l.saveFilename, w.created
+				FROM workspace w
+				JOIN location l
+				    ON w.locCode = l.locCode
+				JOIN locationCode lc
+				    ON w.locCode = lc.locCode
+				JOIN tb_user tu
+				    ON w.userIdx = tu.userIdx
+				WHERE w.locCode = #{locCode}
+				ORDER BY w.created DESC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= 6
+		) WHERE rnum >= 1
+	]]>
+	</select>
+	
+	<select id="replyCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM locationCommunity WHERE locCode = #{locCode}
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.sp.travel.location.Location">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT replyCode, locCode, lc.userIdx, tu.userId, tu.userName, starNum, content,
+		            TO_CHAR(created, 'YYYY-MM-DD') AS created
+		        FROM locationCommunity lc
+		        JOIN tb_user tu
+		            ON lc.userIdx = tu.userIdx
+		        WHERE locCode = #{locCode}
+		        ORDER BY replyCode DESC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<insert id="insertReply" parameterType="com.sp.travel.location.Location">
+		INSERT INTO locationCommunity(replyCode, locCode, userIdx, starNum, content)
+			VALUES(LOCATIONCOMMUNITY_SEQ.NEXTVAL, #{locCode}, #{userIdx}, #{starNum}, #{content})
+	</insert>
+	
+	<delete id="deleteReply" parameterType="Integer">
+		DELETE FROM locationCommunity WHERE replyCode = #{replyCode}
+	</delete>
+</mapper>

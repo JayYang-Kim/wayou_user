@@ -22,6 +22,14 @@ public class Hotel {
 	private String cancel_notice;
 	private String roomName;
 	private int roomTypeCode;
+	private int star;
+	private int userIdx;
+	private String content;
+	private String userName;
+	private String checkin;
+	private String checkout;
+	
+	
 	
 	public int getHotelCode() {
 		return hotelCode;
@@ -149,7 +157,42 @@ public class Hotel {
 	public void setRoomTypeCode(int roomTypeCode) {
 		this.roomTypeCode = roomTypeCode;
 	}
-	
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
+	}
+	public int getUserIdx() {
+		return userIdx;
+	}
+	public void setUserIdx(int userIdx) {
+		this.userIdx = userIdx;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getCheckin() {
+		return checkin;
+	}
+	public void setCheckin(String checkin) {
+		this.checkin = checkin;
+	}
+	public String getCheckout() {
+		return checkout;
+	}
+	public void setCheckout(String checkout) {
+		this.checkout = checkout;
+	}
 
 
 }

@@ -38,8 +38,8 @@ public class FaqBoardServiceImpl implements FaqBoardService{
 	}
 
 	@Override
-	public QnABoard readBoard(int num) {
-		QnABoard dto = null;
+	public FaqBoard readBoard(int num) {
+		FaqBoard dto = null;
 		
 		try {
 			dto=dao.selectOne("tfaq.readBoard", num);

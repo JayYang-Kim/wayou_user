@@ -4,7 +4,133 @@
 <%
    String cp = request.getContextPath();
 %>
+<style type="text/css">
+div {
+	border: none;
+}
+.star {
+	font-size: 0;
+	letter-spacing: -4px;
+}
+.star a {
+	font-size: 20px;
+	text-align: center;
+	letter-spacing: 0;
+	display: inline-block;
 
+	color: #cccccc;
+	text-decoration: none;
+}
+.star a:first-child {
+	margin-left: 0;
+}
+.star a.on {
+	color: #F2CB61;
+}
+</style>
+
+<script type="text/javascript">
+
+function searchDate() {
+	var f=document.dateForm;
+	
+	f.submit();
+	
+}
+
+ function sendReserve(roomCode) {
+	var f=document.sendReserveForm;
+	
+	f.submit();
+	
+} 
+
+$(function () {
+	listPage(1);
+});
+
+
+function listPage(page) {
+	var hotelCode="${hotelCode}";
+	var query="hotelCode="+hotelCode+"&pageNo="+page;
+	var url="<%=cp%>/hotel/hotel/hotelReview";
+	
+	$.ajax({
+		type:"get"
+		,url : url
+		,data:query
+		,success:function(data) {
+			$("#listReview").html(data);
+		}
+		,beforeSend:function(e) {
+			e.setRequestHeader("AJAX", true);
+		}
+		,error:function(e) {
+			if(e.status==403) {
+				location.href="<%=cp%>/member/login";
+				return;
+			}
+			console.log(e.responseText);
+		}
+	});
+}
+$(function () {
+	$(".btnSendReview").click(function () {
+		var hotelCode = "${hotelCode}";
+		var content = $(".boxTF").val().trim();
+		var star=$("#score").val();
+		
+		if(!content) {
+			$(".boxTF").focus();
+			return;
+		}
+		content=encodeURIComponent(content);
+		
+		var query="hotelCode="+hotelCode+"&content="+content+"&star="+star; 
+		var url="<%=cp%>/hotel/hotel/insertReview";
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data){
+				if(data.state == "true") {
+					$(".boxTF").val("");
+					$("#score").val(0);
+					$(".insertstar").children("a").removeClass("on");
+					listPage(1);
+				}
+			}
+			,beforeSend:function(e) {
+				e.setRequestHeader("AJAX", true);
+			}
+			,error:function(e) {
+				if(e.status==403){
+					location.href="<%=cp%>/member/login";
+					return;
+				}
+				console.log(e.responseText);
+			}		
+		});
+	});
+});
+
+$(function() {
+	   $("body").on("click", ".insertstar a", function(){
+	      var b = $(this).hasClass("on");
+	      $(this).parent().children("a").removeClass("on");
+	      $(this).addClass("on").prevAll("a").addClass("on");
+	      if (b)
+	         $(this).removeClass("on");
+	      var s = $(".insertstar .on").length;
+	      $("#score").val(s);
+	      });
+	   });
+	   
+
+
+</script>
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: none;" data-jarallax-original-styles="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-end">
@@ -74,22 +200,24 @@
              <div class="col-12 col-lg-4">
                    <!-- Hotel Reservation Area -->
                    <div class="hotel-reservation--area mb-100" style="border: 2px  solid; border-color:gray; padding: 10px;">
-                       <form action="#" method="post">
+                       <form name="dateForm" action="<%=cp %>/hotel/hotel/article" method="get" >
                             <div >
                                <label style="font-size: 25px;" >날짜 검색</label>
                                <div>
                                    <div class="row no-gutters">
 		                            <div class="col-6 col-md-6 col-lg-6">                              
-		                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
+		                                <input type="date" class="form-control" id="checkin" name="checkin" value="${checkin }">
 		                            </div>
 		                           	<div class="col-6 col-md-6 col-lg-6">                              
-		                                <input type="date" class="form-control" id="checkIn" name="checkin-date">
+		                                <input type="date" class="form-control" id="checkout" name="checkout" value="${checkout}">
+		                                <input type="hidden" value="${hotelCode }" name="hotelCode">
+		                                <input type="hidden" value="${page }" name="page">
 		                            </div>
                                    </div>
                                </div>
                            </div>
                            <div class="form-group" style="margin-top: 40px;">
-                               <button type="submit" class="btn roberto-btn w-100">예약하기</button>
+                               <button type="button" class="btn roberto-btn w-100" onclick="searchDate();">검색하기</button>
                            </div>
                        </form>
                    </div>
@@ -109,10 +237,11 @@
                             <li><img src="<%=cp%>/resources/images/core-img/icon6.png" alt=""> Service 24/24</li>
                         </ul>
                     </div>
+        <form name="sendReserveForm" action="<%=cp%>/myPage/wishlist/list4" method="get" >
 				<c:forEach var="dto" items="${list }">
-					<div>${dto.roomName }
-                        <div class="room-features-area d-flex flex-wrap mb-50">
-                            <h6>해당객실이름:
+					
+                        <div class="room-features-area d-flex flex-wrap mb-50" style=" border: 1px solid #ebebeb;">
+                          <h6>객실&nbsp;이름: &nbsp;&nbsp;${dto.roomName }
                                  <span>
                                   
                                         <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt="">
@@ -121,12 +250,18 @@
                          </h6>
                             <h6>이용정보: <span>${dto.information }</span></h6>
                             <h6>Services: <span>Wifi, television ... </span></h6>
-                           <div class="form-group" style="margin-top: 40px;">
-                               <button type="submit" class="btn roberto-btn w-100">예약하기</button>
-                           </div>
+                            <h6 style="padding-top: 50px;" class="form-group">
+                            	<span style="margin-bottom: 30px;">가격 : ${dto.price }</span>
+                               <button type="button" class="btn roberto-btn w-100"  onclick="sendReserve('${dto.roomCode}');">예약하기</button>
+                               <input type="hidden" value="${dto.hotelCode }" name="hotelCode">
+                               <input type="hidden" value="${dto.roomCode }" name="roomCode">
+                               <input type="hidden"  value="${dto.price }" name="price">
+
+                            </h6>
                         </div>
-					</div>
+				
     			</c:forEach>
+    		</form>
              </div>
              
              <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; padding: 15px 0px;" >
@@ -141,91 +276,32 @@
                         <!-- <h4>Room Review</h4> -->
                         <div style="font-size: 35px; ">
                         Hotel Review
+                 
                         <div>
-                        	<p class="star">								
-								<a class="on" href="#">★</a> 			 
-							</p>
-                    	<textarea style="width: 85%; font-size: 10px;"></textarea>
-                    	<button type="button" style="float:right; text-align: right; font-size: 20px;" >후기 등록하기</button>
-                   		</div>	
-                        </div>
-                    	
-							
-												
-						
-                    	
-                        <!-- Single Review Area -->
-                      <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; border-bottom: 2px solid gray; padding: 15px 0px;" >
-                            <div class="reviwer-thumbnail">
-                                <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt="">
-                            </div>
-                            
-                            <div class="reviwer-content" >
-                            
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title" >
-                                        <span>작성자  &nbsp; |&nbsp; 작성날짜</span>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">친절도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">청결도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">편의성 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">위치만족도 ★★★★★</div>
-                                    </div>
-                                </div>
-                                
-                                 <p>후기내용</p>
-                            </div>
-                        </div>
-                        
-                                                <!-- Single Review Area -->
-                      <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; border-bottom: 2px solid gray; padding: 15px 0px;" >
-                            <div class="reviwer-thumbnail">
-                                <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt="">
-                            </div>
-                            
-                            <div class="reviwer-content" >
-                            
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title" >
-                                        <span>작성자  &nbsp; |&nbsp; 작성날짜</span>
-                                        <!-- <h6>Amada Lyly</h6> -->
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">친절도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">청결도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">편의성 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">위치만족도 ★★★★★</div>
-                                    </div>
-                                </div>
-                                
-                                 <p>후기내용</p>
-                            </div>
-                        </div>
-                        
-                                                <!-- Single Review Area -->
-                      <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; border-bottom: 2px solid gray; padding: 15px 0px;" >
-                            <div class="reviwer-thumbnail">
-                                <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt="">
-                            </div>
-                            
-                            <div class="reviwer-content" >
-                            
-                                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                    <div class="reviwer-title" >
-                                        <span>작성자  &nbsp; |&nbsp; 작성날짜</span>
-                                        <!-- <h6>Amada Lyly</h6> -->
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">친절도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">청결도 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">편의성 ★★★★★</div>
-                                        <div style="font-size: 10px; color: #1cc3b2; font-weight: border;">위치만족도 ★★★★★</div>
-                                    </div>
-                                </div>
-                                
-                                 <p>후기내용</p>
-                            </div>
-                        </div>
+						  <div>
+                    	    <textarea class="boxTF" style="width: 80%; font-size: 20px; text-align: left;"></textarea>							
+							<div style="font-size: 20px; text-align: center; float: right; width: 20%; ">호텔 별점주기
+							<p class="star insertstar" style="font-size: 25px; text-align: right; text-align: center; ">					  
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a> 
+								<a href="#">★</a>
+							</p>	
+						<p style="text-align: center; ">
+							<button type="button" style="font-size: 15px; border: 1px solid gray; padding: 3px; " class="btnSendReview" >후기 등록하기</button>
+                   			<input type="hidden" value="${hotelCode }" name="hotelCode">
+                   		</p>
+							</div>				
+							<input type="hidden" name="score" id="score" value="0">
+						</div>	
+                      </div>
+                  
+                    </div >
+                        <div id="listReview" style="padding-top: 20px;" ></div>
                     </div>
                 </div>
-
-
-            </div>
+</div>
 
     <!-- Rooms Area End -->
 

@@ -45,7 +45,7 @@
 		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.address1
 		    	FROM ticket t
 		    	JOIN (
-		    			select ticketCode, max(price) as price
+		    			select ticketCode, min(price) as price
 		    			FROM ticketDetail
 		    			GROUP BY ticketCode
 				) detail on detail.ticketCode=t.ticketCode
@@ -80,7 +80,7 @@
 	        TO_CHAR(sales_end, 'YYYY"년" MM"월" DD"일"') as sales_end, s.address1, detail.price, t.storeCode
 		FROM ticket t
 		JOIN (
-	    		select ticketcode, max(price) as price
+	    		select ticketcode, min(price) as price
 	    		from ticketDetail
 	    		group by ticketcode
 			) detail on detail.ticketCode=t.ticketcode
@@ -92,12 +92,46 @@
 		SELECT TO_CHAR(use_start, 'YYYY-MM-DD') as use_start FROM ticket where storeCode=#{storeCode}
 	</select>
 	
+	<select id="readOption" parameterType="map" resultType="com.sp.ticket.Ticket">
+		SELECT ticketDetail.ticketDetailCode, TO_CHAR(use_start, 'YYYY-MM-DD') as use_start, ticketdetail.ticketDetailName, ticketdetail.price, ticketdetail.count
+		FROM ticket
+		LEFT OUTER JOIN ticketDetail ON ticket.ticketCode=ticketDetail.ticketCode
+		WHERE storeCode=#{storeCode} AND use_start=#{date}
+	</select>
+	
 	<select id="readStore" parameterType="Integer" resultType="com.sp.ticket.Ticket">
 		SELECT storeCode, storeName, address1, address2, tel, notice, name, email, cancel_notice
 		FROM store
 		WHERE storeCode=#{storeCode}
 	</select>
-
-
-
+	
+	<insert id="insertReview" parameterType="com.sp.ticket.TicketReview">
+	INSERT INTO storeReview (reviewCode, storeCode, star, content, userIdx)
+	VALUES (storeReview_seq.NEXTVAL, #{storeCode}, #{star}, #{content, jdbcType=CLOB}, #{userIdx})
+	</insert>
+	
+	<select id="listReview" parameterType="map" resultType="com.sp.ticket.TicketReview">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+				SELECT reviewCode, storeCode, star, content, TO_CHAR(created, 'YYYY-MM-DD') as created, u.userName
+				FROM storeReview s
+				JOIN tb_user u ON s.useridx = u.userIdx
+				WHERE storeCode = #{storeCode}
+				ORDER BY reviewCode DESC
+	<![CDATA[				
+		        )tb WHERE ROWNUM <= #{end}
+	       )WHERE rnum >= #{start}
+	]]>			
+	</select>
+	
+	<select id="reviewCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM storeReview
+		WHERE storeCode=#{storeCode}
+	</select>
+	
+	<insert id="insertWishlist" parameterType="com.sp.ticket.Ticket">
+	INSERT INTO wishlistcode_dt (wishCode, userIdx, productCode, amount, price)
+	VALUES (wishCode_dt_seq.NEXTVAL, #{userIdx}, #{ticketDetailCode}, #{buyCount}, #{price})
+	</insert>
 </mapper>

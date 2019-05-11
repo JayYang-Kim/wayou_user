@@ -10,39 +10,53 @@
 
  -->
 
-	<select id="listHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
-		 SELECT * FROM (
-            SELECT ROWNUM rnum, tb.* FROM (
+<select id="listHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
+  SELECT * FROM (
+         SELECT ROWNUM rnum, tb.* FROM (
          SELECT h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename
          FROM hotelInfo h
- 
          LEFT OUTER JOIN(
-            SELECT hotelCode, hcount, min(price) as price, roomCode
-            FROM roomInfo
-            GROUP BY hotelCode, roomCode, hcount
-         ) newT ON newT.hotelCode=h.hotelCode
+            select * from (
+              SELECT hotelCode, hcount, min(price) as price, roomcode, rank() over(partition by hotelcode order by min(price)) g
+              FROM roomInfo
+              GROUP BY hotelCode, hcount, roomcode
+          ) where g=1  
+         )  newT ON newT.hotelCode=h.hotelCode
          LEFT OUTER JOIN(
             select roomcode, saveFilename FROM roomfile
-            WHERE fileCode=(SELECT MAX(fileCode) FROM roomfile)
-         )nf ON nf.roomCode=newT.roomCode      			
-			 <where>
-		      	<if test="value!=null and value !=''" >
-					(INSTR(h.address1, #{value}) > 0)
-		      	</if>
-			 </where>
-			 <choose>
-			  <when test="price_order=='desc'"> 
-			   ORDER BY price desc
-			  </when>
-			  <when test="price_order=='asc'"> 
-			   ORDER BY price asc
-			  </when>
-			 </choose>			 
+            WHERE fileCode=(SELECT min(fileCode) FROM roomfile)
+         )nf ON nf.roomCode=newT.roomCode                
+          <where>
+               <if test="value!=null and value !=''" >
+               (INSTR(h.address1, #{value}) > 0)
+               </if>
+          </where>
+          
+          <choose>
+           <when test="price_order=='desc'"> 
+            ORDER BY price desc
+           </when>
+           <when test="price_order=='asc'"> 
+            ORDER BY price asc
+           </when>
+          </choose>
+          <where>
+          <if test="checkin !='' and checkout !='' ">
+				AND( rf.roomCode NOT IN (
+                	select roomCode from roomReserInfo where 
 <![CDATA[
-		      )tb WHERE ROWNUM <=#{end}
-		   )WHERE rnum >=#{start}
+                        (TO_DATE(TO_CHAR(checkin, 'YYYYMMDD')) >= #{checkin} AND TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) <= #{checkout}) OR
+                        (TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) >= #{checkin} AND TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) <= #{checkout})
 ]]>
-	</select>
+                     )
+                 )	
+</if>          
+</where>
+<![CDATA[
+            )tb WHERE ROWNUM <=#{end}
+         )WHERE rnum >=#{start}
+]]>
+   </select>
 	
 	<select id="dataCount" parameterType="map" resultType="Integer">
 		SELECT NVL(COUNT(*), 0) FROM hotelInfo
@@ -53,13 +67,23 @@
 			 </where>
 	</select>
 	
+	<!-- article 호텔방 리스트 -->
 	<select id="readHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
-				SELECT rf.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.information, r.notice, r.cancel_notice, h.hname, r.hotelCode
-				FROM roomInfo r
-				JOIN roomType rt ON rt.roomTypeCode =r.roomTypeCode
-				JOIN roomFile rf ON rf.roomCode=r.roomCode
-				JOIN hotelInfo h ON h.hotelCode=r.hotelCode 	
-		  		  WHERE r.hotelCode=#{hotelCode}
+SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.information, r.notice, r.cancel_notice, h.hname, r.hotelCode
+            FROM roomInfo r
+            JOIN roomType rt ON rt.roomTypeCode =r.roomTypeCode
+            JOIN hotelInfo h ON h.hotelCode=r.hotelCode
+				WHERE r.hotelCode = #{hotelCode}
+<if test="checkin !='' and checkout !='' ">
+				AND( rf.roomCode NOT IN (
+                	select roomCode from roomReserInfo where 
+<![CDATA[
+                        (TO_DATE(TO_CHAR(checkin, 'YYYYMMDD')) >= #{checkin} AND TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) <= #{checkout}) OR
+                        (TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) >= #{checkin} AND TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) <= #{checkout})
+]]>
+                     )
+                 )	
+</if>
 	</select>
 	
 		<select id="readHotelMax" parameterType="Integer" resultType="com.sp.hotel.Hotel">
@@ -77,11 +101,45 @@
                 WHERE h.hotelCode=#{hotelCode}
 	</select>
 	
-	<insert id="insertHReview" parameterType="com.sp.hotel.Hotel">
-		INSERT INTO STAR(starCode, kind, clean, service, location_satis  ) 
-				VALUES (star_seq.NEXTVAL, #{kind}, #{clean}, #{service}, #{location_satis})
+	
+	<insert id="insertReview1" parameterType="com.sp.hotel.Review">
+		INSERT INTO HREVIEW(HotelCode, ReviewNum,  content,  userIdx, star) 
+				VALUES (#{hotelCode}, hReview_seq.NEXTVAL, #{content}, #{userIdx}, #{star})
 	</insert>
 	
+	<select id="reviewDataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM HREVIEW
+		WHERE hotelCode=#{hotelCode}
+	</select>
 	
+	<select id="listReview" parameterType="map" resultType="com.sp.hotel.Review">
+		SELECT * FROM (
+            SELECT ROWNUM rnum, tb.* FROM (
+         SELECT h.hotelCode, h.content, h.star, h.created, u.userName
+         FROM HREVIEW h
+         JOIN tb_user u ON u.userIdx=h.userIdx
+
+	     where hotelCode=#{hotelCode}
+		 ORDER BY created DESC
+<![CDATA[
+		      )tb WHERE ROWNUM <=#{end}
+		   )WHERE rnum >=#{start}
+]]>
+	</select>
 	
+	<insert id="insertReserveHotel" parameterType="com.sp.hotel.Hotel">
+		INSERT INTO  WISHLISTCODE_DH(wishCode, userIdx, productCode, amount, price, hotelCode)
+         VALUES(WISHCODE_DH_SEQ.NEXTVAL, #{userIdx} , #{roomCode}, 1, #{price}, #{hotelCode})	
+	</insert>
+	
+	<select id="readHotel2" parameterType="map" resultType="com.sp.hotel.Hotel">
+SELECT r.roomCode, rt.roomName, r.price, r.hotelCode
+            FROM roomInfo r
+            JOIN roomType rt ON rt.roomTypeCode =r.roomTypeCode
+            JOIN hotelInfo h ON h.hotelCode=r.hotelCode
+			WHERE r.hotelCode = #{hotelCode}
+			AND r.roomCode=#{roomCode}
+			
+	</select>
+		
 </mapper>

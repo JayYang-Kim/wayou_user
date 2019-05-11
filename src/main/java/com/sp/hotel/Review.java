@@ -3,7 +3,7 @@ package com.sp.hotel;
 public class Review {
 	private int hotelCode;
 	private int reviewNum;
-	private int startCode;
+	private int starCode;
 	private String content;
 	private String created;
 	private int userIdx;
@@ -12,6 +12,9 @@ public class Review {
 	private int service;
 	private int location_satis;
 	private int reviewLike;
+	private int star;
+	private String userName;
+	
 	
 	
 	public int getHotelCode() {
@@ -26,11 +29,11 @@ public class Review {
 	public void setReviewNum(int reviewNum) {
 		this.reviewNum = reviewNum;
 	}
-	public int getStartCode() {
-		return startCode;
+	public int getStarCode() {
+		return starCode;
 	}
-	public void setStartCode(int startCode) {
-		this.startCode = startCode;
+	public void setStarCode(int starCode) {
+		this.starCode = starCode;
 	}
 	public String getContent() {
 		return content;
@@ -80,6 +83,16 @@ public class Review {
 	public void setReviewLike(int reviewLike) {
 		this.reviewLike = reviewLike;
 	}
-	
-	
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 }
