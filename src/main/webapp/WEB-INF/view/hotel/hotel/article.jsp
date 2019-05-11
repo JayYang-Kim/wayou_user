@@ -38,6 +38,13 @@ function searchDate() {
 	
 }
 
+ function sendReserve(roomCode) {
+	var f=document.sendReserveForm;
+	
+	f.submit();
+	
+} 
+
 $(function () {
 	listPage(1);
 });
@@ -230,8 +237,9 @@ $(function() {
                             <li><img src="<%=cp%>/resources/images/core-img/icon6.png" alt=""> Service 24/24</li>
                         </ul>
                     </div>
+        <form name="sendReserveForm" action="<%=cp%>/myPage/wishlist/list4" method="get" >
 				<c:forEach var="dto" items="${list }">
-		
+					
                         <div class="room-features-area d-flex flex-wrap mb-50" style=" border: 1px solid #ebebeb;">
                           <h6>객실&nbsp;이름: &nbsp;&nbsp;${dto.roomName }
                                  <span>
@@ -242,12 +250,18 @@ $(function() {
                          </h6>
                             <h6>이용정보: <span>${dto.information }</span></h6>
                             <h6>Services: <span>Wifi, television ... </span></h6>
-                            <h6 style="padding-top: 90px;" class="form-group">
-                               <button type="submit" class="btn roberto-btn w-100">예약하기</button>
+                            <h6 style="padding-top: 50px;" class="form-group">
+                            	<span style="margin-bottom: 30px;">가격 : ${dto.price }</span>
+                               <button type="button" class="btn roberto-btn w-100"  onclick="sendReserve('${dto.roomCode}');">예약하기</button>
+                               <input type="hidden" value="${dto.hotelCode }" name="hotelCode">
+                               <input type="hidden" value="${dto.roomCode }" name="roomCode">
+                               <input type="hidden"  value="${dto.price }" name="price">
+
                             </h6>
                         </div>
-			
+				
     			</c:forEach>
+    		</form>
              </div>
              
              <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; padding: 15px 0px;" >
@@ -276,6 +290,7 @@ $(function() {
 							</p>	
 						<p style="text-align: center; ">
 							<button type="button" style="font-size: 15px; border: 1px solid gray; padding: 3px; " class="btnSendReview" >후기 등록하기</button>
+                   			<input type="hidden" value="${hotelCode }" name="hotelCode">
                    		</p>
 							</div>				
 							<input type="hidden" name="score" id="score" value="0">
