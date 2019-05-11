@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +29,10 @@ public class TravelController {
 	
 	@Autowired
 	private TravelService travelService;
+	@Autowired
+	private EventService eventService;
+	@Autowired
+	private NoticeService noticeService;
 	
 	@Autowired
 	private MyUtil util;
@@ -42,7 +47,7 @@ public class TravelController {
 		name = URLDecoder.decode(name, "utf-8");
 		List<Location> list = travelService.locList(name);
 		model.addAttribute("list", list);
-		return "travel/myplan/location/locList"; //일반형태로 리턴
+		return "travel/myplan/location/locList";
 	}
 	
 	
@@ -514,4 +519,255 @@ public class TravelController {
 		
 		return map;
 	}
+	
+	
+	@GetMapping("/travel/event/list")
+	public String eventList(
+			@RequestParam(defaultValue="1", value="page") int current_page,
+			@RequestParam(defaultValue="", value="searchKey") String searchKey,
+			@RequestParam(defaultValue="", value="searchValue") String searchValue,
+			HttpServletRequest req,
+			Model model
+			) throws Exception{
+		
+		Map<String,Object> map = new HashMap<>();
+		String cp = req.getContextPath();
+		String url = cp+"/travel/event/list";
+		String articleUrl = cp+"/travel/event/article"; 
+		
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+		if(!searchValue.equals("")) {	
+			url += "?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+			articleUrl +="?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+		}
+		
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		//사전 준비
+		int rows = 10;
+		int articleCount = eventService.articleCount(map);
+		int total_page = util.pageCount(rows, articleCount);
+		
+		int start = (current_page-1)*rows +1;
+		int end = current_page*rows;
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Event> list =  eventService.eventList(map);
+		
+		//리스트 번호 만들기
+
+		Calendar cal = Calendar.getInstance();
+		Calendar now = Calendar.getInstance();
+		now.set(Calendar.HOUR, 23);
+		now.set(Calendar.MINUTE,59);
+		now.set(Calendar.SECOND, 59);
+		
+		
+		int n =0;
+		for(Event event : list) {
+			event.setListNum(articleCount-((current_page-1)*rows +n));
+			event.setCreated(event.getCreated().substring(0, 11));
+			cal.set(Integer.parseInt(event.getCreated().substring(0, 4)), Integer.parseInt(event.getCreated().substring(5, 7)), Integer.parseInt(event.getCreated().substring(8, 9)));
+			System.out.println("eventName : "+event.getEventCode()+" now : "+now.getTimeInMillis()+" input : "+cal.getTimeInMillis());
+			if(now.getTimeInMillis()-cal.getTimeInMillis()<=0) {
+				event.setIsNew(true);
+			}else {
+				event.setIsNew(false);
+			}
+			n++;
+		}
+		
+		String paging = util.paging(current_page, total_page, url);
+		
+		model.addAttribute("page", current_page);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", URLEncoder.encode(searchValue, "utf-8"));
+		model.addAttribute("url", url);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("paging", paging);
+		model.addAttribute("list", list);
+		
+		return	".travel.event.list";
+	}
+	
+	
+	@GetMapping("/travel/event/article")
+	public String eventArticle(
+			@RequestParam(value="code") int eventCode,
+			@RequestParam(defaultValue="1", value="page") int current_page,
+			@RequestParam(defaultValue="", value="searchKey") String searchKey,
+			@RequestParam(defaultValue="", value="searchValue") String searchValue,
+			Model model
+			){
+		try {
+			Event event = eventService.eventArticle(eventCode);
+			event.setFiles(eventService.eventFiles(eventCode));
+			eventService.updateHitCount(eventCode);
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+			String query = "page="+current_page+"&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+			
+			event.setStartDate(event.getStartDate().substring(0, 10));
+			event.setEndDate(event.getEndDate().substring(0, 10));
+			
+			model.addAttribute("event", event);
+			model.addAttribute("query", query);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "redirect:/travel/event/list?page="+current_page+"&searchKey="+searchKey+"&searchValue="+searchValue;
+		}
+
+		return ".travel.event.article";
+	}
+	
+	@PostMapping("/travel/event/insertReply")
+	@ResponseBody
+	public void insertReply(
+				EventReply reply,
+				HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		reply.setUserIdx(info.getUserIdx());
+		eventService.insertReply(reply);
+	}
+	
+	@GetMapping("/travel/event/replyList")
+	public String replyList(
+			@RequestParam int eventCode,
+			@RequestParam(value="page", defaultValue="1") int current_page,
+			Model model
+			) {
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		
+		int rows = 5;
+		int dataCount = eventService.replyCount(eventCode);
+		int total_page = util.pageCount(rows, dataCount);
+		
+		int start = (current_page-1)*rows+1;
+		int end = current_page*rows;
+		
+		map.put("eventCode", eventCode);
+		map.put("start", start);
+		map.put("end", end);
+	
+		List<EventReply> list = eventService.eventReplys(map);
+		String methodName = "replyList";
+		String paging = util.pagingMethod(current_page, total_page, methodName);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("page", current_page);
+		model.addAttribute("dataCount", dataCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+		
+		return "travel/event/replyList";
+	}
+	
+	@PostMapping("/travel/event/deleteReply")
+	@ResponseBody
+	public Map<String,Object> deleteReply(
+			EventReply reply,
+			HttpSession session
+			){		
+		Map<String,Object> map = new HashMap<>();
+		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		if(reply.getUserIdx() != info.getUserIdx()) {
+			map.put("isDeleted", false);
+			return map;
+		}
+		eventService.deleteReply(reply);
+		map.put("isDeleted", true);
+		return map;
+	}
+	
+
+	@GetMapping("/travel/notice/list")
+	public String noticeList(
+			@RequestParam(defaultValue="1", value="page") int current_page,
+			@RequestParam(defaultValue="", value="searchKey") String searchKey,
+			@RequestParam(defaultValue="", value="searchValue") String searchValue,
+			HttpServletRequest req,
+			Model model
+			) throws Exception{
+		
+		Map<String,Object> map = new HashMap<>();
+		String cp = req.getContextPath();
+		String url = cp+"/travel/notice/list";
+		String articleUrl = cp+"/travel/notice/article"; 
+		
+		searchValue = URLDecoder.decode(searchValue, "utf-8");
+		if(!searchValue.equals("")) {	
+			url += "?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+			articleUrl +="?searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+		}
+		
+		map.put("searchKey", searchKey);
+		map.put("searchValue", searchValue);
+		
+		//사전 준비
+		int rows = 10;
+		int articleCount = noticeService.noticeCount(map);
+		int total_page = util.pageCount(rows, articleCount);
+		
+		int start = (current_page-1)*rows +1;
+		int end = current_page*rows;
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<Notice> list =  noticeService.list(map);
+		
+		//리스트 번호 만들기
+		int n =0;
+		for(Notice notice : list) {
+			notice.setListNum(articleCount-((current_page-1)*rows +n));
+			notice.setCreated(notice.getCreated().substring(0, 11));
+			n++;
+		}
+		
+		String paging = util.paging(current_page, total_page, url);
+		
+		model.addAttribute("page", current_page);
+		model.addAttribute("searchKey", searchKey);
+		model.addAttribute("searchValue", URLEncoder.encode(searchValue, "utf-8"));
+		model.addAttribute("url", url);
+		model.addAttribute("articleUrl", articleUrl);
+		model.addAttribute("paging", paging);
+		model.addAttribute("list", list);	
+		return	".travel.notice.list";
+	}
+	
+	@GetMapping("/travel/notice/article")
+	public String readNotice(
+				@RequestParam int notiCode,
+				@RequestParam(defaultValue="", value="searchKey") String searchKey,
+				@RequestParam(defaultValue="", value="searchValue") String searchValue,
+				@RequestParam(defaultValue="1", value="page") int current_page,
+				Model model
+			) {
+		try {
+			Notice notice = noticeService.readNotice(notiCode);
+			notice.setFiles(noticeService.readFiles(notiCode));
+			
+			
+			noticeService.updateHitCount(notiCode);
+			searchValue = URLDecoder.decode(searchValue, "utf-8");
+			String query = "page="+current_page+"&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
+			
+			model.addAttribute("notice", notice);
+			model.addAttribute("query", query);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "redirect:/travel/notice/list?page="+current_page+"&searchKey="+searchKey+"&searchValue="+searchValue;
+		}
+		return ".travel.notice.article";
+	}
+	
+	
 }

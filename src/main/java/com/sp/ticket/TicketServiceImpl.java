@@ -97,4 +97,64 @@ public class TicketServiceImpl implements TicketService {
 		return dto;
 	}
 
+	@Override
+	public int insertReview(TicketReview dto) {
+		int result=0;
+		
+		try {
+			result=dao.insertData("ticket.insertReview", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<TicketReview> listReview(Map<String, Object> map) {
+		List<TicketReview> list = null;
+		
+		try {
+			list=dao.selectList("ticket.listReview", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int reviewCount(Map<String, Object> map) {
+		int result = 0;
+		
+		try {
+			result=dao.selectOne("ticket.reviewCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<Ticket> readOption(Map<String, Object> map) {
+		List<Ticket> list = null;
+		try {
+			list=dao.selectList("ticket.readOption", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public int insertWishlist(Ticket dto) {
+		int result=0;
+		try {
+			result=dao.insertData("ticket.insertWishlist", dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 }

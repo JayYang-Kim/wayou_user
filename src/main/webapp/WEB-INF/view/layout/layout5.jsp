@@ -36,6 +36,9 @@
     <script src="<%=cp%>/resources/js/lib/util-jquery.js"></script>
     <script src="<%=cp%>/resources/js/lib/util.js"></script>
     <script src="<%=cp%>/resources/js/lib/jquery-ui-1.12.1.min.js"></script>
+    
+    <script src="<%=cp%>/resources/js/ui_script.js"></script>
+    
 	
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -70,5 +73,20 @@
     <script src="<%=cp%>/resources/js/lib/roberto.bundle.js"></script>
     <!-- Active -->
     <script src="<%=cp%>/resources/js/lib/default-assets/active.js"></script>
+    	<!-- pop_layer -->
+	<div id="popup" class="pop_bg">
+		<article class="pop_wrap">
+			<h1>팝업 타이틀</h1>
+			<div class="pop_cont">
+				<p></p>
+				<p class="t_center mt20">
+					<a href="#" class="pop_close button w72 btn_wht">취소</a>
+					<a href="#" class="button w72 btn_blk">확인</a>
+				</p>
+			</div>
+			<!-- 팝업을 닫을때는 .pop_close 클래스를 활용 하거나, popupHide 함수 활용 -->
+			<a href="#" class="btn_close pop_close">닫기</a>
+		</article>
+	</div>
 </body>
 </html>

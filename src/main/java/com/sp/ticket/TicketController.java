@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,8 +13,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
+import com.sp.member.SessionInfo;
 
 @Controller("ticket.ticketController")
 public class TicketController {
@@ -128,6 +131,79 @@ public class TicketController {
 		return ".ticket.detail";
 	}
 	
+	@RequestMapping(value="/ticket/tab1", method=RequestMethod.POST)
+	public String tab1 (
+			) throws Exception {
+		return "ticket/tab1";
+	}
+	
+	
+	@RequestMapping(value="/ticket/tab2", method=RequestMethod.POST)
+	public String tab2 () throws Exception {
+		return "ticket/tab2";
+	}
+	
+	@RequestMapping(value="/ticket/insertReview", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> insertReview(
+			TicketReview dto,
+			HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		dto.setUserIdx(info.getUserIdx());
+		
+		int result=ticketService.insertReview(dto);
+		String state="true";
+		if(result==0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		return model;
+	}
+	
+	@RequestMapping(value="/ticket/listReview")
+	public String listReview(
+			@RequestParam int storeCode,
+			@RequestParam(value="pageNo", defaultValue="1") int current_page,
+			Model model
+			) throws Exception {
+		
+		int rows = 5;
+		int total_page;
+		int reviewCount = 0;
+		
+		Map<String, Object> map = new HashMap<>();
+		map.put("storeCode", storeCode);
+		
+		reviewCount = ticketService.reviewCount(map);
+		total_page = myUtil.pageCount(rows, reviewCount);
+		if(current_page>total_page)
+			current_page=total_page;
+		
+		int start = (current_page-1)*rows+1;
+		int end = current_page*rows;
+		
+		map.put("start", start);
+		map.put("end", end);
+		
+		List<TicketReview> listReview = ticketService.listReview(map);
+		for(TicketReview dto : listReview) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
+		
+		String paging = myUtil.pagingMethod(current_page, total_page, "listPage");
+		
+		model.addAttribute("listReview", listReview);
+		model.addAttribute("pageNo", current_page);
+		model.addAttribute("reviewCount", reviewCount);
+		model.addAttribute("total_page", total_page);
+		model.addAttribute("paging", paging);
+	
+		return "ticket/listReview";
+	}
+	
+	
 	@RequestMapping(value="/ticket/tab3", method=RequestMethod.POST)
 	public String tab3 (
 			@RequestParam int storeCode,
@@ -138,6 +214,52 @@ public class TicketController {
 		model.addAttribute("dto", dto);
 		
 		return "ticket/tab3";
+	}
+	
+	@RequestMapping(value="/ticket/readOption", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> readOption (
+			@RequestParam Map<String, Object> paramMap
+			) {
+		
+		List<Ticket> list = ticketService.readOption(paramMap);
+		Map<String, Object> model = new HashMap<>();
+		model.put("listOption", list);
+		
+		return model;
+	}
+	
+	/*
+	@RequestMapping(value="/myPage/wishList/list" , method= RequestMethod.GET)
+	@ResponseBody
+	public String go (
+	
+			) {
+		
+		return "myPage/wishList/list";
+	}
+	*/
+	
+	@RequestMapping(value="/myPage/wishList/list3" )
+	@ResponseBody
+	public Map<String, Object> insertWishlist (
+			Ticket dto,
+			HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		dto.setUserIdx(info.getUserIdx());
+		
+		int result=ticketService.insertWishlist(dto);
+		
+		String state="true";
+		if(result==0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		
+		return model;
 	}
 }
 

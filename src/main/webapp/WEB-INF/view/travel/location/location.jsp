@@ -5,244 +5,369 @@
    String cp = request.getContextPath();
 %>
 
-<%-- <link rel="stylesheet" href="<%=cp%>/resources/css/travel.css"> --%>
+<link rel="stylesheet" href="<%=cp%>/resources/css/travel.css">
 
-<!-- Breadcrumb Area Start -->
-<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
+<script type="text/javascript">
+	var starCount = 0;
+
+	$(function(){
+		replyList(1);
+		
+		$(".star a").click(function() {
+			var b = $(this).hasClass("on");
+			$(this).parent().children("a").removeClass("on");
+			$(this).addClass("on").prevAll("a").addClass("on");
+			if(b) {
+				$(this).removeClass("on");
+			}
+				
+			starCount = $(".star .on").length;
+		});
+	});
+
+	function replyList(page){
+		var url = "<%=cp%>/travel/location/replyList";
+		var query="locCode=${readLocation.locCode}&page=" + page;
+		
+		$.ajax({
+			type:"get",
+			url:url,
+			data:query,
+			success:function(data){
+				$("#layoutReply").html(data);
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+			}
+		});
+	}
+	
+	$("body").on("click",".btn_addReply",function(){
+		var $content = $(this).closest(".roberto-contact-form").find("textarea");
+		if(!$content.val()){
+			alert("내용을 입력해주세요.");
+			$content.focus();
+			return false; 
+		}
+		
+		var url = "<%=cp%>/travel/location/reply/insert";
+		var query="locCode=${readLocation.locCode}&starNum=" + starCount + "&content=" + $content.val();
+	
+		$.ajax({
+			type:"post",
+			url:url,
+			data:query,
+			success:function(data){
+				if(data.msg == "false") {
+					alert("글 등록 실패했습니다.");
+					
+					return false;
+				}
+				
+				$content.val("");
+				$(".star a").removeClass("on");
+				
+				replyList(1);
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+			}
+		});
+	});
+
+	$("body").on("click",".btn_deleteReply", function(){
+		replyCode = $(this).closest(".reviwer-content").attr("data-replynum");
+		userIdx = $(this).closest(".reviwer-content").attr("data-userIdx");
+		
+		if(!confirm("삭제하시겠습니까?")){
+			return false;
+		}
+		
+		var url = "<%=cp%>/travel/location/reply/delete";
+		var query = "replyCode=" + replyCode + "&userIdx=" + userIdx;
+		$.ajax({
+			type:"post",
+			url:url,
+			data:query,
+			dataType:"json",
+			success:function(data){
+				if(data.msg == "true"){
+					alert("글 삭제 성공했습니다.");
+					replyList(1);
+					
+					return false;
+				}
+				
+				alert("글 삭제 실패했습니다.");
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+			}
+		})
+	});
+</script>
+
+<!-- 지역상세정보(Top) -->
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top01.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-end">
             <div class="col-12">
                 <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
-                    <h2 class="room-title">Room View Sea</h2>
-                    <h2 class="room-price">$180 <span>/ Per Night</span></h2>
+                    <h2 class="room-title">${readLocation.locName}(${readLocation.loceName})</h2>
+                    <%-- <h2 class="room-price">$180 <span>/ Per Night</span></h2> --%>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Breadcrumb Area End -->
+<!-- //지역상세정보(Top) -->
 
-<!-- Rooms Area Start -->
+<!-- 지역상세정보(Img) -->
 <div class="roberto-rooms-area section-padding-100-0">
-    <div class="container">
-        <div class="row">
-            <div class="col-12 col-lg-8">
-                <!-- Single Room Details Area -->
-                <div class="single-room-details-area mb-50">
-                    <!-- Room Thumbnail Slides -->
-                    <div class="room-thumbnail-slides mb-50">
-                        <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt="">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="<%=cp%>/resources/images/bg-img/50.jpg" class="d-block w-100" alt="">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="<%=cp%>/resources/images/bg-img/51.jpg" class="d-block w-100" alt="">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="<%=cp%>/resources/images/bg-img/52.jpg" class="d-block w-100" alt="">
-                                </div>
-                            </div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12 col-lg-8">
+				<!-- Single Room Details Area -->
+				<div class="single-room-details-area mb-50">
+					<!-- Room Thumbnail Slides -->
+					<div class="room-thumbnail-slides mb-50">
+						<div id="room-thumbnail--slide" class="carousel slide"
+							data-ride="carousel">
+							<div class="carousel-inner">
+								<div class="carousel-item active">
+									<c:if test="${not empty readLocation.saveFilename}">
+										<img src="/wadmin/uploads/location/${readLocation.saveFilename}" class="d-block w-100" alt="">
+									</c:if>
+									<c:if test="${empty readLocation.saveFilename}">
+										<img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
+									</c:if>
+								</div>
+							</div>
 
-                            <ol class="carousel-indicators">
-                                <li data-target="#room-thumbnail--slide" data-slide-to="0" class="active">
-                                    <img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
-                                </li>
-                                <li data-target="#room-thumbnail--slide" data-slide-to="1">
-                                    <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt="">
-                                </li>
-                                <li data-target="#room-thumbnail--slide" data-slide-to="2">
-                                    <img src="<%=cp%>/resources/images/bg-img/50.jpg" class="d-block w-100" alt="">
-                                </li>
-                                <li data-target="#room-thumbnail--slide" data-slide-to="3">
-                                    <img src="<%=cp%>/resources/images/bg-img/51.jpg" class="d-block w-100" alt="">
-                                </li>
-                                <li data-target="#room-thumbnail--slide" data-slide-to="4">
-                                    <img src="<%=cp%>/resources/images/bg-img/52.jpg" class="d-block w-100" alt="">
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-
-                    <!-- Room Features -->
-                    <div class="room-features-area d-flex flex-wrap mb-50">
-                        <h6>Size: <span>350-425sqf</span></h6>
-                        <h6>Capacity: <span>Max persion 5</span></h6>
-                        <h6>Bed: <span>King beds</span></h6>
-                        <h6>Services: <span>Wifi, television ...</span></h6>
-                    </div>
-
-                    <p>If you live in New York City or travel to and from New York City a lot, you know all about the traffic there. Getting places is often next to impossible, even with the gazillion yellow cabs. If you’re like me you often look with envy at those shiny limousines with their unformed drivers and wish you could sit in one. Well, you can. New York limo service is more affordable than you think, whether it’s for Newark airport transportation, LaGuardia airport transportation, or to drive wherever you wish to go.</p>
-
-                    <ul>
-                        <li><i class="fa fa-check"></i> Mauris molestie lectus in irdiet auctor.</li>
-                        <li><i class="fa fa-check"></i> Dictum purus at blandit molestie.</li>
-                        <li><i class="fa fa-check"></i> Neque non fermentum suscipit.</li>
-                        <li><i class="fa fa-check"></i> Donec id dui ac massa malesuada.</li>
-                        <li><i class="fa fa-check"></i> In sit amet sapien quis orci maximus.</li>
-                        <li><i class="fa fa-check"></i> Vestibulum rutrum diam vel eros tristique.</li>
-                    </ul>
-
-                    <p>Every time I hail a cab in New York City or wait for one at the airports, I hope I’ll be lucky enough to get one that’s halfway decent and that the driver actually speaks English. I have spent many anxious moments wondering if I ever get to my destination. Or whether I’d get ripped off. Even if all goes well, I can’t say I can remember many rides in New York cabs that were very pleasant. And given how much they cost by now, going with a limo makes ever more sense.</p>
-                </div>
-
-                <!-- Room Service -->
-                <div class="room-service mb-50">
-                    <h4>Room Services</h4>
-
-                    <ul>
-                        <li><img src="<%=cp%>/resources/images/core-img/icon1.png" alt=""> Air Conditioning</li>
-                        <li><img src="<%=cp%>/resources/images/core-img/icon2.png" alt=""> Free drinks</li>
-                        <li><img src="<%=cp%>/resources/images/core-img/icon3.png" alt=""> Restaurant quality</li>
-                        <li><img src="<%=cp%>/resources/images/core-img/icon4.png" alt=""> Cable TV</li>
-                        <li><img src="<%=cp%>/resources/images/core-img/icon5.png" alt=""> Unlimited Wifi</li>
-                        <li><img src="<%=cp%>/resources/images/core-img/icon6.png" alt=""> Service 24/24</li>
-                    </ul>
-                </div>
-
-                <!-- Room Review -->
-                <div class="room-review-area mb-100">
-                    <h4>Room Review</h4>
-
-                    <!-- Single Review Area -->
-                    <div class="single-room-review-area d-flex align-items-center">
-                        <div class="reviwer-thumbnail">
-                            <img src="img/bg-img/53.jpg" alt="">
-                        </div>
-                        <div class="reviwer-content">
-                            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                <div class="reviwer-title">
-                                    <span>27 Aug 2019</span>
-                                    <h6>Brandon Kelley</h6>
-                                </div>
-                                <div class="reviwer-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Review Area -->
-                    <div class="single-room-review-area d-flex align-items-center">
-                        <div class="reviwer-thumbnail">
-                            <img src="img/bg-img/54.jpg" alt="">
-                        </div>
-                        <div class="reviwer-content">
-                            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                <div class="reviwer-title">
-                                    <span>27 Aug 2019</span>
-                                    <h6>Sounron Masha</h6>
-                                </div>
-                                <div class="reviwer-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                        </div>
-                    </div>
-
-                    <!-- Single Review Area -->
-                    <div class="single-room-review-area d-flex align-items-center">
-                        <div class="reviwer-thumbnail">
-                            <img src="img/bg-img/55.jpg" alt="">
-                        </div>
-                        <div class="reviwer-content">
-                            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-                                <div class="reviwer-title">
-                                    <span>27 Aug 2019</span>
-                                    <h6>Amada Lyly</h6>
-                                </div>
-                                <div class="reviwer-rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
-                            </div>
-                            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-12 col-lg-4">
-                <!-- Hotel Reservation Area -->
-                <div class="hotel-reservation--area mb-100">
-                    <form action="#" method="post">
-                        <div class="form-group mb-30">
-                            <label for="checkInDate">Date</label>
-                            <div class="input-daterange" id="datepicker">
-                                <div class="row no-gutters">
-                                    <div class="col-6">
-                                        <input type="text" class="input-small form-control" name="checkInDate" id="checkInDate" placeholder="Check In">
-                                    </div>
-                                    <div class="col-6">
-                                        <input type="text" class="input-small form-control" name="checkOutDate" placeholder="Check Out">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-30">
-                            <label for="guests">Guests</label>
-                            <div class="row">
-                                <div class="col-6">
-                                    <select name="adults" id="guests" class="form-control">
-                                        <option value="adults">Adults</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                    </select>
-                                </div>
-                                <div class="col-6">
-                                    <select name="children" id="children" class="form-control">
-                                        <option value="children">Children</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group mb-50">
-                            <div class="slider-range">
-                                <div class="range-price">Max Price: $0 - $3000</div>
-                                <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="3000" data-label-result="Max Price: ">
-                                    <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                    <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                    <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn roberto-btn w-100">Check Available</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+							<%-- <ol class="carousel-indicators">
+								<li data-target="#room-thumbnail--slide" data-slide-to="0"
+									class="active"><img
+									src="<%=cp%>/resources/images/bg-img/48.jpg"
+									class="d-block w-100" alt=""></li>
+							</ol> --%>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<!-- Rooms Area End -->
+<!-- //지역상세정보(Img) -->
+
+<!-- 지역 여행테마 -->
+<section class="roberto-blog-area section-padding-100-0 colorlib-light-grey clear">
+	<div class="row m0">
+		<!-- Section Heading -->
+		<div class="col-12">
+			<div class="section-heading text-center wow">
+				<h6>WAYOU 여행 테마</h6>
+				<h4>국내 여행테마를 선택하여 관광명소를 확인하세요.</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="row m0">
+		<div class="col-12 col-md-6 col-lg-3">
+			<div class="single-post-area mb-100 wow">
+				<a href="<%=cp%>/travel/location" class="post-thumbnail"><img
+					src="<%=cp%>/resources/images/travel/main/tag01.jpg" alt="여행테마 - 역사/종교"></a>
+				<!-- Post Title -->
+				<h3 class="post-title bold t_center">역사 / 종교</h3>
+			</div>
+		</div>
+
+		<div class="col-12 col-md-6 col-lg-3">
+			<div class="single-post-area mb-100 wow">
+				<a href="<%=cp%>/travel/plan/list" class="post-thumbnail"><img
+					src="<%=cp%>/resources/images/travel/main/tag02.jpg" alt="여행테마 - 숙박"></a>
+				<!-- Post Title -->
+				<h3 class="post-title bold t_center">숙박</h3>
+			</div>
+		</div>
+
+		<div class="col-12 col-md-6 col-lg-3">
+			<div class="single-post-area mb-100 wow">
+				<a href="<%=cp%>/travel/party" class="post-thumbnail"><img
+					src="<%=cp%>/resources/images/travel/main/tag03.jpg" alt="여행테마 - 쇼핑"></a>
+				<!-- Post Title -->
+				<h3 class="post-title bold t_center">쇼핑</h3>
+			</div>
+		</div>
+		
+		<div class="col-12 col-md-6 col-lg-3">
+			<div class="single-post-area mb-100 wow">
+				<a href="<%=cp%>/travel/party" class="post-thumbnail"><img
+					src="<%=cp%>/resources/images/travel/main/tag04.jpg" alt="여행테마 - 음식점"></a>
+				<!-- Post Title -->
+				<h3 class="post-title bold t_center">음식점</h3>
+			</div>
+		</div>
+	</div>
+	<!-- //row -->
+</section>
+<!-- //지역 여행테마 -->
+
+<!-- 지역 관광명소 -->
+<div class="colorlib-tour clear">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center colorlib-heading animate-box">
+				<h2>${readLocation.locName} 추천 관광명소</h2>
+				<p>WAYOU에서 추천드리는 ${readLocation.locName} 관광명소입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
+			</div>
+		</div>
+		<c:if test="${not empty recommendLandmak}">
+			<div class="row">
+				<div class="col-md-12" style="margin-bottom:40px;">
+					<div class="f-tour">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<c:forEach var="recommendLandmak" items="${recommendLandmak}">
+										<div class="col-md-3 animate-box">
+											<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
+											<c:if test="${not empty recommendLandmak.saveFilename}">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${recommendLandmak.saveFilename});">
+											</c:if>
+											<c:if test="${empty recommendLandmak.saveFilename}">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
+											</c:if>
+												<div class="desc">
+													<h3>${recommendLandmak.landName}</h3>
+													<p class="price"><small>지역 : ${recommendLandmak.locName}(${recommendLandmak.loceName})</small></p>
+													<p class="price"><small>댓글수 : ${recommendLandmak.landReplyCount}(개)</small></p>
+												</div>
+											</a>
+										</div>
+									</c:forEach>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		<div class="t_center">
+			<c:if test="${not empty recommendLandmak}">
+				<button class="btn_classic btn-white" style="width:300px;height:50px;">${readLocation.locName} 관광명소 모두보기</button>
+			</c:if>
+			<c:if test="${empty recommendLandmak}">
+				<div>등록된 관광명소가 없습니다.</div>
+			</c:if>
+		</div>
+	</div>
+</div>
+<!-- //지역 관광명소 -->
+
+<!-- 추천 여행일정 -->
+<div id="colorlib-hotel" class="colorlib-light-grey clear">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12 text-center colorlib-heading animate-box">
+				<h2>${readLocation.locName} 추천 여행일정</h2>
+				<p>WAYOU에서 추천드리는 ${readLocation.locName} 여행일정입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
+			</div>
+		</div>
+		<c:if test="${not empty recommendWorkspace}">
+			<div class="row">
+				<div class="col-md-12 animate-box" style="margin-bottom:40px;">
+					<div>
+						<c:forEach var="recommendWorkspace" items="${recommendWorkspace}">
+							<div class="item">
+								<div class="hotel-entry">
+									<c:if test="${not empty recommendWorkspace.saveFilename}">
+										<a href="<%=cp%>/travel/plan/view?locCode=${recommendWorkspace.locCode}&workNum=${recommendWorkspace.workCode}&dayCount=${recommendWorkspace.dayCount}&userIdx=${recommendWorkspace.userIdx}" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${recommendWorkspace.saveFilename});">
+									</c:if>
+									<c:if test="${empty listWorkspace.saveFilename}">
+										<a href="<%=cp%>/travel/plan/view?locCode=${recommendWorkspace.locCode}&workNum=${recommendWorkspace.workCode}&dayCount=${recommendWorkspace.dayCount}&userIdx=${recommendWorkspace.userIdx}" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
+									</c:if>
+										<p class="price"><span>${recommendWorkspace.locName}</span><small>(${recommendWorkspace.loceName})</small></p>
+									</a>
+									<div class="desc">
+										<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
+										<h3><a href="#">${recommendWorkspace.subject}</a></h3>
+										<span class="place">${recommendWorkspace.userId}(${recommendWorkspace.userName}) / ${recommendWorkspace.pay == 0 ? '무료' : '유료'}</span>
+										<p>숙박일자 : ${recommendWorkspace.dayCount}(일) / 출발일 : ${recommendWorkspace.startDay}</p>
+									</div>
+								</div>
+							</div>
+						</c:forEach>
+					</div>
+				</div>
+			</div>
+		</c:if>
+		<div class="t_center">
+			<c:if test="${not empty recommendWorkspace}">
+				<button class="btn_classic btn-white" onclick="location.href='<%=cp%>/travel/plan/list?locCode=${readLocation.locCode}'" style="width:300px;height:50px;">${readLocation.locName} 여행일정 모두보기</button>
+			</c:if>
+			<c:if test="${empty recommendWorkspace}">
+				<div>등록된 여행일정이 없습니다.</div>
+			</c:if>
+		</div>
+	</div>
+</div>
+<!-- //추천 여행일정 -->
+
+<!-- 커뮤니티 -->
+<div class="room-review-area section-padding-100-0 mb-100 clear">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h4>커뮤니티</h4>
+
+			    <div id="layoutReply" style="padding-top:30px;border-top: 1px solid #cccccc;"></div>
+			</div>
+			<c:if test="${not empty sessionScope.member}">
+				<div class="roberto-contact-form col-md-12 mt-20 mb-100" style="border-top: 1px solid #cccccc;padding-top: 20px;">
+	                <h2>글 남기기</h2>
+	
+	                <div class="row">
+	                    <div class="col-12">
+	                    	<div class="box_star">
+	                    		<div class="title">
+	                    			<span>평점 : </span>
+	                    		</div>
+	                    		<div class="star">
+	                    			<a href="#">★</a> 
+									<a href="#">★</a> 
+									<a href="#">★</a> 
+									<a href="#">★</a> 
+									<a href="#">★</a>
+	                    		</div>
+	                    	</div>
+	                        <textarea name="content" class="form-control mb-30" placeholder="내용을 입력해주세요."></textarea>
+						</div>
+	                    <div class="col-12 text-right">
+							<button type="button" class="btn_addReply btn roberto-btn btn-3 mt-15">등록하기</button>
+	                    </div>
+					</div>
+	            </div>
+            </c:if>
+		</div>
+		<!-- //row -->
+	</div>
+</div>
+<!-- //커뮤니티 -->

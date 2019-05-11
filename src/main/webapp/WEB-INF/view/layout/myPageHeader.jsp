@@ -103,7 +103,7 @@
                                 </li>
                                 <li><a href="<%=cp%>/myPage/main">관심상품</a>
                                     <ul class="dropdown">
-                                        <li><a href="<%=cp%>/">- 장바구니</a></li>
+                                        <li><a href="<%=cp%>/myPage/wishlist/list">- 장바구니</a></li>
                                     </ul>
                                 </li>
                                 <li><a href="<%=cp%>/myPage/main">회원정보</a>
