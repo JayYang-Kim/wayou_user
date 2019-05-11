@@ -19,7 +19,7 @@ public class Main {
 	
 	// 추천 여행정보
 	private int landCount;
-	private int avgStarNum;
+	private double avgStarNum;
 	private int locationReplyCount;
 	private String enable;
 	
@@ -125,10 +125,10 @@ public class Main {
 	public void setLandCount(int landCount) {
 		this.landCount = landCount;
 	}
-	public int getAvgStarNum() {
+	public double getAvgStarNum() {
 		return avgStarNum;
 	}
-	public void setAvgStarNum(int avgStarNum) {
+	public void setAvgStarNum(double avgStarNum) {
 		this.avgStarNum = avgStarNum;
 	}
 	public int getLocationReplyCount() {

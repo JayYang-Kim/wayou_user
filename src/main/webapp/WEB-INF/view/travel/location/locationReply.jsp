@@ -18,9 +18,16 @@
 		                <h6>${reply.userId}(${reply.userName})</h6>
 		            </div>
 		            <div class="reviwer-rating" style="position:relative;top:12px;">
-		            	<c:forEach begin="1" end="${reply.starNum}">
-		            		<i class="fa fa-star"></i>
-		            	</c:forEach>
+		            	<c:if test="${reply.starNum < 5}">
+			            	<c:forEach begin="${reply.starNum}" end="4">
+			            		<i class="fa fa-star" style="color: #b3b3b3;"></i>
+			            	</c:forEach>
+		            	</c:if>
+		            	<c:if test="${reply.starNum > 0}">
+			            	<c:forEach begin="1" end="${reply.starNum}">
+			            		<i class="fa fa-star"></i>
+			            	</c:forEach>
+		            	</c:if>
 		            </div>
 		        </div>
 		        <p>${reply.content}</p>
