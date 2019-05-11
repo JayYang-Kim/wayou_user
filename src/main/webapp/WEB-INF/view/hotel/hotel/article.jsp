@@ -237,7 +237,7 @@ $(function() {
                             <li><img src="<%=cp%>/resources/images/core-img/icon6.png" alt=""> Service 24/24</li>
                         </ul>
                     </div>
-        <form name="sendReserveForm" action="<%=cp%>/myPage/wishlist/list4" method="get" >
+        <form name="sendReserveForm" action="<%=cp%>/myPage/wishlist/list4" method="post" >
 				<c:forEach var="dto" items="${list }">
 					
                         <div class="room-features-area d-flex flex-wrap mb-50" style=" border: 1px solid #ebebeb;">
@@ -256,7 +256,6 @@ $(function() {
                                <input type="hidden" value="${dto.hotelCode }" name="hotelCode">
                                <input type="hidden" value="${dto.roomCode }" name="roomCode">
                                <input type="hidden"  value="${dto.price }" name="price">
-
                             </h6>
                         </div>
 				
