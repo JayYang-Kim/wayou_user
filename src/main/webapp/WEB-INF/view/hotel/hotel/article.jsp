@@ -299,7 +299,7 @@ $(function () {
                     <!-- Room Review -->
                     <div class="room-review-area mb-100">
                         <!-- <h4>Room Review</h4> -->
-                        <div style="font-size: 35px; ">
+                        <div style="font-size: 35px; border: 1px solid gray; padding: 3px; padding: 20px; ">
                         Hotel Review
                  
                         <div>

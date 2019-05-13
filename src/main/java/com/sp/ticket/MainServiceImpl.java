@@ -50,4 +50,17 @@ public class MainServiceImpl implements MainService {
 		return list;
 	}
 
+	@Override
+	public List<Ticket> mainBestList() throws Exception {
+		List<Ticket> list = null;
+		
+		try {
+			list = dao.selectList("tmain.mainBestList");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
+	}
+
 }

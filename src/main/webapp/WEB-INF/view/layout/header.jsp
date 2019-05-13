@@ -139,7 +139,6 @@
                                         	<ul class="dropdown">
                                                 <li><a href="<%=cp%>/ticket/qna/list">- 질문과 답변</a></li>
                                                 <li><a href="<%=cp%>/ticket/faq/list">- 자주하는 질문</a></li>
-                                                <li><a href="#">- 1:1문의</a></li>
                                             </ul>
                                         </li>
                                     </ul>
