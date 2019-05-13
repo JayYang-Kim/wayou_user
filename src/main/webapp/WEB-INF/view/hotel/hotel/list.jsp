@@ -4,7 +4,30 @@
 <%
    String cp = request.getContextPath();
 %>
+<style type="text/css">
+div {
+   border: none;
+}
+.star {
+   font-size: 0;
+   letter-spacing: -4px;
+}
+.star a {
+   font-size: 20px;
+   text-align: center;
+   letter-spacing: 0;
+   display: inline-block;
 
+   color: #cccccc;
+   text-decoration: none;
+}
+.star a:first-child {
+   margin-left: 0;
+}
+.star a.on {
+   color: #F2CB61;
+}
+</style>
 
 
 <section class="welcome-area">

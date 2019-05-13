@@ -36,8 +36,8 @@ public class NoticeController {
 		
 		Map<String,Object> map = new HashMap<>();
 		String cp = req.getContextPath();
-		String url = cp+"/travel/notice/list";
-		String articleUrl = cp+"/travel/notice/article"; 
+		String url = cp+"/hotel/hnotice/list";
+		String articleUrl = cp+"/hotel/hnotice/article"; 
 		
 		searchValue = URLDecoder.decode(searchValue, "utf-8");
 		if(!searchValue.equals("")) {	

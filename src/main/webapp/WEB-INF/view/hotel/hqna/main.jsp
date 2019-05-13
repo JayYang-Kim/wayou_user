@@ -20,8 +20,6 @@ $(function(){
 			  url="<%=cp%>/hotel/hqna/listTab1";
 		  } else if(tab=="2") {
 			  url="<%=cp%>/hotel/hqna/tab2";
-		  } else if(tab=="3") {
-			  url="<%=cp%>/hotel/hqna/tab3";
 		  }
 		  
 		  viewTabContent(id, url);
@@ -219,7 +217,6 @@ function serchList() {
 	  <ul id="myTab" class="nav nav-tabs" role="tablist">
 	      <li role="presentation"  class="active"><a href="#tabContent1" aria-controls="1" role="tab" data-toggle="tab">질&nbsp;문&nbsp;과&nbsp;답&nbsp;변</a></li>
 	      <li role="presentation"><a href="#tabContent2" aria-controls="2" role="tab" data-toggle="tab">자&nbsp;주&nbsp;하&nbsp;는&nbsp;질&nbsp;문</a></li>
-	      <li role="presentation"><a href="#tabContent3" aria-controls="3" role="tab" data-toggle="tab">1대1&nbsp;&nbsp;문의</a></li>
 	  </ul>
 	
 	  <div class="tab-content">
