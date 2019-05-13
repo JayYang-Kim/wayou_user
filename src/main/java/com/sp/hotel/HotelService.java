@@ -16,5 +16,5 @@ public interface HotelService {
 	public List<Review> listReview(Map <String, Object> map);
 	
 	public int insertReserveHotel(Hotel dto);
-	public Hotel readHotel2(Hotel dto);
+	
 }

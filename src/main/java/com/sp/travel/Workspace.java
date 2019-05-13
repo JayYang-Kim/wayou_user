@@ -13,6 +13,8 @@ public class Workspace {
 	private String userName;
 	private int budget;
 	private int pay;
+	private String saveFilename;
+	
 	public int getPay() {
 		return pay;
 	}
@@ -85,5 +87,13 @@ public class Workspace {
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
 	}
+	public String getSaveFilename() {
+		return saveFilename;
+	}
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
+	}
+	
+	
 	
 }

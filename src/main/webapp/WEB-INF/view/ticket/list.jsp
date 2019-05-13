@@ -135,17 +135,6 @@
                                   </div>
                               </div>
                           </div>
-                         <!--  <div class="form-group mb-50">
-                              <div class="slider-range">
-                                  <div class="range-price">Max Price: $0 - $3000</div>
-                                  <div data-min="0" data-max="3000" data-unit="$" class="slider-range-price ui-slider ui-slider-horizontal ui-widget ui-widget-content ui-corner-all" data-value-min="0" data-value-max="3000" data-label-result="Max Price: ">
-                                      <div class="ui-slider-range ui-widget-header ui-corner-all"></div>
-                                      <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                      <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
-                                  </div>
-                              </div>
-                          </div> -->
-                        
                       </form>
                   </div>
               </div>
@@ -167,12 +156,26 @@
                       </div>
                       <!-- Room Content -->
                       <div class="room-content" style="margin-top: 1px;">
-                          <div style="font-size: 18px; margin-bottom: 3px;">${dto.address1}</div>
+                          <div style="font-size: 18px; margin-bottom: 3px;">${dto.loctitle}</div>
                           <h1 style="margin-bottom: 20px;">${dto.ticketName}</h1>
                           <div><h4>${dto.price}<span>원</span></h4></div>
                           <div class="room-feature">
-                              <div><h6>★★★★★(255)</h6></div>
-                              <h6>423개 구매</h6>
+                              <div>
+                               	<span class="star"> 
+                           			<c:forEach begin="1" end="${dto.star}">
+                              			<a class="on" style="color: #F2CB61; font-size: 20px;">★</a> 
+                           			</c:forEach>
+                        		</span>
+                        		<span style="font-size: 20px;">(${dto.reviewCount})</span>
+                              </div>
+                              <!-- <p><h6>423개 구매</h6></p> -->
+                              
+                              
+                              
+                              
+                              
+                              
+                              
                           </div>
                           <a href="${articleUrl}&ticketCode=${dto.ticketCode}&storeCode=${dto.storeCode}" class="btn view-detail-btn">더보기 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                       </div>                     

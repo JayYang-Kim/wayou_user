@@ -3,7 +3,7 @@ package com.sp.travel;
 public class WorkLand {
 	private int landCode;
 	private String landName;
-	private String saveFileName;
+	private String saveFilename;
 	private int workLandCode;
 	private String tagName;
 	private String orderNum;
@@ -11,10 +11,7 @@ public class WorkLand {
 	private String lng;
 	private int budget;
 	private String memo;
-	
-	
-	
-	
+
 	public int getBudget() {
 		return budget;
 	}
@@ -57,11 +54,11 @@ public class WorkLand {
 	public void setLandName(String landName) {
 		this.landName = landName;
 	}
-	public String getSaveFileName() {
-		return saveFileName;
+	public String getSaveFilename() {
+		return saveFilename;
 	}
-	public void setSaveFileName(String saveFileName) {
-		this.saveFileName = saveFileName;
+	public void setSaveFilename(String saveFileName) {
+		this.saveFilename = saveFileName;
 	}
 	public int getWorkLandCode() {
 		return workLandCode;

@@ -25,6 +25,7 @@ public class HqnaController {
 	@Autowired
 	private HqnaService hqnaService;
 	
+	
 	@Autowired
 	private MyUtil myUtil;
 	
@@ -93,7 +94,71 @@ public class HqnaController {
 	}
 	
 	@RequestMapping(value="/hotel/hqna/tab2", method=RequestMethod.POST)
-	public String hqnaListTab2() {
+	public String hqnaListTab2(
+		@RequestParam(value="page", defaultValue="1") int current_page,
+		@RequestParam(defaultValue="all") String key,
+		@RequestParam(defaultValue="") String value,
+		HttpServletRequest req,
+		Model model
+		) throws Exception {
+	
+	if(req.getMethod().equalsIgnoreCase("GET")) {
+		value=URLDecoder.decode(value, "UTF-8");
+	}
+	
+	int total_page = 0;
+	int dataCount = 0;
+	int rows = 10;
+	
+	Map<String, Object> map = new HashMap<>();
+	map.put("key", key);
+	map.put("value", value);
+	
+	dataCount=hqnaService.HfaqdataCount(map);
+	if(dataCount!=0)
+		total_page=myUtil.pageCount(rows, dataCount);
+	
+	if(current_page>total_page)
+		current_page=total_page;
+	
+	int start = (current_page-1)*rows+1;
+	int end = current_page*rows;
+	
+	map.put("start", start);
+	map.put("end", end);
+	List<Hfaq> list = hqnaService.HfaqlistBoard(map);
+	
+	int listNum, n=0;
+	for(Hfaq dto : list) {
+		listNum = dataCount - (start+n-1);
+		dto.setListNum(listNum);
+		n++;
+	}
+	
+/*	String cp = req.getContextPath();
+	String query = "";
+	String listUrl = cp + "/ticket/faq/list";
+	String articleUrl = cp + "ticket/faq/article?page="+current_page;
+	
+	if(searchValue.length()!=0) {
+		query = "searchKey"+searchKey+"&searchValue"+URLEncoder.encode(searchValue, "UTF-8");
+		
+		listUrl += "?" + query;
+		articleUrl += "&" + query;
+	}
+	
+	String paging = myUtil.paging(current_page, total_page, listUrl);*/
+	String paging=myUtil.pagingMethod(current_page, total_page, "listPage");
+	
+	model.addAttribute("list", list);
+	model.addAttribute("dataCount", dataCount);
+	model.addAttribute("page", current_page);
+	model.addAttribute("total_page", total_page);
+	model.addAttribute("paging", paging);
+	model.addAttribute("key", key);
+	model.addAttribute("value", value);
+	
+
 		return "hotel/hqna/tab2";
 	}
 	

@@ -43,7 +43,10 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value="/travel/myplan/locList") //지역 리스트 호출 Using ajax
-	public String locList(@RequestParam String name,Model model) throws UnsupportedEncodingException {
+	public String locList(
+			@RequestParam String name,
+			Model model
+			) throws UnsupportedEncodingException {
 		name = URLDecoder.decode(name, "utf-8");
 		List<Location> list = travelService.locList(name);
 		model.addAttribute("list", list);
@@ -625,13 +628,18 @@ public class TravelController {
 	
 	@PostMapping("/travel/event/insertReply")
 	@ResponseBody
-	public void insertReply(
+	public Map<String,Object> insertReply(
 				EventReply reply,
 				HttpSession session
 			) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		reply.setUserIdx(info.getUserIdx());
 		eventService.insertReply(reply);
+		int dataCount = eventService.replyCount(reply.getEventCode());
+		Map<String,Object> map = new HashMap<>();
+		map.put("dataCount", dataCount);
+		
+		return map;
 	}
 	
 	@GetMapping("/travel/event/replyList")
@@ -681,7 +689,10 @@ public class TravelController {
 			return map;
 		}
 		eventService.deleteReply(reply);
+		int dataCount = eventService.replyCount(reply.getEventCode());
+		map.put("dataCount", dataCount);
 		map.put("isDeleted", true);
+		
 		return map;
 	}
 	

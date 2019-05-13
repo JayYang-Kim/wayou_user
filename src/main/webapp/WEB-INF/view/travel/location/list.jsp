@@ -34,91 +34,17 @@
 	}
 </script>
 
-<section class="welcome-area">
-	<div class="welcome-slides owl-carousel">
-	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg01.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg01.png">
-	        <!-- Welcome Content -->
-	        <div class="welcome-content h-100">
-	            <div class="container h-100">
-	                <div class="row h-100 align-items-center">
-	                    <!-- Welcome Text -->
-	                    <div class="col-12">
-	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">WAYOU &amp; 여행정보</h6>
-	                            <h2 data-animation="fadeInLeft" data-delay="500ms">국내 여행정보 확인</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">바로가기</a>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	
-	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg02.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg02.png">
-	        <!-- Welcome Content -->
-	        <div class="welcome-content h-100">
-	            <div class="container h-100">
-	                <div class="row h-100 align-items-center">
-	                    <!-- Welcome Text -->
-	                    <div class="col-12">
-	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">WAYOU &amp; 여행일정</h6>
-	                            <h2 data-animation="fadeInUp" data-delay="500ms">나만의 여행 일정 계획</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">바로가기</a>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	
-	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg03.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg03.png">
-	        <!-- Welcome Content -->
-	        <div class="welcome-content h-100">
-	            <div class="container h-100">
-	                <div class="row h-100 align-items-center">
-                    <!-- Welcome Text -->
-                        <div class="col-12">
-                            <div class="welcome-text text-center">
-                                <h6 data-animation="fadeInDown" data-delay="200ms">WAYOU &amp; 여행동료 모으기</h6>
-                                <h2 data-animation="fadeInDown" data-delay="500ms">여행동료 모으기</h2>
-                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">바로가기</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<!-- 지역상세정보(Top) -->
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top02.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-end">
+            <div class="col-12">
+                <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5"></div>
             </div>
         </div>
     </div>
-    <!-- //welcome-slides  -->
-</section>
-<!-- //welcome-area  -->
-	
-<!-- roberto-about-area -->
-<section class="roberto-about-area section-padding-100-0">
-    <!-- Hotel Search Form Area -->
-	<div class="hotel-search-form-area">
-	    <div class="container-fluid">
-	        <div class="hotel-search-form">
-	            <form action="#" method="post">
-	                <div class="row justify-content-between align-items-end">
-	                    <div class="col-12 col-md-9">
-	                        <label for="children">여행 지역 및 랜드마크 검색</label>
-	                        <input type="text" class="form-control" id="input_search" name="input_search"/>
-	                    </div>
-	                    <div class="col-12 col-md-3">
-	                        <button type="submit" class="form-control btn roberto-btn w-100">검색(Search)</button>
-	                    </div>
-	                </div>
-	            </form>
-	        </div>
-	    </div>
-	</div>
-</section>
-<!-- //roberto-about-area -->
+</div>
+<!-- //지역상세정보(Top) -->
 
 <!-- Blog Area Start -->
 <div class="roberto-news-area section-padding-100-0">
@@ -143,6 +69,9 @@
 	                        <!-- Post Title -->
 	                        <a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}" class="post-title">${listLocation.locName}(${listLocation.loceName})</a>
 	                        <p>${listLocation.memo}</p>
+	                        <div>
+	                        	
+	                        </div>
 	                    </div>
 	                </div>
                 </c:forEach>

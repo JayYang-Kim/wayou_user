@@ -110,48 +110,78 @@ $("body").on("click", ".nice-select.date ul li", function(){
 
 //옵션 선택
 $("body").on("click", ".nice-select.option ul li", function(){
-
 	var selectedDate = $("#selectedDate option:selected").val();
 	var selectedName = $(this).attr("data-name");
 	var selectedPrice = $(this).attr("data-value");
 	var selectedCount = $(this).attr("data-count");
 	var selectedCode = $(this).attr("data-detailCode");
-	var totalPrice = 0;
-	totalPrice += (1*selectedPrice);
+	var totalPrice = $("#ttPrice").attr("data-total");
+	
+	if(typeof totalPrice == "undefined") {
+		totalPrice = selectedPrice;	
+	} else {
+		totalPrice = Number(totalPrice) + Number(selectedPrice);
+	}
+	
+	// #buy_list에 등록된 data-detailcode값을 배열로 담아두기
+	var buyList_detailCode = new Array();
+	for(var i = 0; i < $("#buy_list li").length; i++) {
+		buyList_detailCode.push($("#buy_list li:eq("+i+")").attr("data-detailCode"));
+	}
+	
+	// #buy_list에 등록된 data-detailcode값을 buyList_detailCode(배열)에 있는 값과 비교하여 같은 경우 이벤트 취소처리
+	for(var i = 0; i < buyList_detailCode.length; i++) {
+		if(selectedCode == buyList_detailCode[i]) {
+			return false;
+		}	
+	}
 	
 	var out="";
-	out += "<li class='clear' style='margin-top: 50px; padding-top: 20px; padding-bottom: 20px; background-color: #f8f8f8'>";
+	out += "<li class='buy_item clear' id='buy_item' data-sssPrice='"+selectedPrice+"' data-detailCode='"+selectedCode+"' style='margin-top: 50px; padding-top: 20px; padding-bottom: 20px; background-color: #f8f8f8'>";
 	out += "<p style='margin-left: 20px; font-size: 15px; margin-right: 20px;'>";
-	out += "<span id='ssCode' data-ssCode='"+selectedCode+"'>"+selectedName+"&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp"+selectedCount+"개 남음</span>";
+	out += "<span class='ssCode' data-ssCode='"+selectedCode+"'>"+selectedName+"&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp"+numberWithCommas(selectedCount)+"개 남음</span>";
 	out += "<span style='float:right;'><button type='button' class='button deleteSel'>x</button></span>";
 	out += "</p>";
 	out += "<p style='margin-top: 25px; margin-left: 20px; margin-right: 20px;'>";
-	out += "<span><button type='button' class='button'>-</button><input type='text' id='ssBuyCount' value='1'><button type='button' class='button' maxcount='4'>+</button></span>";
-	out += "<span style='float:right; font-weight: bold; font-size: 15px;' id='ssPrice' data-ssPrice='"+selectedPrice+"'>"+selectedPrice+"원</span>";
+	out += "<span><button type='button' class='button'>-</button><input type='text' class='ssBuyCount' value='1'><button type='button' class='button' maxcount='4'>+</button></span>";
+	out += "<span style='float:right; font-weight: bold; font-size: 15px;' class='ssPrice' data-ssPrice='"+selectedPrice+"'>"+numberWithCommas(selectedPrice)+"원</span>";
 	out += "</p></li>";
 
-	$("#buy_list").html(out);
+	$("#buy_list").append(out);
 	
-	var html = "<span style='float:right; margin-right: 5px; font-weight: bold; font-size: 20px;' id='ttPrice' data-total='"+totalPrice+"'>"+totalPrice+"</span>";
+	var html = "<span style='float:right; margin-right: 5px; font-weight: bold; font-size: 20px;' id='ttPrice' data-total='"+totalPrice+"'>"+numberWithCommas(totalPrice)+"</span>";
 	
 	$(this).closest("ul.detail").find(".total_price").html(html);
-	
 });
 
 $("body").on("click", ".deleteSel", function(){
-	$("#buy_list").empty();
-	/* var totalPrice=$(this).closest("ul.detail").find(".ttPrice").attr("data-total"); */
-	var totalPrice=$("#ttPrice").attr("data-total");
-	var selectedPrice=$("#ssPrice").attr("data-ssPrice");
-	alert(selectedPrice);
+	var totalPrice = $("#ttPrice").attr("data-total");
+	var buy_item = $(this).closest(".buy_item");
+	var selectedPrice = buy_item.find(".ssPrice").attr("data-ssPrice");
+	var totalPrice = $("#ttPrice").attr("data-total");
+
+	totalPrice = Number(totalPrice) - Number(selectedPrice);
+
+	$(this).closest(".buy_item").remove();
+	
+	var html = "<span style='float:right; margin-right: 5px; font-weight: bold; font-size: 20px;' id='ttPrice' data-total='"+totalPrice+"'>"+numberWithCommas(totalPrice)+"</span>";
+	$(".total_price").html(html);
 });
 
 $("body").on("click", ".cart-btn", function(){
-	var price = $("#ssPrice").attr("data-ssPrice");
-	var buyCount = $("#ssBuyCount").val();
-	var ticketDetailCode = $("#ssCode").attr("data-ssCode");
-	var query = "ticketDetailCode="+ticketDetailCode+"&price="+price+"&buyCount="+buyCount;
-	var url = "<%=cp%>/myPage/wishList/list3";
+	
+	
+	
+	var buyList_code = new Array();
+	var buyList_price = new Array();
+	var buyList_buyCount = new Array();
+	for(var i = 0; i < $("#buy_list li").length; i++) {
+		buyList_code.push($("#buy_list li:eq("+i+")").attr("data-detailCode"));
+		buyList_price.push($("#buy_list li:eq("+i+")").attr("data-sssPrice"));
+		buyList_buyCount.push($("#buy_list li:eq("+i+")").find(".ssBuyCount").val());
+		
+	var query = "ticketDetailCode="+buyList_code[i]+"&price="+buyList_price[i]+"&buyCount="+buyList_buyCount[i];
+	var url = "<%=cp%>/ticket/insertWishlist";	
 	
 	$.ajax({
 		type:"post"
@@ -169,6 +199,8 @@ $("body").on("click", ".cart-btn", function(){
 	    	console.log(e.responseText);
 	    }
 	});
+	
+	}
 });
 
 

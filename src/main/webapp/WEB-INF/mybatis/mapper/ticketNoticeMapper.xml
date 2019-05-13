@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ticketNotice">
+	<sql id="search">
+		<if test="searchKey=='all'">
+			INSTR(SUBJECT,#{searchValue}) &gt; 0 or INSTR(CONTENT,#{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='subject'">
+			INSTR(SUBJECT,#{searchValue}) &gt; 0
+		</if>
+		<if test="searchKey=='content'">
+			INSTR(CONTENT,#{searchValue}) &gt; 0
+		</if>
+	</sql>
+		<select id="noticeList" parameterType="map" resultType="com.sp.ticket.Notice">
+		select * from (
+			select tb.*, rownum rnum from(
+				select noticeNum, subject, content, sn.adminIdx, adminName, sn.created, hitCount
+				from storeNotice sn
+				join admin a on sn.adminIdx=a.adminIdx
+				<if test="searchKey!=''">
+					<where>
+						<include refid="search"/>
+					</where>
+				</if>
+				order by noticeNum desc
+			)tb where rownum &lt;= #{end}
+		) where rnum &gt;= #{start}
+		
+	</select>
+	
+	<select id="noticeCount" parameterType="map" resultType="Integer">
+		select NVL(count(*),0) from storeNotice
+		<if test="searchKey!=''">
+			<where>
+				<include refid="search"/>
+			</where>
+		</if>
+	</select>
+	
+	<update id="updateHitCount" parameterType="Integer">
+		update storeNotice set hitCount = hitCount+1 where noticeNum=#{noticeNum}
+	</update>
+	
+	<select id="readNotice" parameterType="Integer" resultType="com.sp.ticket.Notice">
+		select noticeNum, subject, content, sn.adminidx, adminName ,sn.created, hitCount from storeNotice sn
+		join admin a on sn.adminIdx=a.adminIdx where noticeNum=#{noticeNum}
+	</select>
+
+	
+</mapper>

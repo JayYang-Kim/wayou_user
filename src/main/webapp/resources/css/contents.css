@@ -45,6 +45,11 @@
 
 .tr_locationList .post-content p{height:130px;overflow:hidden;text-overflow:ellipsis;}
 .single-recent-post .post-content .recommendList_memo{height: 80px;overflow: hidden;text-overflow: ellipsis;font-size: 14px;}
+.tr_landmarkList .post-content{height:290px;}
+.tr_landmarkList .post-content .post-title{font-size:24px;font-weight:bold;}
+.tr_landmarkList .post-content .address{font-size:18px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tr_landmarkList .post-content .memo{height:146px;overflow:hidden;text-overflow:ellipsis;font-size:14px;}
+.tr_landmarkList .post-content .etc{font-size:14px;}
 
 .box_star div{float:left;}
 .box_star div.title{height: 45px;line-height: 45px;margin-right: 10px;font-size: 14px;}

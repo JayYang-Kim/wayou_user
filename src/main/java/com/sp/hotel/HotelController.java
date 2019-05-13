@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
+import com.sp.hevent.HEvent;
+import com.sp.hnotice.HNotice;
+import com.sp.hqna.Hqna;
 import com.sp.member.SessionInfo;
 
 @Controller("hotel.hotelController")
@@ -28,9 +31,23 @@ public class HotelController {
 	@Autowired
 	private MyUtil myUtil;
 	
+	@Autowired
+	private HotelMainService hotelmainservice;
 	
-	@RequestMapping(value="/hotel/hotel/main",method=RequestMethod.GET )
-	public String main() {
+	@RequestMapping(value="/hotel/hotel/main" )
+	public String main(Model model ) throws Exception {
+		
+		List<HNotice> list1=hotelmainservice.hotelMainNoticeList();
+		List<HEvent> list2=hotelmainservice.hotelMainEventList();
+		List<Hqna> list3=hotelmainservice.hotelMainQnaList();
+		List<Hotel> list4=hotelmainservice.hotelMainRanking();
+		
+		model.addAttribute("mainHnotice", list1);
+		model.addAttribute("mainHevent", list2);
+		model.addAttribute("mainHqna", list3);
+		model.addAttribute("mainRanking", list4);
+		
+		
 		return ".hotel.hotel.main";
 	}
 	
@@ -49,9 +66,13 @@ public class HotelController {
 			value=URLEncoder.encode(value, "utf-8");
 		}
 
-		int rows=2;
+		int rows=1;
 		int total_page=0;
 		int dataCount=0;
+
+		
+		
+		
 		
 		Map<String, Object> map=new HashMap<>();
 		map.put("price_order1", price_order1);
@@ -61,6 +82,8 @@ public class HotelController {
 		map.put("value", value);
 		
 		dataCount=hotelservice.dataCount(map);
+		
+		
 		if(dataCount!=0)
 			total_page=myUtil.pageCount(rows, dataCount);
 		
@@ -80,6 +103,11 @@ public class HotelController {
 			listNum=dataCount-(start+n-1);
 			dto.setListNum(listNum);
 			n++;
+		}
+		
+		for(Hotel dto : list) {
+			dto.setStar(Math.round(dto.getStar()));
+			
 		}
 		
 		String cp=req.getContextPath();
@@ -220,21 +248,26 @@ public class HotelController {
 	}
 	
 	@RequestMapping(value="/myPage/wishlist/list4")
-	public String insertReserveHotel (Hotel dto,
-			Hotel dto2
-									, HttpSession session) throws Exception{
-													
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		dto.setUserIdx(info.getUserIdx());
-		
-		
-		Hotel readhotel=hotelservice.readHotel2(dto2);
-		
-		int result=hotelservice.insertReserveHotel(dto);
-		System.out.println(result+"===================");
-		
-		
-		return  "redirect:/myPage/wishlist/list";	
-	}
+	   @ResponseBody
+	   public Map<String, Object> insertReserveHotel (Hotel dto,   
+	         HttpSession session) throws Exception{
+	                                       
+	      SessionInfo info=(SessionInfo)session.getAttribute("member");
+	      dto.setUserIdx(info.getUserIdx());	 
+	      
+	      String msg = "true";
+	      
+	      try {
+	         int result=hotelservice.insertReserveHotel(dto);
+	      } catch (Exception e) {
+	         msg = "false";
+	      }
+	      
+	      Map<String, Object> map = new HashMap<>();
+	      map.put("msg", msg);
+	      
+	      return map;   
+	   }
 	
+/*	@RequestMapping(value="")*/
 }

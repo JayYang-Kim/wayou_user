@@ -16,7 +16,7 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Hotel &amp; Resort</h6>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Ticket</h6>
 	                            <h2 data-animation="fadeInLeft" data-delay="500ms">티켓티켓티켓티켓</h2>
 	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
 	                        </div>
@@ -35,7 +35,7 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">Hotel &amp; Resort</h6>
+	                            <h6 data-animation="fadeInUp" data-delay="200ms">Event</h6>
 	                            <h2 data-animation="fadeInUp" data-delay="500ms">이벤트이벤트</h2>
 	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
 	                        </div>
@@ -54,8 +54,8 @@
 	                    <!-- Welcome Text -->
 	                        <div class="col-12">
 	                            <div class="welcome-text text-center">
-	                                <h6 data-animation="fadeInDown" data-delay="200ms">Hotel &amp; Resort</h6>
-	                                <h2 data-animation="fadeInDown" data-delay="500ms">할인할인</h2>
+	                                <h6 data-animation="fadeInDown" data-delay="200ms">Notice</h6>
+	                                <h2 data-animation="fadeInDown" data-delay="500ms">공지공지</h2>
 	                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
 	                            </div>
 	                        </div>
@@ -88,47 +88,7 @@
 	    </div>
 	</div>
 	
-	
-	
-	<%-- <div class="container mt-100">
-	    <div class="row align-items-center">
-	        <div class="col-12 col-lg-6">
-	            <!-- Section Heading -->
-	            <div class="section-heading wow fadeInUp" data-wow-delay="100ms">
-	                <h6>About Us</h6>
-	                <h2>Welcome to <br>Roberto Hotel Luxury</h2>
-	            </div>
-	            <div class="about-us-content mb-100">
-	                <h5 class="wow fadeInUp" data-wow-delay="300ms">With over 340 hotels worldwide, NH Hotel Group offers a wide variety of hotels catering for a perfect stay no matter where your destination.</h5>
-	                <p class="wow fadeInUp" data-wow-delay="400ms">Manager: <span>Michen Taylor</span></p>
-	                <img src="./resources/images/core-img/signature.png" alt="" class="wow fadeInUp" data-wow-delay="500ms">
-	            </div>
-	        </div>
-	
-	        <div class="col-12 col-lg-6">
-	            <div class="about-us-thumbnail mb-100 wow fadeInUp" data-wow-delay="700ms">
-	                <div class="row no-gutters">
-	                    <div class="col-6">
-	                        <div class="single-thumb">
-	                            <img src="<%=cp%>/resources/images/bg-img/13.jpg" alt="">
-	                        </div>
-	                        <div class="single-thumb">
-	                            <img src="<%=cp%>/resources/images/bg-img/14.jpg" alt="">
-	                        </div>
-	                    </div>
-	                    <div class="col-6">
-	                        <div class="single-thumb">
-	                            <img src="<%=cp%>/resources/images/bg-img/15.jpg" alt="">
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</section>
-	<!-- About Us Area End -->
-	 --%>
+
 	<!-- Service Area Start -->
 	<div class="roberto-service-area">
 	    <div class="container">
@@ -136,43 +96,43 @@
 	            <div class="col-12">
 	                <div class="service-content d-flex align-items-center justify-content-between">
 	                    <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=1'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
 	                    <h5>테마파크</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="300ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="300ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=2'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-2.png" alt="">
 	                    <h5>워터파크</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="500ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="500ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=3'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-3.png" alt="">
 	                    <h5>익스트림</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="700ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="700ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=4'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-4.png" alt="">
 	                    <h5>공연/전시</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="900ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="900ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=5'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
-	                        <h5>키즈</h5>
+	                        <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;키즈&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
 	                </div>
 	                
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1100ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1100ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=6'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
 	                        <h5>축제/캠핑</h5>
 	                </div>
 	                
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1300ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1300ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=7'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
 	                        <h5>투어/교통</h5>
 	                </div>
@@ -181,6 +141,7 @@
 	        </div>
 	    </div>
 	</div>
+</section>	
 	<!-- Service Area End -->
 	
 	<section class="roberto-service-area section-padding-100-0">
@@ -234,252 +195,48 @@
 	 <div class="row">
                 <div class="col-12">
                     <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms" style="visibility: visible; animation-delay: 100ms; animation-name: fadeInUp;">
-                        <h6>Ultimate Solutions</h6>
+                        <h6>지금 가장 인기있는 티켓!</h6>
                         <h2>인기상품</h2>
                     </div>
                     </div>
                 </div>
             </div>
 	
-	    <!-- Projects Slide -->
+	 
 	<div class="projects-slides owl-carousel">
-	    <!-- Single Project Slide -->
-	    <div class="single-project-slide active bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/5.jpg);height:500px;">
+	    <c:forEach var="listBest" items="${listBest}">
+	    <div class="single-project-slide bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/5.jpg);height:400px;">
 	        <!-- Project Text -->
-	        <div class="project-content">
-	            <div class="text">
-	                <h6>경기도 용인</h6>
-	                <h5>에버랜드</h5>
+	        <div class="project-content" style="height: 150px;">
+	            <div class="text" style="height: 100px;">
+	                <h6>${listBest.loctitle}</h6>
+	                <h5>${listBest.ticketName}</h5>
+	                <h6 style="margin-top: 3px;">${listBest.price}원</h6>
+	                 <div>
+                               	<span class="star"> 
+                           			<c:forEach begin="1" end="${listBest.star}">
+                              			<a class="on" style="color: #F2CB61; font-size: 20px;">★</a> 
+                           			</c:forEach>
+                        		</span>
+                        		<span style="font-size: 20px; color: white;">(${listBest.reviewCount})</span>
+                              </div>
 	            </div>
 	        </div>
 	        <!-- Hover Effects -->
 	        <div class="hover-effects">
 	            <div class="text">
-	                <h6>경기도 용인</h6>
-	                <h5>에버랜드</h5>
-	                <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
+	                <h6>${listBest.loctitle}</h6>
+	                <h5>${listBest.ticketName}</h5>
+	                <h5 style="color: black;">${listBest.price}원</h5>
 	            </div>
-	            <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	            <a href="<%=cp%>/ticket/detail?page=1&regionCode=0&cateCode=0&ticketCode=${listBest.ticketCode}&storeCode=${listBest.storeCode}" class="btn project-btn">더보기 <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	        </div>
 	    </div>
-	
-	    <!-- Single Project Slide -->
-	    <div class="single-project-slide bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/6.jpg);height:500px;">
-	        <!-- Project Text -->
-	        <div class="project-content">
-	            <div class="text">
-	                <h6>경상남도 진해</h6>
-	                <h5>벚꽃축제</h5>
-	            </div>
-	        </div>
-	        <!-- Hover Effects -->
-	        <div class="hover-effects">
-	            <div class="text">
-	                <h6>경상남도 진해</h6>
-	                <h5>벚꽃축제</h5>
-	                <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-	            </div>
-	            <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-	        </div>
-	    </div>
-	
-	    <!-- Single Project Slide -->
-	    <div class="single-project-slide bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/7.jpg);height:500px;">
-	        <!-- Project Text -->
-	        <div class="project-content">
-	            <div class="text">
-	                <h6>Entertaiment</h6>
-	                <h5>Racing Bike</h5>
-	            </div>
-	        </div>
-	        <!-- Hover Effects -->
-	        <div class="hover-effects">
-	            <div class="text">
-	                <h6>Entertaiment</h6>
-	                <h5>Racing Bike</h5>
-	                <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-	            </div>
-	            <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-	        </div>
-	    </div>
-	
-	    <!-- Single Project Slide -->
-	    <div class="single-project-slide bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/8.jpg);height:500px;">
-	        <!-- Project Text -->
-	        <div class="project-content">
-	            <div class="text">
-	                <h6>Entertaiment</h6>
-	                <h5>Racing Bike</h5>
-	            </div>
-	        </div>
-	        <!-- Hover Effects -->
-	        <div class="hover-effects">
-	            <div class="text">
-	                <h6>Entertaiment</h6>
-	                <h5>Racing Bike</h5>
-	                <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-	            </div>
-	            <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-	        </div>
-	    </div>
-	
-	    <!-- Single Project Slide -->
-	    <div class="single-project-slide bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/9.jpg);height:500px;">
-	        <!-- Project Text -->
-	        <div class="project-content">
-	            <div class="text">
-	                <h6>Entertaiment</h6>
-	                <h5>Racing Bike</h5>
-	            </div>
-	        </div>
-	        <!-- Hover Effects -->
-	            <div class="hover-effects">
-	                <div class="text">
-	                    <h6>Entertaiment</h6>
-	                    <h5>Racing Bike</h5>
-	                    <p>I focus a lot on helping the first time or inexperienced traveler head out prepared and confident...</p>
-	                </div>
-	                <a href="#" class="btn project-btn">Discover Now <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
-	            </div>
-	        </div>
-	    </div>
-	  </div> 
+		</c:forEach>
+	  </div>
 	</section>
 	<!-- Projects Area End -->
-	
-	
-<%-- 	<!-- Our Room Area Start -->
-	<section class="roberto-rooms-area">
-	    <div class="rooms-slides owl-carousel">
-	        <!-- Single Room Slide -->
-	    <div class="single-room-slide d-flex align-items-center">
-	        <!-- Thumbnail -->
-	        <div class="room-thumbnail h-100 bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);"></div>
-	
-	        <!-- Content -->
-	        <div class="room-content">
-	            <h2 data-animation="fadeInUp" data-delay="100ms">Premium King Room</h2>
-	            <h3 data-animation="fadeInUp" data-delay="300ms">400$ <span>/ Day</span></h3>
-	            <ul class="room-feature" data-animation="fadeInUp" data-delay="500ms">
-	                <li><span><i class="fa fa-check"></i> Size</span> <span>: 30 ft</span></li>
-	                <li><span><i class="fa fa-check"></i> Capacity</span> <span>: Max persion 5</span></li>
-	                <li><span><i class="fa fa-check"></i> Bed</span> <span>: King Beds</span></li>
-	                <li><span><i class="fa fa-check"></i> Services</span> <span>: Wifi, Television, Bathroom</span></li>
-	            </ul>
-	            <a href="#" class="btn roberto-btn mt-30" data-animation="fadeInUp" data-delay="700ms">View Details</a>
-	        </div>
-	    </div>
-	
-	    <!-- Single Room Slide -->
-	    <div class="single-room-slide d-flex align-items-center">
-	        <!-- Thumbnail -->
-	        <div class="room-thumbnail h-100 bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);"></div>
-	
-	        <!-- Content -->
-	            <div class="room-content">
-	                <h2 data-animation="fadeInUp" data-delay="100ms">Best King Room</h2>
-	                <h3 data-animation="fadeInUp" data-delay="300ms">125$ <span>/ Day</span></h3>
-	                <ul class="room-feature" data-animation="fadeInUp" data-delay="500ms">
-	                    <li><span><i class="fa fa-check"></i> Size</span> <span>: 30 ft</span></li>
-	                    <li><span><i class="fa fa-check"></i> Capacity</span> <span>: Max persion 5</span></li>
-	                    <li><span><i class="fa fa-check"></i> Bed</span> <span>: King Beds</span></li>
-	                    <li><span><i class="fa fa-check"></i> Services</span> <span>: Wifi, Television, Bathroom</span></li>
-	                </ul>
-	                <a href="#" class="btn roberto-btn mt-30" data-animation="fadeInUp" data-delay="700ms">View Details</a>
-	            </div>
-	        </div>
-	    </div>
-	</section>
-	<!-- Our Room Area End --> --%>
-	
-	<!-- Testimonials Area Start -->
-	<section class="roberto-testimonials-area section-padding-100-0">
-	    <div class="container">
-	        <div class="row align-items-center">
-	            <div class="col-12 col-md-6">
-	                <div class="testimonial-thumbnail owl-carousel mb-100">
-	                    <img src="<%=cp%>/resources/images/bg-img/10.jpg" alt="">
-	                <img src="<%=cp%>/resources/images/bg-img/11.jpg" alt="">
-	            </div>
-	        </div>
-	
-	        <div class="col-12 col-md-6">
-	            <!-- Section Heading -->
-	            <div class="section-heading">
-	                <h6>Testimonials</h6>
-	                <h2>Our Guests Love Us</h2>
-	            </div>
-	            <!-- Testimonial Slide -->
-	            <div class="testimonial-slides owl-carousel mb-100">
-	
-	                <!-- Single Testimonial Slide -->
-	                <div class="single-testimonial-slide">
-	                    <h5>“This can be achieved by applying search engine optimization or popularly known as SEO. This is a marketing strategy which increases the quality and quantity of traffic flow to a particular website via search engines.”</h5>
-	                    <div class="rating-title">
-	                        <div class="rating">
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                        </div>
-	                        <h6>Robert Downey <span>- CEO Deercreative</span></h6>
-	                    </div>
-	                </div>
-	
-	                <!-- Single Testimonial Slide -->
-	                <div class="single-testimonial-slide">
-	                    <h5>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus delectus facilis molestias, error vitae praesentium quos eaque qui ea, tempore blanditiis sint reprehenderit, quaerat. Commodi ab architecto sit suscipit exercitationem!”</h5>
-	                    <div class="rating-title">
-	                        <div class="rating">
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                        </div>
-	                        <h6>Akash Downey <span>- CEO Deercreative</span></h6>
-	                    </div>
-	                </div>
-	
-	                <!-- Single Testimonial Slide -->
-	                <div class="single-testimonial-slide">
-	                    <h5>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolor, ex quos. Alias a rem maiores, possimus dicta sit distinctio quis iusto!”</h5>
-	                    <div class="rating-title">
-	                        <div class="rating">
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                            <i class="icon_star"></i>
-	                        </div>
-	                        <h6>Downey Sarah <span>- CEO Deercreative</span></h6>
-	                    </div>
-	                </div>
-	
-	                <!-- Single Testimonial Slide -->
-	                    <div class="single-testimonial-slide">
-	                        <h5>“Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore sequi laboriosam fugit suscipit aspernatur, minima minus voluptatum, id ab atque similique ex earum. Magni.”</h5>
-	                        <div class="rating-title">
-	                            <div class="rating">
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                                <i class="icon_star"></i>
-	                            </div>
-	                            <h6>Robert Brown <span>- CEO Deercreative</span></h6>
-	                        </div>
-	                    </div>
-	
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</section>
-	<!-- Testimonials Area End -->
-	
-	
+
 	
 	<!-- Blog Area Start -->
 	<section class="roberto-blog-area section-padding-100-0">
@@ -488,8 +245,8 @@
 	            <!-- Section Heading -->
 	        <div class="col-12">
 	            <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
-	                <h6>Our Blog</h6>
-	                <h2>와유 소식</h2>
+	                <h6>WAYOU 소식을 전해드립니다</h6>
+	                <h2>WAYOU 소식</h2>
 	            </div>
 	        </div>
 	    </div>
@@ -498,48 +255,54 @@
 	        <!-- Single Post Area -->
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-	                <a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/2.jpg" alt=""></a>
+                	<c:forEach var="listNotice" items="${listNotice}">
+	                <a href="<%=cp%>/ticket/notice/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/2.jpg" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
-	                    <a href="#" class="post-catagory">공지사항</a>
+	                    <a href="#" class="post-date">${listNotice.created}</a>
+	                    <a href="<%=cp%>/ticket/notice/list" class="post-catagory">공지사항</a>
 	                </div>
 	                <!-- Post Title -->
-	                <a href="#" class="post-title">공지공지공지공지</a>
-	                <p>How many free autoresponders have you tried? And how many emails did you get through using them?</p>
-	                <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                <a href="<%=cp%>/ticket/notice/article?noticeNum=${listNotice.noticeNum}" class="post-title">${listNotice.subject}</a>
+	                <p>${listNotice.content}</p>
+	                <a href="<%=cp%>/ticket/notice/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	            </c:forEach>
 	            </div>
 	        </div>
 	
 	        <!-- Single Post Area -->
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="500ms">
-	                <a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/3.jpg" alt=""></a>
+	                <c:forEach var="listQnA" items="${listQnA}">
+	                <a href="<%=cp%>/ticket/qna/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/3.jpg" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
+	                    <a href="#" class="post-date">${listQnA.created}</a>
 	                    <a href="#" class="post-catagory">문의사항</a>
 	                </div>
 	                <!-- Post Title -->
-	                <a href="#" class="post-title">문의문의문의문의</a>
-	                <p>My point here is that if you have no clue for the answers above you probably are not operating a followup.</p>
-	                <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                <a href="<%=cp%>/ticket/qna/list" class="post-title">${listQnA.subject}</a>
+	                <p>${listQnA.content}</p>
+	                <a href="<%=cp%>/ticket/qna/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	            </c:forEach>
 	            </div>
 	        </div>
 	
 	        <!-- Single Post Area -->
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="700ms">
-	                <a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/4.jpg" alt=""></a>
+	                <c:forEach var="listEvent" items="${listEvent}">
+	                <a href="<%=cp%>/ticket/event/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/4.jpg" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
+	                    <a href="#" class="post-date">${listEvent.created}</a>
 	                    <a href="#" class="post-catagory">이벤트</a>
 	                </div>
 	                <!-- Post Title -->
-	                    <a href="#" class="post-title">이벤트이벤트이벤트</a>
-	                    <p>Some good steps to take to ensure you are getting what you need out of a autoresponder include…</p>
-	                    <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                    <a href="<%=cp%>/ticket/event/article?eventNum=${listEvent.eventNum}" class="post-title">${listEvent.subject}</a>
+	                    <p>${listEvent.content}</p>
+	                    <a href="<%=cp%>/ticket/event/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                </c:forEach>
 	                </div>
 	            </div>
 	
@@ -548,21 +311,3 @@
 	</section>
 	<!-- Blog Area End -->
 	
-	<!-- Call To Action Area Start -->
-	<section class="roberto-cta-area pt40 pb40">
-	    <div class="container">
-	        <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/1.jpg);">
-	            <div class="row align-items-center">
-	                <div class="col-12 col-md-7">
-	                    <div class="cta-text mb-50">
-	                        <h2>Contact us now!</h2>
-	                        <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
-	                    </div>
-	                </div>
-	                <div class="col-12 col-md-5 text-right">
-	                    <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</section>

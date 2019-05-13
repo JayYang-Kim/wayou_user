@@ -133,13 +133,12 @@
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/ticket/list">- 티켓</a></li>
                                         <li><a href="#">- 나만의 티켓 예약</a></li>
-                                        <li><a href="#">- 이벤트</a></li>
-                                        <li><a href="#">- 공지사항</a></li>
+                                        <li><a href="<%=cp%>/ticket/event/list">- 이벤트</a></li>
+                                        <li><a href="<%=cp%>/ticket/notice/list">- 공지사항</a></li>
                                         <li><a href="<%=cp%>/ticket/qna/list">- 문의사항</a>
                                         	<ul class="dropdown">
                                                 <li><a href="<%=cp%>/ticket/qna/list">- 질문과 답변</a></li>
                                                 <li><a href="<%=cp%>/ticket/faq/list">- 자주하는 질문</a></li>
-                                                <li><a href="#">- 1:1문의</a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -147,11 +146,16 @@
                                 <li><a href="<%=cp%>/hotel/hotel/main">숙박</a>
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/hotel/hotel/list">- 호텔</a></li>
-                                        <li><a href="<%=cp%>/hotel/hotel/article">- 나만의 호텔 예약</a></li>
-                                        <li><a href="<%=cp%>/hotel/hevent/hevent">- 이벤트</a></li>
-                                        <li><a href="#">- 공지사항</a></li>
-                                        <li><a href="<%=cp%>/hotel/hqna/main">- 문의사항</a></li>
-                                        <li><a href="#">- FAQ</a></li>
+                                        <li><a href="<%=cp%>/hotel/hotel/main">- 나만의 호텔 예약</a></li>
+                                        <li><a href="<%=cp%>/hotel/hevent/list">- 이벤트</a></li>
+                                        <li><a href="<%=cp%>/hotel/hnotice/list">- 공지사항</a></li>
+                                        <li><a href="<%=cp%>/hotel/hqna/main">- 문의사항</a>
+                                        	<ul class="dropdown">
+                                                <li><a href="<%=cp%>/hotel/hqna/main">- 질문과 답변</a></li>
+                                                <li><a href="<%=cp%>/hotel/hqna/main">- 자주하는 질문</a></li>
+                                              
+                                            </ul>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li><a href="#">문의사항</a></li>

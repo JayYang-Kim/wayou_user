@@ -344,8 +344,7 @@
 								<div class="sch_num">${dto.orderNum}</div>
 							</div>
 							<div class="sch_content" data-landCode="${dto.landCode}">
-								<%-- <img src="${dto.saveFileName}" alt="no image" class="spot_img"> --%>
-								<img src="<%=cp%>/resources/images/bg-img/46.jpg" alt="no image" class="spot_img">
+								<img src="<%=cp%>/uploads/landmark/${dto.saveFilename}" alt="no image" class="spot_img">
 								<div class="spot_content_box">
 									<div class="spot_name" onclick="window.open('http://localhost:9090/wayou/travel');" style="cursor: pointer;">${dto.landName}</div>
 									<div class="spot_info">

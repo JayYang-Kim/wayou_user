@@ -124,21 +124,4 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return result;
 	}
-
-	@Override
-	public Hotel readHotel2(Hotel dto) {
-		
-		Hotel dto2=null;
-		
-		try {
-			dto2=dao.selectOne("hotel.readHotel", dto);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return dto2;
-	}
-
-	
-	
-	
 }

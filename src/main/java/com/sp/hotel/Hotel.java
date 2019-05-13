@@ -28,6 +28,7 @@ public class Hotel {
 	private String userName;
 	private String checkin;
 	private String checkout;
+	private int REVIEW;
 	
 	
 	
@@ -193,6 +194,14 @@ public class Hotel {
 	public void setCheckout(String checkout) {
 		this.checkout = checkout;
 	}
+	public int getREVIEW() {
+		return REVIEW;
+	}
+	public void setREVIEW(int rEVIEW) {
+		REVIEW = rEVIEW;
+	}
+
+
 
 
 }
