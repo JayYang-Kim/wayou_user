@@ -80,6 +80,11 @@ public class LocationController {
 		map.put("end", end);
 	
 		List<Location> list = locationService.replyList(map);
+		
+		for(Location dto : list) {
+			dto.setContent(myUtil.htmlSymbols(dto.getContent()));
+		}
+		
 		String methodName = "replyList";
 		String paging = myUtil.pagingMethod(current_page, total_page, methodName);
 		

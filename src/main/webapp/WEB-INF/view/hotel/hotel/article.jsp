@@ -6,129 +6,154 @@
 %>
 <style type="text/css">
 div {
-	border: none;
+   border: none;
 }
 .star {
-	font-size: 0;
-	letter-spacing: -4px;
+   font-size: 0;
+   letter-spacing: -4px;
 }
 .star a {
-	font-size: 20px;
-	text-align: center;
-	letter-spacing: 0;
-	display: inline-block;
+   font-size: 20px;
+   text-align: center;
+   letter-spacing: 0;
+   display: inline-block;
 
-	color: #cccccc;
-	text-decoration: none;
+   color: #cccccc;
+   text-decoration: none;
 }
 .star a:first-child {
-	margin-left: 0;
+   margin-left: 0;
 }
 .star a.on {
-	color: #F2CB61;
+   color: #F2CB61;
 }
 </style>
 
 <script type="text/javascript">
 
 function searchDate() {
-	var f=document.dateForm;
-	
-	f.submit();
-	
+   var f=document.dateForm;
+   
+   f.submit();
+   
 }
 
- function sendReserve(roomCode) {
-	var f=document.sendReserveForm;
-	
-	f.submit();
-	
-} 
 
 $(function () {
-	listPage(1);
+   listPage(1);
 });
 
 
 function listPage(page) {
-	var hotelCode="${hotelCode}";
-	var query="hotelCode="+hotelCode+"&pageNo="+page;
-	var url="<%=cp%>/hotel/hotel/hotelReview";
-	
-	$.ajax({
-		type:"get"
-		,url : url
-		,data:query
-		,success:function(data) {
-			$("#listReview").html(data);
-		}
-		,beforeSend:function(e) {
-			e.setRequestHeader("AJAX", true);
-		}
-		,error:function(e) {
-			if(e.status==403) {
-				location.href="<%=cp%>/member/login";
-				return;
-			}
-			console.log(e.responseText);
-		}
-	});
+   var hotelCode="${hotelCode}";
+   var query="hotelCode="+hotelCode+"&pageNo="+page;
+   var url="<%=cp%>/hotel/hotel/hotelReview";
+   
+   $.ajax({
+      type:"get"
+      ,url : url
+      ,data:query
+      ,success:function(data) {
+         $("#listReview").html(data);
+      }
+      ,beforeSend:function(e) {
+         e.setRequestHeader("AJAX", true);
+      }
+      ,error:function(e) {
+         if(e.status==403) {
+            location.href="<%=cp%>/member/login";
+            return;
+         }
+         console.log(e.responseText);
+      }
+   });
 }
 $(function () {
-	$(".btnSendReview").click(function () {
-		var hotelCode = "${hotelCode}";
-		var content = $(".boxTF").val().trim();
-		var star=$("#score").val();
-		
-		if(!content) {
-			$(".boxTF").focus();
-			return;
-		}
-		content=encodeURIComponent(content);
-		
-		var query="hotelCode="+hotelCode+"&content="+content+"&star="+star; 
-		var url="<%=cp%>/hotel/hotel/insertReview";
-		
-		$.ajax({
-			type:"post"
-			,url:url
-			,data:query
-			,dataType:"json"
-			,success:function(data){
-				if(data.state == "true") {
-					$(".boxTF").val("");
-					$("#score").val(0);
-					$(".insertstar").children("a").removeClass("on");
-					listPage(1);
-				}
-			}
-			,beforeSend:function(e) {
-				e.setRequestHeader("AJAX", true);
-			}
-			,error:function(e) {
-				if(e.status==403){
-					location.href="<%=cp%>/member/login";
-					return;
-				}
-				console.log(e.responseText);
-			}		
-		});
-	});
+   $(".btnSendReview").click(function () {
+      var hotelCode = "${hotelCode}";
+      var content = $(".boxTF").val().trim();
+      var star=$("#score").val();
+      
+      if(!content) {
+         $(".boxTF").focus();
+         return;
+      }
+      content=encodeURIComponent(content);
+      
+      var query="hotelCode="+hotelCode+"&content="+content+"&star="+star; 
+      var url="<%=cp%>/hotel/hotel/insertReview";
+      
+      $.ajax({
+         type:"post"
+         ,url:url
+         ,data:query
+         ,dataType:"json"
+         ,success:function(data){
+            if(data.state == "true") {
+               $(".boxTF").val("");
+               $("#score").val(0);
+               $(".insertstar").children("a").removeClass("on");
+               listPage(1);
+            }
+         }
+         ,beforeSend:function(e) {
+            e.setRequestHeader("AJAX", true);
+         }
+         ,error:function(e) {
+            if(e.status==403){
+               location.href="<%=cp%>/member/login";
+               return;
+            }
+            console.log(e.responseText);
+         }      
+      });
+   });
 });
 
 $(function() {
-	   $("body").on("click", ".insertstar a", function(){
-	      var b = $(this).hasClass("on");
-	      $(this).parent().children("a").removeClass("on");
-	      $(this).addClass("on").prevAll("a").addClass("on");
-	      if (b)
-	         $(this).removeClass("on");
-	      var s = $(".insertstar .on").length;
-	      $("#score").val(s);
-	      });
-	   });
-	   
+      $("body").on("click", ".insertstar a", function(){
+         var b = $(this).hasClass("on");
+         $(this).parent().children("a").removeClass("on");
+         $(this).addClass("on").prevAll("a").addClass("on");
+         if (b)
+            $(this).removeClass("on");
+         var s = $(".insertstar .on").length;
+         $("#score").val(s);
+         });
+      });
 
+
+$(function () {
+   $("body").on("click", ".btn_reservation", function(){
+      var price=$(this).closest("h6.form-group").find("input.price").val();
+      var roomCode=$(this).closest("h6.form-group").find("input.roomCode").val();
+      var hotelCode=$(this).closest("h6.form-group").find("input.hotelCode").val();
+
+   
+      var query="price="+price+"&roomCode="+roomCode+"&hotelCode="+hotelCode; 
+      var url = "<%=cp%>/myPage/wishlist/list4";
+      
+      $.ajax({
+         type:"post"
+         ,url:url
+         ,data:query
+         ,dataType:"json"
+         ,success:function(data){
+             location.href="<%=cp%>/myPage/wishlist/list";
+            }
+         ,beforeSend:function(e) {
+            e.setRequestHeader("AJAX", true);
+         }
+         ,error:function(e) {
+            if(e.status==403){
+               location.href="<%=cp%>/member/login";
+               return;
+            }
+            console.log(e.responseText);
+         }      
+      });
+   });
+});
 
 </script>
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: none;" data-jarallax-original-styles="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
@@ -143,8 +168,8 @@ $(function() {
             </div>
         </div>
  </div>
-	
-	<!-- Welcome Area End -->
+   
+   <!-- Welcome Area End -->
 <div class="roberto-rooms-area section-padding-100-0">
         <div class="container">
             <div class="row" style="margin-right:0px; margin-left:0px;">
@@ -152,9 +177,9 @@ $(function() {
                     <!-- Single Room Details Area -->
 
                     <div class="single-room-details-area mb-50">
- 						<div class="room-thumbnail-slides mb-50">
- 		
- 						<div class="room-thumbnail-slides mb-50">
+                   <div class="room-thumbnail-slides mb-50">
+       
+                   <div class="room-thumbnail-slides mb-50">
                             <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
                                     <div class="carousel-item">
@@ -205,14 +230,14 @@ $(function() {
                                <label style="font-size: 25px;" >날짜 검색</label>
                                <div>
                                    <div class="row no-gutters">
-		                            <div class="col-6 col-md-6 col-lg-6">                              
-		                                <input type="date" class="form-control" id="checkin" name="checkin" value="${checkin }">
-		                            </div>
-		                           	<div class="col-6 col-md-6 col-lg-6">                              
-		                                <input type="date" class="form-control" id="checkout" name="checkout" value="${checkout}">
-		                                <input type="hidden" value="${hotelCode }" name="hotelCode">
-		                                <input type="hidden" value="${page }" name="page">
-		                            </div>
+                                  <div class="col-6 col-md-6 col-lg-6">                              
+                                      <input type="date" class="form-control" id="checkin" name="checkin" value="${checkin }">
+                                  </div>
+                                    <div class="col-6 col-md-6 col-lg-6">                              
+                                      <input type="date" class="form-control" id="checkout" name="checkout" value="${checkout}">
+                                      <input type="hidden" value="${hotelCode }" name="hotelCode">
+                                      <input type="hidden" value="${page }" name="page">
+                                  </div>
                                    </div>
                                </div>
                            </div>
@@ -237,9 +262,9 @@ $(function() {
                             <li><img src="<%=cp%>/resources/images/core-img/icon6.png" alt=""> Service 24/24</li>
                         </ul>
                     </div>
-        <form name="sendReserveForm" action="<%=cp%>/myPage/wishlist/list4" method="get" >
-				<c:forEach var="dto" items="${list }">
-					
+
+            <c:forEach var="dto" items="${list }">
+               
                         <div class="room-features-area d-flex flex-wrap mb-50" style=" border: 1px solid #ebebeb;">
                           <h6>객실&nbsp;이름: &nbsp;&nbsp;${dto.roomName }
                                  <span>
@@ -251,17 +276,17 @@ $(function() {
                             <h6>이용정보: <span>${dto.information }</span></h6>
                             <h6>Services: <span>Wifi, television ... </span></h6>
                             <h6 style="padding-top: 50px;" class="form-group">
-                            	<span style="margin-bottom: 30px;">가격 : ${dto.price }</span>
-                               <button type="button" class="btn roberto-btn w-100"  onclick="sendReserve('${dto.roomCode}');">예약하기</button>
-                               <input type="hidden" value="${dto.hotelCode }" name="hotelCode">
-                               <input type="hidden" value="${dto.roomCode }" name="roomCode">
-                               <input type="hidden"  value="${dto.price }" name="price">
+                               <span style="margin-bottom: 30px;">가격 : ${dto.price }</span>
+                               <button type="button" class="btn_reservation btn roberto-btn w-100">예약하기</button>
+                               <input type="hidden" value="${dto.hotelCode }" name="hotelCode" class="hotelCode">
+                               <input type="hidden" value="${dto.roomCode }" name="roomCode" class="roomCode">
+                               <input type="hidden"  value="${dto.price }" name="price" class="price">
 
                             </h6>
                         </div>
-				
-    			</c:forEach>
-    		</form>
+            
+             </c:forEach>
+   
              </div>
              
              <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; padding: 15px 0px;" >
@@ -278,23 +303,23 @@ $(function() {
                         Hotel Review
                  
                         <div>
-						  <div>
-                    	    <textarea class="boxTF" style="width: 80%; font-size: 20px; text-align: left;"></textarea>							
-							<div style="font-size: 20px; text-align: center; float: right; width: 20%; ">호텔 별점주기
-							<p class="star insertstar" style="font-size: 25px; text-align: right; text-align: center; ">					  
-								<a href="#">★</a> 
-								<a href="#">★</a> 
-								<a href="#">★</a> 
-								<a href="#">★</a> 
-								<a href="#">★</a>
-							</p>	
-						<p style="text-align: center; ">
-							<button type="button" style="font-size: 15px; border: 1px solid gray; padding: 3px; " class="btnSendReview" >후기 등록하기</button>
-                   			<input type="hidden" value="${hotelCode }" name="hotelCode">
-                   		</p>
-							</div>				
-							<input type="hidden" name="score" id="score" value="0">
-						</div>	
+                    <div>
+                           <textarea class="boxTF" style="width: 80%; font-size: 20px; text-align: left;"></textarea>                     
+                     <div style="font-size: 20px; text-align: center; float: right; width: 20%; ">호텔 별점주기
+                     <p class="star insertstar" style="font-size: 25px; text-align: right; text-align: center; ">                 
+                        <a href="#">★</a> 
+                        <a href="#">★</a> 
+                        <a href="#">★</a> 
+                        <a href="#">★</a> 
+                        <a href="#">★</a>
+                     </p>   
+                  <p style="text-align: center; ">
+                     <button type="button" style="font-size: 15px; border: 1px solid gray; padding: 3px; " class="btnSendReview" >후기 등록하기</button>
+                            <input type="hidden" value="${hotelCode }" name="hotelCode">
+                         </p>
+                     </div>            
+                     <input type="hidden" name="score" id="score" value="0">
+                  </div>   
                       </div>
                   
                     </div >
@@ -325,4 +350,4 @@ $(function() {
     </section>
     <!-- Call To Action Area End -->
 
-	
+   
