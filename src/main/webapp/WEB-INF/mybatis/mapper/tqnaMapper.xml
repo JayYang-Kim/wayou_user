@@ -46,24 +46,6 @@
 	
 	<!-- 글리스트 -->
 	<select id="listBoard" parameterType="map" resultType="com.sp.ticket.QnABoard">
-	<!-- SELECT * FROM (
-    	SELECT ROWNUM rnum, tb.* FROM (
-        	SELECT QNACODE, CATCODE, subject, TO_CHAR(created, 'YYYY-MM-DD') created,
-                tb_user.userName, hitCount
-        	FROM question
-        	JOIN tb_user ON question.userIdx=tb_user.userIdx
-        	<where>
-				<if test="searchValue !=null and searchValue !='' ">
-				<include refid="where-list"/>
-				</if>
-				AND CATCODE =1
-			</where>
-			
-        	ORDER BY created DESC
-<![CDATA[        	
-    	) tb WHERE ROWNUM <= #{end}
-	) WHERE rnum >= #{start}
-]]> -->
 		SELECT * FROM (
 	    	SELECT ROWNUM rnum, tb.* FROM (
 	        	SELECT q.QNACODE, q.CATCODE, subject, content, TO_CHAR(created, 'YYYY-MM-DD') created, q.userIdx,
