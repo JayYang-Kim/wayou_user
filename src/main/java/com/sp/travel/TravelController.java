@@ -1,6 +1,5 @@
 	package com.sp.travel;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -629,13 +628,18 @@ public class TravelController {
 	
 	@PostMapping("/travel/event/insertReply")
 	@ResponseBody
-	public void insertReply(
+	public Map<String,Object> insertReply(
 				EventReply reply,
 				HttpSession session
 			) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		reply.setUserIdx(info.getUserIdx());
 		eventService.insertReply(reply);
+		int dataCount = eventService.replyCount(reply.getEventCode());
+		Map<String,Object> map = new HashMap<>();
+		map.put("dataCount", dataCount);
+		
+		return map;
 	}
 	
 	@GetMapping("/travel/event/replyList")
@@ -685,7 +689,10 @@ public class TravelController {
 			return map;
 		}
 		eventService.deleteReply(reply);
+		int dataCount = eventService.replyCount(reply.getEventCode());
+		map.put("dataCount", dataCount);
 		map.put("isDeleted", true);
+		
 		return map;
 	}
 	
