@@ -15,7 +15,7 @@
 	.routeItem {
 		width: 33%;
 		min-width: 250px;
-		height: 250px;
+		height: 280px;
 		float: left;
 		padding:15px 10px;
 		cursor: pointer;
@@ -91,7 +91,7 @@
 	$(function(){
 		$("#routeSort").change(function(){ 
 			var routeSort = $(this).val();
-			if(${locCode==0}){
+			if("${locCode==0}"=="true"){
 				if(${searchValue==""}){
 					location.href="<%=cp%>/travel/plan/list?routeSort="+routeSort;	
 				}else{
@@ -102,7 +102,7 @@
 					location.href="<%=cp%>/travel/plan/list?locCode=${locCode}&routeSort="+routeSort;	
 				}else{
 					location.href="<%=cp%>/travel/plan/list?locCode=${locCode}&routeSort="+routeSort+"&searchKey=${searchKey}&searchValue=${searchValue}";
-				}
+				} 
 			}
 		});
 	});
@@ -163,7 +163,7 @@
                 <section class="routeList" style="min-height: 700px; padding-left: 20px; padding-right: 20px;">
 					<c:forEach var="dto" items="${list}">
 						<div class="routeItem wow fadeInUp" data-wow-delay="100ms">
-							<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" style="float: left;">
+							<img src="<%=cp%>/uploads/location/${dto.saveFilename}" style="float: left;">
 							<div style="float: left;">
 								<p>
 									<input type="hidden" data-locCode="${dto.locCode}" data-workCode="${dto.workCode}" data-dayCount="${dto.dayCount}" data-userIdx="${dto.userIdx}">

@@ -126,7 +126,7 @@
 </script>
 
 <!-- 지역상세정보(Top) -->
-<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top01.jpg);">
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top02.jpg);">
     <div class="container h-100">
         <div class="row h-100 align-items-end">
             <div class="col-12">
@@ -272,7 +272,7 @@
 		</c:if>
 		<div class="t_center">
 			<c:if test="${not empty recommendLandmak}">
-				<button class="btn_classic btn-white" style="width:300px;height:50px;">${readLocation.locName} 관광명소 모두보기</button>
+				<button class="btn_classic btn-white" onclick="location.href='<%=cp%>/travel/landmark?locCode=${readLocation.locCode}'" style="width:300px;height:50px;">${readLocation.locName} 관광명소 모두보기</button>
 			</c:if>
 			<c:if test="${empty recommendLandmak}">
 				<div>등록된 관광명소가 없습니다.</div>

@@ -131,7 +131,7 @@
 	</select>
 	
 	<insert id="insertWishlist" parameterType="com.sp.ticket.Ticket">
-	INSERT INTO wishlistcode_dt (wishCode, userIdx, productCode, amount, price)
-	VALUES (wishCode_dt_seq.NEXTVAL, #{userIdx}, #{ticketDetailCode}, #{buyCount}, #{price})
+	INSERT INTO wishlist_dt (wishCode, userIdx, productCode, amount, price)
+	VALUES (WISHCODE_SEQ.NEXTVAL, #{userIdx}, #{ticketDetailCode}, #{buyCount}, #{price})
 	</insert>
 </mapper>

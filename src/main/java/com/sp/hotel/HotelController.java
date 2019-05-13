@@ -49,7 +49,7 @@ public class HotelController {
 			value=URLEncoder.encode(value, "utf-8");
 		}
 
-		int rows=2;
+		int rows=10;
 		int total_page=0;
 		int dataCount=0;
 		
@@ -80,6 +80,10 @@ public class HotelController {
 			listNum=dataCount-(start+n-1);
 			dto.setListNum(listNum);
 			n++;
+		}
+		
+		for(Hotel dto : list) {
+			dto.setStar(Math.round(dto.getStar()));
 		}
 		
 		String cp=req.getContextPath();
@@ -241,4 +245,5 @@ public class HotelController {
 	      return map;   
 	   }
 	
+/*	@RequestMapping(value="")*/
 }
