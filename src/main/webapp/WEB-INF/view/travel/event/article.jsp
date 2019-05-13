@@ -91,7 +91,7 @@
 		replyList(1);
 		var dataCount = $("#reply").attr("data-dataCount");
 		alert(dataCount);
-		$(".replyFrame").find("h4").append(dataCount+"개");
+		$(".replyFrame").find("h4").html("전체 댓글 "+dataCount+"개");
 	});
 	
 	function replyList(page){

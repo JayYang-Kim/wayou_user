@@ -84,7 +84,7 @@
 				location.href="<%=cp%>/travel/plan/list?locCode="+locCode+"&routeSort="+routeSort;	
 			}else{
 				location.href="<%=cp%>/travel/plan/list?locCode="+locCode+"&routeSort="+routeSort+"&searchKey=${searchKey}&searchValue=${searchValue}";
-			}
+			} 
 			
 		});
 	});
