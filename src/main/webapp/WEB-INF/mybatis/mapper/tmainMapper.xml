@@ -51,5 +51,28 @@
 	
 </select>
 
+<select id="mainBestList" parameterType="map" resultType="com.sp.ticket.Ticket">
+	SELECT * FROM (
+	    SELECT ROWNUM rnum, tb.* FROM (
+	    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.loctitle, sr.star, sr.reviewCount
+	    	FROM ticket t
+	    	JOIN (
+	    			select ticketCode, min(price) as price
+	    			FROM ticketDetail
+	    			GROUP BY ticketCode
+			) detail on detail.ticketCode=t.ticketCode
+			JOIN store s ON t.storeCode=s.storeCode
+			LEFT OUTER JOIN (       
+               		SELECT AVG(star) AS star, NVL(COUNT(*), 0) AS reviewCount, storeCode FROM storeReview
+               		GROUP BY storeCode
+               ) sr ON sr.storeCode=t.storeCode
+			ORDER BY sr.star DESC
+<![CDATA[				
+       )tb WHERE ROWNUM <= 5
+     )WHERE rnum >= 1
+]]>
+	</select>
+
+
 	
 </mapper>

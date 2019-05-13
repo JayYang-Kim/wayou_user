@@ -15,6 +15,7 @@ public class Ticket {
 	private String name;				//대표자명
 	private String email;				//이메일
 	private String calcel_notice;		//취소규정
+	private String loctitle;			//티켓리스트 주소
 	
 	private int ticketCode;				//티켓코드
 	private String ticketName;			//티켓명
@@ -43,7 +44,8 @@ public class Ticket {
 	private int buyCount;				//구매수량
 	private int userIdx;				//유저
 	
-	
+	private int star;					//평균별점
+	private int reviewCount;			//티켓리스트 리뷰 개수
 	
 	
 	public int getStoreCode() {
@@ -256,6 +258,24 @@ public class Ticket {
 	}
 	public void setBuyCount(int buyCount) {
 		this.buyCount = buyCount;
+	}
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
+	}
+	public String getLoctitle() {
+		return loctitle;
+	}
+	public void setLoctitle(String loctitle) {
+		this.loctitle = loctitle;
+	}
+	public int getReviewCount() {
+		return reviewCount;
+	}
+	public void setReviewCount(int reviewCount) {
+		this.reviewCount = reviewCount;
 	}
 	
 	

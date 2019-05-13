@@ -6,4 +6,5 @@ public interface MainService {
 	public List<Notice> mainNoticeList() throws Exception;
 	public List<QnABoard> mainQnAList() throws Exception;
 	public List<Event> mainEventList() throws Exception;
+	public List<Ticket> mainBestList() throws Exception;
 }

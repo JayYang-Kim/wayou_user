@@ -42,7 +42,7 @@
 	<select id="listTicket" parameterType="map" resultType="com.sp.ticket.Ticket">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.address1
+		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.loctitle, sr.star, sr.reviewCount
 		    	FROM ticket t
 		    	JOIN (
 		    			select ticketCode, min(price) as price
@@ -50,6 +50,10 @@
 		    			GROUP BY ticketCode
 				) detail on detail.ticketCode=t.ticketCode
 				JOIN store s ON t.storeCode=s.storeCode
+				LEFT OUTER JOIN (       
+                		SELECT AVG(star) AS star, NVL(COUNT(*), 0) AS reviewCount, storeCode FROM storeReview
+                		GROUP BY storeCode
+                ) sr ON sr.storeCode=t.storeCode
 				<where>
 					<if test="regionCode != 0">
 						locCode=#{regionCode}
@@ -130,8 +134,9 @@
 		WHERE storeCode=#{storeCode}
 	</select>
 	
-	<insert id="insertWishlist" parameterType="com.sp.ticket.Ticket">
+	<!-- <insert id="insertWishlist" parameterType="com.sp.ticket.Ticket">
 	INSERT INTO wishlist_dt (wishCode, userIdx, productCode, amount, price)
 	VALUES (WISHCODE_SEQ.NEXTVAL, #{userIdx}, #{ticketDetailCode}, #{buyCount}, #{price})
-	</insert>
+	</insert> -->
+	
 </mapper>

@@ -34,10 +34,12 @@ public class TicketController {
 			List<Notice> listNotice = mainService.mainNoticeList();
 			List<QnABoard> listQnA = mainService.mainQnAList();
 			List<Event> listEvent = mainService.mainEventList();
+			List<Ticket> listBest = mainService.mainBestList();
 			
 			model.addAttribute("listNotice", listNotice);
 			model.addAttribute("listQnA", listQnA);
 			model.addAttribute("listEvent", listEvent);
+			model.addAttribute("listBest", listBest);
 		return ".ticket.tmain";
 	}
 	
@@ -78,6 +80,10 @@ public class TicketController {
 			listNum = dataCount - (start+n-1);
 			dto.setListNum(listNum);
 			n++;
+		}
+		
+		for(Ticket dto : list) {
+			dto.setStar(Math.round(dto.getStar()));
 		}
 		
 		List<Ticket> listRegion = ticketService.listRegion();
