@@ -124,7 +124,4 @@ public class HotelServiceImpl implements HotelService {
 		}
 		return result;
 	}
-
-	
-	
 }

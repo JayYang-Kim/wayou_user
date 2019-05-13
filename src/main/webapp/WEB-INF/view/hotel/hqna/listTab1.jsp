@@ -50,21 +50,16 @@
 </c:forEach>	
 		</table>
 		 
-		<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
-		   <tr height="35">
-			<td align="center">
-		        ${dadtaCount==0?"등록된 자료가 없습니다.": paging}
-			</td>
-		   </tr>
-		</table>
+
 		
 		<table style="width: 100%; margin: 10px auto; border-spacing: 0px;">
 		   <tr height="40">
 		      <td align="left" width="100">
-		          <button type="button" class="btn" onclick="reloadHqna();">새로고침</button>
+		          <button type="button" class="btn_classic" onclick="reloadHqna();">새로고침</button>
 		      </td>
 		      <td align="center">
-		              <select name="key" id="key" class="selectField">
+		       <form>
+		              <select name="key" id="key" class="select">
 		              	  <option value="all"      ${key=="all"?"selected='selected'":"" }>모두</option>
 		                  <option value="subject"  ${key=="subject"?"selected='selected'":"" }>제목</option>
 		                  <option value="userName" ${key=="userName"?"selected='selected'":"" }>작성자</option>
@@ -72,10 +67,18 @@
 		                  <option value="created"  ${key=="created"?"selected='selected'":"" }>등록일</option>
 		            </select>
 		            <input type="text" name="value"  id="value" value="${value}" class="boxTF" >
-		            <button type="button" class="btn" onclick="serchList()">검색</button>
+		            <button type="button" class="btn btn_classic" onclick="serchList()">검색</button>
+		        </form>
 		      </td>
 		      <td align="right" width="100">
-		          <button type="button" class="btn" onclick="insertHqna()">글올리기</button>
+		          <button type="button" class="btn_classic" onclick="insertHqna()">글올리기</button>
 		      </td>
+		   </tr>
+		</table>
+				<table style="width: 100%; margin: 0px auto; border-spacing: 0px;">
+		   <tr height="35">
+				<td align="center" style="padding-top:10px;">
+		        ${dataCount==0 ? "등록된 자료가 없습니다." : paging}
+			</td>
 		   </tr>
 		</table>

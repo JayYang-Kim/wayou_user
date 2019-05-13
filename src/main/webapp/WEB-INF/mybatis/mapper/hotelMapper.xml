@@ -13,9 +13,9 @@
 <select id="listHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
   SELECT * FROM (
          SELECT ROWNUM rnum, tb.* FROM (
-         SELECT h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename
+         SELECT HRS.STAR, h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename
          FROM hotelInfo h
-         LEFT OUTER JOIN(
+         JOIN(
             select * from (
               SELECT hotelCode, hcount, min(price) as price, roomcode, rank() over(partition by hotelcode order by min(price)) g
               FROM roomInfo
@@ -25,7 +25,11 @@
          LEFT OUTER JOIN(
             select roomcode, saveFilename FROM roomfile
             WHERE fileCode=(SELECT min(fileCode) FROM roomfile)
-         )nf ON nf.roomCode=newT.roomCode                
+         )nf ON nf.roomCode=newT.roomCode    
+          LEFT OUTER JOIN(
+            select AVG(star) AS STAR, HOTELCODE FROM HREVIEW   
+            GROUP BY HOTELCODE
+         )HRS ON HRS.HOTELCODE=H.HOTELCODE            
           <where>
                <if test="value!=null and value !=''" >
                (INSTR(h.address1, #{value}) > 0)
@@ -33,10 +37,10 @@
           </where>
           
           <choose>
-           <when test="price_order=='desc'"> 
+           <when test="price_order2=='desc'"> 
             ORDER BY price desc
            </when>
-           <when test="price_order=='asc'"> 
+           <when test="price_order1=='asc'"> 
             ORDER BY price asc
            </when>
           </choose>
@@ -126,20 +130,16 @@ SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.informatio
 		   )WHERE rnum >=#{start}
 ]]>
 	</select>
-	
+<!-- 	
 	<insert id="insertReserveHotel" parameterType="com.sp.hotel.Hotel">
 		INSERT INTO  WISHLISTCODE_DH(wishCode, userIdx, productCode, amount, price, hotelCode)
          VALUES(WISHCODE_DH_SEQ.NEXTVAL, #{userIdx} , #{roomCode}, 1, #{price}, #{hotelCode})	
 	</insert>
 	
-<!-- 	<select id="readHotel2" parameterType="map" resultType="com.sp.hotel.Hotel">
-SELECT r.roomCode, rt.roomName, r.price, r.hotelCode
-            FROM roomInfo r
-            JOIN roomType rt ON rt.roomTypeCode =r.roomTypeCode
-            JOIN hotelInfo h ON h.hotelCode=r.hotelCode
-			WHERE r.hotelCode = #{hotelCode}
-			AND r.roomCode=#{roomCode}
-
-	</select> -->
-		
+ -->
+ 
+ 	<select id="seq_order_master" resultType="Integer">
+ 		SELECT NVL(ORDERCODE_SEQ.NEXTVAL, 0) FROM dual
+ 	</select>
+ 			
 </mapper>
