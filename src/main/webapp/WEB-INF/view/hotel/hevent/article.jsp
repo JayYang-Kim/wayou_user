@@ -90,7 +90,7 @@
 	$(function(){
 		replyList(1);
 		var dataCount = $("#reply").attr("data-dataCount");
-		alert(dataCount);
+		
 		$(".replyFrame").find("h4").append(dataCount+"개");
 	});
 	
