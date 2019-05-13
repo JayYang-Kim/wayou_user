@@ -29,21 +29,19 @@
 		   	<div class="row justify-content-center box_search mb40">
 		            <div class="col-12 col-sm-3 col-lg-2">
 		            	<select name="searchKey">
-		            		<option value="all" ${searchKey == 'all' ? "selected='selected'" : ""}>제목 + 내용</option>
-		            		<option value="subject" ${searchKey == 'subject' ? "selected='selected'" : ""}>제목</option>
-		            		<option value="content" ${searchKey == 'content' ? "selected='selected'" : ""}>내용</option>
-		            		<option value="startDate" ${searchKey == 'startDate' ? "selected='selected'" : ""}>시작일</option>
-		            		<option value="endDate" ${searchKey == 'endDate' ? "selected='selected'" : ""}>종료일</option>
-		            		<option value="userId" ${searchKey == 'userId' ? "selected='selected'" : ""}>아이디</option>
-		            		<option value="userCount" ${searchKey == 'userCount' ? "selected='selected'" : ""}>인원수</option>
+		            		<option value="all" ${searchKey == 'all' ? "selected='selected'" : ""}>전체</option>
+		            		<option value="tag1" ${searchKey == 'tag1' ? "selected='selected'" : ""}>역사 / 종교</option>
+		            		<option value="tag2" ${searchKey == 'tag2' ? "selected='selected'" : ""}>숙박</option>
+		            		<option value="tag3" ${searchKey == 'tag3' ? "selected='selected'" : ""}>쇼핑</option>
+		            		<option value="tag4" ${searchKey == 'tag4' ? "selected='selected'" : ""}>음식점</option>
 		            	</select>
 		            </div>
-		            <div class="col-12 col-sm-9 col-lg-8">
+		            <div class="col-12 col-sm-9 col-lg-6">
 		            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요."/>
 		            </div>
-		            <div class="col-12 col-lg-2">
+		            <div class="col-12 col-lg-4">
 		            	<button type="button" class="btn roberto-btn" onclick="sendSearch()">검색</button>
-		            	<button type="button" class="btn roberto-btn" onclick="sendSearch()">새로고침</button>
+		            	<button type="button" class="btn roberto-btn" onclick="location.href='<%=cp%>/travel/landmark?locCode=${locCode}'">새로고침</button>
 		            </div>
 			</div>
 		</form>
@@ -52,7 +50,7 @@
             <div class="col-12 col-lg-12">
                 <!-- Single Blog Post Area -->
                 <c:forEach var="list" items="${list}">
-	                <div class="tr_locationList single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
+	                <div class="tr_landmarkList single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 	                    <!-- Post Thumbnail -->
 	                    <div class="post-thumbnail">
 	                    	<a href="${articleUrl}?&locCode=${list.locCode}&landCode=${list.landCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
@@ -67,14 +65,24 @@
 	                    <div class="post-content">
 	                        <!-- Post Title -->
 	                        <a href="${articleUrl}?&locCode=${list.locCode}&landCode=${list.landCode}" class="post-title">${list.landName}</a>
-	                        <div class="mb20">
+	                        <div class="address mb20">
 	                        	${list.address1}, ${list.address2}
 	                        </div>
-	                        <div class="mb20">
+	                        <div class="memo mb20">
 	                        	${list.memo}
 	                        </div>
-	                        <div class="mb20">
-	                        	${list.landAvgStarNum} / ${list.landReplyCount} (댓글수)
+	                        <div class="etc mb20">
+	                        	<c:if test="${list.landAvgStarNum < 5}">
+									<c:forEach begin="${list.landAvgStarNum}" end="4">
+										<i class="fa fa-star"></i>
+									</c:forEach>
+								</c:if>
+								<c:if test="${list.landAvgStarNum > 0}">
+									<c:forEach begin="1" end="${list.landAvgStarNum}">
+					            		<i class="fa fa-star" style="color: #f5b917;"></i>
+					            	</c:forEach>
+				            	</c:if>
+	                        	 / ${list.landReplyCount} (댓글수)
 	                        </div>
 	                    </div>
 	                </div>

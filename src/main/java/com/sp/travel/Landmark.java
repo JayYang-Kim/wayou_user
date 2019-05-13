@@ -14,7 +14,7 @@ public class Landmark {
 	private String created;
 	private int tagCode;
 	private int adminIdx;
-	private List<String> saveFilename;
+	private String saveFilename;
 	private int workNum;
 	private int day;
 	
@@ -98,12 +98,13 @@ public class Landmark {
 	public void setAdminIdx(int adminIdx) {
 		this.adminIdx = adminIdx;
 	}
-	public List<String> getSaveFilename() {
+	public String getSaveFilename() {
 		return saveFilename;
 	}
-	public void setSaveFilename(List<String> saveFilename) {
+	public void setSaveFilename(String saveFilename) {
 		this.saveFilename = saveFilename;
 	}
+
 	
 	
 }

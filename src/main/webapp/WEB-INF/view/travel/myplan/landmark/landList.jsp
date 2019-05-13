@@ -26,7 +26,10 @@
 	<c:forEach var="dto" items="${list}">
 		<div class="landList">
 			<input type="hidden" name="info" data-landCode="${dto.landCode}" data-lat="${dto.lat}" data-lng="${dto.lng}" data-landName="${dto.landName}">
-			<img src="<%=cp%>/resource/user/images/travel/seoul.jpg" class="locImage" draggable="false">
+			<script>
+				alert("${dto.saveFilename}");
+			</script>
+			<img src="<%=cp%>/uploads/landmark/${dto.saveFilename}" class="locImage" draggable="false">
 			<div style="float: left; padding-left: 5px; padding-top: 12px; font-size: 16px;">
 				<span style="padding-left:0px;"><b>${dto.landName}</b></span><br><span style="color: #b3b3b3; font-size: 12px;">${dto.tagCode==1?'역사/종교':(dto.tagCode==2?'숙박':(dto.tagCode=3?'쇼핑':'음식점'))}</span><br>
 			<c:if test="${day=='all'}">
