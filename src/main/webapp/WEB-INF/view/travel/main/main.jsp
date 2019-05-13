@@ -121,7 +121,19 @@
 					</c:if>
 					</div>
 					<span class="desc">
-						<p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> ${listLocation.locationReplyCount} (댓글수)</p>
+						<p class="star">
+							<c:if test="${listLocation.avgStarNum < 5}">
+								<c:forEach begin="${listLocation.avgStarNum}" end="4">
+									<i class="fa fa-star"></i>
+								</c:forEach>
+							</c:if>
+							<c:if test="${listLocation.avgStarNum > 0}">
+								<c:forEach begin="1" end="${listLocation.avgStarNum}">
+				            		<i class="fa fa-star" style="color: #f5b917;"></i>
+				            	</c:forEach>
+			            	</c:if>
+							/ ${listLocation.locationReplyCount} (댓글수)
+						</p>
 						<h2>${listLocation.locName}</h2>
 						<span class="city">${listLocation.memo}</span>
 						<span class="price">관광명소 : ${listLocation.landCount}(개)</span>

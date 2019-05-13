@@ -49,7 +49,7 @@ public class HotelController {
 			value=URLEncoder.encode(value, "utf-8");
 		}
 
-		int rows=2;
+		int rows=10;
 		int total_page=0;
 		int dataCount=0;
 		
@@ -80,6 +80,10 @@ public class HotelController {
 			listNum=dataCount-(start+n-1);
 			dto.setListNum(listNum);
 			n++;
+		}
+		
+		for(Hotel dto : list) {
+			dto.setStar(Math.round(dto.getStar()));
 		}
 		
 		String cp=req.getContextPath();
@@ -115,6 +119,7 @@ public class HotelController {
 						   @RequestParam int page,
 						   @RequestParam (defaultValue="") String checkin,
 						   @RequestParam (defaultValue="") String checkout,
+						   
 						   HttpServletRequest req,
 						   Model model
 						   ) throws Exception {
@@ -125,6 +130,8 @@ public class HotelController {
 		
 		
 		Hotel maxDto=hotelservice.readHotelMax(hotelCode);
+		
+		
 		
 		Map<String, Object> map=new HashMap<>();
 		map.put("hotelCode", hotelCode);
@@ -216,26 +223,27 @@ public class HotelController {
 		return "hotel/hotel/hotelReview";		
 	}
 	
-	@RequestMapping(value="/wishlist/list", method=RequestMethod.POST)
-	public Map<String, Object> insertReserveHotel (Hotel dto 
-											, HttpSession session) throws Exception{
-													
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		dto.setUserIdx(info.getUserIdx());
-		
-		int result=hotelservice.insertReserveHotel(dto);
-		
-		
-			String state="true";
-			
-			if(result==0) {
-				state="false";
-			}
-			
-			Map<String, Object> model=new HashMap<>();
-			model.put("state", state);
-					
-		return model;		
-	}
+	@RequestMapping(value="/myPage/wishlist/list4")
+	   @ResponseBody
+	   public Map<String, Object> insertReserveHotel (Hotel dto,   
+	         HttpSession session) throws Exception{
+	                                       
+	      SessionInfo info=(SessionInfo)session.getAttribute("member");
+	      dto.setUserIdx(info.getUserIdx());	 
+	      
+	      String msg = "true";
+	      
+	      try {
+	         int result=hotelservice.insertReserveHotel(dto);
+	      } catch (Exception e) {
+	         msg = "false";
+	      }
+	      
+	      Map<String, Object> map = new HashMap<>();
+	      map.put("msg", msg);
+	      
+	      return map;   
+	   }
 	
+/*	@RequestMapping(value="")*/
 }

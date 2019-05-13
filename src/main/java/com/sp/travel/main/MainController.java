@@ -17,6 +17,11 @@ public class MainController {
 	public String main(Model model) throws Exception {
 		
 		List<Main> listLocation = mainService.recommendLocation();
+		
+		for(Main dto : listLocation) {
+			dto.setAvgStarNum(Math.round(dto.getAvgStarNum()));
+		}
+		
 		List<Main> listLandMark = mainService.recommendLandmak();
 		List<Main> listWorkspace = mainService.recommendWorkspace();
 		

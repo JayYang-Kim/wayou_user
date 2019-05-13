@@ -86,7 +86,13 @@
                             <div class="room-feature">
                                 <h6>위치<span>${dto.locCode }</span></h6>
                                 <h6>최대인원: <span>${dto.HCount }</span></h6>
-                                <h6>별찍기?: <span>몇점?</span></h6>
+                             <!--    <h6>별찍기?: <span>몇점?</span></h6> -->
+                        <p class="star"> 별점 : 
+                           <c:forEach begin="1" end="${dto.star}">
+                              <a class="on">★</a> 
+                           </c:forEach>
+                        </p>
+                    
                             </div>
                           	<a href="${articleUrl}&hotelCode=${dto.hotelCode}" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
                         </div>
