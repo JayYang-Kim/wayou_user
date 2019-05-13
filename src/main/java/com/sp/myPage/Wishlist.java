@@ -12,7 +12,13 @@ public class Wishlist {
 	private int totalprice;
 	private String totalprice1;
 	private int listNum;
+	private String hName;
+	private String information;
 	private int wishCode;
+	private int departCode;
+	private String ticketdetailName;
+	private String ticketName;
+	private int roomNum;
 	public int getUserIdx() {
 		return userIdx;
 	}
@@ -84,6 +90,42 @@ public class Wishlist {
 	}
 	public void setWishCode(int wishCode) {
 		this.wishCode = wishCode;
+	}
+	public int getDepartCode() {
+		return departCode;
+	}
+	public void setDepartCode(int departCode) {
+		this.departCode = departCode;
+	}
+	public String getInformation() {
+		return information;
+	}
+	public void setInformation(String information) {
+		this.information = information;
+	}
+	public String getTicketdetailName() {
+		return ticketdetailName;
+	}
+	public void setTicketdetailName(String ticketdetailName) {
+		this.ticketdetailName = ticketdetailName;
+	}
+	public String gethName() {
+		return hName;
+	}
+	public void sethName(String hName) {
+		this.hName = hName;
+	}
+	public String getTicketName() {
+		return ticketName;
+	}
+	public void setTicketName(String ticketName) {
+		this.ticketName = ticketName;
+	}
+	public int getRoomNum() {
+		return roomNum;
+	}
+	public void setRoomNum(int roomNum) {
+		this.roomNum = roomNum;
 	}
 	
 	

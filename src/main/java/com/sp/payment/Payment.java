@@ -26,13 +26,11 @@ public class Payment {
 	private String confirmDate;
 	
 	//order DB용
-	private int dataType;
 	private int odCode;
 	private int orderCode;
 	private int productCode;
 	private int amount;
 	private int price;
-	private int wishCode;
 	
 	//order Master DB용
 	private String orderDate;
@@ -41,7 +39,14 @@ public class Payment {
 	private String memo;
 	private int totalMoney;
 	private int separate;
-	
+	private int roomNum;
+	//wishlist 용
+	private String hName;
+	private String information;
+	private int wishCode;
+	private int departCode;
+	private String ticketdetailName;
+	private String ticketName;
 	
 	public int getPgIdentCode() {
 		return pgIdentCode;
@@ -97,6 +102,12 @@ public class Payment {
 	public void setUserAddr2(String userAddr2) {
 		this.userAddr2 = userAddr2;
 	}
+	public String getEtc() {
+		return etc;
+	}
+	public void setEtc(String etc) {
+		this.etc = etc;
+	}
 	public String getUserTel() {
 		return userTel;
 	}
@@ -109,11 +120,29 @@ public class Payment {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public int getSeparate() {
-		return separate;
+	public String getImpCode() {
+		return impCode;
 	}
-	public void setSeparate(int separate) {
-		this.separate = separate;
+	public void setImpCode(String impCode) {
+		this.impCode = impCode;
+	}
+	public String getPaymethod() {
+		return paymethod;
+	}
+	public void setPaymethod(String paymethod) {
+		this.paymethod = paymethod;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public int getConfirmCardNum() {
+		return confirmCardNum;
+	}
+	public void setConfirmCardNum(int confirmCardNum) {
+		this.confirmCardNum = confirmCardNum;
 	}
 	public int getConfirmMoney() {
 		return confirmMoney;
@@ -157,11 +186,23 @@ public class Payment {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	public int getWishCode() {
+		return wishCode;
+	}
+	public void setWishCode(int wishCode) {
+		this.wishCode = wishCode;
+	}
 	public String getOrderDate() {
 		return orderDate;
 	}
 	public void setOrderDate(String orderDate) {
 		this.orderDate = orderDate;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 	public int getReceiveType() {
 		return receiveType;
@@ -181,54 +222,49 @@ public class Payment {
 	public void setTotalMoney(int totalMoney) {
 		this.totalMoney = totalMoney;
 	}
-	public String getName() {
-		return name;
+	public int getSeparate() {
+		return separate;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setSeparate(int separate) {
+		this.separate = separate;
 	}
-	public String getImpCode() {
-		return impCode;
+	public String getInformation() {
+		return information;
 	}
-	public void setImpCode(String impCode) {
-		this.impCode = impCode;
+	public void setInformation(String information) {
+		this.information = information;
 	}
-	public String getPaymethod() {
-		return paymethod;
+	public int getDepartCode() {
+		return departCode;
 	}
-	public void setPaymethod(String paymethod) {
-		this.paymethod = paymethod;
+	public void setDepartCode(int departCode) {
+		this.departCode = departCode;
 	}
-	public String getStatus() {
-		return status;
+	public String getTicketdetailName() {
+		return ticketdetailName;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setTicketdetailName(String ticketdetailName) {
+		this.ticketdetailName = ticketdetailName;
 	}
-	public int getConfirmCardNum() {
-		return confirmCardNum;
+	public int getRoomNum() {
+		return roomNum;
 	}
-	public void setConfirmCardNum(int confirmCardNum) {
-		this.confirmCardNum = confirmCardNum;
+	public void setRoomNum(int roomNum) {
+		this.roomNum = roomNum;
 	}
-	public int getDataType() {
-		return dataType;
+	public String gethName() {
+		return hName;
 	}
-	public void setDataType(int dataType) {
-		this.dataType = dataType;
+	public void sethName(String hName) {
+		this.hName = hName;
 	}
-	public int getWishCode() {
-		return wishCode;
+	public String getTicketName() {
+		return ticketName;
 	}
-	public void setWishCode(int wishCode) {
-		this.wishCode = wishCode;
+	public void setTicketName(String ticketName) {
+		this.ticketName = ticketName;
 	}
-	public String getEtc() {
-		return etc;
-	}
-	public void setEtc(String etc) {
-		this.etc = etc;
-	}
+	
 	
 	
 }

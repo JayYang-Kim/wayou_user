@@ -34,44 +34,51 @@ function listWish(){
          
       if(dataCount!=0){
          for(var i=0; i<data.listdh.length; i++){
+        	 var departCode=data.listdh[i].departCode;
 			 var wishCode=data.listdh[i].wishCode;
 	         var amount=data.listdh[i].amount;
 	         var price=data.listdh[i].price;
 	         var listNum = data.listdh[i].listNum;
+	         var hName=data.listdh[i].hName;
+	         var roomNum=data.listdh[i].roomNum;
+	         var information=data.listdh[i].information;
 	         var amount1=data.listdh[i].amount1;
 	         var price1=data.listdh[i].price1;
 	         var totalprice1=data.listdh[i].totalprice1;
 	         totalprice+=(amount*price);
          
-         out+=" <tr data-Type='1' data-wishCode="+wishCode+" data-amount="+amount+" data-price="+price+">";
+         out+=" <tr data-departCode="+departCode+" data-wishCode="+wishCode+" data-amount="+amount+" data-price="+price+">";
          out+=" <td style='text-align:center'>"+listNum+"</td>";
-         out+=" <td style='text-align:center'>"+'사진'+"</td>";
-         out+=" <td style='text-align:center'>"+'상품명'+"</td>";
-         out+=" <td style='text-align:center'><input class='upInput' style='border:none; width:45px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px; margin-top:0px'>수정</button></td>";
+         out+=" <td style='text-align:center'><img src ='<%=cp%>/resources/images/bg-img/everland.jpeg' style='width:100px; height:100px;'></td>";
+         out+=" <td style='text-align:center'><h6>"+hName+"/ "+roomNum+"호실</h><br>"+information+"</td>";
+         out+=" <td style='text-align:center'><input class='upInput' style='border:none; width:45px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h25 m20' style='margin:0px;'>수정</button></td>";
          out+=" <td style='text-align:center' class='price'>"+price1+"원</td>";
          out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
          out+=" <td style='text-align:center'>"+'없음'+"</td>";
-         out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px; margin-top:0px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20' style='margin-top:0px'>삭제</button></td>";
+         out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h25 m20' style='margin-right:10px; margin-top:0px; margin-left:10px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h25 m20' style='margin-top:0px; margin-left:0px; margin-right:0px'>삭제</button></td>";
          out+=" </tr>";
          }
          for(var i=0; i<data.listdt.length; i++){
+        	 var departCode=data.listdt[i].departCode;
 			 var wishCode=data.listdt[i].wishCode;
              var amount=data.listdt[i].amount;
              var price=data.listdt[i].price;
              var listNum = data.listdt[i].listNum;
+	         var ticketName=data.listdt[i].ticketName;
+	         var ticketdetailName=data.listdt[i].ticketdetailName;
              var amount1=data.listdt[i].amount1;
              var price1=data.listdt[i].price1;
              var totalprice1=data.listdt[i].totalprice1;
              totalprice+=(amount*price);
-             out+=" <tr data-Type='2' data-wishCode="+wishCode+" data-amount="+amount+" data-price="+price+">";
+             out+=" <tr data-departCode="+departCode+" data-wishCode="+wishCode+" data-amount="+amount+" data-price="+price+">";
              out+=" <td style='text-align:center'>"+listNum+"</td>";
-             out+=" <td style='text-align:center'>"+'사진'+"</td>";
-             out+=" <td style='text-align:center'>"+'상품명'+"</td>";
-             out+=" <td style='text-align:center'><input class='update_amount' style='border:none; width:45px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px; margin-top:0px'>수정</button></td>";
+             out+=" <td style='text-align:center'><img src ='<%=cp%>/resources/images/bg-img/everland.jpeg' style='width:100px; height:100px;'></td>";
+             out+=" <td style='text-align:center'><h6>"+ticketName+"/ "+ticketdetailName+"</h><br></td>";
+             out+=" <td style='text-align:center'><input class='update_amount' style='border:none; width:45px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h25 m20' style='margin:0px;'>수정</button></td>";
              out+=" <td style='text-align:center'>"+price1+"원</td>";
              out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
              out+=" <td style='text-align:center'>"+'없음'+"</td>";
-             out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px; margin-top:0px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20' style='margin-top:0px'>삭제</button></td>";
+             out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h25 m20' style='margin-right:10px; margin-top:0px; margin-left:10px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h25 m20' style='margin-top:0px; margin-left:0px; margin-right:0px'>삭제</button></td>";
              out+=" </tr>";
          }
 
@@ -89,9 +96,9 @@ function listWish(){
    }
     
     $("body").on("click", ".delete_confirm",function(){
-    	var dataType=$(this).closest("tr").attr("data-Type");
+    	var departCode=$(this).closest("tr").attr("data-departCode");
     	var wishCode=$(this).closest("tr").attr("data-wishCode");
-    	var query="dataType="+dataType+"&wishCode="+wishCode;
+    	var query="departCode="+departCode+"&wishCode="+wishCode;
     	var url="<%=cp%>/myPage/wishlist/delete";
     	$.ajax({
     		type:"POST"
@@ -129,9 +136,9 @@ function listWish(){
     		$(this).siblings("input").css("border","1px solid");
     	}else{
            	var amount=$(this).siblings("input").val();
+        	var departCode=$(this).closest("tr").attr("data-departCode");
         	var wishCode=$(this).closest("tr").attr("data-wishCode");
-        	var dataType=$(this).closest("tr").attr("data-Type");
-        	var query="dataType="+dataType+"&amount="+amount+"&wishCode="+wishCode;
+        	var query="departCode="+departCode+"&amount="+amount+"&wishCode="+wishCode;
         	var url="<%=cp%>/myPage/wishlist/update";
         	$.ajax({
         		type:"POST"
@@ -165,8 +172,8 @@ function listWish(){
     
     $("body").on("click", ".order_confirm", function(){
     	var wishCode=$(this).closest("tr").attr("data-wishCode");
-    	var dataType=$(this).closest("tr").attr("data-Type");
-		var query="?wishCode="+wishCode+"&dataType="+dataType;
+    	var departCode=$(this).closest("tr").attr("data-departCode");
+		var query="?wishCode="+wishCode+"&departCode="+departCode;
         	 location.href="<%=cp%>/payment/orderMenu"+query;	
     });
     $("body").on("click", ".Allorder_confirm", function(){
