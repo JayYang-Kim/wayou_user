@@ -10,7 +10,7 @@ public class Location {
 	private String created;
 	private int enable;
 	private int adminIdx;
-	private String savefilename;
+	private String saveFilename;
 	
 	public int getLocCode() {
 		return locCode;
@@ -66,10 +66,10 @@ public class Location {
 	public void setAdminIdx(int adminIdx) {
 		this.adminIdx = adminIdx;
 	}
-	public String getSavefilename() {
-		return savefilename;
+	public String getSaveFilename() {
+		return saveFilename;
 	}
-	public void setSavefilename(String savefilename) {
-		this.savefilename = savefilename;
+	public void setSaveFilename(String saveFilename) {
+		this.saveFilename = saveFilename;
 	}
 }

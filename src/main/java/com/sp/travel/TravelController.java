@@ -1,5 +1,6 @@
 	package com.sp.travel;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -43,7 +44,10 @@ public class TravelController {
 	}
 	
 	@RequestMapping(value="/travel/myplan/locList") //지역 리스트 호출 Using ajax
-	public String locList(@RequestParam String name,Model model) throws UnsupportedEncodingException {
+	public String locList(
+			@RequestParam String name,
+			Model model
+			) throws UnsupportedEncodingException {
 		name = URLDecoder.decode(name, "utf-8");
 		List<Location> list = travelService.locList(name);
 		model.addAttribute("list", list);

@@ -73,6 +73,7 @@ public class LandmarkController {
 		String paging = myUtil.paging(current_page, total_page, listUrl);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("locCode", locCode);
 		model.addAttribute("page", current_page);
 		model.addAttribute("total_page", total_page);
 		model.addAttribute("dataCount", dataCount);

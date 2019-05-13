@@ -26,7 +26,7 @@
 		            FROM landmarkCommunity
 		            GROUP BY landCode
 		        ) lmc ON lmc.landCode = lm.landCode
-	               WHERE lm.locCode = #{landCode}
+	               WHERE lm.locCode = #{locCode}
 		        ORDER BY landReplyCount DESC, lm.landCode ASC
 		    ) tb
 		<![CDATA[
