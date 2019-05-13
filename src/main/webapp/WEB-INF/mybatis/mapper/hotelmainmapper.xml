@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="hotelmain">
+	
+<select id="HotelMainNoticeList" parameterType="map" resultType="com.sp.hnotice.HNotice">
+	select * from (
+		select tb.*, rownum rnum from(
+			select noticeNum, subject, content, sn.adminIdx, adminName, TO_CHAR(sn.created, 'YYYY-MM-DD') created, hitCount
+			from storeNotice sn
+			join admin a on sn.adminIdx=a.adminIdx
+			order by noticeNum desc
+		)tb where rownum &lt;= 1
+	) where rnum &gt;= 1
+	
+</select>
+	
+<select id="HotelMainQnAList" parameterType="map" resultType="com.sp.hqna.Hqna">
+SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+					SELECT q.qnaCode, q.userIdx, subject, hitCount, 
+		            TO_CHAR(created, 'YYYY-MM-DD')created, q.catCode
+		            ,userName, NVL(answerCount, 0) answerCount
+		          
+		            FROM question q
+		            LEFT OUTER JOIN answer a ON q.qnaCode=a.qnaCode
+		            JOIN tb_user u ON u.userIdx=q.userIdx
+		            
+		            LEFT OUTER JOIN(
+		            	SELECT qe.qnaCode, COUNT(*) answerCount
+		            	FROM question qe
+		            	JOIN answer an
+		            	ON qe.qnaCode=an.qnaCode
+		            	GROUP BY qe.qnaCode
+		            ) qe ON qe.qnaCode=q.qnaCode
+		          where  catCode = 2 
+		            ORDER BY qnaCode DESC
+<![CDATA[
+		    ) tb WHERE ROWNUM <= 1
+		) WHERE rnum >= 1
+]]>			
+	</select>
+	
+<select id="HotelMainEventList" parameterType="map" resultType="com.sp.hevent.HEvent">
+	select * from (
+			select tb.*, rownum rnum from(
+				select eventNum, subject, content, he.adminIdx, he.created, endDate, adminName, hitCount
+				from hotelEvent he
+				join admin a on he.adminIdx=a.adminIdx
+				order by eventNum desc
+			)tb where rownum &lt;=1
+		) where rnum &gt;= 1
+	
+</select>
+
+<select id="HotelRanking" parameterType="map" resultType="com.sp.hotel.Hotel">
+SELECT * FROM (
+         SELECT ROWNUM rnum, tb.* FROM (
+         SELECT HRS.STAR, h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename, h.information, HRS.REVIEW
+         FROM hotelInfo h
+         JOIN(
+            select * from (
+              SELECT hotelCode, hcount, min(price) as price, roomcode, rank() over(partition by hotelcode order by min(price)) g
+              FROM roomInfo
+              GROUP BY hotelCode, hcount, roomcode
+          ) where g=1  
+         )  newT ON newT.hotelCode=h.hotelCode
+         LEFT OUTER JOIN(
+            select roomcode, saveFilename FROM roomfile
+            WHERE fileCode=(SELECT min(fileCode) FROM roomfile)
+         )nf ON nf.roomCode=newT.roomCode    
+          LEFT OUTER JOIN(
+            select AVG(star) AS STAR  , NVL(COUNT(*),0) AS REVIEW, HOTELCODE FROM HREVIEW   
+            GROUP BY HOTELCODE
+         )HRS ON HRS.HOTELCODE=H.HOTELCODE            
+         order by star desc
+
+<![CDATA[
+            )tb WHERE ROWNUM <=3
+         )WHERE rnum >=1
+]]>
+
+</select>
+
+	
+</mapper>

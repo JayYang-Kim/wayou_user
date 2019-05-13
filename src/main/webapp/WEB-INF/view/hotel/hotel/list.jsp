@@ -4,7 +4,30 @@
 <%
    String cp = request.getContextPath();
 %>
+<style type="text/css">
+div {
+   border: none;
+}
+.star {
+   font-size: 0;
+   letter-spacing: -4px;
+}
+.star a {
+   font-size: 20px;
+   text-align: center;
+   letter-spacing: 0;
+   display: inline-block;
 
+   color: #cccccc;
+   text-decoration: none;
+}
+.star a:first-child {
+   margin-left: 0;
+}
+.star a.on {
+   color: #F2CB61;
+}
+</style>
 
 
 <section class="welcome-area">
@@ -86,12 +109,13 @@
                             <div class="room-feature">
                                 <h6>위치<span>${dto.locCode }</span></h6>
                                 <h6>최대인원: <span>${dto.HCount }</span></h6>
-                             <!--    <h6>별찍기?: <span>몇점?</span></h6> -->
-                        <p class="star"> 별점 : 
+                                                    
+                        <span class="star"> 
                            <c:forEach begin="1" end="${dto.star}">
-                              <a class="on">★</a> 
+                              <a class="on" style="color: #F2CB61; font-size: 20px;">★</a> 
                            </c:forEach>
-                        </p>
+                        </span>
+                        <span  style="color: gray; font-size: 18px;">(${dto.REVIEW })</span>
                     
                             </div>
                           	<a href="${articleUrl}&hotelCode=${dto.hotelCode}" class="btn view-detail-btn">View Details <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
