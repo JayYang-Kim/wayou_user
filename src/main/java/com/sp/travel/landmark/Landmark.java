@@ -1,6 +1,6 @@
-package com.sp.travel.main;
+package com.sp.travel.landmark;
 
-public class Main {
+public class Landmark {
 	// 공통 
 	private int locCode;
 	private String locName;
@@ -17,23 +17,33 @@ public class Main {
 	private String saveFilename;
 	private String created;
 	
-	// 추천 여행정보
+	// 여행정보
+	private String lat;
+	private String lng;
 	private int landCount;
-	private double avgStarNum;
-	private int locationReplyCount;
-	private String enable;
+	private int locAvgStarNum;
+	private int locReplyCount;
+	private int enable;
 	
-	// 추천 관광명소
+	// 관광명소
+	private String address1;
+	private String address2;
 	private int tagCode;
 	private String tagName;
 	private int landReplyCount;
+	private double landAvgStarNum;
 	
-	// 추천 여행일정
+	// 여행일정
 	private int workCode;
 	private String subject;
 	private int dayCount;
 	private String startDay;
 	private int pay;
+	
+	// 커뮤니티
+	private int replyCode;
+	private int starNum;
+	private String content;
 	
 	public int getLocCode() {
 		return locCode;
@@ -119,29 +129,53 @@ public class Main {
 	public void setCreated(String created) {
 		this.created = created;
 	}
+	public String getLat() {
+		return lat;
+	}
+	public void setLat(String lat) {
+		this.lat = lat;
+	}
+	public String getLng() {
+		return lng;
+	}
+	public void setLng(String lng) {
+		this.lng = lng;
+	}
 	public int getLandCount() {
 		return landCount;
 	}
 	public void setLandCount(int landCount) {
 		this.landCount = landCount;
 	}
-	public double getAvgStarNum() {
-		return avgStarNum;
+	public int getLocAvgStarNum() {
+		return locAvgStarNum;
 	}
-	public void setAvgStarNum(double avgStarNum) {
-		this.avgStarNum = avgStarNum;
+	public void setLocAvgStarNum(int locAvgStarNum) {
+		this.locAvgStarNum = locAvgStarNum;
 	}
-	public int getLocationReplyCount() {
-		return locationReplyCount;
+	public int getLocReplyCount() {
+		return locReplyCount;
 	}
-	public void setLocationReplyCount(int locationReplyCount) {
-		this.locationReplyCount = locationReplyCount;
+	public void setLocReplyCount(int locReplyCount) {
+		this.locReplyCount = locReplyCount;
 	}
-	public String getEnable() {
+	public int getEnable() {
 		return enable;
 	}
-	public void setEnable(String enable) {
+	public void setEnable(int enable) {
 		this.enable = enable;
+	}
+	public String getAddress1() {
+		return address1;
+	}
+	public void setAddress1(String address1) {
+		this.address1 = address1;
+	}
+	public String getAddress2() {
+		return address2;
+	}
+	public void setAddress2(String address2) {
+		this.address2 = address2;
 	}
 	public int getTagCode() {
 		return tagCode;
@@ -160,6 +194,12 @@ public class Main {
 	}
 	public void setLandReplyCount(int landReplyCount) {
 		this.landReplyCount = landReplyCount;
+	}
+	public double getLandAvgStarNum() {
+		return landAvgStarNum;
+	}
+	public void setLandAvgStarNum(double landAvgStarNum) {
+		this.landAvgStarNum = landAvgStarNum;
 	}
 	public int getWorkCode() {
 		return workCode;
@@ -190,5 +230,23 @@ public class Main {
 	}
 	public void setPay(int pay) {
 		this.pay = pay;
+	}
+	public int getReplyCode() {
+		return replyCode;
+	}
+	public void setReplyCode(int replyCode) {
+		this.replyCode = replyCode;
+	}
+	public int getStarNum() {
+		return starNum;
+	}
+	public void setStarNum(int starNum) {
+		this.starNum = starNum;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 }

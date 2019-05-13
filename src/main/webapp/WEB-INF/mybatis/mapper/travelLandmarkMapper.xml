@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="travel.landmark">
+	<select id="countLandmark" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM landmark WHERE locCode = #{locCode}
+	</select>
+
+	<select id="listLandmark" parameterType="map" resultType="com.sp.travel.landmark.Landmark">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT lm.landCode, lm.locCode, lc.locName, loceName, lm.landName, lm.memo, lm.address1, lm.address2,
+		            TO_CHAR(lm.created, 'YYYY-MM-DD') created, lm.tagCode, ltc.tagName, lm.adminIdx, lf.saveFilename, NVL(lmc.landReplyCount, 0) AS landReplyCount, NVL(starNum, 0) AS landAvgStarNum
+		        FROM landMark lm
+		        JOIN locationCode lc
+		            ON lm.locCode = lc.locCode
+		        JOIN lndtagCode ltc
+		            ON lm.tagCode = ltc.tagCode
+		        LEFT OUTER JOIN (
+		            SELECT landCode, MIN(fileCode) AS fileCode, MIN(saveFilename) AS saveFilename
+		            FROM landmarkFile
+		            GROUP BY landCode
+		        ) lf ON lf.landCode = lm.landCode
+		        LEFT OUTER JOIN (
+		            SELECT Count(replyNum) AS landReplyCount, AVG(starNum) AS starNum, landCode
+		            FROM landmarkCommunity
+		            GROUP BY landCode
+		        ) lmc ON lmc.landCode = lm.landCode
+	               WHERE lm.locCode = #{landCode}
+		        ORDER BY landReplyCount DESC, lm.landCode ASC
+		    ) tb
+		<![CDATA[
+		    WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+		]]>
+	</select>
+</mapper>

@@ -220,21 +220,25 @@ public class HotelController {
 	}
 	
 	@RequestMapping(value="/myPage/wishlist/list4")
-	public String insertReserveHotel (Hotel dto,
-			Hotel dto2
-									, HttpSession session) throws Exception{
-													
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		dto.setUserIdx(info.getUserIdx());
-		
-		
-		Hotel readhotel=hotelservice.readHotel2(dto2);
-		
-		int result=hotelservice.insertReserveHotel(dto);
-		System.out.println(result+"===================");
-		
-		
-		return  "redirect:/myPage/wishlist/list";	
-	}
+	   @ResponseBody
+	   public Map<String, Object> insertReserveHotel (Hotel dto,   
+	         HttpSession session) throws Exception{
+	                                       
+	      SessionInfo info=(SessionInfo)session.getAttribute("member");
+	      dto.setUserIdx(info.getUserIdx());	 
+	      
+	      String msg = "true";
+	      
+	      try {
+	         int result=hotelservice.insertReserveHotel(dto);
+	      } catch (Exception e) {
+	         msg = "false";
+	      }
+	      
+	      Map<String, Object> map = new HashMap<>();
+	      map.put("msg", msg);
+	      
+	      return map;   
+	   }
 	
 }

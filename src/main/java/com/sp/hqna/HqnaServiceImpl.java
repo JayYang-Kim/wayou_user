@@ -138,6 +138,42 @@ public class HqnaServiceImpl implements HqnaService {
 		return list;
 	}
 
+	@Override
+	public List<Hfaq> HfaqlistBoard(Map<String, Object> map) {
+		List<Hfaq> list=null;
+		
+		try {
+			list=dao.selectList("hqna.HfaqlistBoard", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 
+	@Override
+	public int HfaqdataCount(Map<String, Object> map) {
+		int result=0;
+		
+		try {
+			result=dao.selectOne("hqna.HfaqdataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+
+
+	@Override
+	public Hfaq HfaqreadBoard(int num) {
+		Hfaq dto = null;
+		
+		try {
+			dto=dao.selectOne("hqna.HfaqreadBoard", num);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return dto;
+	}
 	
 }

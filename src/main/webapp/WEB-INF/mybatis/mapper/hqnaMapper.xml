@@ -121,4 +121,43 @@
 	<select id="listReply" parameterType="map" resultType="com.sp.hqna.Reply">
 		SELECT answerCode, qnaCode, answerContent, answerCreated, adminIdx FROM answer 	WHERE qnaCode=#{qnaCode}
 	</select>	
+	
+		<!-- faq카운드 -->
+	<select id="HfaqdataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM hotelfaq
+		<where>
+			<if test="value !=null and value !=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		
+	</select>
+	
+	<!-- faq글리스트 -->
+	<select id="HfaqlistBoard" parameterType="map" resultType="com.sp.hqna.Hfaq">
+	SELECT * FROM (
+    	SELECT ROWNUM rnum, tb.* FROM (
+        	SELECT faqNum, subject, content, adminIdx
+        	FROM hotelfaq
+        	<where>
+				<if test="value !=null and value !=''">
+				<include refid="where-list"/>
+				</if>
+			</where>
+        	ORDER BY faqNum DESC
+<![CDATA[        	
+    	) tb WHERE ROWNUM <= #{end}
+	) WHERE rnum >= #{start}
+]]>
+	</select>	
+	
+	<!-- faq글보기 -->
+	<select id="HfaqreadBoard" parameterType="Integer" resultType="com.sp.hqna.Hfaq">
+		SELECT subject, content, adminIdx
+		FROM hotelfaq
+		WHERE faqNum = #{faqNum}
+	</select>
+	
+	
 </mapper>
