@@ -47,21 +47,23 @@
 
 	<select id="listLandmark" parameterType="Integer"
 		resultType="com.sp.travel.Landmark">
-		select landcode, loccode, landname, lat, lng, tagCode from landmark
+		select lm.landcode, loccode, landname, lat, lng, saveFilename, tagCode from landmark lm
+			join landmarkfile lmf on lm.landcode=lmf.landcode
 		<choose>
 			<when test="landName != 'All'">
 				where instr(landName,#{landName}) >0 and locCode =
-				#{locCode}
+				#{locCode} and isMain=1
 			</when>
 			<otherwise>
-				where locCode = #{locCode}
+				where locCode = #{locCode} and isMain=1
 			</otherwise>
 		</choose>
 	</select>
 	<select id="listLandmarkByTag" parameterType="Integer"
 		resultType="com.sp.travel.Landmark">
-		select landcode, loccode, landname, lat, lng, tagCode from
-		landmark where locCode=#{locCode} and tagCode=${tagNum}
+		select landcode, loccode, landname, lat, lng, tagCode, saveFilename from
+		landmark lm join landmarkfile lmf on lm.landcode = lmf.landcode 
+		where locCode=#{locCode} and tagCode=${tagNum} and isMain=1
 	</select>
 
 	<insert id="insertWorkDetail" parameterType="map">
@@ -242,8 +244,10 @@
  	</select>
  	
  	<select id="readWorkspace" parameterType="map" resultType="com.sp.travel.Workspace">
- 		select workCode, u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, locCode,pay from workspace w
+ 		select w.workCode, u.userName,w.subject,to_char(startDay,'YYYY.MM.DD') startDay,to_char(endDay,'YYYY.MM.DD') endDay,dayCount,u.userIdx,to_char(w.created,'YYYY.MM.DD') created, w.locCode,pay,saveFilename 
+ 		from workspace w
  		join tb_user u on w.userIdx=u.userIdx
+ 		join location l on w.locCode = l.locCode
  		where workCode=#{workCode} and u.userIdx=#{userIdx}
  	</select>
  	
@@ -252,12 +256,12 @@
  		    w.budget, w.memo 
 			from workland w 
 			join landmark lm on w.landCode=lm.landCode
-			left outer join (select * from landmarkfile where rownum=1) lmf on w.landCode = lmf.landCode
+			join landmarkfile lmf on w.landCode = lmf.landCode
 			join lndTagCode ltc on lm.tagCode = ltc.tagCode
 			where w.detailCode = (
 			select detailCode from workspaceDetail wd
 			join workspace ws on wd.workCode = ws.workCode where wd.workCode=#{workCode} and userIdx=#{userIdx} and day=#{day}
-			) order by orderNum asc
+			) and isMain=1 order by orderNum asc
  	</select>
  	
  	<select id="countWorkDetail" parameterType="map" resultType="Integer">
