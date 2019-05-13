@@ -26,7 +26,15 @@
 		            FROM landmarkCommunity
 		            GROUP BY landCode
 		        ) lmc ON lmc.landCode = lm.landCode
-	               WHERE lm.locCode = #{locCode}
+		        <where>
+		        	lm.locCode = #{locCode}
+		        	<if test="searchValue != null and searchValue != ''">
+			     	    AND INSTR(lm.landName, #{searchValue}) &gt; 0
+			     	</if>
+		        	<if test="tagCode != 0">
+			     		AND lm.tagCode = #{tagCode}
+			     	</if>
+		        </where>
 		        ORDER BY landReplyCount DESC, lm.landCode ASC
 		    ) tb
 		<![CDATA[
@@ -34,4 +42,57 @@
 		) WHERE rnum >= #{start}
 		]]>
 	</select>
+	
+	<select id="readLandmark" parameterType="map" resultType="com.sp.travel.landmark.Landmark">
+		SELECT lm.landCode, lm.locCode, lc.locName, lc.loceName, landName, address1, address2, lat, lng, memo, lm.tagCode, ltc.tagName, adminIdx, 
+		    NVL(lmc.landmarkReplyCount, 0) AS landReplyCount , NVL(lmc.avgStarNum, 0) AS landAvgStarNum,
+		    TO_CHAR(lm.created, 'YYYY-MM-DD') AS created
+		FROM landmark lm
+		JOIN locationCode lc
+		    ON lm.locCode = lc.locCode
+		JOIN lndtagCode ltc
+		    ON lm.tagCode = ltc.tagCode
+		LEFT OUTER JOIN (
+		    SELECT COUNT(*) AS landmarkReplyCount, landCode, AVG(starNum) AS avgStarNum
+		    FROM landmarkCommunity
+		    GROUP BY landCode
+		) lmc ON lm.landCode = lmc.landCode
+		WHERE lm.locCode = #{locCode} AND lm.landCode = #{landCode}
+	</select>
+	
+	<select id="landmarkFiles" parameterType="Integer" resultType="com.sp.travel.landmark.Landmark">
+		SELECT landCode, saveFilename, TO_CHAR(created, 'YYYY-MM-DD') AS created
+		FROM landmarkFile
+		WHERE landCode = #{landCode}
+	</select>
+	
+	<select id="replyCount" parameterType="Integer" resultType="Integer">
+		SELECT NVL(COUNT(*), 0) FROM landmarkCommunity WHERE landCode = #{landCode}
+	</select>
+	
+	<select id="listReply" parameterType="map" resultType="com.sp.travel.landmark.Landmark">
+		SELECT * FROM (
+		    SELECT ROWNUM rnum, tb.* FROM (
+		        SELECT replyNum, landCode, lc.userIdx, tu.userId, tu.userName, starNum, content,
+		            TO_CHAR(created, 'YYYY-MM-DD') AS created
+		        FROM landmarkCommunity lc
+		        JOIN tb_user tu
+		            ON lc.userIdx = tu.userIdx
+		        WHERE landCode = #{landCode}
+		        ORDER BY replyNum DESC
+		    ) tb
+	<![CDATA[
+		    WHERE ROWNUM <= #{end}
+		) WHERE rnum >= #{start}
+	]]>
+	</select>
+	
+	<insert id="insertReply" parameterType="com.sp.travel.landmark.Landmark">
+		INSERT INTO landmarkCommunity(replyNum, landCode, userIdx, starNum, content)
+			VALUES(LANDMARKCOMMUNITY_SEQ.NEXTVAL, #{landCode}, #{userIdx}, #{starNum}, #{content})
+	</insert>
+	
+	<delete id="deleteReply" parameterType="Integer">
+		DELETE FROM landmarkCommunity WHERE replyNum = #{replyNum}
+	</delete>
 </mapper>

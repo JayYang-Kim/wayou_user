@@ -28,6 +28,10 @@ public class LocationController {
 		
 		List<Location> listLocation = locationService.listLocation();
 		
+		for(Location dto : listLocation) {
+			dto.setLocAvgStarNum(Math.round(dto.getLocAvgStarNum()));
+		}
+		
 		model.addAttribute("listLocation", listLocation);
 		
 		return ".travel.location.list";
@@ -43,10 +47,13 @@ public class LocationController {
 		return "travel/location/recommendList";
 	}
 	
+	@SuppressWarnings("unused")
 	@RequestMapping(value="/travel/location/view")
 	public String locationView(@RequestParam int locCode,
 			Model model) throws Exception {
 		Location readLocation = locationService.readLocation(locCode);
+		
+		readLocation.setLocAvgStarNum(Math.round(readLocation.getLocAvgStarNum()));
 		
 		if(readLocation == null) {
 			return "redirect:/travel";

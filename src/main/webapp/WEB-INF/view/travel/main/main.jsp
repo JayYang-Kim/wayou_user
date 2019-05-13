@@ -171,10 +171,10 @@
 										<div class="col-md-3 animate-box">
 											<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
 											<c:if test="${not empty listLandMark.saveFilename}">
-												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/uploads/landmark/${listLandMark.saveFilename});">
+												<a href="<%=cp%>/travel/landmark/view?locCode=${listLandMark.locCode}&landCode=${listLandMark.landCode}" class="f-tour-img" style="background-image: url(<%=cp%>/uploads/landmark/${listLandMark.saveFilename});">
 											</c:if>
 											<c:if test="${empty listLandMark.saveFilename}">
-												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
+												<a href="<%=cp%>/travel/landmark/view?locCode=${listLandMark.locCode}&landCode=${listLandMark.landCode}" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
 											</c:if>
 												<div class="desc">
 													<h3>${listLandMark.landName}</h3>

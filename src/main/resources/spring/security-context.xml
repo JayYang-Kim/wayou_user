@@ -27,6 +27,12 @@
 		<intercept-url pattern="/main" access="permitAll" />
 		<intercept-url pattern="/travel" access="permitAll" />
 		<intercept-url pattern="/travel/location" access="permitAll" />
+		<intercept-url pattern="/travel/location/recommendLocation" access="permitAll" />
+		<intercept-url pattern="/travel/location/view" access="permitAll" />
+		<intercept-url pattern="/travel/location/replyList" access="permitAll" />
+		<intercept-url pattern="/travel/landmark" access="permitAll" />
+		<intercept-url pattern="/travel/landmark/view" access="permitAll" />
+		<intercept-url pattern="/travel/landmark/replyList" access="permitAll" />
 		<intercept-url pattern="/travel/party" access="permitAll" />
 		<intercept-url pattern="/travel/party/view" access="permitAll" />	
 		<intercept-url pattern="/member/login" access="permitAll" />
@@ -38,6 +44,7 @@
 		<intercept-url pattern="/member/idCheck" access="permitAll" />
 		<intercept-url pattern="/member/emailCheck" access="permitAll" />
 		<intercept-url pattern="/resources/**" access="permitAll" />
+		<intercept-url pattern="/uploads/**" access="permitAll" />
 		<!-- <intercept-url pattern="/" access="permitAll" /> -->
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 		

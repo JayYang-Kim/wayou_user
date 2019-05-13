@@ -40,10 +40,10 @@
 				e.setRequestHeader("AJAX",true);
 			},
 			error:function(e){
-		    	if(e.status==403) {
+		    	<%-- if(e.status==403) {
 		    		location.href="<%=cp%>/member/login";
 		    		return;
-		    	}
+		    	} --%>
 			}
 		});
 	}
@@ -72,6 +72,7 @@
 				
 				$content.val("");
 				$(".star a").removeClass("on");
+				starCount = 0;
 				
 				replyList(1);
 			},
@@ -172,6 +173,22 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-12 col-lg-4" style="font-size:14px;">
+				<c:if test="${readLocation.locAvgStarNum < 5}">
+					<c:forEach begin="${readLocation.locAvgStarNum}" end="4">
+						<i class="fa fa-star"></i>
+					</c:forEach>
+				</c:if>
+				<c:if test="${readLocation.locAvgStarNum > 0}">
+					<c:forEach begin="1" end="${readLocation.locAvgStarNum}">
+	            		<i class="fa fa-star" style="color: #f5b917;"></i>
+	            	</c:forEach>
+            	</c:if>
+                / ${readLocation.locReplyCount} (댓글수)
+                <div class="mt10" style="line-height: 22px;height: 378px;overflow: hidden;text-overflow: ellipsis;">
+                	${readLocation.memo}
+                </div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -192,7 +209,7 @@
 	<div class="row m0">
 		<div class="col-12 col-md-6 col-lg-3">
 			<div class="single-post-area mb-100 wow">
-				<a href="<%=cp%>/travel/location" class="post-thumbnail"><img
+				<a href="<%=cp%>/travel/landmark?locCode=${readLocation.locCode}&tagCode=1" class="post-thumbnail"><img
 					src="<%=cp%>/resources/images/travel/main/tag01.jpg" alt="여행테마 - 역사/종교"></a>
 				<!-- Post Title -->
 				<h3 class="post-title bold t_center">역사 / 종교</h3>
@@ -201,7 +218,7 @@
 
 		<div class="col-12 col-md-6 col-lg-3">
 			<div class="single-post-area mb-100 wow">
-				<a href="<%=cp%>/travel/plan/list" class="post-thumbnail"><img
+				<a href="<%=cp%>/travel/landmark?locCode=${readLocation.locCode}&tagCode=2" class="post-thumbnail"><img
 					src="<%=cp%>/resources/images/travel/main/tag02.jpg" alt="여행테마 - 숙박"></a>
 				<!-- Post Title -->
 				<h3 class="post-title bold t_center">숙박</h3>
@@ -210,7 +227,7 @@
 
 		<div class="col-12 col-md-6 col-lg-3">
 			<div class="single-post-area mb-100 wow">
-				<a href="<%=cp%>/travel/party" class="post-thumbnail"><img
+				<a href="<%=cp%>/travel/landmark?locCode=${readLocation.locCode}&tagCode=3" class="post-thumbnail"><img
 					src="<%=cp%>/resources/images/travel/main/tag03.jpg" alt="여행테마 - 쇼핑"></a>
 				<!-- Post Title -->
 				<h3 class="post-title bold t_center">쇼핑</h3>
@@ -219,7 +236,7 @@
 		
 		<div class="col-12 col-md-6 col-lg-3">
 			<div class="single-post-area mb-100 wow">
-				<a href="<%=cp%>/travel/party" class="post-thumbnail"><img
+				<a href="<%=cp%>/travel/landmark?locCode=${readLocation.locCode}&tagCode=4" class="post-thumbnail"><img
 					src="<%=cp%>/resources/images/travel/main/tag04.jpg" alt="여행테마 - 음식점"></a>
 				<!-- Post Title -->
 				<h3 class="post-title bold t_center">음식점</h3>
@@ -250,10 +267,10 @@
 										<div class="col-md-3 animate-box">
 											<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
 											<c:if test="${not empty recommendLandmak.saveFilename}">
-												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/uploads/landmark/${recommendLandmak.saveFilename});">
+												<a href="<%=cp%>/travel/landmark/view?locCode=${recommendLandmak.locCode}&landCode=${recommendLandmak.landCode}" class="f-tour-img" style="background-image: url(<%=cp%>/uploads/landmark/${recommendLandmak.saveFilename});">
 											</c:if>
 											<c:if test="${empty recommendLandmak.saveFilename}">
-												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
+												<a href="<%=cp%>/travel/landmark/view?locCode=${recommendLandmak.locCode}&landCode=${recommendLandmak.landCode}" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
 											</c:if>
 												<div class="desc">
 													<h3>${recommendLandmak.landName}</h3>

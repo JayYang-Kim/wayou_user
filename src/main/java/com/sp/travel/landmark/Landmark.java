@@ -21,7 +21,7 @@ public class Landmark {
 	private String lat;
 	private String lng;
 	private int landCount;
-	private int locAvgStarNum;
+	private double locAvgStarNum;
 	private int locReplyCount;
 	private int enable;
 	
@@ -41,7 +41,7 @@ public class Landmark {
 	private int pay;
 	
 	// 커뮤니티
-	private int replyCode;
+	private int replyNum;
 	private int starNum;
 	private String content;
 	
@@ -147,10 +147,10 @@ public class Landmark {
 	public void setLandCount(int landCount) {
 		this.landCount = landCount;
 	}
-	public int getLocAvgStarNum() {
+	public double getLocAvgStarNum() {
 		return locAvgStarNum;
 	}
-	public void setLocAvgStarNum(int locAvgStarNum) {
+	public void setLocAvgStarNum(double locAvgStarNum) {
 		this.locAvgStarNum = locAvgStarNum;
 	}
 	public int getLocReplyCount() {
@@ -231,11 +231,11 @@ public class Landmark {
 	public void setPay(int pay) {
 		this.pay = pay;
 	}
-	public int getReplyCode() {
-		return replyCode;
+	public int getReplyNum() {
+		return replyNum;
 	}
-	public void setReplyCode(int replyCode) {
-		this.replyCode = replyCode;
+	public void setReplyNum(int replyNum) {
+		this.replyNum = replyNum;
 	}
 	public int getStarNum() {
 		return starNum;

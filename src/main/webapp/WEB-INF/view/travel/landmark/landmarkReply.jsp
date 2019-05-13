@@ -11,7 +11,7 @@
 		    <div class="reviwer-thumbnail">
 		        <img src="<%=cp%>/resources/images/common/defaultImg.jpeg" alt="">
 		    </div>
-		    <div class="reviwer-content w100p" data-replyNum="${reply.replyCode}" data-userIdx="${reply.userIdx}">
+		    <div class="reviwer-content w100p" data-replyNum="${reply.replyNum}" data-userIdx="${reply.userIdx}">
 		        <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
 		            <div class="reviwer-title">
 		                <span>${reply.created}</span>
