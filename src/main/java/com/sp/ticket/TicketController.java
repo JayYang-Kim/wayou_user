@@ -24,10 +24,20 @@ public class TicketController {
 	private TicketService ticketService;
 	@Autowired
 	private MyUtil myUtil;
+	@Autowired
+	private MainService mainService;
 
 	
 	@RequestMapping(value="/ticket/tmain")
-	public String main() {
+		public String main(Model model) throws Exception{
+			
+			List<Notice> listNotice = mainService.mainNoticeList();
+			List<QnABoard> listQnA = mainService.mainQnAList();
+			List<Event> listEvent = mainService.mainEventList();
+			
+			model.addAttribute("listNotice", listNotice);
+			model.addAttribute("listQnA", listQnA);
+			model.addAttribute("listEvent", listEvent);
 		return ".ticket.tmain";
 	}
 	
@@ -229,18 +239,9 @@ public class TicketController {
 		return model;
 	}
 	
-	/*
-	@RequestMapping(value="/myPage/wishList/list" , method= RequestMethod.GET)
-	@ResponseBody
-	public String go (
+
 	
-			) {
-		
-		return "myPage/wishList/list";
-	}
-	*/
-	
-	@RequestMapping(value="/myPage/wishList/list3" )
+	@RequestMapping(value="/ticket/insertWishlist")
 	@ResponseBody
 	public Map<String, Object> insertWishlist (
 			Ticket dto,
