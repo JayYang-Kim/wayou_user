@@ -16,7 +16,7 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Hotel &amp; Resort</h6>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Ticket</h6>
 	                            <h2 data-animation="fadeInLeft" data-delay="500ms">티켓티켓티켓티켓</h2>
 	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
 	                        </div>
@@ -35,7 +35,7 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">Hotel &amp; Resort</h6>
+	                            <h6 data-animation="fadeInUp" data-delay="200ms">Event</h6>
 	                            <h2 data-animation="fadeInUp" data-delay="500ms">이벤트이벤트</h2>
 	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
 	                        </div>
@@ -54,7 +54,7 @@
 	                    <!-- Welcome Text -->
 	                        <div class="col-12">
 	                            <div class="welcome-text text-center">
-	                                <h6 data-animation="fadeInDown" data-delay="200ms">Hotel &amp; Resort</h6>
+	                                <h6 data-animation="fadeInDown" data-delay="200ms">Event</h6>
 	                                <h2 data-animation="fadeInDown" data-delay="500ms">할인할인</h2>
 	                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
 	                            </div>
@@ -136,43 +136,43 @@
 	            <div class="col-12">
 	                <div class="service-content d-flex align-items-center justify-content-between">
 	                    <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="100ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=1'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
 	                    <h5>테마파크</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="300ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="300ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=2'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-2.png" alt="">
 	                    <h5>워터파크</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="500ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="500ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=3'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-3.png" alt="">
 	                    <h5>익스트림</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="700ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="700ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=4'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-4.png" alt="">
 	                    <h5>공연/전시</h5>
 	                </div>
 	
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="900ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="900ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=5'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
-	                        <h5>키즈</h5>
+	                        <h5>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;키즈&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</h5>
 	                </div>
 	                
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1100ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1100ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=6'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
 	                        <h5>축제/캠핑</h5>
 	                </div>
 	                
 	                <!-- Single Service Area -->
-	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1300ms">
+	                <div class="single-service--area mb-100 wow fadeInUp" data-wow-delay="1300ms" onclick="location.href='<%=cp%>/ticket/list?regionCode=0&cateCode=7'" style="cursor:pointer;">
 	                    <img src="<%=cp%>/resources/images/core-img/icon-1.png" alt="">
 	                        <h5>투어/교통</h5>
 	                </div>
@@ -498,48 +498,54 @@
 	        <!-- Single Post Area -->
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
-	                <a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/2.jpg" alt=""></a>
+                	<c:forEach var="listNotice" items="${listNotice}">
+	                <a href="<%=cp%>/ticket/notice/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/2.jpg" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
-	                    <a href="#" class="post-catagory">공지사항</a>
+	                    <a href="#" class="post-date">${listNotice.created}</a>
+	                    <a href="<%=cp%>/ticket/notice/list" class="post-catagory">공지사항</a>
 	                </div>
 	                <!-- Post Title -->
-	                <a href="#" class="post-title">공지공지공지공지</a>
-	                <p>How many free autoresponders have you tried? And how many emails did you get through using them?</p>
-	                <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                <a href="<%=cp%>/ticket/notice/article?noticeNum=${listNotice.noticeNum}" class="post-title">${listNotice.subject}</a>
+	                <p>${listNotice.content}</p>
+	                <a href="<%=cp%>/ticket/notice/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	            </c:forEach>
 	            </div>
 	        </div>
 	
 	        <!-- Single Post Area -->
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="500ms">
-	                <a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/3.jpg" alt=""></a>
+	                <c:forEach var="listQnA" items="${listQnA}">
+	                <a href="<%=cp%>/ticket/qna/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/3.jpg" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
+	                    <a href="#" class="post-date">${listQnA.created}</a>
 	                    <a href="#" class="post-catagory">문의사항</a>
 	                </div>
 	                <!-- Post Title -->
-	                <a href="#" class="post-title">문의문의문의문의</a>
-	                <p>My point here is that if you have no clue for the answers above you probably are not operating a followup.</p>
-	                <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                <a href="<%=cp%>/ticket/qna/list" class="post-title">${listQnA.subject}</a>
+	                <p>${listQnA.content}</p>
+	                <a href="<%=cp%>/ticket/qna/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	            </c:forEach>
 	            </div>
 	        </div>
 	
 	        <!-- Single Post Area -->
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="700ms">
-	                <a href="#" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/4.jpg" alt=""></a>
+	                <c:forEach var="listEvent" items="${listEvent}">
+	                <a href="<%=cp%>/ticket/event/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/4.jpg" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
-	                    <a href="#" class="post-date">Jan 02, 2019</a>
+	                    <a href="#" class="post-date">${listEvent.created}</a>
 	                    <a href="#" class="post-catagory">이벤트</a>
 	                </div>
 	                <!-- Post Title -->
-	                    <a href="#" class="post-title">이벤트이벤트이벤트</a>
-	                    <p>Some good steps to take to ensure you are getting what you need out of a autoresponder include…</p>
-	                    <a href="index.html" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                    <a href="<%=cp%>/ticket/event/article?eventNum=${listEvent.eventNum}" class="post-title">${listEvent.subject}</a>
+	                    <p>${listEvent.content}</p>
+	                    <a href="<%=cp%>/ticket/event/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                </c:forEach>
 	                </div>
 	            </div>
 	
@@ -548,21 +554,3 @@
 	</section>
 	<!-- Blog Area End -->
 	
-	<!-- Call To Action Area Start -->
-	<section class="roberto-cta-area pt40 pb40">
-	    <div class="container">
-	        <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/1.jpg);">
-	            <div class="row align-items-center">
-	                <div class="col-12 col-md-7">
-	                    <div class="cta-text mb-50">
-	                        <h2>Contact us now!</h2>
-	                        <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
-	                    </div>
-	                </div>
-	                <div class="col-12 col-md-5 text-right">
-	                    <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
-	                </div>
-	            </div>
-	        </div>
-	    </div>
-	</section>
