@@ -7,7 +7,7 @@ public class EventReply {
 	private int userIdx;
 	private String userName;
 	private String created;
-	
+	 
 	
 	public int getReplyCode() {
 		return replyCode;
