@@ -285,7 +285,7 @@
  	</update>
  	<select id="selectTotBudget" parameterType="Integer" resultType="Integer">
  		select nvl(sum(budget),0) from workspaceDetail where workCode=#{workCode}
- 	</select>
+ 	</select> 
  	
  	<select id="isPaid" parameterType="map" resultType="Integer">
  		select nvl(count(*),0) from paidRoute where userIdx=#{userIdx} and workCode=#{workCode}
