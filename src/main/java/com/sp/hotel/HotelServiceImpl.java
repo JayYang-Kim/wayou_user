@@ -39,11 +39,11 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	public List<Hotel> readHotel(int hotelCode) {
+	public List<Hotel> readHotel(Map<String , Object>map) {
 		List<Hotel> dto=null;
 		
 		try {
-			dto=dao.selectList("hotel.readHotel", hotelCode);
+			dto=dao.selectList("hotel.readHotel", map);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,37 +75,56 @@ public class HotelServiceImpl implements HotelService {
 	}
 
 	@Override
-	   public int insertReview(Map<String, Object> reqMap) throws Exception {
+	   public int insertReview(Review dto) {
 	      int result=0;
 	      
 	      try {
-	         int seq_star = dao.selectOne("hotel.seq_star");
-	         
-	         reqMap.put("starCode", seq_star);
-	         
-	         dao.insertData("hotel.insertReview1", reqMap); // STAR INSERT 부분
-	         dao.insertData("hotel.insertReview2", reqMap); // HREVIEW INSERT 부분
-	         
-	         result = 1;
+	         result=dao.insertData("hotel.insertReview1", dto); // STAR INSERT 부분      
 	      } catch (Exception e) {
 	         e.printStackTrace();
-	         throw e;
 	      }
 	      return result;
 	   }
 
 	@Override
-	public List<Review> listReview(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return null;
+	public int reviewDataCount(Map<String, Object> map) {
+		int result=0;
+		
+		try {
+			result=dao.selectOne("hotel.reviewDataCount", map);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
-	public int reviewDataCount(Map<String, Object> map) {
-		// TODO Auto-generated method stub
-		return 0;
+	public List<Review> listReview(Map<String, Object> map) {
+		List<Review> list=null;
+		
+		try {
+			list=dao.selectList("hotel.listReview", map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return list;
 	}
-	
+
+	@Override
+	public int insertReserveHotel(Hotel dto) {
+		int result=0;
+		
+		try {
+			result=dao.insertData("hotel.insertReserveHotel", dto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 	
 	
 }

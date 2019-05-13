@@ -43,12 +43,12 @@ function listWish(){
 	         var totalprice1=data.listdh[i].totalprice1;
 	         totalprice+=(amount*price);
          
-         out+=" <tr data-Type='1' data-wishCode="+wishCode+">";
+         out+=" <tr data-Type='1' data-wishCode="+wishCode+" data-amount="+amount+" data-price="+price+">";
          out+=" <td style='text-align:center'>"+listNum+"</td>";
          out+=" <td style='text-align:center'>"+'사진'+"</td>";
          out+=" <td style='text-align:center'>"+'상품명'+"</td>";
          out+=" <td style='text-align:center'><input class='upInput' style='border:none; width:45px' readonly='readonly' value="+amount1+"><button type='button' class='update_confirm button btn_blue h20 m20' style='margin-left:10px; margin-top:0px'>수정</button></td>";
-         out+=" <td style='text-align:center'>"+price1+"원</td>";
+         out+=" <td style='text-align:center' class='price'>"+price1+"원</td>";
          out+=" <td style='text-align:center; color:#DA6464;'>"+totalprice1+"원</td>";
          out+=" <td style='text-align:center'>"+'없음'+"</td>";
          out+=" <td style='text-align:center'><button type='button' class='order_confirm button btn_red h20 m20' style='margin-right:10px; margin-top:0px'>주문하기</button><button type='button' class='delete_confirm button btn_blue h20 m20' style='margin-top:0px'>삭제</button></td>";
@@ -63,7 +63,7 @@ function listWish(){
              var price1=data.listdt[i].price1;
              var totalprice1=data.listdt[i].totalprice1;
              totalprice+=(amount*price);
-             out+=" <tr data-Type='2' data-wishCode="+wishCode+">";
+             out+=" <tr data-Type='2' data-wishCode="+wishCode+" data-amount="+amount+" data-price="+price+">";
              out+=" <td style='text-align:center'>"+listNum+"</td>";
              out+=" <td style='text-align:center'>"+'사진'+"</td>";
              out+=" <td style='text-align:center'>"+'상품명'+"</td>";
@@ -130,7 +130,6 @@ function listWish(){
     	}else{
            	var amount=$(this).siblings("input").val();
         	var wishCode=$(this).closest("tr").attr("data-wishCode");
-           	alert(wishCode);
         	var dataType=$(this).closest("tr").attr("data-Type");
         	var query="dataType="+dataType+"&amount="+amount+"&wishCode="+wishCode;
         	var url="<%=cp%>/myPage/wishlist/update";
@@ -162,7 +161,16 @@ function listWish(){
         		}
         	});   		
     	}
-    	
+    });
+    
+    $("body").on("click", ".order_confirm", function(){
+    	var wishCode=$(this).closest("tr").attr("data-wishCode");
+    	var dataType=$(this).closest("tr").attr("data-Type");
+		var query="?wishCode="+wishCode+"&dataType="+dataType;
+        	 location.href="<%=cp%>/payment/orderMenu"+query;	
+    });
+    $("body").on("click", ".Allorder_confirm", function(){
+        	 location.href="<%=cp%>/payment/AllorderMenu";	
     });
 </script>
 

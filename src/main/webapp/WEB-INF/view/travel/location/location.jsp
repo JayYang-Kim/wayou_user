@@ -7,6 +7,124 @@
 
 <link rel="stylesheet" href="<%=cp%>/resources/css/travel.css">
 
+<script type="text/javascript">
+	var starCount = 0;
+
+	$(function(){
+		replyList(1);
+		
+		$(".star a").click(function() {
+			var b = $(this).hasClass("on");
+			$(this).parent().children("a").removeClass("on");
+			$(this).addClass("on").prevAll("a").addClass("on");
+			if(b) {
+				$(this).removeClass("on");
+			}
+				
+			starCount = $(".star .on").length;
+		});
+	});
+
+	function replyList(page){
+		var url = "<%=cp%>/travel/location/replyList";
+		var query="locCode=${readLocation.locCode}&page=" + page;
+		
+		$.ajax({
+			type:"get",
+			url:url,
+			data:query,
+			success:function(data){
+				$("#layoutReply").html(data);
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+			}
+		});
+	}
+	
+	$("body").on("click",".btn_addReply",function(){
+		var $content = $(this).closest(".roberto-contact-form").find("textarea");
+		if(!$content.val()){
+			alert("내용을 입력해주세요.");
+			$content.focus();
+			return false; 
+		}
+		
+		var url = "<%=cp%>/travel/location/reply/insert";
+		var query="locCode=${readLocation.locCode}&starNum=" + starCount + "&content=" + $content.val();
+	
+		$.ajax({
+			type:"post",
+			url:url,
+			data:query,
+			success:function(data){
+				if(data.msg == "false") {
+					alert("글 등록 실패했습니다.");
+					
+					return false;
+				}
+				
+				$content.val("");
+				$(".star a").removeClass("on");
+				
+				replyList(1);
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+			}
+		});
+	});
+
+	$("body").on("click",".btn_deleteReply", function(){
+		replyCode = $(this).closest(".reviwer-content").attr("data-replynum");
+		userIdx = $(this).closest(".reviwer-content").attr("data-userIdx");
+		
+		if(!confirm("삭제하시겠습니까?")){
+			return false;
+		}
+		
+		var url = "<%=cp%>/travel/location/reply/delete";
+		var query = "replyCode=" + replyCode + "&userIdx=" + userIdx;
+		$.ajax({
+			type:"post",
+			url:url,
+			data:query,
+			dataType:"json",
+			success:function(data){
+				if(data.msg == "true"){
+					alert("글 삭제 성공했습니다.");
+					replyList(1);
+					
+					return false;
+				}
+				
+				alert("글 삭제 실패했습니다.");
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+			}
+		})
+	});
+</script>
+
 <!-- 지역상세정보(Top) -->
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top01.jpg);">
     <div class="container h-100">
@@ -116,42 +234,49 @@
 <div class="colorlib-tour clear">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-				<h2>서울 추천 관광명소</h2>
-				<p>WAYOU에서 추천드리는 서울 관광명소입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
+			<div class="col-md-12 text-center colorlib-heading animate-box">
+				<h2>${readLocation.locName} 추천 관광명소</h2>
+				<p>WAYOU에서 추천드리는 ${readLocation.locName} 관광명소입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12" style="margin-bottom:40px;">
-				<div class="f-tour">
-					<div class="row">
-						<div class="col-md-12">
-							<div class="row">
-								<c:forEach var="recommendLandmak" items="${recommendLandmak}">
-									<div class="col-md-3 animate-box">
-										<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
-										<c:if test="${not empty recommendLandmak.saveFilename}">
-											<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${recommendLandmak.saveFilename});">
-										</c:if>
-										<c:if test="${empty recommendLandmak.saveFilename}">
-											<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
-										</c:if>
-											<div class="desc">
-												<h3>${recommendLandmak.landName}</h3>
-												<p class="price"><small>지역 : ${recommendLandmak.locName}(${recommendLandmak.loceName})</small></p>
-												<p class="price"><small>댓글수 : ${recommendLandmak.landReplyCount}(개)</small></p>
-											</div>
-										</a>
-									</div>
-								</c:forEach>
+		<c:if test="${not empty recommendLandmak}">
+			<div class="row">
+				<div class="col-md-12" style="margin-bottom:40px;">
+					<div class="f-tour">
+						<div class="row">
+							<div class="col-md-12">
+								<div class="row">
+									<c:forEach var="recommendLandmak" items="${recommendLandmak}">
+										<div class="col-md-3 animate-box">
+											<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
+											<c:if test="${not empty recommendLandmak.saveFilename}">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${recommendLandmak.saveFilename});">
+											</c:if>
+											<c:if test="${empty recommendLandmak.saveFilename}">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
+											</c:if>
+												<div class="desc">
+													<h3>${recommendLandmak.landName}</h3>
+													<p class="price"><small>지역 : ${recommendLandmak.locName}(${recommendLandmak.loceName})</small></p>
+													<p class="price"><small>댓글수 : ${recommendLandmak.landReplyCount}(개)</small></p>
+												</div>
+											</a>
+										</div>
+									</c:forEach>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</c:if>
 		<div class="t_center">
-			<button class="btn_classic btn-white" style="width:300px;height:50px;">서울 관광명소 모두보기</button>
+			<c:if test="${not empty recommendLandmak}">
+				<button class="btn_classic btn-white" style="width:300px;height:50px;">${readLocation.locName} 관광명소 모두보기</button>
+			</c:if>
+			<c:if test="${empty recommendLandmak}">
+				<div>등록된 관광명소가 없습니다.</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -161,39 +286,46 @@
 <div id="colorlib-hotel" class="colorlib-light-grey clear">
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3 text-center colorlib-heading animate-box">
-				<h2>서울 추천 여행일정</h2>
-				<p>WAYOU에서 추천드리는 서울 여행일정입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
+			<div class="col-md-12 text-center colorlib-heading animate-box">
+				<h2>${readLocation.locName} 추천 여행일정</h2>
+				<p>WAYOU에서 추천드리는 ${readLocation.locName} 여행일정입니다. 여행일정 짜기가 힘들다면 참고하고 나만의 여행을 계획해보세요.</p>
 			</div>
 		</div>
-		<div class="row">
-			<div class="col-md-12 animate-box" style="margin-bottom:40px;">
-				<div>
-					<c:forEach var="recommendWorkspace" items="${recommendWorkspace}">
-						<div class="item">
-							<div class="hotel-entry">
-								<c:if test="${not empty recommendWorkspace.saveFilename}">
-									<a href="hotels.html" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${recommendWorkspace.saveFilename});">
-								</c:if>
-								<c:if test="${empty listWorkspace.saveFilename}">
-									<a href="hotels.html" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
-								</c:if>
-									<p class="price"><span>${recommendWorkspace.locName}</span><small>(${recommendWorkspace.loceName})</small></p>
-								</a>
-								<div class="desc">
-									<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
-									<h3><a href="#">${recommendWorkspace.subject}</a></h3>
-									<span class="place">${recommendWorkspace.userId}(${recommendWorkspace.userName}) / ${recommendWorkspace.pay == 0 ? '무료' : '유료'}</span>
-									<p>숙박일자 : ${recommendWorkspace.dayCount}(일) / 출발일 : ${recommendWorkspace.startDay}</p>
+		<c:if test="${not empty recommendWorkspace}">
+			<div class="row">
+				<div class="col-md-12 animate-box" style="margin-bottom:40px;">
+					<div>
+						<c:forEach var="recommendWorkspace" items="${recommendWorkspace}">
+							<div class="item">
+								<div class="hotel-entry">
+									<c:if test="${not empty recommendWorkspace.saveFilename}">
+										<a href="<%=cp%>/travel/plan/view?locCode=${recommendWorkspace.locCode}&workNum=${recommendWorkspace.workCode}&dayCount=${recommendWorkspace.dayCount}&userIdx=${recommendWorkspace.userIdx}" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${recommendWorkspace.saveFilename});">
+									</c:if>
+									<c:if test="${empty listWorkspace.saveFilename}">
+										<a href="<%=cp%>/travel/plan/view?locCode=${recommendWorkspace.locCode}&workNum=${recommendWorkspace.workCode}&dayCount=${recommendWorkspace.dayCount}&userIdx=${recommendWorkspace.userIdx}" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
+									</c:if>
+										<p class="price"><span>${recommendWorkspace.locName}</span><small>(${recommendWorkspace.loceName})</small></p>
+									</a>
+									<div class="desc">
+										<!-- <p class="star"><span><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i><i class="icon-star-full"></i></span> 545 Reviews</p> -->
+										<h3><a href="#">${recommendWorkspace.subject}</a></h3>
+										<span class="place">${recommendWorkspace.userId}(${recommendWorkspace.userName}) / ${recommendWorkspace.pay == 0 ? '무료' : '유료'}</span>
+										<p>숙박일자 : ${recommendWorkspace.dayCount}(일) / 출발일 : ${recommendWorkspace.startDay}</p>
+									</div>
 								</div>
 							</div>
-						</div>
-					</c:forEach>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
-		</div>
+		</c:if>
 		<div class="t_center">
-			<button class="btn_classic btn-white" style="width:300px;height:50px;">서울 여행일정 모두보기</button>
+			<c:if test="${not empty recommendWorkspace}">
+				<button class="btn_classic btn-white" onclick="location.href='<%=cp%>/travel/plan/list?locCode=${readLocation.locCode}'" style="width:300px;height:50px;">${readLocation.locName} 여행일정 모두보기</button>
+			</c:if>
+			<c:if test="${empty recommendWorkspace}">
+				<div>등록된 여행일정이 없습니다.</div>
+			</c:if>
 		</div>
 	</div>
 </div>
@@ -206,89 +338,34 @@
 			<div class="col-md-12">
 				<h4>커뮤니티</h4>
 
-			    <!-- Single Review Area -->
-			    <div class="single-room-review-area d-flex align-items-center">
-			        <div class="reviwer-thumbnail">
-			            <img src="<%=cp%>/resources/images/common/defaultImg.jpeg" alt="">
-			        </div>
-			        <div class="reviwer-content">
-			            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-			                <div class="reviwer-title">
-			                    <span>27 Aug 2019</span>
-			                    <h6>Brandon Kelley</h6>
-			                </div>
-			                <div class="reviwer-rating">
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                </div>
-			            </div>
-			            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-			        </div>
-			    </div>
-			
-			    <!-- Single Review Area -->
-			    <div class="single-room-review-area d-flex align-items-center">
-			        <div class="reviwer-thumbnail">
-			            <img src="<%=cp%>/resources/images/common/defaultImg.jpeg" alt="">
-			        </div>
-			        <div class="reviwer-content">
-			            <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-			                <div class="reviwer-title">
-			                    <span>27 Aug 2019</span>
-			                    <h6>Sounron Masha</h6>
-			                </div>
-			                <div class="reviwer-rating">
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                    <i class="fa fa-star"></i>
-			                </div>
-			            </div>
-			            <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-			        </div>
-			    </div>
-			
-			    <!-- Single Review Area -->
-		        <div class="single-room-review-area d-flex align-items-center">
-		            <div class="reviwer-thumbnail">
-		                <img src="<%=cp%>/resources/images/common/defaultImg.jpeg" alt="">
-		            </div>
-		            <div class="reviwer-content">
-		                <div class="reviwer-title-rating d-flex align-items-center justify-content-between">
-		                    <div class="reviwer-title">
-		                        <span>27 Aug 2019</span>
-		                        <h6>Amada Lyly</h6>
-		                    </div>
-		                    <div class="reviwer-rating">
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star"></i>
-		                        <i class="fa fa-star"></i>
-		                    </div>
-		                </div>
-		                <p>Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora.</p>
-		            </div>
-		        </div>
+			    <div id="layoutReply" style="padding-top:30px;border-top: 1px solid #cccccc;"></div>
 			</div>
-			<div class="roberto-contact-form col-md-12 mt-80 mb-100">
-                <h2>글 남기기</h2>
-
-                <form>
-                    <div class="row">
-                        <div class="col-12">
-                            <textarea name="message" class="form-control mb-30" placeholder="내용을 입력해주세요."></textarea>
-                        </div>
-                        <div class="col-12 text-right">
-                            <button type="button" class="btn roberto-btn btn-3 mt-15" onclick="sendJoinParty()">신청하기</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+			<c:if test="${not empty sessionScope.member}">
+				<div class="roberto-contact-form col-md-12 mt-20 mb-100" style="border-top: 1px solid #cccccc;padding-top: 20px;">
+	                <h2>글 남기기</h2>
+	
+	                <div class="row">
+	                    <div class="col-12">
+	                    	<div class="box_star">
+	                    		<div class="title">
+	                    			<span>평점 : </span>
+	                    		</div>
+	                    		<div class="star">
+	                    			<a href="#">★</a> 
+									<a href="#">★</a> 
+									<a href="#">★</a> 
+									<a href="#">★</a> 
+									<a href="#">★</a>
+	                    		</div>
+	                    	</div>
+	                        <textarea name="content" class="form-control mb-30" placeholder="내용을 입력해주세요."></textarea>
+						</div>
+	                    <div class="col-12 text-right">
+							<button type="button" class="btn_addReply btn roberto-btn btn-3 mt-15">등록하기</button>
+	                    </div>
+					</div>
+	            </div>
+            </c:if>
 		</div>
 		<!-- //row -->
 	</div>

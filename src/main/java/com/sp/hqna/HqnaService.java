@@ -18,4 +18,9 @@ public interface HqnaService {
 	public int deleteHqna(int qnaCode);
 	
 	public List<Reply> listReply(Map<String, Object>map);
+	
+	public List<Hfaq> HfaqlistBoard(Map<String, Object> map);
+	public int HfaqdataCount(Map<String, Object> map);
+	public Hfaq HfaqreadBoard(int num);
+	
 }

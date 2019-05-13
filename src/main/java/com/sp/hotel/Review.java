@@ -12,6 +12,10 @@ public class Review {
 	private int service;
 	private int location_satis;
 	private int reviewLike;
+	private int star;
+	private String userName;
+	
+	
 	
 	public int getHotelCode() {
 		return hotelCode;
@@ -78,5 +82,17 @@ public class Review {
 	}
 	public void setReviewLike(int reviewLike) {
 		this.reviewLike = reviewLike;
+	}
+	public int getStar() {
+		return star;
+	}
+	public void setStar(int star) {
+		this.star = star;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 }

@@ -91,89 +91,55 @@
 		
 	}
 	
-	function drawRouteToMap(objs){
-		
-	    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	function drawRouteToMap(objs){ //objs : 리스트에 담긴 랜드마크
+	    var mapContainer = document.getElementById('map'),
 	    mapOption = {
-	        center : new daum.maps.LatLng('${lat}', '${lng}'), // 지도의 중심좌표
-	        level : 7
-	    // 지도의 확대 레벨
+	        center : new daum.maps.LatLng('${lat}', '${lng}'), //지도 중심 좌표
+	        level : 7	    // 지도의 확대 레벨
 	    };
-	 
-	    var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	    var distanceOverlay; // 선의 거리정보를 표시할 커스텀오버레이 입니다 
-	    var dots = {}; // 선이 그려지고 있을때 클릭할 때마다 클릭 지점과 거리를 표시하는 커스텀 오버레이 배열입니다.
-	 
-	    // 마커를 표시할 위치와 title 객체 배열입니다
-	    var positions= [];
+	    var map = new daum.maps.Map(mapContainer, mapOption);
+	    var positions= []; //리스트에 들어온 랜드마크들을 담을 배열
 	   	for(var i=0; i<objs.length; i++){
-	   		var $hiddenInfo = $(objs[i]).find("input[type=hidden]");
+	   		var $hiddenInfo = $(objs[i]).find("input[type=hidden]"); //div에서 위도 경도를 갖고 있는 input 태그를 찾는다.
 	   		var position = {
 	   			title : $hiddenInfo.attr("data-landName"),
 	   			latlng : new daum.maps.LatLng($hiddenInfo.attr("data-lat"), $hiddenInfo.attr("data-lng"))
 	   		};
 	   		positions[i] = position;
 	   	}
-	    // 마커 이미지의 이미지 주소입니다
-	    var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
-	 
 	    for (var i = 0; i < positions.length; i++) {
-	 
-	        // 마커 이미지의 이미지 크기 입니다
-	        var imageSize = new daum.maps.Size(24, 35);
-	 
-	        // 마커 이미지를 생성합니다    
-	        var markerImage = new daum.maps.MarkerImage(imageSrc, imageSize);
-	 
-	        // 마커를 생성합니다
 	        var marker = new daum.maps.Marker({
 	            map : map, // 마커를 표시할 지도
-	            position : positions[i].latlng, // 마커를 표시할 위치
-	            title : positions[i].title,
-	            image : markerImage
-	        // 마커 이미지 
+	            position : positions[i].latlng,
+	            title:positions[i].title
 	        });
 	    }
-	 
-	    var linePath;
-	    var lineLine = new daum.maps.Polyline();
+	    var p2p;
 	    var distance;
-	 
 	    for (var i = 0; i < positions.length; i++) {
 	        if (i != 0) {
-	            linePath = [ positions[i - 1].latlng, positions[i].latlng ] //라인을 그리려면 두 점이 있어야하니깐 두 점을 지정했습니다
+	            p2p = [ positions[i - 1].latlng, positions[i].latlng ];
 	        }
-	        ;
-	        lineLine.setPath(linePath); // 선을 그릴 라인을 세팅합니다
-	 
 	        var drawLine = new daum.maps.Polyline({
 	            map : map, // 선을 표시할 지도입니다 
-	            path : linePath,
-	            strokeWeight : 3, // 선의 두께입니다 
-	            strokeColor : '#db4040', // 선의 색깔입니다
-	            strokeOpacity : 1, // 선의 불투명도입니다 0에서 1 사이값이며 0에 가까울수록 투명합니다
+	            path : p2p,
+	            strokeColor : 'red', // 선의 색깔입니다
 	            strokeStyle : 'solid' // 선의 스타일입니다
 	        });
-	 
-	        distance = Math.round(lineLine.getLength());
-	        displayCircleDot(positions[i].latlng, distance);
-	         
+	        distance = Math.round(drawLine.getLength());
+	        displayDistance(positions[i].latlng, distance);//커스텀 오버레이를 이용해 랜드마크 사이의 거리를 지도에 표시하는 함수
 	    }
 	 
-	    function displayCircleDot(position, distance) {
+	    function displayDistance(position, distance) {
 	        if (distance > 0) {
 	            // 클릭한 지점까지의 그려진 선의 총 거리를 표시할 커스텀 오버레이를 생성합니다
-	            var distanceOverlay = new daum.maps.CustomOverlay(
+	            var Overlay = new daum.maps.CustomOverlay(
 	                    {
-	                        content : '<div class="dotOverlay">거리 <span class="number">'
-	                                + distance + '</span>m</div>',
+	                        content : '<div><br><b>거리 <span class="number">'+ distance + '</span>m</b></div>',
 	                        position : position,
-	                        yAnchor : 1,
 	                        zIndex : 2
 	                    });
-	 
-	            // 지도에 표시합니다
-	            distanceOverlay.setMap(map);
+	            Overlay.setMap(map);
 	        }
 	    }
 	}
@@ -306,7 +272,7 @@
 </script>
 
 <div id="container">
-	<div class="row" style="margin-left: 0; margin-right: 0">
+	<div class="row" style="margin-left: 0; margin-right: 0;">
 		<div class="leftDayBar" class="col12 col-lg-1" style="background: teal; padding: 0;height: 750px; width: 158px; z-index: 0;">
 				  <ul style="width: 100%;" class="dayBox">
 				  	<li style="width: 100%;" class="dayBar dayBar-first">

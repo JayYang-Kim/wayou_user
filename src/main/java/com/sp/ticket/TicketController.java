@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sp.common.MyUtil;
-import com.sp.hotel.Review;
 import com.sp.member.SessionInfo;
 
 @Controller("ticket.ticketController")
@@ -215,6 +214,52 @@ public class TicketController {
 		model.addAttribute("dto", dto);
 		
 		return "ticket/tab3";
+	}
+	
+	@RequestMapping(value="/ticket/readOption", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> readOption (
+			@RequestParam Map<String, Object> paramMap
+			) {
+		
+		List<Ticket> list = ticketService.readOption(paramMap);
+		Map<String, Object> model = new HashMap<>();
+		model.put("listOption", list);
+		
+		return model;
+	}
+	
+	/*
+	@RequestMapping(value="/myPage/wishList/list" , method= RequestMethod.GET)
+	@ResponseBody
+	public String go (
+	
+			) {
+		
+		return "myPage/wishList/list";
+	}
+	*/
+	
+	@RequestMapping(value="/myPage/wishList/list3" )
+	@ResponseBody
+	public Map<String, Object> insertWishlist (
+			Ticket dto,
+			HttpSession session
+			) {
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
+		dto.setUserIdx(info.getUserIdx());
+		
+		int result=ticketService.insertWishlist(dto);
+		
+		String state="true";
+		if(result==0)
+			state="false";
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("state", state);
+		
+		return model;
 	}
 }
 

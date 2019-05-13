@@ -41,10 +41,21 @@
 	<select id="listHqna" parameterType="map" resultType="com.sp.hqna.Hqna">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-					SELECT qnaCode, q.userIdx, subject, hitCount, 
-		            TO_CHAR(created, 'YYYY-MM-DD')created, catCode
+					SELECT q.qnaCode, q.userIdx, subject, hitCount, 
+		            TO_CHAR(created, 'YYYY-MM-DD')created, q.catCode
+		            ,userName, NVL(answerCount, 0) answerCount
+		          
 		            FROM question q
+		            LEFT OUTER JOIN answer a ON q.qnaCode=a.qnaCode
 		            JOIN tb_user u ON u.userIdx=q.userIdx
+		            
+		            LEFT OUTER JOIN(
+		            	SELECT qe.qnaCode, COUNT(*) answerCount
+		            	FROM question qe
+		            	JOIN answer an
+		            	ON qe.qnaCode=an.qnaCode
+		            	GROUP BY qe.qnaCode
+		            ) qe ON qe.qnaCode=q.qnaCode
 		            <where>
 						<if test="value != null and value !=''">
 							<include refid="where-list"></include>
@@ -110,4 +121,43 @@
 	<select id="listReply" parameterType="map" resultType="com.sp.hqna.Reply">
 		SELECT answerCode, qnaCode, answerContent, answerCreated, adminIdx FROM answer 	WHERE qnaCode=#{qnaCode}
 	</select>	
+	
+		<!-- faq카운드 -->
+	<select id="HfaqdataCount" parameterType="map" resultType="Integer">
+		SELECT NVL(COUNT(*), 0)
+		FROM hotelfaq
+		<where>
+			<if test="value !=null and value !=''">
+				<include refid="where-list"/>
+			</if>
+		</where>
+		
+	</select>
+	
+	<!-- faq글리스트 -->
+	<select id="HfaqlistBoard" parameterType="map" resultType="com.sp.hqna.Hfaq">
+	SELECT * FROM (
+    	SELECT ROWNUM rnum, tb.* FROM (
+        	SELECT faqNum, subject, content, adminIdx
+        	FROM hotelfaq
+        	<where>
+				<if test="value !=null and value !=''">
+				<include refid="where-list"/>
+				</if>
+			</where>
+        	ORDER BY faqNum DESC
+<![CDATA[        	
+    	) tb WHERE ROWNUM <= #{end}
+	) WHERE rnum >= #{start}
+]]>
+	</select>	
+	
+	<!-- faq글보기 -->
+	<select id="HfaqreadBoard" parameterType="Integer" resultType="com.sp.hqna.Hfaq">
+		SELECT subject, content, adminIdx
+		FROM hotelfaq
+		WHERE faqNum = #{faqNum}
+	</select>
+	
+	
 </mapper>
