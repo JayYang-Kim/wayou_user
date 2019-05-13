@@ -510,14 +510,20 @@ public class TravelController {
 	@ResponseBody
 	public Map<String,Object> confirm(
 			@RequestParam int workCode,
+			@RequestParam String impCode,
+			@RequestParam String payMethod,
+			@RequestParam String status,
 			HttpSession session
 			) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Map<String,Object> map = new HashMap<>();
 		
 		map.put("workCode", workCode);
+		map.put("impCode", impCode);
+		map.put("payMethod", payMethod);
+		map.put("status", status);
 		map.put("userIdx", info.getUserIdx());
-		
+		map.put("userName", info.getUserName());
 		travelService.payRoute(map);
 		
 		return map;

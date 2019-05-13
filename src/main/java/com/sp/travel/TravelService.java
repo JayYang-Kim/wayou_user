@@ -297,6 +297,10 @@ public class TravelService {
 	public void payRoute(Map<String, Object> map) {
 		try {
 			dao.insertData("workspace.payRoute",map);
+			int orderCode = dao.selectOne("selectOrderCode");
+			map.put("orderCode", orderCode);
+			dao.insertData("workspace.insertOrder", map);
+			dao.insertData("workspace.insertPay", map);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

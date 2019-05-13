@@ -294,5 +294,15 @@
  	<insert id="payRoute" parameterType="map">
  		insert into paidRoute(prcode,userIdx,workCode) values(paidRoute_seq.nextval,#{userIdx},#{workCode})
  	</insert>
+ 	<select id="selectOrderCode" resultType="Integer">
+ 		select paySangkeun_seq.nextval from dual
+ 	</select>
+ 	<insert id="insertOrder" parameterType="map">
+ 		insert into order_master(ordercode,useridx,receivetype,memo,totalmoney,name)
+ 			values(#{orderCode},#{userIdx},1,'경로 구매', 1000,#{userName})
+ 	</insert>
+ 	<insert id="insertPay" parameterType="map">
+ 		insert into tb_pay_master(ordercode,impcode,paymethod,status) values(#{orderCode},#{impCode},#{payMethod},#{status})
+ 	</insert>
 
 </mapper>
