@@ -137,7 +137,7 @@ $("body").on("click", ".nice-select.option ul li", function(){
 	}
 	
 	var out="";
-	out += "<li class='buy_item clear' data-detailCode='"+selectedCode+"' style='margin-top: 50px; padding-top: 20px; padding-bottom: 20px; background-color: #f8f8f8'>";
+	out += "<li class='buy_item clear' id='buy_item' data-sssPrice='"+selectedPrice+"' data-detailCode='"+selectedCode+"' style='margin-top: 50px; padding-top: 20px; padding-bottom: 20px; background-color: #f8f8f8'>";
 	out += "<p style='margin-left: 20px; font-size: 15px; margin-right: 20px;'>";
 	out += "<span class='ssCode' data-ssCode='"+selectedCode+"'>"+selectedName+"&nbsp&nbsp&nbsp|&nbsp&nbsp&nbsp"+numberWithCommas(selectedCount)+"개 남음</span>";
 	out += "<span style='float:right;'><button type='button' class='button deleteSel'>x</button></span>";
@@ -158,15 +158,10 @@ $("body").on("click", ".deleteSel", function(){
 	var totalPrice = $("#ttPrice").attr("data-total");
 	var buy_item = $(this).closest(".buy_item");
 	var selectedPrice = buy_item.find(".ssPrice").attr("data-ssPrice");
-	alert(selectedPrice);
-	
 	var totalPrice = $("#ttPrice").attr("data-total");
-	alert(totalPrice);
-	
+
 	totalPrice = Number(totalPrice) - Number(selectedPrice);
-	
-	alert("계산 : " + totalPrice);
-	
+
 	$(this).closest(".buy_item").remove();
 	
 	var html = "<span style='float:right; margin-right: 5px; font-weight: bold; font-size: 20px;' id='ttPrice' data-total='"+totalPrice+"'>"+numberWithCommas(totalPrice)+"</span>";
@@ -174,11 +169,19 @@ $("body").on("click", ".deleteSel", function(){
 });
 
 $("body").on("click", ".cart-btn", function(){
-	var price = $("#ssPrice").attr("data-ssPrice");
-	var buyCount = $("#ssBuyCount").val();
-	var ticketDetailCode = $("#ssCode").attr("data-ssCode");
-	var query = "ticketDetailCode="+ticketDetailCode+"&price="+price+"&buyCount="+buyCount;
-	var url = "<%=cp%>/myPage/wishList/list3";
+	
+	
+	
+	var buyList_code = new Array();
+	var buyList_price = new Array();
+	var buyList_buyCount = new Array();
+	for(var i = 0; i < $("#buy_list li").length; i++) {
+		buyList_code.push($("#buy_list li:eq("+i+")").attr("data-detailCode"));
+		buyList_price.push($("#buy_list li:eq("+i+")").attr("data-sssPrice"));
+		buyList_buyCount.push($("#buy_list li:eq("+i+")").find(".ssBuyCount").val());
+		
+	var query = "ticketDetailCode="+buyList_code[i]+"&price="+buyList_price[i]+"&buyCount="+buyList_buyCount[i];
+	var url = "<%=cp%>/ticket/insertWishlist";	
 	
 	$.ajax({
 		type:"post"
@@ -196,6 +199,8 @@ $("body").on("click", ".cart-btn", function(){
 	    	console.log(e.responseText);
 	    }
 	});
+	
+	}
 });
 
 
