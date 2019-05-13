@@ -58,7 +58,7 @@
 	                    <!-- Post Thumbnail -->
 	                    <div class="post-thumbnail">
 	                    	<c:if test="${not empty listLocation.saveFilename}">
-	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="/wadmin/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
+	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="<%=cp%>/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
 	                    	</c:if>
 	                    	<c:if test="${empty listLocation.saveFilename}">
 	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>

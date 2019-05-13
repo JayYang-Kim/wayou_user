@@ -3,35 +3,38 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="wish">
 
-	<select id="dataCount1" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*) FROM wishlistcode_dh WHERE userIdx = #{userIdx}
-	</select>
-	<select id="dataCount2" parameterType="Integer" resultType="Integer">
-		SELECT COUNT(*) FROM wishlistcode_dt WHERE userIdx = #{userIdx}
+	<select id="dataCount" parameterType="Integer" resultType="Integer">
+		SELECT COUNT(*) FROM wishlist WHERE userIdx = #{userIdx}
 	</select>
 	
 	<select id="listWishdh" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
-		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
-   		 JOIN wishlistcode_dh dh ON dh.userIdx = u.userIdx
-       	 WHERE u.userIdx = #{userIdx}
+		SELECT wl.wishCode, wl.departCode, productCode, dh.amount, dh.price, hi.hName, ri.roomNum, dh.information
+		FROM wishlist_dh dh
+		JOIN wishlist wl ON wl.wishCode = dh.wishCode
+		JOIN roominfo ri ON dh.productCode= ri.roomCode
+		JOIN hotelinfo  hi ON ri.hotelCode = hi.hotelCode
+		where wl.userIdx=#{userIdx} and wl.departCode=2
 	</select>
 	<select id="listWishdt" parameterType="Integer" resultType="com.sp.myPage.Wishlist">
-		SELECT u.userIdx, productCode, amount, price, wishCode FROM tb_user u
-   		 JOIN wishlistcode_dt dt ON dt.userIdx = u.userIdx
-       	 WHERE u.userIdx = #{userIdx}
+		SELECT wl.wishCode, wl.departCode, productcode, dt.amount, dt.price, t.ticketName, td.ticketdetailName
+		FROM wishlist_dt dt
+		JOIN wishlist wl ON wl.wishCode = dt.wishCode
+		JOIN ticketdetail td ON dt.productCode = td.ticketdetailcode
+		JOIN ticket t ON td.ticketcode = t.ticketcode
+		where wl.userIdx=#{userIdx} and wl.departCode=1
 	</select>
 	
 	<delete id="deleteWishdh" parameterType="Integer">
-		DELETE FROM wishlistcode_dh	WHERE wishCode = #{wishCode}
+		DELETE FROM wishlist_dh	WHERE wishCode = #{wishCode}
 	</delete>
 	<delete id="deleteWishdt" parameterType="Integer">
-		DELETE FROM wishlistcode_dt	WHERE wishCode = #{wishCode}
+		DELETE FROM wishlist_dt	WHERE wishCode = #{wishCode}
 	</delete>
 	
-	<delete id="updateWishdh" parameterType="Map">
-		UPDATE wishlistcode_dh SET amount=#{amount} WHERE wishCode=#{wishCode}
-	</delete>
-	<delete id="updateWishdt" parameterType="Map">
-		UPDATE wishlistcode_dt SET amount=#{amount} WHERE wishCode=#{wishCode}
-	</delete>
+	<update id="updateWishdh" parameterType="Map">
+		UPDATE wishlist_dh SET amount=#{amount} WHERE wishCode=#{wishCode}
+	</update>
+	<update id="updateWishdt" parameterType="Map">
+		UPDATE wishlist_dt SET amount=#{amount} WHERE wishCode=#{wishCode}
+	</update>
 </mapper>

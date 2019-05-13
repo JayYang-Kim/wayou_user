@@ -10,7 +10,7 @@
 	    <!-- Thumb -->
 	    <div class="post-thumb">
 	    	<c:if test="${not empty list.saveFilename}">
-	        	<a href="single-blog.html"><img src="/wadmin/uploads/location/${list.saveFilename}" alt=""></a>
+	        	<a href="single-blog.html"><img src="<%=cp%>/uploads/location/${list.saveFilename}" alt=""></a>
 	        </c:if>
 	        <c:if test="${empty list.saveFilename}">
 	        	<a href="single-blog.html"><img src="<%=cp%>/resources/images/bg-img/29.jpg" alt=""></a>

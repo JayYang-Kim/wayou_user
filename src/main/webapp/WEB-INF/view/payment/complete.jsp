@@ -23,9 +23,9 @@
 		<div class="col-md-12">
 			<div class="order_complate">
 				<div class="mt20 mb40 t_center">
-					<h1><strong class="t_red">김아무개님</strong> <strong class="t_red">결제</strong>가 완료되었습니다.</h1>
+					<h1><strong class="t_red">${dto.userName}님</strong> <strong class="t_red">결제</strong>가 완료되었습니다.</h1>
 				</div>
-				<h5 class="cont_tit tit2">결제번호 <strong class="t_red">012345645</strong> <span class="f12 normal">2014년 2월 25일 13시 40분에 결제하신 결제 내역입니다.</span></h5>
+				<h5 class="cont_tit tit2">결제번호 <strong class="t_red">${dto.orderCode}</strong> <span class="f12 normal">${dto.confirmDate}에 결제하신 결제 내역입니다.</span></h5>
 
 				<table class="table mt10">
 					<colgroup>			
@@ -44,17 +44,16 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th scope="row" colspan="2" class="f14">합계</th>
-							<td><strong class="f18">35,300</strong></td>
-							<td><strong class="f20 t_red">30,000</strong></td>
+							<th scope="row" colspan="3" class="f14">합계</th>
+							<td><strong class="f20 t_red">${dto.totalMoney}</strong></td>
 						</tr>
 					</tfoot>
 					<tbody>
 						<tr>
-							<td class="t_left">디즈니랜드 45박 46일 </td>
-							<td class="t_gray">2</td>
-							<td><strong>800,000</strong></td>
-							<td><strong>1,600,000</strong></td>
+							<td class="t_left">${dto.roomName}&nbsp;/&nbsp;${dto.roomNum}호실</td>
+							<td class="t_gray">${dto.amount}</td>
+							<td><strong>${dto.price}</strong></td>
+							<td><strong>${dto.totalMoney }</strong></td>
 						</tr>
 					</tbody>
 				</table>
@@ -69,7 +68,7 @@
 					<tbody>
 						<tr>
 							<th class="t_right">주문자</th>
-							<td class="t_gray t_left">김아무개</td>
+							<td class="t_gray t_left">${dto.userName}</td>
 						</tr>
 						<tr>
 							<th class="t_right">수령방법</th>
@@ -77,15 +76,11 @@
 						</tr>
 						<tr>
 							<th class="t_right">결제수단</th>
-							<td class="t_gray t_left"><strong class="t_blue">일반카드</strong></td>
-						</tr>
-						<tr>
-							<th class="t_right">할부개월</th>
-							<td class="t_gray t_left"><strong class="t_blue">3(개월)</strong></td>
+							<td class="t_gray t_left"><strong class="t_blue">${dto.paymethod}</strong></td>
 						</tr>
 						<tr>
 							<th class="t_right">최종결제금액</th>
-							<td class="t_gray t_left"><strong class="t_red">0원</strong></td>
+							<td class="t_gray t_left"><strong class="t_red">${dto.totalMoney}원</strong></td>
 						</tr>
 					</tbody>
 				</table>

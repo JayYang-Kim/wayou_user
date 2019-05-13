@@ -15,32 +15,135 @@
 		WHERE userIdx = #{userIdx}
 	</select>
 	
-	<insert id="insertOrder" parameterType="com.sp.payment.Payment">
-		INSERT INTO order_master(orderCode, userIdx, orderDate, name, receiveType, memo, totalMoney, separate)
-			VALUES(orderCode_seq.NEXTVAL, #{userIdx}, SYSDATE, #{name}, #{receiveType}, #{memo}, #{totalMoney}, #{separate}) 
+	<select id="readWish_dt" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
+		SELECT wl.wishCode, departCode, wl.userIdx, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail, dt.productCode, dt.amount, dt.price, td.ticketdetailName, t.ticketName 
+		FROM wishlist_dt dt
+		JOIN wishlist wl ON wl.wishCode = dt.wishCode
+		JOIN tb_user  tb ON tb.userIdx= wl.userIdx
+		JOIN ticketdetail td ON td.ticketdetailCode = dt.productCode
+		JOIN ticket t ON t.ticketCode = td.ticketCode
+		WHERE wl.userIdx =#{userIdx} and wl.wishCode = #{wishCode}
+	</select>
+	
+	<select id="readWish_dh" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
+		SELECT wl.wishCode, departCode, wl.userIdx, userId, userName, tb.postCode, userAddr1, userAddr2, etc, userTel, userEmail, dh.productCode, dh.amount, dh.price, ri.roomNum, ri.information, h.hName 
+		FROM wishlist_dh dh
+		JOIN wishlist wl ON wl.wishCode = dh.wishCode
+		JOIN tb_user  tb ON tb.userIdx= wl.userIdx
+		JOIN roominfo ri ON ri.roomCode = dh.productCode
+		JOIN hotelinfo h ON h.hotelCode = ri.hotelCode
+		WHERE wl.userIdx = #{userIdx} and wl.wishCode = #{wishCode}
+	</select>
+
+	<select id="readWishA_dt" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
+		SELECT wl.wishCode, departCode, wl.userIdx, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail, dt.productCode, dt.amount, dt.price, td.ticketdetailName, t.ticketName 
+		FROM wishlist_dt dt
+		JOIN wishlist wl ON wl.wishCode = dt.wishCode
+		JOIN tb_user  tb ON tb.userIdx= wl.userIdx
+		JOIN ticketdetail td ON td.ticketdetailCode = dt.productCode
+		JOIN ticket t ON t.ticketCode = td.ticketCode
+		WHERE wl.userIdx =#{userIdx}
+	</select>
+	
+	<select id="readWishA_dh" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
+		SELECT wl.wishCode, departCode, wl.userIdx, userId, userName, tb.postCode, userAddr1, userAddr2, etc, userTel, userEmail, dh.productCode, dh.amount, dh.price, ri.roomNum, ri.information, h.hName 
+		FROM wishlist_dh dh
+		JOIN wishlist wl ON wl.wishCode = dh.wishCode
+		JOIN tb_user  tb ON tb.userIdx= wl.userIdx
+		JOIN roominfo ri ON ri.roomCode = dh.productCode
+		JOIN hotelinfo h ON h.hotelCode = ri.hotelCode
+		WHERE wl.userIdx = #{userIdx}
+	</select>
+	
+	<insert id="insertOrder_wish" parameterType="com.sp.payment.Payment">
+		INSERT INTO order_master(orderCode, userIdx, orderDate, name, receiveType, memo, totalMoney, wishCode)
+			VALUES(orderCode_seq.NEXTVAL, #{userIdx}, SYSDATE, #{userName}, 1, #{memo}, #{totalMoney}, #{wishCode}) 
 	</insert>
 	
-	<select id="checkPurchase" parameterType="Integer">
-		SELECT separate, cardName, confirmNum, confirmMoney, ,confirmDate, odCode, orderCode,  productCode, amount, price 
-		FROM tb_pay_master tpm
-		WHERE payCode = #{orderCode}
-		JOIN order_dh dh ON tpm.payCode = dh.orderCode
-		JOIN order_dt dt ON tpm.payCode = dt.orderCode
-		JOIN order_dtr dtr ON tpm.payCode = dtr.orderCode
+	<insert id="insertOrder_wishDh" parameterType="com.sp.payment.Payment">
+		INSERT INTO order_dh(odCode, orderCode, productCode, amount, price)
+		VALUES(odCode_dh_seq.nextval, #{orderCode}, #{productCode}, #{amount}, #{price})
+	</insert>
+	
+	<insert id="insertOrder_wishDt" parameterType="com.sp.payment.Payment">
+		INSERT INTO order_dt(odCode, orderCode, productCode, amount, price)
+		VALUES(odCode_dt_seq.nextval, #{orderCode}, #{productCode}, #{amount}, #{price})
+	</insert>
+	
+	<insert id="insertPayment_pay" parameterType="com.sp.payment.Payment">
+		INSERT INTO tb_pay_master(orderCode, impCode, paymethod, status)
+		VALUES(#{orderCode}, #{impCode}, #{paymethod}, #{status})
+	</insert>
+	
+	<delete id="deleteOrder_dh">
+		DELETE FROM order_dh  WHERE orderCode=#{orderCode};
+	</delete>
+	<delete id="deleteOrder_dt">
+		DELETE FROM order_dt  WHERE orderCode=#{orderCode};
+	</delete>
+	<delete id="deleteOrder">
+		DELETE FROM order_master  WHERE orderCode=#{orderCode};
+	</delete>
+	
+	<delete id="deleteWishdh" parameterType="Integer">
+		DELETE FROM wishlist_dh	WHERE wishCode = #{wishCode}
+	</delete>
+	<delete id="deleteWishdt" parameterType="Integer">
+		DELETE FROM wishlist_dt	WHERE wishCode = #{wishCode}
+	</delete>
+	<delete id="deleteWish" parameterType="Integer">
+		DELETE FROM wishlist WHERE wishCode = #{wishCode}
+	</delete>
+	
+	<select id="readOrderM" parameterType="Integer" resultType="com.sp.payment.Payment">
+		SELECT tb.userIdx, orderCode, totalMoney, wishCode, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail from tb_user tb
+		JOIN order_master om ON tb.userIdx = om.userIdx WHERE tb.userIdx = #{userIdx} and rownum=1 ORDER BY ordercode DESC
 	</select>
 	
-	<select id="readOrder_dt" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
-		select tu.userIdx, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail, dt.wishCode, productCode, amount, dt.price 
-		FROM wishlistCode_dt dt
-		JOIN ticketdetail t ON t.ticketdetailcode = dt.productcode
-		JOIN tb_user tu ON tu.userIdx = dt.userIdx
-		WHERE dt.userIdx =#{userIdx} and wishCode = #{wishCode}
+	<select id="checkOrder" parameterType="Integer" resultType="Integer">
+		select orderCode from order_master where userIdx = #{userIdx} and rownum =1 order by orderCode  DESC
 	</select>
-	<select id="readOrder_dh" parameterType="com.sp.payment.Payment" resultType="com.sp.payment.Payment">
-		select tu.userIdx, userId, userName, postCode, userAddr1, userAddr2, etc, userTel, userEmail, wishCode, productCode, amount, price 
-		FROM wishlistCode_dh dh
-		JOIN roominfo ri ON ri.roomCode = dt.productcode
-		JOIN tb_user tu ON tu.userIdx = dt.userIdx
-		WHERE dh.userIdx = #{userIdx} and wishCode = #{wishCode}
+	
+	<select id="checkDepart" parameterType="Integer" resultType="Integer">
+		select nvl(Count(orderCode),0) from order_dh where orderCode=#{orderCode}
+	</select>
+	
+	<select id="resultOrder" parameterType="Integer" resultType="com.sp.payment.Payment">
+		select orderCode, TO_CHAR(confirmDate, 'yyyy"년"mm"월"dd"일" hh24"시"mi"분"') confirmDate, userName, amount, price, (amount*price) totalMoney, paymethod, productCode
+		from order_master om
+		JOIN order_dh dh ON dh.orderCode = om.orderCode
+		JOIN tb_user tu ON tu.userIdx = om.userIdx
+		JOIN tb_pay_master tpm ON tpm.orderCode = om.orderCode
+		WHERE om.userIdx = ${userIdx} and rownum = 1
+		ORDER BY om.orderCode DESC
+
+	</select>
+	
+	<select id="resultOrder1" parameterType="Integer" resultType="com.sp.payment.Payment">
+		select roomName, roomNum from roominfo ri
+			JOIN roomtype rt ON rt.roomtypecode = ri.roomtypecode
+			where ri.roomCode = #{roomCode}
+	</select>
+	
+	<select id="readWishCount" parameterType="Integer" resultType="com.sp.payment.Payment">
+		select wishCode, departCode from wishlist where userIdx = #{userIdx}
+	</select>
+	
+	<insert id="createOrderCode" parameterType="com.sp.payment.Payment">
+		INSERT INTO order_master (orderCode, userIdx, name, receivetype, memo, totalMoney)
+		values(orderCode_seq.nextval, #{userIdx}, #{userName}, 1, #{memo}, 0)
+	</insert>
+	
+	<update id="updateOrderTotalMoney" parameterType="com.sp.payment.Payment">
+		update order_master set totalMoney = #{totalMoney} where orderCode = #{orderCode}
+	</update>
+	
+	<delete id="deleteWishAll" parameterType="com.sp.payment.Payment">
+		delete from wishlist where userIdx=#{userIdx}
+	</delete>
+	<select id="checkWishCode" parameterType="Integer" resultType="com.sp.payment.Payment">
+		SELECT wishCode, departCode FROM tb_user tb
+		JOIN wishlist wl ON wl.userIdx = tb.userIdx
+		WHERE tb.userIdx = #{userIdx}
 	</select>
 </mapper>

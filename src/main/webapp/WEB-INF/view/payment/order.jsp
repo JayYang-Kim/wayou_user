@@ -12,76 +12,97 @@
 
 <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
 <script type="text/javascript">
-	$(function(){
-		$(".paymentBtn").click(function(){
-			var url = "<%=cp%>/payInfo";
-			var data = "userIdx=${sessionScope.member.userIdx}";
-			
-			$.ajax({
-				type:"get",
-				url:url,
-				data:data,
-				dataType:"json",
-				success:function(data){
-					var IMP = window.IMP; // 생략가능
-					var sum = 1000;
-					IMP.init(data.payInfo.storeCode);
-					IMP.request_pay({
-					    pg : 'inicis', // version 1.1.0부터 지원.
-					    pay_method : 'card',
-					    merchant_uid : 'merchant_' + new Date().getTime(),
-					    name : '주문명:결제테스트',
-					    amount : 100,
-	 				    buyer_email : data.payInfo.userEmail,
-					    buyer_name : data.payInfo.userName,
-					    buyer_tel : data.payInfo.userTel,
-					    buyer_addr : data.payInfo.userAddr1 + data.payInfo.userAddr2,
-					    buyer_postcode : data.payInfo.postCode
-					}, function(rsp) {
-					    if ( rsp.success ) { 
-					        var msg = '결제가 완료되었습니다.';
-					        msg += '고유ID : ' + rsp.imp_uid;
-					        msg += '상점 거래ID : ' + rsp.merchant_uid;
-					        msg += '결제 금액 : ' + rsp.paid_amount;
-					        msg += '카드 승인번호 : ' + rsp.apply_num;
+$(function(){
+	$(".paymentBtn").click(function(){
+		var mode="${mode}";
+		var IMP = window.IMP; // 생략가능
+		var sum = 1000;
+		IMP.init("imp16254268");
+		IMP.request_pay({
+		    pg : 'inicis', // version 1.1.0부터 지원.
+		    pay_method : 'card',
+		    merchant_uid : 'merchant_' + new Date().getTime(),
+		    name : '주문명:결제테스트',
+		    amount : 100,
+			buyer_email : '${dto.userEmail}',
+		    buyer_name : '${dto.userName}',
+		    buyer_tel : '${dto.userTel}',
+		    buyer_addr : '${dto.userAddr1} + ${dto.userAddr2} + ${dto.etc}',
+		    buyer_postcode : '${dto.postCode}'
+		}, function(rsp) {
+		    if ( rsp.success ) { 
+		        var msg = '결제가 완료되었습니다.';
+		        msg += '고유ID : ' + rsp.imp_uid;
+		        msg += '상점 거래ID : ' + rsp.merchant_uid;
+		        msg += '결제 금액 : ' + rsp.paid_amount;
+		        msg += '카드 승인번호 : ' + rsp.apply_num;
+		       
+		        var impCode = rsp.imp_uid;
+		        var paymethod= rsp.pay_method;
+		        var status=rsp.status;
+
+				var memo=$("#d_txt").val();
 				
-					        $.ajax({
-					        	type:"post",
-								url:url, 
-								dataType:"json",
-								success:function(){
-									alert("구매해주셔서 감사합니다.");
-								},
-								beforesend:function(e){
-									e.setRequestHeader("AJAX",true);
-								},
-								error:function(e){
-							    	if(e.status==403) {
-							    		location.href="<%=cp%>/member/login";
-							    		return;
-							    	}
-								}
-					        });
-					    } else {
-					        var msg = '결제에 실패하였습니다.';
-					        msg += '에러내용 : ' + rsp.error_msg;
-					    }
-					    alert(msg);
-					});		
-				},
-				beforesend:function(e){
-					e.setRequestHeader("AJAX",true);
-				},
-				error:function(e){
-			    	if(e.status==403) {
-			    		location.href="<%=cp%>/member/login";
-			    		return;
-			    	} 
+				<c:if test="${not empty dto1}">
+					var wishCode=${dto1.wishCode};
+					var url = "<%=cp%>/payment/insertPayment_wish";
+					var data="wishCode="+wishCode+"&mode="+mode+"&memo="+memo+"&impCode="+impCode+"&paymethod="+paymethod+"&status="+status;
+					alert(data);
+		        $.ajax({
+		        	type:"post",
+					url:url, 
+					data:data,
+					dataType:"json",
+					success:function(data){
+						alert("구매해주셔서 감사합니다.");
+						location.href="<%=cp%>/payment/complete"
+					},
+					beforesend:function(e){
+						e.setRequestHeader("AJAX",true);
+					},
+					error:function(e){
+				    	if(e.status==403) {
+				    		location.href="<%=cp%>/member/login";
+				    		return;
+				    	}
+					}
+		        });
+				</c:if>
+				<c:if test="${mode==3}">
+				if((mode==3)){
+					alert("mode3");
+					var url = "<%=cp%>/payment/insertPayment_wishA";
+					var data="mode="+mode+"&memo="+memo+"&impCode="+impCode+"&paymethod="+paymethod+"&status="+status;
+		        $.ajax({
+		        	type:"post",
+					url:url, 
+					data:data,
+					dataType:"json",
+					success:function(data){
+						alert("구매해주셔서 감사합니다.");
+						location.href="<%=cp%>/payment/complete"
+					},
+					beforesend:function(e){
+						e.setRequestHeader("AJAX",true);
+					},
+					error:function(e){
+				    	if(e.status==403) {
+				    		location.href="<%=cp%>/member/login";
+				    		return;
+				    	}
+					}
+		        });
 				}
-			});
-	
+			</c:if>
+		    } else {
+		        var msg = '결제에 실패하였습니다.';
+		        msg += '에러내용 : ' + rsp.error_msg;
+		    }
+		    alert(msg);
 		});
 	});
+});
+
 </script>
 
 
@@ -97,6 +118,7 @@
 		<div class="col-md-12">
 			<div class="order_complate">
 				<div class="mt20 mb40 t_center">
+					<input type="hidden" >
 					<h1><strong class="t_red">${dto.userName}님</strong> <strong class="t_red">주문</strong>내역 리스트</h1>
 				</div>
 				
@@ -118,18 +140,51 @@
 					</thead>
 					<tfoot>
 						<tr>
-							<th scope="row" colspan="2" class="f14">합계</th>
-							<td><strong class="f18">${dto.price}</strong></td>
-							<td><strong class="f20 t_red">${dto.price*dto.amount}</strong></td>
+							<th scope="row" colspan="3" class="f14">합계</th>
+						<c:if test="${not empty dto1}">
+							<!-- <td><strong class="f18"></strong>${dto1.price}</td> -->
+							<td><strong class="f20 t_red"  id="totalMoney" value="${dto1.totalMoney}">${dto1.totalMoney}</strong></td>
+						</c:if>
+						<c:if test="${not empty totalMoney}">
+							<!-- <td><strong class="f18"></strong>${dto1.price}</td> -->
+							<td><strong class="f20 t_red"  id="totalMoney" value="${totalMoney}">${totalMoney}</strong></td>
+						</c:if>
 						</tr>
 					</tfoot>
 					<tbody>
+					<c:if test="${not empty dto1}">
 						<tr>
-							<td class="t_left">디즈니랜드 45박 46일 </td>
+						<c:if test="${dto1.departCode == 1}">
+							<td class="t_left">${dto1.ticketName}&nbsp;${dto1.ticketdetailName}</td>
+						</c:if>
+						<c:if test="${dto1.departCode == 2 }">
+							<td class="t_left">${dto1.hName}&nbsp;${dto1.roomNum}</td>
+						</c:if>
+							<td class="t_gray">${dto1.amount}</td>
+							<td><strong>${dto1.price}</strong></td>
+							<td><strong>${dto1.price*dto1.amount}</strong></td>
+						</tr>
+					</c:if>
+					<c:if test="${not empty list_dh}">
+					<c:forEach var="dto" items="${list_dh}">
+						<tr>
+							<td class="t_left">${dto.hName}&nbsp;${dto.roomNum} </td>
 							<td class="t_gray">${dto.amount}</td>
 							<td><strong>${dto.price}</strong></td>
 							<td><strong>${dto.price*dto.amount}</strong></td>
 						</tr>
+					</c:forEach>
+					</c:if>
+					<c:if test="${not empty list_dt}">
+					<c:forEach var="dto" items="${list_dt}">
+						<tr>
+							<td class="t_left">${dto.ticketdetailName } </td>
+							<td class="t_gray">${dto.amount}</td>
+							<td><strong>${dto.price}</strong></td>
+							<td><strong>${dto.price*dto.amount}</strong></td>
+						</tr>
+					</c:forEach>
+					</c:if>
 					</tbody>
 				</table>
 
@@ -145,13 +200,13 @@
 							<tbody>
 								<tr>
 									<th scope="row">주문유형</th>
-									<td class="t_left"><span class="line35">모바일</span></td>
+									<td class="t_left"><span class="line35">온라인</span></td>
 								</tr>
 								<tr>
 									<th scope="row"><label for="d_name" style="margin-bottom:0;">주문자 정보</label></th>
 									<td class="t_left">
 										<div>
-											<span class="line30">${dto.userName }</span>
+											<span class="line30" >${dto.userName}</span>
 										</div>
 									</td>
 								</tr>								

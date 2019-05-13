@@ -154,7 +154,7 @@
 							<div class="carousel-inner">
 								<div class="carousel-item active">
 									<c:if test="${not empty readLocation.saveFilename}">
-										<img src="/wadmin/uploads/location/${readLocation.saveFilename}" class="d-block w-100" alt="">
+										<img src="<%=cp%>/uploads/location/${readLocation.saveFilename}" class="d-block w-100" alt="">
 									</c:if>
 									<c:if test="${empty readLocation.saveFilename}">
 										<img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
@@ -250,7 +250,7 @@
 										<div class="col-md-3 animate-box">
 											<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
 											<c:if test="${not empty recommendLandmak.saveFilename}">
-												<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${recommendLandmak.saveFilename});">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/uploads/landmark/${recommendLandmak.saveFilename});">
 											</c:if>
 											<c:if test="${empty recommendLandmak.saveFilename}">
 												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
@@ -299,9 +299,9 @@
 							<div class="item">
 								<div class="hotel-entry">
 									<c:if test="${not empty recommendWorkspace.saveFilename}">
-										<a href="<%=cp%>/travel/plan/view?locCode=${recommendWorkspace.locCode}&workNum=${recommendWorkspace.workCode}&dayCount=${recommendWorkspace.dayCount}&userIdx=${recommendWorkspace.userIdx}" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${recommendWorkspace.saveFilename});">
+										<a href="<%=cp%>/travel/plan/view?locCode=${recommendWorkspace.locCode}&workNum=${recommendWorkspace.workCode}&dayCount=${recommendWorkspace.dayCount}&userIdx=${recommendWorkspace.userIdx}" class="hotel-img" style="background-image: url(<%=cp%>/uploads/location/${recommendWorkspace.saveFilename});">
 									</c:if>
-									<c:if test="${empty listWorkspace.saveFilename}">
+									<c:if test="${empty recommendWorkspace.saveFilename}">
 										<a href="<%=cp%>/travel/plan/view?locCode=${recommendWorkspace.locCode}&workNum=${recommendWorkspace.workCode}&dayCount=${recommendWorkspace.dayCount}&userIdx=${recommendWorkspace.userIdx}" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
 									</c:if>
 										<p class="price"><span>${recommendWorkspace.locName}</span><small>(${recommendWorkspace.loceName})</small></p>

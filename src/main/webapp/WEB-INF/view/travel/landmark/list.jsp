@@ -53,7 +53,7 @@
 	                <div class="tr_landmarkList single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 	                    <!-- Post Thumbnail -->
 	                    <div class="post-thumbnail">
-	                    	<a href="${articleUrl}?&locCode=${list.locCode}&landCode=${list.landCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
+	                    	<a href="${articleUrl}&locCode=${list.locCode}&landCode=${list.landCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
 	                    	<%-- <c:if test="${not empty list.saveFilename}">
 	                    		<a href="${articleUrl}?locCode=${list.locCode}"><img src="/wadmin/uploads/landmark/${list.saveFilename}" alt="${list.locName}"></a>
 	                    	</c:if>

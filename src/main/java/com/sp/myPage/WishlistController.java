@@ -41,21 +41,15 @@ public class WishlistController {
       int userIdx=info.getUserIdx();
    
       int dataCount=0;
-      int dataCount1=0;
-      int dataCount2=0;
 
-      dataCount1=wish.dataCount1(userIdx);
-      dataCount2=wish.dataCount2(userIdx);
+      dataCount=wish.dataCount(userIdx);
 
-  
-      dataCount=dataCount1+dataCount2;
       int listNum=0;
       int n=1;
   
       Map<String, Object> map = new HashMap<>();
       map.put("userIdx", userIdx);
   
-
       List<Wishlist> listdh = wish.listdhWish(map);
       List<Wishlist> listdt = wish.listdtWish(map);
          
@@ -89,14 +83,14 @@ public class WishlistController {
    @RequestMapping(value="/myPage/wishlist/delete")
    @ResponseBody
    public Map<String, Object> deleteWish (
-		   @RequestParam int dataType,
+		   @RequestParam int departCode,
 		   @RequestParam int wishCode
 		  )throws Exception{
 	   int result=0;
-	   if(dataType==1) {
+	   if(departCode==2) {
 		   wish.deleteWishdh(wishCode);
 		   result=1;
-	   }else if(dataType==2) {
+	   }else if(departCode==1) {
 		   wish.deleteWishdt(wishCode);
 		   result=1;
 	   }
@@ -110,19 +104,19 @@ public class WishlistController {
    @RequestMapping(value="/myPage/wishlist/update")
    @ResponseBody
    public Map<String, Object> updateWish (
-		   @RequestParam int dataType,
+		   @RequestParam int departCode,
 		   @RequestParam int wishCode,
 		   @RequestParam int amount
 		  )throws Exception{
 	   Map<String, Object> map = new HashMap<>();
 	   map.put("wishCode", wishCode);
-	   System.out.println(dataType);
+	   
 	   int result=0;
-	   if(dataType==1) {
+	   if(departCode==2) {
 		   map.put("amount", amount);
 		   wish.updateWishdh(map);
 		   result=1;
-	   }else if(dataType==2) {
+	   }else if(departCode==1) {
 		   map.put("amount", amount);
 		   wish.updateWishdt(map);
 		   result=1;

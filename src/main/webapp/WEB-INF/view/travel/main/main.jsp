@@ -114,7 +114,7 @@
 				<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}" class="tour-entry animate-box">
 					<%-- <div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);"> --%>
 					<c:if test="${not empty listLocation.saveFilename}">
-						<div class="tour-img" style="background-image: url(/wadmin/uploads/location/${listLocation.saveFilename});">
+						<div class="tour-img" style="background-image: url(<%=cp%>/uploads/location/${listLocation.saveFilename});">
 					</c:if>
 					<c:if test="${empty listLocation.saveFilename}">
 						<div class="tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/basic_location.jpg);">
@@ -171,7 +171,7 @@
 										<div class="col-md-3 animate-box">
 											<%-- <a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);"> --%>
 											<c:if test="${not empty listLandMark.saveFilename}">
-												<a href="tours.html" class="f-tour-img" style="background-image: url(/wadmin/uploads/landmark/${listLandMark.saveFilename});">
+												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/uploads/landmark/${listLandMark.saveFilename});">
 											</c:if>
 											<c:if test="${empty listLandMark.saveFilename}">
 												<a href="tours.html" class="f-tour-img" style="background-image: url(<%=cp%>/resources/images/travel/main/tour-1.jpg);">
@@ -217,7 +217,7 @@
 							<div class="item">
 								<div class="hotel-entry">
 									<c:if test="${not empty listWorkspace.saveFilename}">
-										<a href="<%=cp%>/travel/plan/view?locCode=${listWorkspace.locCode}&workNum=${listWorkspace.workCode}&dayCount=${listWorkspace.dayCount}&userIdx=${listWorkspace.userIdx}" class="hotel-img" style="background-image: url(/wadmin/uploads/location/${listWorkspace.saveFilename});">
+										<a href="<%=cp%>/travel/plan/view?locCode=${listWorkspace.locCode}&workNum=${listWorkspace.workCode}&dayCount=${listWorkspace.dayCount}&userIdx=${listWorkspace.userIdx}" class="hotel-img" style="background-image: url(<%=cp%>/uploads/location/${listWorkspace.saveFilename});">
 									</c:if>
 									<c:if test="${empty listWorkspace.saveFilename}">
 										<a href="<%=cp%>/travel/plan/view?locCode=${listWorkspace.locCode}&workNum=${listWorkspace.workCode}&dayCount=${listWorkspace.dayCount}&userIdx=${listWorkspace.userIdx}" class="hotel-img" style="background-image: url(<%=cp%>/resources/images/travel/main/hotel-1.jpg);">
