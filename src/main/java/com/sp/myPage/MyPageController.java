@@ -68,4 +68,14 @@ public class MyPageController {
 		int result=myPageService.deleteUser(userIdx);
 		return "redirect:/member/logout";
 	}
+	
+	@RequestMapping(value="/myPage/payment")
+	public String myPaymentList() throws Exception{
+		return ".myP.myPage.payment.list";
+	}
+	
+	@RequestMapping(value="/myPage/payment/view")
+	public String myPaymentView() throws Exception{
+		return ".myP.myPage.payment.history";
+	}
 }

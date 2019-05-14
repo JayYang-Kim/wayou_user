@@ -181,18 +181,19 @@ function listWish(){
     });
 </script>
 
-<!-- Breadcrumb Area Start -->
-<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/wishlist.jpg);">
+<!-- 지역상세정보(Top) -->
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top02.jpg);">
     <div class="container h-100">
-        <div class="row h-100 align-items-center">
+        <div class="row h-100 align-items-end">
             <div class="col-12">
-                <div class="breadcrumb-content text-center">
+                <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
+                	<h2 class="page-title">장바구니</h2>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Breadcrumb Area End -->
+<!-- //지역상세정보(Top) -->
 
 <!-- Blog Area Start -->
     <div class="container" style="margin-top:100px; margin-bottom:100px">

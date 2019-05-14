@@ -66,22 +66,22 @@
     <div class="container">
     	<form name="search_form" action="<%=cp%>/travel/party" method="post">
 	    	<div class="row justify-content-center box_search mb40">
-		            <div class="col-12 col-sm-3 col-lg-2">
-		            	<select name="searchKey">
-		            		<option value="all" ${searchKey == 'all' ? "selected='selected'" : ""}>제목 + 내용</option>
-		            		<option value="subject" ${searchKey == 'subject' ? "selected='selected'" : ""}>제목</option>
-		            		<option value="content" ${searchKey == 'content' ? "selected='selected'" : ""}>내용</option>
-		            		<option value="startDate" ${searchKey == 'startDate' ? "selected='selected'" : ""}>시작일</option>
-		            		<option value="endDate" ${searchKey == 'endDate' ? "selected='selected'" : ""}>종료일</option>
-		            		<option value="userCount" ${searchKey == 'userCount' ? "selected='selected'" : ""}>인원수</option>
-		            	</select>
-		            </div>
-		            <div class="col-12 col-sm-9 col-lg-8">
-		            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요."/>
-		            </div>
-		            <div class="col-12 col-lg-2">
-		            	<button type="button" class="btn roberto-btn" onclick="sendSearch()">검색</button>
-		            </div>
+	            <div class="col-12 col-sm-3 col-lg-2">
+	            	<select name="searchKey">
+	            		<option value="all" ${searchKey == 'all' ? "selected='selected'" : ""}>제목 + 내용</option>
+	            		<option value="subject" ${searchKey == 'subject' ? "selected='selected'" : ""}>제목</option>
+	            		<option value="content" ${searchKey == 'content' ? "selected='selected'" : ""}>내용</option>
+	            		<option value="startDate" ${searchKey == 'startDate' ? "selected='selected'" : ""}>시작일</option>
+	            		<option value="endDate" ${searchKey == 'endDate' ? "selected='selected'" : ""}>종료일</option>
+	            		<option value="userCount" ${searchKey == 'userCount' ? "selected='selected'" : ""}>인원수</option>
+	            	</select>
+	            </div>
+	            <div class="col-12 col-sm-9 col-lg-8">
+	            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요."/>
+	            </div>
+	            <div class="col-12 col-lg-2">
+	            	<button type="button" class="btn roberto-btn" onclick="sendSearch()">검색</button>
+	            </div>
 			</div>
 		</form>
         <div class="row justify-content-center">
