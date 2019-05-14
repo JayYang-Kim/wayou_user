@@ -1,25 +1,34 @@
 package com.sp.payment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.stereotype.Controller;
 
+import com.sp.hotel.Hotel;
 import com.sp.member.SessionInfo;
+import com.sp.ticket.Ticket;
+import com.sp.ticket.TicketService;
 
 @Controller("payment.paymentController")
 public class PaymentController {
 	@Autowired
 	private PaymentService paymentService;
+	@Autowired
+	private TicketService ticketService;
 	
 	@RequestMapping(value="/payInfo")
 	@ResponseBody
@@ -256,4 +265,55 @@ public class PaymentController {
 	public String paymentHistory() throws Exception {
 		return ".payment.history";
 	}
+	
+	@RequestMapping(value="/payment/directOrder/{sort}", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String,Object> toOrderPage(
+			@PathVariable(value="sort") String sort,
+			@RequestParam(value="buyList", required=false) String buyList,
+			Model model) throws Exception{
+
+		
+		Map<String,Object> map = new HashMap<>();
+		int totalprice =0;
+		int mode=3;
+		List<Ticket> ticketList = new ArrayList<>();
+		List<Hotel> hotelList = new ArrayList<>();
+		JSONArray array = new JSONArray(buyList);
+		
+		System.out.println("-----------buyList-----------");
+		System.out.println(array);
+		System.out.println(array.length());
+		if(sort.equals("ticket")) {
+			
+			Ticket ticket = new Ticket();
+			for(int i=0; i<array.length(); i++) {
+				JSONObject object = array.getJSONObject(i);
+				try {
+					System.out.println(object.getInt("code")+"/"+object.getInt("buyCount")+"/"+object.getInt("price"));
+					ticket = ticketService.readTicketDetail(object.getInt("code"));
+					ticket.setBuyCount(object.getInt("buyCount"));
+					totalprice += ticket.getPrice()*ticket.getBuyCount();
+					ticketList.add(ticket);
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}else {
+			Hotel hotel = new Hotel();
+			for(int i=0; i<array.length(); i++) {
+				JSONObject object = array.getJSONObject(i);
+			}
+		}
+		//아임포트 결제 완료하면 order_seq => tb_pay_master => order_master => order_dt
+		
+		map.put("amount",totalprice);
+		map.put("sort", sort);
+		map.put("list_dt", ticketList);
+		map.put("mode", mode);
+		map.put("totalMoney", totalprice);
+		
+		return map;
+	}
+	
 }
