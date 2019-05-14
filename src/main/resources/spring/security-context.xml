@@ -26,9 +26,56 @@
 		<intercept-url pattern="/index.jsp" access="permitAll" />
 		<intercept-url pattern="/main" access="permitAll" />
 		<intercept-url pattern="/travel" access="permitAll" />
+		
 		<intercept-url pattern="/travel/location" access="permitAll" />
+		<intercept-url pattern="/travel/location/recommendLocation" access="permitAll" />
+		<intercept-url pattern="/travel/location/view" access="permitAll" />
+		<intercept-url pattern="/travel/location/replyList" access="permitAll" />
+		<intercept-url pattern="/travel/landmark" access="permitAll" />
+		<intercept-url pattern="/travel/landmark/view" access="permitAll" />
+		<intercept-url pattern="/travel/landmark/replyList" access="permitAll" />
 		<intercept-url pattern="/travel/party" access="permitAll" />
-		<intercept-url pattern="/travel/party/view" access="permitAll" />	
+		<intercept-url pattern="/travel/partyNew" access="permitAll" />
+		<intercept-url pattern="/travel/party/view" access="permitAll" />
+		
+		<intercept-url pattern="/travel/plan/list" access="permitAll" />
+		
+		<intercept-url pattern="/travel/event/list" access="permitAll" />
+		<intercept-url pattern="/travel/event/article" access="permitAll" />
+		<intercept-url pattern="/travel/event/replyList" access="permitAll" />
+		<intercept-url pattern="/travel/notice/list" access="permitAll" />
+		<intercept-url pattern="/travel/notice/article" access="permitAll" />
+		
+		<intercept-url pattern="/ticket/tmain" access="permitAll" />
+		<intercept-url pattern="/ticket/list" access="permitAll" />
+		<intercept-url pattern="/ticket/detail" access="permitAll" />
+		<intercept-url pattern="/ticket/tab1" access="permitAll" />
+		<intercept-url pattern="/ticket/tab2" access="permitAll" />
+		<intercept-url pattern="/ticket/tab3" access="permitAll" />
+		<intercept-url pattern="/ticket/listReview" access="permitAll" />
+		<intercept-url pattern="/ticket/readOption" access="permitAll" />
+		
+		<intercept-url pattern="/ticket/event/list" access="permitAll" />
+		<intercept-url pattern="/ticket/event/article" access="permitAll" />
+		<intercept-url pattern="/ticket/event/replyList" access="permitAll" />
+		<intercept-url pattern="/ticket/event/replyList" access="permitAll" />
+		
+		<intercept-url pattern="/ticket/notice/list" access="permitAll" />
+		<intercept-url pattern="/ticket/notice/article" access="permitAll" />
+		
+		<intercept-url pattern="/ticket/qna/faq" access="permitAll" />
+		<intercept-url pattern="/ticket/faq/list" access="permitAll" />
+		
+		<intercept-url pattern="/hotel/hotel/main" access="permitAll" />
+		<intercept-url pattern="/hotel/hotel/list" access="permitAll" />
+		<intercept-url pattern="/hotel/hotel/article" access="permitAll" />
+		<intercept-url pattern="/hotel/hotel/hotelReview" access="permitAll" />
+		<intercept-url pattern="/hotel/hnotice/list" access="permitAll" />
+		<intercept-url pattern="/hotel/hnotice/article" access="permitAll" />
+		<intercept-url pattern="/hotel/hevent/list" access="permitAll" />
+		<intercept-url pattern="/hotel/hevent/article" access="permitAll" />
+		<intercept-url pattern="/hotel/hevent/replyList" access="permitAll" />
+		
 		<intercept-url pattern="/member/login" access="permitAll" />
 		<intercept-url pattern="/member/join" access="permitAll" />
 		<intercept-url pattern="/member/step1" access="permitAll" />
@@ -38,6 +85,7 @@
 		<intercept-url pattern="/member/idCheck" access="permitAll" />
 		<intercept-url pattern="/member/emailCheck" access="permitAll" />
 		<intercept-url pattern="/resources/**" access="permitAll" />
+		<intercept-url pattern="/uploads/**" access="permitAll" />
 		<!-- <intercept-url pattern="/" access="permitAll" /> -->
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 		

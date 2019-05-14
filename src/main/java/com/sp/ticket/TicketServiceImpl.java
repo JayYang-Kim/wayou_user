@@ -156,5 +156,16 @@ public class TicketServiceImpl implements TicketService {
 		}
 		return result;
 	}
+	
+	@Override
+	public Ticket readTicketDetail(int detailCode) {
+		Ticket ticket = null;
+		try {
+			ticket = dao.selectOne("ticket.readTicketDetail", detailCode);
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ticket;
+	}
 
 }

@@ -3,10 +3,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="travel.location">
 	<select id="listLocation" resultType="com.sp.travel.location.Location">
-		SELECT l.locCode, lc.locName, lc.loceName, memo, enable, adminIdx, saveFilename
+		SELECT l.locCode, lc.locName, lc.loceName, memo, enable, adminIdx, saveFilename, NVL(lcm.locationReplyCount, 0) AS locReplyCount , NVL(lcm.avgStarNum, 0) AS locAvgStarNum
 		FROM location l
 		JOIN locationCode lc
 		    ON l.locCode = lc.locCode
+		LEFT OUTER JOIN (
+		    SELECT COUNT(*) AS locationReplyCount, locCode, AVG(starNum) AS avgStarNum
+		    FROM locationCommunity
+		    GROUP BY locCode
+		) lcm ON lcm.locCode = l.locCode
 		WHERE enable = 1
 		ORDER BY l.locCode ASC
 	</select>
@@ -14,7 +19,7 @@
 	<select id="recommendLocation" resultType="com.sp.travel.location.Location">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		        SELECT l.locCode, lc.locName, lc.loceName, memo, enable, adminIdx, saveFilename, NVL(lcm.locationReplyCount, 0) AS locationReplyCount , NVL(lcm.avgStarNum, 0) AS avgStarNum
+		        SELECT l.locCode, lc.locName, lc.loceName, memo, enable, adminIdx, saveFilename, NVL(lcm.locationReplyCount, 0) AS locReplyCount , NVL(lcm.avgStarNum, 0) AS locAvgStarNum
 		        FROM location l
 		        JOIN locationCode lc
 		            ON l.locCode = lc.locCode

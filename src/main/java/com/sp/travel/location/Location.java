@@ -21,7 +21,7 @@ public class Location {
 	private String lat;
 	private String lng;
 	private int landCount;
-	private int locAvgStarNum;
+	private double locAvgStarNum;
 	private int locReplyCount;
 	private int enable;
 	
@@ -144,10 +144,10 @@ public class Location {
 	public void setLandCount(int landCount) {
 		this.landCount = landCount;
 	}
-	public int getLocAvgStarNum() {
+	public double getLocAvgStarNum() {
 		return locAvgStarNum;
 	}
-	public void setLocAvgStarNum(int locAvgStarNum) {
+	public void setLocAvgStarNum(double locAvgStarNum) {
 		this.locAvgStarNum = locAvgStarNum;
 	}
 	public int getLocReplyCount() {

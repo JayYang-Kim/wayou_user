@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
    String cp = request.getContextPath();
 %>
@@ -143,9 +144,9 @@ $("body").on("click", ".nice-select.option ul li", function(){
 	out += "<span style='float:right;'><button type='button' class='button deleteSel'>x</button></span>";
 	out += "</p>";
 	out += "<p style='margin-top: 25px; margin-left: 20px; margin-right: 20px;'>";
-	out += "<span><button type='button' class='button'>-</button><input type='text' class='ssBuyCount' value='1'><button type='button' class='button' maxcount='4'>+</button></span>";
+	out += "<span><button type='button' class='button minusBtn'>-</button><input type='text' class='ssBuyCount' value='1'><button type='button' class='button plusBtn'>+</button></span>";
 	out += "<span style='float:right; font-weight: bold; font-size: 15px;' class='ssPrice' data-ssPrice='"+selectedPrice+"'>"+numberWithCommas(selectedPrice)+"원</span>";
-	out += "</p></li>";
+	out += "</p></li>"; 
 
 	$("#buy_list").append(out);
 	
@@ -167,42 +168,6 @@ $("body").on("click", ".deleteSel", function(){
 	var html = "<span style='float:right; margin-right: 5px; font-weight: bold; font-size: 20px;' id='ttPrice' data-total='"+totalPrice+"'>"+numberWithCommas(totalPrice)+"</span>";
 	$(".total_price").html(html);
 });
-
-$("body").on("click", ".cart-btn", function(){
-	
-	
-	
-	var buyList_code = new Array();
-	var buyList_price = new Array();
-	var buyList_buyCount = new Array();
-	for(var i = 0; i < $("#buy_list li").length; i++) {
-		buyList_code.push($("#buy_list li:eq("+i+")").attr("data-detailCode"));
-		buyList_price.push($("#buy_list li:eq("+i+")").attr("data-sssPrice"));
-		buyList_buyCount.push($("#buy_list li:eq("+i+")").find(".ssBuyCount").val());
-		
-	var query = "ticketDetailCode="+buyList_code[i]+"&price="+buyList_price[i]+"&buyCount="+buyList_buyCount[i];
-	var url = "<%=cp%>/ticket/insertWishlist";	
-	
-	$.ajax({
-		type:"post"
-		,url:url
-		,data:query
-		,dataType:"json"
-		,success:function(data) {
-			 location.href="<%=cp%>/myPage/wishlist/list";
-		}
-	 	,error:function(e) {
-	    	if(e.status==403) {
-	    		location.href="<%=cp%>/member/login";
-	    		return;
-	    	}
-	    	console.log(e.responseText);
-	    }
-	});
-	
-	}
-});
-
 
 //탭 메뉴
 $(function(){
@@ -338,10 +303,175 @@ $(function(){
 	
 });
 
+$(function(){
+	
+	$("body").on("keyup",".ssBuyCount",function(){
+		var $span = $(this).parent();
+		if(parseInt($(this).val())>99){
+			alert("최대 구매 수량은 99개 입니다.");
+			$(this).val(99);
+			return false;
+		}else if(parseInt($(this).val())<1){
+			alert("최소 구매 수량은 1개 입니다.");
+			$(this).val(1);
+			return false;
+		}
+		$span.siblings("span").html((""+$(this).val()*($span.siblings("span").attr("data-ssprice"))).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')+"원");
+		getSum();
+	});
+	
+	$("body").on("click",".plusBtn",function(){
+		var $span = $(this).parent();
+		var $buyCount = $span.find(".ssBuyCount");
+		if(parseInt($buyCount.val())>=99){
+			alert("최대 구매 수량은 99개 입니다.");
+			return false;
+		}
+		$buyCount.val(parseInt($buyCount.val())+1);
+		$span.siblings("span").html((""+$buyCount.val()*($span.siblings("span").attr("data-ssprice"))).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')+"원");
+		getSum();
+	});
+	$("body").on("click",".minusBtn",function(){
+		var $span = $(this).parent();
+		var $buyCount = $span.find(".ssBuyCount");
+		if(parseInt($buyCount.val())<=1){
+			alert("최소 구매 수량은 1개 입니다.");
+			return false;
+		}
+		$buyCount.val(parseInt($buyCount.val())-1);
+		$span.siblings("span").html((""+$buyCount.val()*($span.siblings("span").attr("data-ssprice"))).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,')+"원");
+		
+		getSum();
+	});
+	
+	function getSum(){
+		var $totPrice = $(".newsletter-formm").find("#ttPrice");
+		var sum = 0;
+		for(var i = 0; i < $("#buy_list li").length; i++) {
+			sum += ($("#buy_list li:eq("+i+")").attr("data-sssPrice")*$("#buy_list li:eq("+i+")").find(".ssBuyCount").val());
+		}
+		$totPrice.html((""+sum).replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+	}
+	
+	$("body").on("click", ".cart-btn", function(){
+		var buyList_code = new Array();
+		var buyList_price = new Array();
+		var buyList_buyCount = new Array();
+		for(var i = 0; i < $("#buy_list li").length; i++) {
+			buyList_code.push($("#buy_list li:eq("+i+")").attr("data-detailCode"));
+			buyList_price.push($("#buy_list li:eq("+i+")").attr("data-sssPrice"));
+			buyList_buyCount.push($("#buy_list li:eq("+i+")").find(".ssBuyCount").val());
+			
+		var query = "ticketDetailCode="+buyList_code[i]+"&price="+buyList_price[i]+"&buyCount="+buyList_buyCount[i];
+		var url = "<%=cp%>/ticket/insertWishlist";	
+		
+		$.ajax({
+			type:"post"
+			,url:url
+			,data:query
+			,dataType:"json"
+			,success:function(data) {
+				 location.href="<%=cp%>/myPage/wishlist/list";
+			}
+		 	,error:function(e) {
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	}
+		    	console.log(e.responseText);
+		    }
+		});
+		
+		}
+	});
+	$("body").on("click", ".buy-btn", function(){
+		var totPrice = 0;
+		
+		if($("#buy_list li").length==0){
+			alert("구매할 티켓을 선택하세요!");
+			return false;
+		}
+		
+		for(var i = 0; i < $("#buy_list li").length; i++) {
+			totPrice += $("#buy_list li:eq("+i+")").attr("data-sssPrice")*$("#buy_list li:eq("+i+")").find(".ssBuyCount").val();		
+		}
+
+		var data = "userIdx=${sessionScope.member.userIdx}";
+		var url = "<%=cp%>/payInfo";		
+		$.ajax({
+			type:"get",
+			url:url,
+			data:data,
+			dataType:"json",
+			success:function(data){
+				var IMP = window.IMP; // 생략가능
+				IMP.init(data.payInfo.storeCode);
+				IMP.request_pay({
+				    pg : 'inicis', // version 1.1.0부터 지원.
+				    pay_method : 'card',
+				    merchant_uid : 'merchant_' + new Date().getTime(),
+				    name : '주문명:결제테스트',
+				    amount : totPrice,
+ 				    buyer_email : data.payInfo.userEmail,
+				    buyer_name : data.payInfo.userName,
+				    buyer_tel : data.payInfo.userTel,
+				    buyer_addr : data.payInfo.userAddr1 + data.payInfo.userAddr2,
+				    buyer_postcode : data.payInfo.postCode				 
+				}, function(rsp) {
+				    if ( rsp.success ) { 
+				        var msg = '결제가 완료되었습니다.';
+				        var impCode = rsp.imp_uid;
+				        var paymethod= rsp.pay_method;
+				        var status=rsp.status;
+				        $.ajax({
+				        	type:"post",
+							url:url, 
+							data:{
+								impCode:impCode,
+								payMethod:paymethod,
+								status:status
+							},
+							dataType:"json",
+							success:function(){
+								alert("구매해주셔서 감사합니다.");
+								location.replace("<%=cp%>/");
+							},
+							beforesend:function(e){
+								e.setRequestHeader("AJAX",true);
+							},
+							error:function(e){
+						    	if(e.status==403) {
+						    		location.href="<%=cp%>/member/login";
+						    		return;
+						    	}
+							}
+				        });
+				    } else {
+				        var msg = '결제에 실패하였습니다.';
+				        msg += '에러내용 : ' + rsp.error_msg;
+				    }
+				});		
+			},
+			beforesend:function(e){
+				e.setRequestHeader("AJAX",true);
+			},
+			error:function(e){
+		    	if(e.status==403) {
+		    		location.href="<%=cp%>/member/login";
+		    		return;
+		    	} 
+			}
+		});
+	});
+
+});
+
+
+
 </script>
 
   
- 
+  
 
     <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
         <div class="container h-100">
@@ -402,10 +532,10 @@ $(function(){
                             <ul class="detail">
                             		<li style="font-size:18px;">${dto.address1}</li>
                             		<li style="font-size:25px;">${dto.ticketName}</li>
-                            		<li style="font-size: 23px; margin-top: 10px;">${dto.price}원</li>
+                            		<li style="font-size: 23px; margin-top: 10px;"><fmt:formatNumber>${dto.price}</fmt:formatNumber>원</li>
                             		<li style="font-size: 15px; margin-top: 10px;">판매기간: ${dto.sales_start} ~ ${dto.sales_end}</li>
                             		<li style="font-size: 15px; margin-top: 12px;">티켓선택
-                            		<li style="text-align: right">1인당 최대 4개 구매 가능</li>
+                            		<li style="text-align: right">1인당 최대 99개 구매 가능</li>
                             		
                   					<li style="margin-top: 5px;">
                             		<select class="nice-select date" id="selectedDate" name="selectedDate">
@@ -436,7 +566,7 @@ $(function(){
                             </ul>
 
                             
-                        </div>
+                        </div>	
                     
                            <!--  <div class="form-group">
                                 <button type="submit" class="btn roberto-btn w-100">Check Available</button>
