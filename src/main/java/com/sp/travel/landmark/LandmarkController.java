@@ -62,6 +62,10 @@ public class LandmarkController {
 		
 		List<Landmark> list = landmarkService.listLandmark(map);
 		
+		for(Landmark dto : list) {
+			dto.setLandAvgStarNum(Math.round(dto.getLandAvgStarNum()));
+		}
+		
 		String cp = req.getContextPath();
 		String listUrl = cp + "/travel/landmark";
 		String articleUrl = cp + "/travel/landmark/view?page=" + current_page;
