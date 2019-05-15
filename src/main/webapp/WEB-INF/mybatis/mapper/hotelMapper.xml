@@ -46,7 +46,7 @@
           </choose>
           <where>
           <if test="checkin !='' and checkout !='' ">
-				AND( rf.roomCode NOT IN (
+				AND(r.roomCode NOT IN (
                 	select roomCode from roomReserInfo where 
 <![CDATA[
                         (TO_DATE(TO_CHAR(checkin, 'YYYYMMDD')) >= #{checkin} AND TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) <= #{checkout}) OR
