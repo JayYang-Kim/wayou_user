@@ -1,4 +1,4 @@
-package com.sp.travel;
+package com.sp.myPage;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.HashMap;
@@ -20,16 +20,15 @@ import com.sp.common.MyUtil;
 import com.sp.member.SessionInfo;
 import com.sp.ticket.QnABoard;
 
-@Controller("travel.qnaController")
-public class TravelQnaController {
-
+@Controller("myPage.myPageQnaController")
+public class MyPageQnaController {
 	@Autowired
-	private TravelQnaService boardService;
+	private MyPageQnaService boardService;
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/travel/qna/contact")
-	public String list (
+	@RequestMapping(value="/myPage/question")
+	public String myQuestion(
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String searchKey,
 			@RequestParam(defaultValue="") String searchValue,
@@ -53,8 +52,9 @@ public class TravelQnaController {
 		if(dataCount!=0)
 			total_page=myUtil.pageCount(rows, dataCount);
 		
-		if(current_page>total_page)
+		if(current_page>total_page) {
 			current_page=total_page;
+		}	
 		
 		int start = (current_page-1)*rows+1;
 		int end = current_page*rows;
@@ -72,7 +72,7 @@ public class TravelQnaController {
 		
 		String cp = req.getContextPath();
 		String query = "";
-		String listUrl = cp + "/travel/contact";
+		String listUrl = cp + "/myPage/question";
 		
 		if(searchValue.length()!=0) {
 			query = "searchKey"+searchKey+"&searchValue"+URLEncoder.encode(searchValue, "UTF-8");
@@ -90,35 +90,10 @@ public class TravelQnaController {
 		model.addAttribute("searchKey", searchKey);
 		model.addAttribute("searchValue", searchValue);
 	
-		return ".travel.qna.contact";
+		return ".myP.myPage.qna.contact";
 	}
 	
-	
-	@RequestMapping(value="/travel/contact/created", method=RequestMethod.GET)
-	public String createdForm(
-			Model model
-			) throws Exception {
-		model.addAttribute("mode", "created");
-		return ".travel.qna.created";
-	}
-	
-	@RequestMapping(value="/travel/qna/created", method=RequestMethod.POST)
-	public String createdSubmit(
-			HttpSession session,
-			QnABoard dto
-			) throws Exception {
-		
-		SessionInfo info=(SessionInfo)session.getAttribute("member");
-		
-		dto.setUserIdx(info.getUserIdx());
-		
-		boardService.insertBoard(dto);
-		
-		return "redirect:/travel/qna/contact";
-	}
-	
-	
-	@RequestMapping(value="/travel/contact/hitCount", method=RequestMethod.POST)
+	@RequestMapping(value="/myPage/question/hitCount", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> hitCount(@RequestParam int qnaCode) throws Exception {
 		Map<String, Object> model = new HashMap<>();
@@ -137,7 +112,7 @@ public class TravelQnaController {
 		return model;
 	}
 	
-	@RequestMapping(value="/travel/contact/update", method=RequestMethod.GET)
+	@RequestMapping(value="/myPage/question/update", method=RequestMethod.GET)
 	public String updateForm(
 			@RequestParam int qnaCode,
 			@RequestParam String page,
@@ -150,36 +125,34 @@ public class TravelQnaController {
 		System.out.println("성공"+dto.getUserIdx());
 		
 		if(info.getUserIdx()!=dto.getUserIdx()) {
-			return "redirect:/travel/qna/contact?page="+page;
+			return "redirect:/myPage/question?page="+page;
 		}
 		
 		model.addAttribute("dto", dto);
 		model.addAttribute("mode", "update");
 		model.addAttribute("page", page);
 		
-		return ".travel.qna.created";
+		return ".myP.myPage.qna.created";
 	}
 	
-	@RequestMapping(value="/travel/qna/update", method=RequestMethod.POST)
+	@RequestMapping(value="/myPage/question/update", method=RequestMethod.POST)
 	public String updateSubmit(
 			QnABoard dto,
-			@RequestParam String page
-			) throws Exception {
+			@RequestParam String page) throws Exception {
 		
 		boardService.updateBoard(dto);
 		
-		return "redirect:/travel/qna/contact?page="+page;
+		return "redirect:/myPage/question?page="+page;
 	}
 	
-	@RequestMapping(value="/travel/contact/delete")
+	@RequestMapping(value="/myPage/question/delete")
 	public String delete(
 			@RequestParam int qnaCode,
-			@RequestParam String page
-			) throws Exception {
+			@RequestParam String page) throws Exception {
 		
 		boardService.deleteBoard(qnaCode);
 		
-		return "redirect:/travel/qna/contact?page="+page;
+		return "redirect:/myPage/question?page="+page;
 	}
 	
 }

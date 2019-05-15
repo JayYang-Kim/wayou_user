@@ -12,6 +12,11 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1" />
     
+    <title>WAYOU - 누워서 유람하듯 여행을 떠나요</title>
+    
+    <!-- Favicon - 파비콘 (주소창 영역 아이콘) -->
+    <link rel="Shortcut Icon" href="<%=cp%>/resources/images/common/wayou.ico"/>
+    
     <!-- Css -->
     <link rel="stylesheet" href="<%=cp%>/resources/css/common.css" media="all" />
 

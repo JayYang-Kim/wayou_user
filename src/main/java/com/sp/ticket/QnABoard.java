@@ -19,8 +19,6 @@ public class QnABoard {
 	private String answerCreated; //답변 작성일
 	private String answerContent; //답변 내용
 	
-	
-	
 	public int getHitCount() {
 		return hitCount;
 	}

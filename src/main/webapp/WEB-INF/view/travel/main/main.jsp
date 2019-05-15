@@ -13,9 +13,9 @@
 	});
 </script>
 
+<!-- 메인(Top) -->
 <section class="welcome-area">
 	<div class="welcome-slides owl-carousel">
-	    <!-- Single Welcome Slide -->
 	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg01.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg01.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
@@ -26,7 +26,7 @@
 	                        <div class="welcome-text text-center">
 	                            <h6 data-animation="fadeInLeft" data-delay="200ms">WAYOU &amp; 여행정보</h6>
 	                            <h2 data-animation="fadeInLeft" data-delay="500ms">국내 여행정보 확인</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">바로가기</a>
+	                            <a href="<%=cp%>/travel/location" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -34,7 +34,6 @@
 	        </div>
 	    </div>
 	
-	    <!-- Single Welcome Slide -->
 	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg02.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg02.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
@@ -45,7 +44,7 @@
 	                        <div class="welcome-text text-center">
 	                            <h6 data-animation="fadeInUp" data-delay="200ms">WAYOU &amp; 여행일정</h6>
 	                            <h2 data-animation="fadeInUp" data-delay="500ms">나만의 여행 일정 계획</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">바로가기</a>
+	                            <a href="<%=cp%>/travel/plan/list" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -53,7 +52,6 @@
 	        </div>
 	    </div>
 	
-	    <!-- Single Welcome Slide -->
 	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/travel/main/bg03.png);" data-img-url="<%=cp%>/resources/images/travel/main/bg03.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
@@ -64,7 +62,7 @@
                             <div class="welcome-text text-center">
                                 <h6 data-animation="fadeInDown" data-delay="200ms">WAYOU &amp; 여행동료 모으기</h6>
                                 <h2 data-animation="fadeInDown" data-delay="500ms">여행동료 모으기</h2>
-                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">바로가기</a>
+                                <a href="<%=cp%>/travel/party" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">바로가기</a>
                             </div>
                         </div>
                     </div>
@@ -72,13 +70,13 @@
             </div>
         </div>
     </div>
-    <!-- //welcome-slides  -->
+    <!-- //slides  -->
 </section>
-<!-- //welcome-area  -->
+<!-- //메인(Top) -->
 	
-<!-- roberto-about-area -->
-<section class="roberto-about-area section-padding-100-0">
-    <!-- Hotel Search Form Area -->
+<!-- 검색 영역 -->
+<%-- <section class="roberto-about-area section-padding-100-0">
+    Hotel Search Form Area
 	<div class="hotel-search-form-area">
 	    <div class="container-fluid">
 	        <div class="hotel-search-form">
@@ -96,9 +94,10 @@
 	        </div>
 	    </div>
 	</div>
-</section>
-<!-- //roberto-about-area -->
+</section> --%>
+<!-- //검색 영역 -->
 
+<!-- 추천 여행정보 -->
 <div class="colorlib-tour">
 	<div class="container">
 		<div class="row">
@@ -151,7 +150,9 @@
 		</c:if>
 	</div>
 </div>
+<!-- //추천 여행정보 -->
 
+<!-- 추천 관광명소 -->
 <div class="colorlib-tour colorlib-light-grey">
 	<div class="container">
 		<div class="row">
@@ -200,7 +201,9 @@
 		</c:if>
 	</div>
 </div>
+<!-- //추천 관광명소 -->
 
+<!-- 추천 여행일정 -->
 <div id="colorlib-hotel">
 	<div class="container">
 		<div class="row">
@@ -239,7 +242,7 @@
 		</c:if>
 		<div class="t_center">
 			<c:if test="${not empty listWorkspace}">
-				<button class="btn_classic btn-white" style="width:300px;height:50px;">여행일정 모두보기</button>
+				<button class="btn_classic btn-white" onclick="location.href='<%=cp%>/travel/plan/list'" style="width:300px;height:50px;">여행일정 모두보기</button>
 			</c:if>
 			<c:if test="${empty listWorkspace}">
 				<div>등록된 여행일정이 없습니다.</div>
@@ -247,8 +250,9 @@
 		</div>
 	</div>
 </div>
+<!-- //추천 여행일정 -->
 
-<!-- roberto-blog-area -->
+<!-- 퀵 메뉴 -->
 <section class="roberto-blog-area section-padding-100-0 colorlib-light-grey clear">
     <div class="container">
         <div class="row">
@@ -296,4 +300,4 @@
     </div>
     <!-- //container -->
 </section>
-<!-- //roberto-blog-area -->
+<!-- //퀵 메뉴 -->
