@@ -81,7 +81,7 @@
 	
 	<select id="readTicket" parameterType="Integer" resultType="com.sp.ticket.Ticket">
 		SELECT t.ticketCode, ticketName, TO_CHAR(sales_start, 'YYYY"년" MM"월" DD"일"') as sales_start,
-	        TO_CHAR(sales_end, 'YYYY"년" MM"월" DD"일"') as sales_end, s.address1, detail.price, t.storeCode	        
+	        TO_CHAR(sales_end, 'YYYY"년" MM"월" DD"일"') as sales_end, s.address1, detail.price, t.storeCode, s.loctitle        
 		FROM ticket t
 		JOIN (
 	    		select ticketcode, min(price) as price

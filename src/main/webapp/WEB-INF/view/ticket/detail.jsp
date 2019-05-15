@@ -530,7 +530,7 @@ $(function(){
                         <div class="single-widget-area mb-100">
                             <div class="newsletter-formm">  	
                             <ul class="detail">
-                            		<li style="font-size:18px;">${dto.address1}</li>
+                            		<li style="font-size:18px;">${dto.loctitle}</li>
                             		<li style="font-size:25px;">${dto.ticketName}</li>
                             		<li style="font-size: 23px; margin-top: 10px;"><fmt:formatNumber>${dto.price}</fmt:formatNumber>원</li>
                             		<li style="font-size: 15px; margin-top: 10px;">판매기간: ${dto.sales_start} ~ ${dto.sales_end}</li>

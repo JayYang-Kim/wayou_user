@@ -35,7 +35,8 @@ function searchDate() {
    var f=document.dateForm;
    
    f.submit();
-   
+  
+
 }
 
 
@@ -168,7 +169,6 @@ $(function () {
             </div>
         </div>
  </div>
-   
    <!-- Welcome Area End -->
 <div class="roberto-rooms-area section-padding-100-0">
         <div class="container">
@@ -221,6 +221,7 @@ $(function () {
                         </div>
                      </div>
                  </div>
+                 
              </div>
              <div class="col-12 col-lg-4">
                    <!-- Hotel Reservation Area -->
@@ -246,10 +247,12 @@ $(function () {
                            </div>
                        </form>
                    </div>
+                     
                </div>
 
             
                     <!-- Room Service -->
+                  
                     <div class="room-service mb-50">
                         <h4>Room Services</h4>
 
@@ -260,21 +263,24 @@ $(function () {
                             <li><img src="<%=cp%>/resources/images/core-img/icon4.png" alt=""> Cable TV</li>
                             <li><img src="<%=cp%>/resources/images/core-img/icon5.png" alt=""> Unlimited Wifi</li>
                             <li><img src="<%=cp%>/resources/images/core-img/icon6.png" alt=""> Service 24/24</li>
+                
                         </ul>
+                         <h4 style="margin-top: 20px;"><&nbsp;사장님 한마디&nbsp;></h4>
+                        <div style="font-size: 14px;background-color: #ebebeb; padding: 20px;line-height: 28px; margin-top: 12px">${maxDto.information }</div>
                     </div>
-
+				
             <c:forEach var="dto" items="${list }">
                
                         <div class="room-features-area d-flex flex-wrap mb-50" style=" border: 1px solid #ebebeb;">
-                          <h6>객실&nbsp;이름: &nbsp;&nbsp;${dto.roomName }
+                          <h6>객실&nbsp;이름 &nbsp;-&nbsp;${dto.roomName }
                                  <span>
-                                  
-                                        <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt="">
+                                  ${dto.saveFilename }
+                                        <%-- <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt=""> --%>
                             
                                 </span>    
                          </h6>
-                            <h6>이용정보: <span>${dto.information }</span></h6>
-                            <h6>Services: <span>Wifi, television ... </span></h6>
+                            <h6>이용&nbsp;정보 <span>${dto.information }</span></h6>
+                            <h6>시설&nbsp;규정 <span>${dto.notice } </span></h6>
                             <h6 style="padding-top: 50px;" class="form-group">
                                <span style="margin-bottom: 30px;">가격 : ${dto.price }</span>
                                <button type="button" class="btn_reservation btn roberto-btn w-100">예약하기</button>
