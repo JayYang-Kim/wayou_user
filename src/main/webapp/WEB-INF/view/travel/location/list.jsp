@@ -23,10 +23,10 @@
 		    	e.setRequestHeader("AJAX", true);
 		    }
 		    ,error:function(e) {
-		    	if(e.status==403) {
+		    	<%-- if(e.status==403) {
 		    		location.href="<%=cp%>/member/login";
 		    		return;
-		    	}
+		    	} --%>
 		    	console.log(e.responseText);
 		    }
 		});
@@ -58,7 +58,7 @@
 	                    <!-- Post Thumbnail -->
 	                    <div class="post-thumbnail">
 	                    	<c:if test="${not empty listLocation.saveFilename}">
-	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="/wadmin/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
+	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="<%=cp%>/uploads/location/${listLocation.saveFilename}" alt="${listLocation.locName}"></a>
 	                    	</c:if>
 	                    	<c:if test="${empty listLocation.saveFilename}">
 	                    		<a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
@@ -70,7 +70,17 @@
 	                        <a href="<%=cp%>/travel/location/view?locCode=${listLocation.locCode}" class="post-title">${listLocation.locName}(${listLocation.loceName})</a>
 	                        <p>${listLocation.memo}</p>
 	                        <div>
-	                        	
+	                        	<c:if test="${listLocation.locAvgStarNum < 5}">
+									<c:forEach begin="${listLocation.locAvgStarNum}" end="4">
+										<i class="fa fa-star"></i>
+									</c:forEach>
+								</c:if>
+								<c:if test="${listLocation.locAvgStarNum > 0}">
+									<c:forEach begin="1" end="${listLocation.locAvgStarNum}">
+					            		<i class="fa fa-star" style="color: #f5b917;"></i>
+					            	</c:forEach>
+				            	</c:if>
+	                        	 / ${listLocation.locReplyCount} (댓글수)
 	                        </div>
 	                    </div>
 	                </div>

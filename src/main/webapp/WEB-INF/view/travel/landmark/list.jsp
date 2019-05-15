@@ -6,7 +6,10 @@
 %>
 
 <script type="text/javascript">
-	
+	function sendSearch() {
+		var f = document.search_form;
+		f.submit();
+	}
 </script>
 
 <!-- 지역상세정보(Top) -->
@@ -25,24 +28,25 @@
 <div class="roberto-news-area section-padding-100-0">
     <div class="container">
     	<!-- 검색 -->
-    	<form name="search_form" action="<%=cp%>/travel/party" method="post">
+    	<form name="search_form" action="<%=cp%>/travel/landmark" method="post">
 		   	<div class="row justify-content-center box_search mb40">
-		            <div class="col-12 col-sm-3 col-lg-2">
-		            	<select name="searchKey">
-		            		<option value="all" ${searchKey == 'all' ? "selected='selected'" : ""}>전체</option>
-		            		<option value="tag1" ${searchKey == 'tag1' ? "selected='selected'" : ""}>역사 / 종교</option>
-		            		<option value="tag2" ${searchKey == 'tag2' ? "selected='selected'" : ""}>숙박</option>
-		            		<option value="tag3" ${searchKey == 'tag3' ? "selected='selected'" : ""}>쇼핑</option>
-		            		<option value="tag4" ${searchKey == 'tag4' ? "selected='selected'" : ""}>음식점</option>
-		            	</select>
-		            </div>
-		            <div class="col-12 col-sm-9 col-lg-6">
-		            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요."/>
-		            </div>
-		            <div class="col-12 col-lg-4">
-		            	<button type="button" class="btn roberto-btn" onclick="sendSearch()">검색</button>
-		            	<button type="button" class="btn roberto-btn" onclick="location.href='<%=cp%>/travel/landmark?locCode=${locCode}'">새로고침</button>
-		            </div>
+	            <div class="col-12 col-sm-3 col-lg-2">
+	            	<input type="hidden" name="locCode" value="${locCode}"/>
+	            	<select name="tagCode">
+	            		<option value="0" ${tagCode == '0' ? "selected='selected'" : ""}>전체</option>
+	            		<option value="1" ${tagCode == '1' ? "selected='selected'" : ""}>역사 / 종교</option>
+	            		<option value="2" ${tagCode == '2' ? "selected='selected'" : ""}>숙박</option>
+	            		<option value="3" ${tagCode == '3' ? "selected='selected'" : ""}>쇼핑</option>
+	            		<option value="4" ${tagCode == '4' ? "selected='selected'" : ""}>음식점</option>
+	            	</select>
+	            </div>
+	            <div class="col-12 col-sm-9 col-lg-6">
+	            	<input type="text" name="searchValue" class="form-control" value="${searchValue}" placeholder="검색어를 입력해주세요."/>
+	            </div>
+	            <div class="col-12 col-lg-4">
+	            	<button type="button" class="btn roberto-btn" onclick="sendSearch()">검색</button>
+	            	<button type="button" class="btn roberto-btn" onclick="location.href='<%=cp%>/travel/landmark?locCode=${locCode}'">새로고침</button>
+	            </div>
 			</div>
 		</form>
 		<!-- //검색 -->
@@ -53,7 +57,7 @@
 	                <div class="tr_landmarkList single-blog-post d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
 	                    <!-- Post Thumbnail -->
 	                    <div class="post-thumbnail">
-	                    	<a href="${articleUrl}?&locCode=${list.locCode}&landCode=${list.landCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
+	                    	<a href="${articleUrl}&locCode=${list.locCode}&landCode=${list.landCode}"><img src="<%=cp%>/resources/images/travel/main/basic_location.jpg" alt=""></a>
 	                    	<%-- <c:if test="${not empty list.saveFilename}">
 	                    		<a href="${articleUrl}?locCode=${list.locCode}"><img src="/wadmin/uploads/landmark/${list.saveFilename}" alt="${list.locName}"></a>
 	                    	</c:if>
@@ -87,6 +91,11 @@
 	                    </div>
 	                </div>
                 </c:forEach>
+                <c:if test="${empty list}">
+                	<div class="t_center" style="font-size:14px;">
+                		조회된 관광명소가 없습니다.
+                	</div>
+                </c:if>
             </div>
         </div>
     </div>

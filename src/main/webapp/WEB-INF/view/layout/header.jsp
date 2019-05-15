@@ -125,7 +125,7 @@
                                         </li>
                                         <li><a href="<%=cp%>/travel/myplan/add">- 일정 만들기</a></li>
                                         <li><a href="<%=cp%>/travel/notice/list">- 공지사항</a></li>
-                                        <li><a href="<%=cp%>/travel/contact">- 문의하기</a></li>
+                                        <li><a href="<%=cp%>/travel/qna/contact">- 문의하기</a></li>
                                         <li><a href="<%=cp%>/travel/event/list">- 이벤트</a></li>
                                     </ul>
                                 </li>
@@ -158,7 +158,7 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li><a href="#">문의사항</a></li>
+                                <li><a href="<%=cp%>/myPage/question">문의사항</a></li>
                             </ul>
 
                         <!-- Search -->

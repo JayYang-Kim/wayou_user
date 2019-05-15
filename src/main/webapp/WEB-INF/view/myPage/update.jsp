@@ -5,7 +5,7 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -21,9 +21,8 @@
     <script src="<%=cp%>/resources/js/lib/jquery-ui-1.12.1.min.js"></script>
     
     <script src="<%=cp%>/resources/js/lib/util-jquery.js"></script>
-    <script src="<%=cp%>/resources/js/lib/util.js"></script>
-    
-
+    <script src="<%=cp%>/resources/js/lib/util.js"></script> --%>
+   
  <script type="text/javascript">
    var echeck=0;
    
@@ -210,102 +209,128 @@
 	    }).open();
 	}
 </script>
-    
-    
-    
-</head>
+        
+<!-- </head>
 
-<body>
-<div class="row">
-<div class="col-3"></div>
- <div class="col-6" style="margin-top:20px; margin-bottom:30px;">
-  	<div style="padding-bottom:20px">
-  	<h1>회원 정보 (수정 / 탈퇴)</h1>
-  		</div>
-  		<div style="font-size:14px;">&nbsp;<b class="t_blue">*</b>표시된 사항은 수정이 제한됩니다.</div>
-  		<form name="updateForm" method="POST">
-			<table class="table left_tbl form_tbl">
-				<colgroup>
-					<col style="width:30%" />
-					<col style="width:45%" />
-					<col />
-				</colgroup>
-					<tr>
-						<th scope="row"><b class="t_blue">*</b> 성함 (Name)</th>
-						<td colspan="2">
-							<input type="hidden" id="userIdx" name="userIdx"  readonly="readonly" value="${dto.userIdx}"/>
-							<input type="text" id="userName" name="userName"  readonly="readonly" value="${dto.userName}"/>
-						</td>
-					</tr>	
-					<tr>
-						<th scope="row"><b class="t_blue">*</b> 아이디 (ID)</th>
-						<td colspan="2">
-							<input  name="userId" type="text" value="${dto.userId}" readonly="readonly">
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><b class="t_blue">*</b> 생년월일 (Birth)</th>
-						<td colspan="2">
-							<input type="text" id="userBirth" name="userBirth"  readonly="readonly" value="${dto.userBirth}"/>
-						</td>
-					</tr>					
-					<tr>
-						<th scope="row"><b class="t_red">*</b> 변경할 비밀번호<br>(Password)</th>
-						<td colspan="2" style="padding-top: 18px;">
-							<input name="userPwd" type="password" placeholder="PASSWORD">
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><b class="t_red">*</b> 비밀번호 확인<br>(Password Check)</th>
-						<td colspan="2"  style="padding-top: 18px;">
-							<input name="userPwdCheck" type="password" placeholder="PASSWORD">
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><b class="t_red">*</b> 이메일(Email)</th>
-						<td>
-							<input name="userEmail" type="text" placeholder=" 메일 주소를 정확히 입력해주세요 "  value="${dto.userEmail}">
-						</td>
-						<td style="text-align:center">
-							<button type="button" onclick="sendEmail()" class='button btn_yellow'>메일 확인</button>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><b class="t_red">*</b> 인증번호<br>(Security Number)</th>
-						<td style="padding-top: 18px;">
-							<input  name="security" type="text">
-						</td>
-						<td style="text-align:center; padding-top: 18px;">
-							<button type="button" onclick="securityCheck()" class='button btn_yellow'>인증 확인</button>
- 		 					<input  name="securityNum" type="hidden">
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><b class="t_red">*</b> 전화번호 (Tel)</th>
-						<td colspan="2">
-							<input type="text" id="userTel" name="userTel"  placeholder=" - 없이 숫자만 입력하세요" value="${dto.userTel}"/>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row"><b class="t_red">*</b> 주소 (Address)</th>
-				 		<td colspan="2">
-					 		<input type="text" id="postCode" name="postCode" placeholder="우편번호" style="margin-bottom:5px" value="${dto.postCode}">
-							<button type="button" onclick="myForm_Postcode()" class='button btn_yellow' style="margin-bottom:5px">주소 검색</button>
-							<input type="text" id="userAddr1" name="userAddr1" placeholder="도로명 주소" style="margin-bottom:5px; width:330px" value="${dto.userAddr1}"><br>
-							<input type="text" id="userAddr2" name="userAddr2" placeholder="지번주소" style="margin-bottom:5px; width:330px" value="${dto.userAddr2}"><br>
-							<input type="text" id="etc" name="etc" placeholder="상세주소를 입력해주세요" 	style="margin-bottom:5px; width:330px" value="${dto.etc}">
-						</td>
-			 		</tr>
-			</table> 
-				<div class="btn_wrap view_btn" style="margin-top:20px">
-					<button type='button' class='button btn_yellow' onclick="updateSubmit()" style="margin-right:5px;">수정</button>
-					<button type='button' class='button btn_red' onclick="deleteSubmit()">탈퇴</button>
+<body> -->
+<!-- 회원정보(Top) -->
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top02.jpg);">
+    <div class="container h-100">
+        <div class="row h-100 align-items-end">
+            <div class="col-12">
+                <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
+                	<h2 class="page-title">회원정보</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- //회원정보(Top) -->
+
+<div>
+	<div class="container">
+		<div class="row">
+			<div class="col-12" style="margin-top: 20px; margin-bottom: 30px;">
+				<div style="padding-bottom: 20px">
+					<h1>회원 정보 (수정 / 탈퇴)</h1>
 				</div>
-
-  			</form>
-  		</div>
- <div class="col-3"></div>
- </div>
-</body>
-</html>
+				<div style="font-size: 14px;">
+					&nbsp;<b class="t_blue">*</b>표시된 사항은 수정이 제한됩니다.
+				</div>
+				<form name="updateForm" method="POST">
+					<table class="table left_tbl form_tbl">
+						<colgroup>
+							<col style="width: 30%" />
+							<col style="width: 45%" />
+							<col />
+						</colgroup>
+						<tr>
+							<th scope="row"><b class="t_blue">*</b> 성함 (Name)</th>
+							<td colspan="2"><input type="hidden" id="userIdx"
+								name="userIdx" readonly="readonly" value="${dto.userIdx}" /> <input
+								type="text" id="userName" name="userName" readonly="readonly"
+								value="${dto.userName}" /></td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_blue">*</b> 아이디 (ID)</th>
+							<td colspan="2"><input name="userId" type="text"
+								value="${dto.userId}" readonly="readonly"></td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_blue">*</b> 생년월일 (Birth)</th>
+							<td colspan="2"><input type="text" id="userBirth"
+								name="userBirth" readonly="readonly" value="${dto.userBirth}" />
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_red">*</b> 변경할 비밀번호<br>(Password)</th>
+							<td colspan="2" style="padding-top: 18px;"><input
+								name="userPwd" type="password" placeholder="PASSWORD"></td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_red">*</b> 비밀번호 확인<br>(Password
+								Check)</th>
+							<td colspan="2" style="padding-top: 18px;"><input
+								name="userPwdCheck" type="password" placeholder="PASSWORD">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_red">*</b> 이메일(Email)</th>
+							<td><input name="userEmail" type="text"
+								placeholder=" 메일 주소를 정확히 입력해주세요 " value="${dto.userEmail}">
+							</td>
+							<td style="text-align: center">
+								<button type="button" onclick="sendEmail()"
+									class='button btn_yellow'>메일 확인</button>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_red">*</b> 인증번호<br>(Security
+								Number)</th>
+							<td style="padding-top: 18px;"><input name="security"
+								type="text"></td>
+							<td style="text-align: center; padding-top: 18px;">
+								<button type="button" onclick="securityCheck()"
+									class='button btn_yellow'>인증 확인</button> <input
+								name="securityNum" type="hidden">
+							</td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_red">*</b> 전화번호 (Tel)</th>
+							<td colspan="2"><input type="text" id="userTel"
+								name="userTel" placeholder=" - 없이 숫자만 입력하세요"
+								value="${dto.userTel}" /></td>
+						</tr>
+						<tr>
+							<th scope="row"><b class="t_red">*</b> 주소 (Address)</th>
+							<td colspan="2"><input type="text" id="postCode"
+								name="postCode" placeholder="우편번호" style="margin-bottom: 5px"
+								value="${dto.postCode}">
+								<button type="button" onclick="myForm_Postcode()"
+									class='button btn_yellow' style="margin-bottom: 5px">주소
+									검색</button> <input type="text" id="userAddr1" name="userAddr1"
+								placeholder="도로명 주소" style="margin-bottom: 5px; width: 330px"
+								value="${dto.userAddr1}"><br> <input type="text"
+								id="userAddr2" name="userAddr2" placeholder="지번주소"
+								style="margin-bottom: 5px; width: 330px"
+								value="${dto.userAddr2}"><br> <input type="text"
+								id="etc" name="etc" placeholder="상세주소를 입력해주세요"
+								style="margin-bottom: 5px; width: 330px" value="${dto.etc}">
+							</td>
+						</tr>
+					</table>
+					<div class="btn_wrap view_btn" style="margin-top: 20px">
+						<button type='button' class='button btn_yellow'
+							onclick="updateSubmit()" style="margin-right: 5px;">수정</button>
+						<button type='button' class='button btn_red'
+							onclick="deleteSubmit()">탈퇴</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!-- //row -->
+	</div>
+</div>
+<!-- </body>
+</html> -->
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>

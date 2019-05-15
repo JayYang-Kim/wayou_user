@@ -445,15 +445,23 @@
 					}, function(rsp) {
 					    if ( rsp.success ) { 
 					        var msg = '결제가 완료되었습니다.';
-					        msg += '고유ID : ' + rsp.imp_uid;
+					        /* msg += '고유ID : ' + rsp.imp_uid;
 					        msg += '상점 거래ID : ' + rsp.merchant_uid;
 					        msg += '결제 금액 : ' + rsp.paid_amount;
-					        msg += '카드 승인번호 : ' + rsp.apply_num;
+					        msg += '카드 승인번호 : ' + rsp.apply_num; */
+					        var impCode = rsp.imp_uid;
+					        var paymethod= rsp.pay_method;
+					        var status=rsp.status;
 					        
 					       url = "<%=cp%>/travel/plan/confirm?workCode=${workspace.workCode}";
 					        $.ajax({
 					        	type:"post",
 								url:url, 
+								data:{
+									impCode:impCode,
+									payMethod:paymethod,
+									status:status
+								},
 								dataType:"json",
 								success:function(){
 									alert("구매해주셔서 감사합니다.");
@@ -473,7 +481,6 @@
 					        var msg = '결제에 실패하였습니다.';
 					        msg += '에러내용 : ' + rsp.error_msg;
 					    }
-					    alert(msg);
 					});		
 				},
 				beforesend:function(e){
@@ -492,7 +499,6 @@
 	
 	
 	$(function(){
-		  
  		if(!${isPaid}){ 
 			var modal = document.getElementById('myModal');
 			modal.style.display = "block";

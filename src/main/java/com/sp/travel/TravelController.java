@@ -1,6 +1,5 @@
 	package com.sp.travel;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -511,14 +510,20 @@ public class TravelController {
 	@ResponseBody
 	public Map<String,Object> confirm(
 			@RequestParam int workCode,
+			@RequestParam String impCode,
+			@RequestParam String payMethod,
+			@RequestParam String status,
 			HttpSession session
 			) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		Map<String,Object> map = new HashMap<>();
 		
 		map.put("workCode", workCode);
+		map.put("impCode", impCode);
+		map.put("payMethod", payMethod);
+		map.put("status", status);
 		map.put("userIdx", info.getUserIdx());
-		
+		map.put("userName", info.getUserName());
 		travelService.payRoute(map);
 		
 		return map;
@@ -629,13 +634,18 @@ public class TravelController {
 	
 	@PostMapping("/travel/event/insertReply")
 	@ResponseBody
-	public void insertReply(
+	public Map<String,Object> insertReply(
 				EventReply reply,
 				HttpSession session
 			) {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
 		reply.setUserIdx(info.getUserIdx());
 		eventService.insertReply(reply);
+		int dataCount = eventService.replyCount(reply.getEventCode());
+		Map<String,Object> map = new HashMap<>();
+		map.put("dataCount", dataCount);
+		
+		return map;
 	}
 	
 	@GetMapping("/travel/event/replyList")
@@ -685,7 +695,10 @@ public class TravelController {
 			return map;
 		}
 		eventService.deleteReply(reply);
+		int dataCount = eventService.replyCount(reply.getEventCode());
+		map.put("dataCount", dataCount);
 		map.put("isDeleted", true);
+		
 		return map;
 	}
 	

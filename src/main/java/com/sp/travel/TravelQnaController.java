@@ -28,7 +28,7 @@ public class TravelQnaController {
 	@Autowired
 	private MyUtil myUtil;
 	
-	@RequestMapping(value="/travel/contact")
+	@RequestMapping(value="/travel/qna/contact")
 	public String list (
 			@RequestParam(value="page", defaultValue="1") int current_page,
 			@RequestParam(defaultValue="all") String searchKey,
