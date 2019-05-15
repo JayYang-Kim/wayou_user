@@ -73,13 +73,13 @@
 	
 	<!-- article 호텔방 리스트 -->
 	<select id="readHotel" parameterType="map" resultType="com.sp.hotel.Hotel">
-SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.information, r.notice, r.cancel_notice, h.hname, r.hotelCode
+SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.information, r.notice, r.cancel_notice, h.hname, r.hotelCode, h.saveFilename
             FROM roomInfo r
             JOIN roomType rt ON rt.roomTypeCode =r.roomTypeCode
             JOIN hotelInfo h ON h.hotelCode=r.hotelCode
 				WHERE r.hotelCode = #{hotelCode}
 <if test="checkin !='' and checkout !='' ">
-				AND( rf.roomCode NOT IN (
+				AND( r.roomCode NOT IN (
                 	select roomCode from roomReserInfo where 
 <![CDATA[
                         (TO_DATE(TO_CHAR(checkin, 'YYYYMMDD')) >= #{checkin} AND TO_DATE(TO_CHAR(checkout, 'YYYYMMDD')) <= #{checkout}) OR
@@ -91,7 +91,7 @@ SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.informatio
 	</select>
 	
 		<select id="readHotelMax" parameterType="Integer" resultType="com.sp.hotel.Hotel">
-		         SELECT h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename, newT.roomCode
+		         SELECT h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename, newT.roomCode, h.information
 		         FROM hotelInfo h
 		         LEFT OUTER JOIN(
 		            SELECT hotelCode, hcount, max(price) as price, max(roomCode) as roomCode
