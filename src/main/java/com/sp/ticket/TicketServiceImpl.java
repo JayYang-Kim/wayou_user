@@ -168,4 +168,26 @@ public class TicketServiceImpl implements TicketService {
 		return ticket;
 	}
 
+	@Override
+	public List<Ticket> listStoreFile(int storeCode) {
+		List<Ticket> list = null;
+		try {
+			list=dao.selectList("ticket.listStoreFile", storeCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
+	@Override
+	public List<Ticket> listTicketFile(int ticketCode) {
+		List<Ticket> list = null;
+		try {
+			list=dao.selectList("ticket.listTicketFile", ticketCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

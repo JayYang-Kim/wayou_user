@@ -152,7 +152,7 @@
 				<div class="row" align="left" style="width:900px;">
 
                       <div class="room-thumbnail" style="margin-left: 40px;">
-                          <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" alt="" style="padding-bottom: 50px;">
+                          <img src="<%=cp%>/resources/images/bg-img/${dto.saveFilename}" alt="" style="padding-bottom: 50px;">
                       </div>
                       <!-- Room Content -->
                       <div class="room-content" style="margin-top: 1px;">

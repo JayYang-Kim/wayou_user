@@ -132,7 +132,8 @@ public class TicketController {
 		}
 		
 		List<Ticket> listDate = ticketService.readDate(storeCode);
-
+		List<Ticket> listStoreFile = ticketService.listStoreFile(storeCode);
+		
 		Map<String, Object> map = new HashMap<>();
 		map.put("ticketCode", ticketCode);
 		map.put("regionCode", regionCode);
@@ -143,6 +144,7 @@ public class TicketController {
 		model.addAttribute("page", page);
 		model.addAttribute("query", query);
 		model.addAttribute("listDate", listDate);
+		model.addAttribute("listStoreFile", listStoreFile);
 		
 		return ".ticket.detail";
 	}

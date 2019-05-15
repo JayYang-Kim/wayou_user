@@ -42,7 +42,7 @@
 	<select id="listTicket" parameterType="map" resultType="com.sp.ticket.Ticket">
 		SELECT * FROM (
 		    SELECT ROWNUM rnum, tb.* FROM (
-		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.loctitle, sr.star, sr.reviewCount
+		    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.loctitle, sr.star, sr.reviewCount, sf.savefilename
 		    	FROM ticket t
 		    	JOIN (
 		    			select ticketCode, min(price) as price
@@ -50,6 +50,10 @@
 		    			GROUP BY ticketCode
 				) detail on detail.ticketCode=t.ticketCode
 				JOIN store s ON t.storeCode=s.storeCode
+				LEFT OUTER JOIN(
+                select storeCode, saveFilename FROM storefile
+                WHERE fileCode=(SELECT min(fileCode) FROM storefile)
+                )sf ON sf.storeCode=t.storeCode
 				LEFT OUTER JOIN (       
                 		SELECT AVG(star) AS star, NVL(COUNT(*), 0) AS reviewCount, storeCode FROM storeReview
                 		GROUP BY storeCode
@@ -142,5 +146,17 @@
 	INSERT INTO wishlist_dt (wishCode, userIdx, productCode, amount, price)
 	VALUES (WISHCODE_SEQ.NEXTVAL, #{userIdx}, #{ticketDetailCode}, #{buyCount}, #{price})
 	</insert> -->
+	
+	<select id="listStoreFile" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+	SELECT fileCode, storeCode, savefilename, originalfilename
+	FROM storeFile
+	WHERE storeCode=#{storeCode}
+	</select>
+	
+	<select id="listTicketFile" parameterType="Integer" resultType="com.sp.ticket.Ticket">
+	SELECT fileCode, ticketCode, savefilename, originalfilename
+	FROM storeFile
+	WHERE ticketCode=#{ticketCode}
+	</select>
 	
 </mapper>

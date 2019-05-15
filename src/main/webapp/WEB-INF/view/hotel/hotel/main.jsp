@@ -109,9 +109,11 @@ div {
                   </div> 
 	                </div>
 	                <!-- Post Title -->
-	                <a href="<%=cp%>/hotel/hotel/article?hotelCode=${mainRanking.hotelCode}&page=1" class="post-title">${mainRanking.information }</a>
-	                <p>How many free autoresponders have you tried? And how many emails did you get through using them?</p>
-	                <a href="<%=cp%>/hotel/hotel/article?hotelCode=${mainRanking.hotelCode}&page=1" class="btn continue-btn"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
+	                <a href="<%=cp%>/hotel/hotel/article?hotelCode=${mainRanking.hotelCode}&page=1" class="post-title" style="white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;">${mainRanking.information }</a>
+	                <p></p>
+	                <a href="<%=cp%>/hotel/hotel/article?hotelCode=${mainRanking.hotelCode}&page=1" class="btn continue-btn">더보기&nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	            </div>
 	        </div>
 	      </c:forEach>

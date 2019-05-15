@@ -21,4 +21,7 @@ public interface TicketService {
 	
 	public int insertWishlist(Ticket dto);
 	
+	public List<Ticket> listStoreFile (int storeCode);
+	public List<Ticket> listTicketFile (int ticketCode);
+	
 }
