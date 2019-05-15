@@ -112,12 +112,7 @@
                                         <li><a href="<%=cp%>/myPage/step">- 등급확인</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="<%=cp%>/myPage/main">문의사항</a>
-                                        <ul class="dropdown">
-                                        <li><a href="<%=cp%>/">- 문의사항 작성</a></li>
-                                        <li><a href="<%=cp%>/">- 답변 확인</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="<%=cp%>/myPage/question">문의사항</a></li>
                             </ul>
 
                         <!-- Search -->

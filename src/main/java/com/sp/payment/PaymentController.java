@@ -245,7 +245,7 @@ public class PaymentController {
 			Model model
 			) throws Exception {
 		SessionInfo info = (SessionInfo)session.getAttribute("member");
-		int userIdx=info.getUserIdx();
+		/*int userIdx=info.getUserIdx();
 		int orderCode = paymentService.checkOrder(userIdx);
 		int result=paymentService.checkDepart(orderCode);
 		Payment dto= new Payment();
@@ -256,7 +256,7 @@ public class PaymentController {
 			dto.sethName(dto1.gethName());
 			dto.setRoomNum(dto1.getRoomNum());
 			model.addAttribute("dto", dto);
-		}
+		}*/
 		
 		return ".payment.complete";
 	}

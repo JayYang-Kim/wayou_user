@@ -16,7 +16,7 @@ $(function(){
 		var $this = $(this).closest("tr");
 		if(isHidden) {
 			var qnaCode=$(this).attr("data-Num");
-			var url = "<%=cp%>/ticket/qna/hitCount";
+			var url = "<%=cp%>/myPage/question/hitCount";
 			var query="qnaCode="+qnaCode;
 			$.ajax({
 				type:"post"
@@ -26,7 +26,7 @@ $(function(){
 				,success:function(data) {
 					if(data.msg=="true"){
 						var hitCount = data.hitCount;
-						$this.children("td:nth-child(6)").html(hitCount);
+						$this.children("td:nth-child(7)").html(hitCount);
 					}
 				}
 			    ,beforeSend:function(e) {
@@ -51,7 +51,7 @@ $(function(){
 	$("body").on("click", ".btn_update", function(){
 		var qnaCode = $(this).attr("data-qnaCode");
 		
-		var url="<%=cp%>/ticket/qna/update?qnaCode=" + qnaCode + "&page=${page}";
+		var url="<%=cp%>/myPage/question/update?qnaCode=" + qnaCode + "&page=${page}";
 		location.href=url;
 	});
 	
@@ -61,7 +61,7 @@ $(function(){
 		
 		if(confirm("게시물을 삭제하시겠습니까?")){
 		
-		var url="<%=cp%>/ticket/qna/delete?qnaCode="+qnaCode+"&page=${page}";
+		var url="<%=cp%>/myPage/question/delete?qnaCode="+qnaCode+"&page=${page}";
 		location.href=url;
 		}
 	});
@@ -118,68 +118,81 @@ function searchList() {
 		</form>
 		<div class="row justify-content-center">
 			<div class="col-12 col-lg-12">
-				<button type="button" class="btn roberto-btn" id="btn_createQna" onclick="javascript:location.href='<%=cp%>/travel/contact/created'">문의사항 작성</button>
-				<table class=tb style="font-size: 15px;margin-top:20px;"> 
-					<tr align="center" bgcolor="#eeeeee" height="40"
-						style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
-						<th width="60" style="color: #787878;">번호</th>
-						<th width="100" style="color: #787878;">답변상태</th>
-						<th style="color: #787878;">제목</th>
-						<th width="100" style="color: #787878;">작성자</th>
-						<th width="120" style="color: #787878;">작성일</th>
-						<th width="60" style="color: #787878;">조회수</th>
-
-					</tr>
-					<c:forEach var="dto" items="${list}">
-						<tr align="center" bgcolor="#ffffff" height="40"
-							style="border-bottom: 1px solid #cccccc;">
-							<td>${dto.listNum}</td>
-							<c:if test="${dto.answerCount == 0 }">
-								<td style="color: #787878;">검토중</td>
-							</c:if>
-							<c:if test="${dto.answerCount != 0 }">
-								<td style="color: #1cc3b2;">답변완료</td>
-							</c:if>
-							<td class="qnaSubject" data-Num='${dto.qnaCode}'
-								style="cursor: pointer;">${dto.subject}</td>
-							<td>${dto.userName}</td>
-							<td>${dto.created}</td>
-							<td>${dto.hitCount}</td>
+				<table class="tb_basic" style="font-size: 14px;">
+					<colgroup>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
+						<col/>
+					</colgroup>
+					<thead>
+						<tr align="center" bgcolor="#eeeeee" height="40" style="border-top: 1px solid #cccccc; border-bottom: 1px solid #cccccc;">
+							<th width="60" style="color: #787878;">번호</th>
+							<th width="60" style="color: #787878;">구분</th>
+							<th width="100" style="color: #787878;">답변상태</th>
+							<th style="color: #787878;">제목</th>
+							<th width="100" style="color: #787878;">작성자</th>
+							<th width="120" style="color: #787878;">작성일</th>
+							<th width="60" style="color: #787878;">조회수</th>
 						</tr>
-						<tr class="qnaArticle" style="background-color: #F6F6F6">
-							<td colspan="6" style="text-align: left !important;">
-								<div style="margin: 30px 10px 25px 40px;">
-									<div style="margin-bottom: 30px;">
-										<span style="display: inline-block; font-weight: bold;">Q.&nbsp;&nbsp;</span>${dto.content}
-									</div>
-									<div align="right" style="margin-right: 30px;">
-
-										<c:if
-											test="${sessionScope.member.userIdx == dto.userIdx && empty dto.answerContent}">
-											<button type="button" class="btn_classic btn_update"
-												style="margin-right: 7px; border-radius: 3px;"
-												data-qnaCode='${dto.qnaCode}'>수정</button>
-											<%-- 	<button type="button" class="btn_classic" style="margin-right:7px; border-radius: 3px;" onclick="updateBoard('${dto.qnaCode}')">수정</button> --%>
-										</c:if>
-										<!-- 삭제 - admin 권한추가해야함 -->
-										<c:if
-											test="${sessionScope.member.userIdx == dto.userIdx && empty dto.answerContent}">
-											<button type="button" class="btn_classic btn_delete"
-												style="border-radius: 3px;" data-qnaCode='${dto.qnaCode}'>삭제</button>
-										</c:if>
-									</div>
-									<c:if test="${dto.answerCount != 0}">
-										<div>
-											<span
-												style="display: inline-block; font-weight: bold; color: #1cc3b2;">A.&nbsp;&nbsp;</span>${dto.answerContent}
-											<p style="color: #1cc3b2; font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-												${dto.answerCreated}</p>
+					</thead> 
+					
+					<tbody>
+						<c:forEach var="dto" items="${list}">
+							<tr align="center" bgcolor="#ffffff" height="40"
+								style="border-bottom: 1px solid #cccccc;">
+								<td>${dto.listNum}</td>
+								<td>${dto.catCode == 1 ? '쇼핑' : (dto.catCode == 2) ? '숙박' : '여행'}</td>
+								<c:if test="${dto.answerCount == 0 }">
+									<td style="color: #787878;">검토중</td>
+								</c:if>
+								<c:if test="${dto.answerCount != 0 }">
+									<td style="color: #1cc3b2;">답변완료</td>
+								</c:if>
+								<td class="qnaSubject" data-Num='${dto.qnaCode}'
+									style="cursor: pointer;">${dto.subject}</td>
+								<td>${dto.userName}</td>
+								<td>${dto.created}</td>
+								<td>${dto.hitCount}</td>
+							</tr>
+							<tr class="qnaArticle" style="background-color: #F6F6F6">
+								<td colspan="7" style="text-align: left !important;">
+									<div style="margin: 30px 10px 25px 40px;">
+										<div style="margin-bottom: 30px;">
+											<span style="display: inline-block; font-weight: bold;">Q.&nbsp;&nbsp;</span>${dto.content}
 										</div>
-									</c:if>
-								</div>
-							</td>
-						</tr>
-					</c:forEach>
+										<div align="right" style="margin-right: 30px;">
+	
+											<c:if
+												test="${sessionScope.member.userIdx == dto.userIdx && empty dto.answerContent}">
+												<button type="button" class="btn_classic btn_update"
+													style="margin-right: 7px; border-radius: 3px;"
+													data-qnaCode='${dto.qnaCode}'>수정</button>
+												<%-- 	<button type="button" class="btn_classic" style="margin-right:7px; border-radius: 3px;" onclick="updateBoard('${dto.qnaCode}')">수정</button> --%>
+											</c:if>
+											<!-- 삭제 - admin 권한추가해야함 -->
+											<c:if
+												test="${sessionScope.member.userIdx == dto.userIdx && empty dto.answerContent}">
+												<button type="button" class="btn_classic btn_delete"
+													style="border-radius: 3px;" data-qnaCode='${dto.qnaCode}'>삭제</button>
+											</c:if>
+										</div>
+										<c:if test="${dto.answerCount != 0}">
+											<div>
+												<span
+													style="display: inline-block; font-weight: bold; color: #1cc3b2;">A.&nbsp;&nbsp;</span>${dto.answerContent}
+												<p style="color: #1cc3b2; font-size: 14px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+													${dto.answerCreated}</p>
+											</div>
+										</c:if>
+									</div>
+								</td>
+							</tr>
+						</c:forEach>
+					</tbody>
 				</table>
 
 				<c:if test="${empty list}">
