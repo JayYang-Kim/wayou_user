@@ -141,5 +141,11 @@ SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.informatio
  	<select id="seq_order_master" resultType="Integer">
  		SELECT NVL(ORDERCODE_SEQ.NEXTVAL, 0) FROM dual
  	</select>
- 			
+ 	
+ 	<select id="listPicture" parameterType="Integer" resultType="com.sp.hotel.Hotel" >
+	 	SELECT f.saveFilename, h.saveFilename from roomInfo r
+			LEFT OUTER JOIN  roomfile f on f.roomCode=r.roomCode
+			LEFT OUTER JOIN hotelInfo h on h.hotelCode=r.hotelCode
+			WHERE hotelCode=#{hotelCode}
+ 	</select>
 </mapper>

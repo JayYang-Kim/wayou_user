@@ -284,6 +284,7 @@ $(function () {
                             <h6 style="padding-top: 50px;" class="form-group">
                                <span style="margin-bottom: 30px;">가격 : ${dto.price }</span>
                                <button type="button" class="btn_reservation btn roberto-btn w-100">예약하기</button>
+                               <button type="button" class="btn_reservation btn roberto-btn w-100" style="margin-top: 20px;">결제하기</button>
                                <input type="hidden" value="${dto.hotelCode }" name="hotelCode" class="hotelCode">
                                <input type="hidden" value="${dto.roomCode }" name="roomCode" class="roomCode">
                                <input type="hidden"  value="${dto.price }" name="price" class="price">
