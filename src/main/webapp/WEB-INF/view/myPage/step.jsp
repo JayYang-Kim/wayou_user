@@ -5,46 +5,46 @@
 <%
 	String cp=request.getContextPath();
 %>
-<!-- Breadcrumb Area Start -->
-<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);">
+<!-- 회원등급(Top) -->
+<div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/travel/main/top02.jpg);">
     <div class="container h-100">
-        <div class="row h-100 align-items-center">
+        <div class="row h-100 align-items-end">
             <div class="col-12">
-                <div class="breadcrumb-content text-center">
-                    <h2 class="page-title">회원 등급</h2>
+                <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
+                	<h2 class="page-title">회원등급</h2>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<!-- Breadcrumb Area End -->
+<!-- //회원등급(Top) -->
 
 <!-- Blog Area Start -->
 <div class="mt-50 mb-100">
 	<div class="container">
 		<div class="mb40">
-			<h2>회원님의 등급</h2>
+			<h2 class="mb10">회원님의 등급</h2>
 			<table class="table left_tbl">
 				<tr>
 					<c:if test="${sessionScope.member.roleCode==1}">
-					<td style="font-size: 20px;padding:44px 0px 10px 300px">회원님의 등급은</td>
-					<td style="border: none;text-align:center; width:100px; padding-top:30px"><img src="<%=cp%>/resources/images/level-img/friends.png" style="width:50px; height:50px; border-bottom:none" ></td>
-					<td style="text-align:center;border: none;padding-top: 0px;font-size:20px; padding-top:44px; width:150px; font-weight: bold;" >'프렌즈'</td>
+					<td style="font-size: 20px;padding:10px 0px 10px 300px">회원님의 등급은</td>
+					<td style="border: none;text-align:center; width:100px;"><img src="<%=cp%>/resources/images/level-img/friends.png" style="width:50px; height:50px; border-bottom:none" ></td>
+					<td style="text-align:center;border: none;font-size:20px;width:150px; font-weight: bold;" >'프렌즈'</td>
 					</c:if>
 					<c:if test="${sessionScope.member.roleCode==2}">
-					<td style="font-size: 20px;padding:44px 0px 10px 280px">회원님의 등급은</td>
-					<td style="border: none;text-align:center;"><img src="<%=cp%>/resources/images/level-img/premium.png" style="width:50px; height:50px; border-bottom:none" ></td>
-					<td style="text-align:center;border: none;padding-top: 0px;font-size:20px; padding-top:44px; width:220px; font-weight: bold;" >'프리미엄'</td>
+					<td style="font-size: 20px;padding:10px 0px 10px 300px">회원님의 등급은</td>
+					<td style="border: none;text-align:center; width:100px;"><img src="<%=cp%>/resources/images/level-img/premium.png" style="width:50px; height:50px; border-bottom:none" ></td>
+					<td style="text-align:center;border: none;font-size:20px;width:150px; font-weight: bold;" >'프리미엄'</td>
 					</c:if>
 					<c:if test="${sessionScope.member.roleCode==3}">
-					<td style="font-size: 20px;padding:44px 0px 10px 280px">회원님의 등급은</td>
-					<td style="border: none;text-align:center;"><img src="<%=cp%>/resources/images/level-img/super.png" style="width:50px; height:50px; border-bottom:none" ></td>
-					<td style="text-align:center;border: none;padding-top: 0px;font-size:20px; padding-top:44px; width:220px; font-weight: bold;" >'슈퍼프리미엄'</td>
+					<td style="font-size: 20px;padding:10px 0px 10px 300px">회원님의 등급은</td>
+					<td style="border: none;text-align:center; width:100px;"><img src="<%=cp%>/resources/images/level-img/super.png" style="width:50px; height:50px; border-bottom:none" ></td>
+					<td style="text-align:center;border: none;font-size:20px;width:150px; font-weight: bold;" >'슈퍼프리미엄'</td>
 					</c:if>
 					<c:if test="${sessionScope.member.roleCode==3}">
-					<td style="font-size: 20px;padding:44px 0px 10px 280px">회원님의 등급은</td>
-					<td style="border: none;text-align:center;"><img src="<%=cp%>/resources/images/level-img/superplus.png" style="width:50px; height:50px; border-bottom:none" ></td>
-					<td style="text-align:center;border: none;padding-top: 0px;font-size:20px; padding-top:44px; width:220px; font-weight: bold;" >'슈퍼프리미엄플러스'</td>
+					<td style="font-size: 20px;padding:10px 0px 10px 300px">회원님의 등급은</td>
+					<td style="border: none;text-align:center; width:100px;"><img src="<%=cp%>/resources/images/level-img/superplus.png" style="width:50px; height:50px; border-bottom:none" ></td>
+					<td style="text-align:center;border: none;font-size:20px;width:150px; font-weight: bold;" >'슈퍼프리미엄플러스'</td>
 					</c:if>															
 					<td style="font-size: 20px;border: none;padding: 44px 11px;">입니다.</td>
 				</tr>

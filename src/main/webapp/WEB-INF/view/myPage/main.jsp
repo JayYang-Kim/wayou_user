@@ -54,7 +54,9 @@
     <div class="container h-100">
         <div class="row h-100 align-items-end">
             <div class="col-12">
-                <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5"></div>
+                <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
+                	<h2 class="page-title">마이페이지</h2>
+                </div>
             </div>
         </div>
     </div>
@@ -69,6 +71,7 @@
                 <div class="title mb20 pb15" style="border-bottom:1px solid #c4c4c4">
                 	<h3>마이페이지</h3>
                 </div>
+                <!-- 최근 주문내역 -->
                 <div class="row">
                 	<div class="col-12 col-lg-12">
                 		<div>
@@ -143,7 +146,9 @@
                 		</div>
                 	</div>
                 </div>
+                <!-- //최근 주문내역 -->
                 
+                <!-- 회원등급 -->
                 <div class="row">
                 	<div class="col-12 col-lg-12">
                 		<div class="mt30 mb30">
@@ -157,10 +162,12 @@
 						</div>
                 	</div>
                 </div>
+                <!-- 회원등급 -->
                 
+                <!-- 문의사항 -->
                 <div class="row">
                 	<div class="col-12 col-lg-12">
-                		<div style="margin-bottom:100px;">
+                		<div class="mb30">
                 			<div class="dashBoard_title mb20" style="background-color:#ffffff;">
 	                            <h4>
 	                                <span class="float_left'">문의사항</span>
@@ -231,6 +238,12 @@
                 			</table>
                 		</div>
                 	</div>
+                </div>
+                <!-- //문의사항 -->
+                
+                <!-- 수정 / 탈퇴 -->
+                <div class="t_center" style="margin-bottom:100px;">
+                	<button class="btn_classic btn-black w140 h40" onclick="location.href='<%=cp%>/myPage/check'">수정 / 탈퇴</button>
                 </div>
             </div>
         </div>
