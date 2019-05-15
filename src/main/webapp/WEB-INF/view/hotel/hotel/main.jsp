@@ -4,6 +4,7 @@
 <%
    String cp = request.getContextPath();
 %>
+<link rel="stylesheet" href="<%=cp%>/resources/css/travel.css">
 <style type="text/css">
 div {
    border: none;
@@ -29,9 +30,9 @@ div {
 }
 </style>
 <section class="welcome-area">
-	<div class="welcome-slides owl-carousel noImg">
+	<div class="welcome-slides owl-carousel">
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/16.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/hotel/bg01.png);" data-img-url="<%=cp%>/resources/images/hotel/bg01.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -39,16 +40,54 @@ div {
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">호텔</h6>
-	                            <h2 data-animation="fadeInLeft" data-delay="500ms">Hotel</h2>
-	                          
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">WAYOU & 숙박</h6>
+	                            <h2 data-animation="fadeInLeft" data-delay="500ms">저렴하게 숙박 구매</h2>
+	                            <a href="<%=cp%>/ticket/list" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
 	            </div>
 	        </div>
 	    </div>
-	  </div>
+	
+	    <!-- Single Welcome Slide -->
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/hotel/bg02.png);" data-img-url="<%=cp%>/resources/images/hotel/bg02.png">
+	        <!-- Welcome Content -->
+	        <div class="welcome-content h-100">
+	            <div class="container h-100">
+	                <div class="row h-100 align-items-center">
+	                    <!-- Welcome Text -->
+	                    <div class="col-12">
+	                        <div class="welcome-text text-center">
+	                            <h6 data-animation="fadeInUp" data-delay="200ms">WAYOU & 숙박</h6>
+	                            <h2 data-animation="fadeInUp" data-delay="500ms">다양한 숙박 목록</h2>
+	                            <a href="<%=cp%>/ticket/list" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">바로가기</a>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
+	
+	    <!-- Single Welcome Slide -->
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/hotel/bg03.png);" data-img-url="<%=cp%>/resources/images/hotel/bg03.png">
+	        <!-- Welcome Content -->
+	        <div class="welcome-content h-100">
+	            <div class="container h-100">
+	                <div class="row h-100 align-items-center">
+	                    <!-- Welcome Text -->
+	                        <div class="col-12">
+	                            <div class="welcome-text text-center">
+	                                <h6 data-animation="fadeInDown" data-delay="200ms">WAYOU & 숙박</h6>
+	                                <h2 data-animation="fadeInDown" data-delay="500ms">숙박 구매하고 즐기기</h2>
+	                                <a href="<%=cp%>/ticket/list" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">바로가기</a>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+	    </div>
 	</section>
 <section class="roberto-about-area section-padding-100-0">
 	<div class="hotel-search-form-area">
@@ -124,7 +163,7 @@ div {
 
 	
 	    <!-- Projects Area Start -->
-   <section class="roberto-project-area">
+   <section class="roberto-project-area section-padding-100-0" style="border-top:1px solid #ebebeb;">
    <div class="container">
     <div class="row">
                 <div class="col-12">
@@ -174,7 +213,7 @@ div {
    <!-- Projects Area End -->
 
 		<!-- Blog Area Start -->
-	<section class="roberto-blog-area section-padding-100-0">
+	<section class="roberto-blog-area section-padding-100-0 colorlib-light-grey">
 	    <div class="container">
 	        <div class="row">
 	            <!-- Section Heading -->
@@ -191,7 +230,7 @@ div {
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
 	                <c:forEach var="mainHevent" items="${mainHevent}">
-	                <a href="<%=cp%>/hotel/hevent/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/4.jpg" alt=""></a>
+	                <a href="<%=cp%>/hotel/hevent/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/common/event.png" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
 	                    <a href="#" class="post-date">${mainHevent.created}</a>
@@ -209,7 +248,7 @@ div {
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="500ms">
                 	<c:forEach var="mainHnotice" items="${mainHnotice}">
-	                <a href="<%=cp%>/hotel/hnotice/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/2.jpg" alt=""></a>
+	                <a href="<%=cp%>/hotel/hnotice/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/common/notice.png" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
 	                    <a href="#" class="post-date">${mainHnotice.created}</a>
@@ -227,7 +266,7 @@ div {
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
 	                <c:forEach var="mainHqna" items="${mainHqna}">
-	                <a href="<%=cp%>/hotel/hqna/main" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/3.jpg" alt=""></a>
+	                <a href="<%=cp%>/hotel/hqna/main" class="post-thumbnail"><img src="<%=cp%>/resources/images/common/question.png" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
 	                    <a href="#" class="post-date">${mainHqna.created}</a>
@@ -247,18 +286,18 @@ div {
 	</section>
 	
 	<!-- Call To Action Area Start -->
-	 <section class="roberto-cta-area" style="padding-bottom: 80px;">
+	 <section class="roberto-cta-area" style="margin-top: 80px;padding-bottom: 80px;">
         <div class="container">
             <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/1.jpg);">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-7">
                         <div class="cta-text mb-50">
-                            <h2>Contact us now!</h2>
-                            <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
+                            <h2>WAYOU 호텔 예약</h2>
+                            <h6>WAYOU에서 저렴하게 호텔을 예약해 보세요.</h6>
                         </div>
                     </div>
                     <div class="col-12 col-md-5 text-right">
-                        <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
+                        <a href="#" class="btn roberto-btn mb-50">예약하기</a>
                     </div>
                 </div>
             </div>

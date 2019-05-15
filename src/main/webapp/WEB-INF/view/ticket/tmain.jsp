@@ -5,10 +5,12 @@
    String cp = request.getContextPath();
 %>
 
+<link rel="stylesheet" href="<%=cp%>/resources/css/travel.css">
+
 <section class="welcome-area">
 	<div class="welcome-slides owl-carousel">
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/16.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/ticket/bg01.png);" data-img-url="<%=cp%>/resources/images/ticket/bg01.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -16,9 +18,9 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInLeft" data-delay="200ms">Ticket</h6>
-	                            <h2 data-animation="fadeInLeft" data-delay="500ms">티켓티켓티켓티켓</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">Discover Now</a>
+	                            <h6 data-animation="fadeInLeft" data-delay="200ms">WAYOU & 티켓몰</h6>
+	                            <h2 data-animation="fadeInLeft" data-delay="500ms">저렴하게 티켓 구매</h2>
+	                            <a href="<%=cp%>/ticket/list" class="btn roberto-btn btn-2" data-animation="fadeInLeft" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -27,7 +29,7 @@
 	    </div>
 	
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/17.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/17.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/ticket/bg02.png);" data-img-url="<%=cp%>/resources/images/ticket/bg02.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -35,9 +37,9 @@
 	                    <!-- Welcome Text -->
 	                    <div class="col-12">
 	                        <div class="welcome-text text-center">
-	                            <h6 data-animation="fadeInUp" data-delay="200ms">Event</h6>
-	                            <h2 data-animation="fadeInUp" data-delay="500ms">이벤트이벤트</h2>
-	                            <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">Discover Now</a>
+	                            <h6 data-animation="fadeInUp" data-delay="200ms">WAYOU & 티켓몰</h6>
+	                            <h2 data-animation="fadeInUp" data-delay="500ms">다양한 티켓 목록</h2>
+	                            <a href="<%=cp%>/ticket/list" class="btn roberto-btn btn-2" data-animation="fadeInUp" data-delay="800ms">바로가기</a>
 	                        </div>
 	                    </div>
 	                </div>
@@ -46,7 +48,7 @@
 	    </div>
 	
 	    <!-- Single Welcome Slide -->
-	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/bg-img/18.jpg);" data-img-url="<%=cp%>/resources/images/bg-img/18.jpg">
+	    <div class="single-welcome-slide bg-img bg-overlay" style="background-image: url(<%=cp%>/resources/images/ticket/bg03.png);" data-img-url="<%=cp%>/resources/images/ticket/bg03.png">
 	        <!-- Welcome Content -->
 	        <div class="welcome-content h-100">
 	            <div class="container h-100">
@@ -54,9 +56,9 @@
 	                    <!-- Welcome Text -->
 	                        <div class="col-12">
 	                            <div class="welcome-text text-center">
-	                                <h6 data-animation="fadeInDown" data-delay="200ms">Notice</h6>
-	                                <h2 data-animation="fadeInDown" data-delay="500ms">공지공지</h2>
-	                                <a href="#" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">Discover Now</a>
+	                                <h6 data-animation="fadeInDown" data-delay="200ms">WAYOU & 티켓몰</h6>
+	                                <h2 data-animation="fadeInDown" data-delay="500ms">티켓 구매하고 즐기기</h2>
+	                                <a href="<%=cp%>/ticket/list" class="btn roberto-btn btn-2" data-animation="fadeInDown" data-delay="800ms">바로가기</a>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -90,7 +92,7 @@
 	
 
 	<!-- Service Area Start -->
-	<div class="roberto-service-area">
+	<div class="roberto-service-area section-padding-100-0">
 	    <div class="container">
 	        <div class="row">
 	            <div class="col-12">
@@ -144,7 +146,7 @@
 </section>	
 	<!-- Service Area End -->
 	
-	<section class="roberto-service-area section-padding-100-0">
+	<section class="roberto-service-area section-padding-100-0 colorlib-light-grey">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -190,7 +192,7 @@
 	
 	
 	<!-- Projects Area Start -->
-	<section class="roberto-project-area">
+	<section class="roberto-project-area section-padding-100-0">
 	<div class="container">
 	 <div class="row">
                 <div class="col-12">
@@ -239,7 +241,7 @@
 
 	
 	<!-- Blog Area Start -->
-	<section class="roberto-blog-area section-padding-100-0">
+	<section class="roberto-blog-area section-padding-100-0 colorlib-light-grey">
 	    <div class="container">
 	        <div class="row">
 	            <!-- Section Heading -->
@@ -256,7 +258,7 @@
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms">
                 	<c:forEach var="listNotice" items="${listNotice}">
-	                <a href="<%=cp%>/ticket/notice/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/2.jpg" alt=""></a>
+	                <a href="<%=cp%>/ticket/notice/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/common/notice.png" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
 	                    <a href="#" class="post-date">${listNotice.created}</a>
@@ -274,7 +276,7 @@
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="500ms">
 	                <c:forEach var="listQnA" items="${listQnA}">
-	                <a href="<%=cp%>/ticket/qna/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/3.jpg" alt=""></a>
+	                <a href="<%=cp%>/ticket/qna/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/common/question.png" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
 	                    <a href="#" class="post-date">${listQnA.created}</a>
@@ -292,7 +294,7 @@
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="700ms">
 	                <c:forEach var="listEvent" items="${listEvent}">
-	                <a href="<%=cp%>/ticket/event/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/bg-img/4.jpg" alt=""></a>
+	                <a href="<%=cp%>/ticket/event/list" class="post-thumbnail"><img src="<%=cp%>/resources/images/common/event.png" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="post-meta">
 	                    <a href="#" class="post-date">${listEvent.created}</a>

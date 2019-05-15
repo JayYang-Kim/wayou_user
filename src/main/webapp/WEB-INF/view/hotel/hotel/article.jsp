@@ -157,6 +157,7 @@ $(function () {
 });
 
 </script>
+
 <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: none;" data-jarallax-original-styles="background-image: url(<%=cp%>/resources/images/bg-img/16.jpg);">
         <div class="container h-100">
             <div class="row h-100 align-items-end">
@@ -215,8 +216,7 @@ $(function () {
                                     <li data-target="#room-thumbnail--slide" data-slide-to="4" class="">
                                         <img src="<%=cp%>/resources/images/bg-img/52.jpg" class="d-block w-100" alt="">
                                     </li>
-                                </ol>
-                                
+                                </ol>         
                             </div>
                         </div>
                      </div>
@@ -265,10 +265,10 @@ $(function () {
                             <li><img src="<%=cp%>/resources/images/core-img/icon6.png" alt=""> Service 24/24</li>
                 
                         </ul>
-                         <h4 style="margin-top: 20px;"><&nbsp;사장님 한마디&nbsp;></h4>
+                         <h4 style="margin-top: 20px;">&nbsp;한눈에&nbsp;살펴보기&nbsp;</h4>
                         <div style="font-size: 14px;background-color: #ebebeb; padding: 20px;line-height: 28px; margin-top: 12px">${maxDto.information }</div>
                     </div>
-				
+            
             <c:forEach var="dto" items="${list }">
                
                         <div class="room-features-area d-flex flex-wrap mb-50" style=" border: 1px solid #ebebeb;">
@@ -279,8 +279,8 @@ $(function () {
                             
                                 </span>    
                          </h6>
-                            <h6>이용&nbsp;정보 <span>${dto.information }</span></h6>
-                            <h6>시설&nbsp;규정 <span>${dto.notice } </span></h6>
+                            <h6>객실&nbsp;정보 <span >${dto.information }</span></h6>
+                            <h6>주요&nbsp;편의&nbsp;시설 <span style=" text-align: left;">${dto.notice } </span></h6>
                             <h6 style="padding-top: 50px;" class="form-group">
                                <span style="margin-bottom: 30px;">가격 : ${dto.price }</span>
                                <button type="button" class="btn_reservation btn roberto-btn w-100">예약하기</button>
@@ -295,14 +295,15 @@ $(function () {
              </c:forEach>
    
              </div>
-             
+            
              <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; padding: 15px 0px;" >
+                     
                    <div class="reviwer-thumbnail">
                        <%-- <img src="<%=cp%>/resources/images/bg-img/55.jpg" alt=""> --%>
                    </div>
 
                </div>
-
+             
                     <!-- Room Review -->
                     <div class="room-review-area mb-100">
                         <!-- <h4>Room Review</h4> -->
@@ -338,23 +339,21 @@ $(function () {
     <!-- Rooms Area End -->
 
     <!-- Call To Action Area Start -->
-    <section class="roberto-cta-area" style="padding-bottom: 30px;">
+    <section class="roberto-cta-area" style="margin-top: 80px;padding-bottom: 80px;">
         <div class="container">
             <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url(<%=cp%>/resources/images/bg-img/1.jpg);">
                 <div class="row align-items-center">
                     <div class="col-12 col-md-7">
                         <div class="cta-text mb-50">
-                            <h2>Contact us now!</h2>
-                            <h6>Contact (+12) 345-678-9999 to book directly or for advice</h6>
+                            <h2>WAYOU 호텔 예약</h2>
+                            <h6>WAYOU에서 저렴하게 호텔을 예약해 보세요.</h6>
                         </div>
                     </div>
                     <div class="col-12 col-md-5 text-right">
-                        <a href="#" class="btn roberto-btn mb-50">Contact Now</a>
+                        <a href="#" class="btn roberto-btn mb-50">예약하기</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
     <!-- Call To Action Area End -->
-
-   

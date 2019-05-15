@@ -33,6 +33,7 @@
 			<if test="searchValue !=null and searchValue !='' ">
 				<include refid="where-list"/>
 			</if>
+			AND q.userIdx = #{userIdx}
 		</where>
 	</select>
 	
@@ -57,6 +58,7 @@
 					<if test="searchValue !=null and searchValue !='' ">
 						<include refid="where-list"/>
 					</if>
+					AND q.userIdx = #{userIdx}
 				</where>
 	        	ORDER BY answerCount ASC, catCode DESC   	
 		<![CDATA[

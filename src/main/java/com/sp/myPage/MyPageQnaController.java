@@ -33,6 +33,7 @@ public class MyPageQnaController {
 			@RequestParam(defaultValue="all") String searchKey,
 			@RequestParam(defaultValue="") String searchValue,
 			HttpServletRequest req,
+			HttpSession session,
 			Model model
 			) throws Exception {
 		
@@ -40,11 +41,14 @@ public class MyPageQnaController {
 			searchValue=URLDecoder.decode(searchValue, "UTF-8");
 		}
 		
+		SessionInfo info = (SessionInfo)session.getAttribute("member");
+		
 		int total_page = 0;
 		int dataCount = 0;
 		int rows = 10;
 		
 		Map<String, Object> map = new HashMap<>();
+		map.put("userIdx", info.getUserIdx());
 		map.put("searchKey", searchKey);
 		map.put("searchValue", searchValue);
 		

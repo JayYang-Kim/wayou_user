@@ -90,26 +90,6 @@
                     <!-- Nav Start -->
                     <div class="classynav">
                             <ul id="nav">
-                            	<!-- Menu Sample -->
-                            	<%-- <li><a href="<%=cp%>/travel">여행</a>
-                                    <ul class="dropdown">
-                                        <li><a href="#">- 지역보기</a></li>
-                                        <li><a href="#">- 랜드마크 보기 </a></li>
-                                        <li><a href="#">- 일정 모음</a></li>
-                                        <li><a href="#">- 나만의 일정</a></li>
-                                        <li><a href="#">- 동료 모으기</a></li>
-                                        <li><a href="#">- 일정 만들기</a></li>
-                                        <li><a href="#">- 문의하기</a></li>
-                                        <li><a href="#">- Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                                <li><a href="#">- Dropdown Item</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li> --%>
                                 <li><a href="<%=cp%>/travel">여행</a>
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/travel/location">- 지역보기</a></li>
@@ -132,7 +112,7 @@
                                 <li><a href="<%=cp%>/ticket/tmain">티켓몰</a>
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/ticket/list">- 티켓</a></li>
-                                        <li><a href="#">- 나만의 티켓 예약</a></li>
+                                        <%-- <li><a href="#">- 나만의 티켓 예약</a></li> --%>
                                         <li><a href="<%=cp%>/ticket/event/list">- 이벤트</a></li>
                                         <li><a href="<%=cp%>/ticket/notice/list">- 공지사항</a></li>
                                         <li><a href="<%=cp%>/ticket/qna/list">- 문의사항</a>
@@ -146,7 +126,7 @@
                                 <li><a href="<%=cp%>/hotel/hotel/main">숙박</a>
                                     <ul class="dropdown">
                                         <li><a href="<%=cp%>/hotel/hotel/list">- 호텔</a></li>
-                                        <li><a href="<%=cp%>/hotel/hotel/main">- 나만의 호텔 예약</a></li>
+                                        <%-- <li><a href="<%=cp%>/hotel/hotel/main">- 나만의 호텔 예약</a></li> --%>
                                         <li><a href="<%=cp%>/hotel/hevent/list">- 이벤트</a></li>
                                         <li><a href="<%=cp%>/hotel/hnotice/list">- 공지사항</a></li>
                                         <li><a href="<%=cp%>/hotel/hqna/main">- 문의사항</a>

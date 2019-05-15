@@ -35,7 +35,7 @@ function sendOk() {
         return;
     }
 	
-	f.action="<%=cp%>/travel/contact/${mode}";
+	f.action="<%=cp%>/myPage/question/${mode}";
 	
 	f.submit();
 }
@@ -61,7 +61,7 @@ function sendOk() {
 <div class="roberto-news-area section-padding-100-0">
 	<div class="container">
 		<div class="row justify-content-center">
-			<div class="col-12 col-lg-8">
+			<div class="col-12 col-lg-12">
 				<h3>| 문의 사항 작성</h3>
 				<form name="QnABoardForm" method="post"> 
 			  <table style="width: 100%; margin: 20px auto 0px; min-height: 500px; border-spacing: 0px; border-collapse: collapse;">
@@ -87,10 +87,10 @@ function sendOk() {
 			  </tr>
 			  </table>
 			
-			  <div style="width: 100%; margin: 0px auto; border-spacing: 0px;" class="btnSpace">
+			  <div class="btnSpace mt30 mb30" style="width: 100%;border-spacing: 0px;">
 			        <button type="button" class="btn roberto-btn" onclick="sendOk();">${mode=='update'?'수정완료':'등록하기'}</button>
 			        <button type="reset" class="btn roberto-btn">다시입력</button>
-			        <button type="button" class="btn roberto-btn" onclick="javascript:location.href='<%=cp%>/travel/contact';">${mode=='update'?'수정취소':'등록취소'}</button>
+			        <button type="button" class="btn roberto-btn" onclick="javascript:location.href='<%=cp%>/myPage/question';">${mode=='update'?'수정취소':'등록취소'}</button>
 			        
 			         <c:if test="${mode=='update'}">
 			         	 <input type="hidden" name="qnaCode" value="${dto.qnaCode}">
