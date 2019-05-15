@@ -107,7 +107,7 @@ div {
                             <h2>${dto.hName}</h2>
                             <h4>가격 <span>${dto.price }/ Day</span></h4>
                             <div class="room-feature">
-                                <h6>위치<span>${dto.locCode }</span></h6>
+                                <h6>위치<span>${dto.address1 }</span></h6>
                                 <h6>최대인원: <span>${dto.HCount }</span></h6>
                                                     
                         <span class="star"> 

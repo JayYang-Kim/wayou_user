@@ -66,7 +66,7 @@ public class HotelController {
 			value=URLEncoder.encode(value, "utf-8");
 		}
 
-		int rows=1;
+		int rows=5;
 		int total_page=0;
 		int dataCount=0;
 
