@@ -53,7 +53,7 @@ public class TicketController {
 		
 		int total_page = 0;
 		int dataCount = 0;
-		int rows = 2;
+		int rows = 3;
 		
 		Map<String, Object> map = new HashMap<>();
 		map.put("regionCode", regionCode);

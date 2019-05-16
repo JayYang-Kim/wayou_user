@@ -92,6 +92,8 @@ SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.informatio
 	</select>
 	
 		<select id="readHotelMax" parameterType="Integer" resultType="com.sp.hotel.Hotel">
+			 SELECT * FROM (
+         		SELECT ROWNUM rnum, tb.* FROM (
 		         SELECT h.hName, h.address1, newT.hcount, newT.price, h.locCode, h.hotelCode , nf.saveFilename, newT.roomCode, h.information
 		         FROM hotelInfo h
 		         LEFT OUTER JOIN(
@@ -104,6 +106,10 @@ SELECT r.roomCode, rt.roomTypeCode, rt.roomName, r.hCount, r.price, r.informatio
 		            WHERE fileCode=(SELECT MAX(fileCode) FROM roomfile)
 		         )nf ON nf.roomCode=newT.roomCode  
                 WHERE h.hotelCode=#{hotelCode}
+               <![CDATA[
+               ) tb WHERE ROWNUM <= 1
+              ) WHERE rnum >= 1
+              ]]>
 	</select>
 	
 	
