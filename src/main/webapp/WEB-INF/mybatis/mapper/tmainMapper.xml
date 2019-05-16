@@ -54,7 +54,7 @@
 <select id="mainBestList" parameterType="map" resultType="com.sp.ticket.Ticket">
 	SELECT * FROM (
 	    SELECT ROWNUM rnum, tb.* FROM (
-	    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.loctitle, sr.star, sr.reviewCount
+	    	SELECT t.ticketCode, ticketName, t.storeCode, detail.price, locCode, s.categoryCode, s.loctitle, sr.star, sr.reviewCount, sf.saveFilename
 	    	FROM ticket t
 	    	JOIN (
 	    			select ticketCode, min(price) as price
@@ -66,6 +66,11 @@
                		SELECT AVG(star) AS star, NVL(COUNT(*), 0) AS reviewCount, storeCode FROM storeReview
                		GROUP BY storeCode
                ) sr ON sr.storeCode=t.storeCode
+            LEFT OUTER JOIN(
+                	SELECT storeCode, MIN(fileCode) AS fileCode, MIN(saveFilename) AS saveFilename
+		            FROM storefile
+		            GROUP BY storeCode
+                ) sf ON sf.storeCode=t.storeCode
 			ORDER BY sr.star DESC
 <![CDATA[				
        )tb WHERE ROWNUM <= 5

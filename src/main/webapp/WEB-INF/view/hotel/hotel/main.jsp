@@ -134,7 +134,7 @@ div {
 	     <c:forEach var="mainRanking" items="${mainRanking }">
 	        <div class="col-12 col-md-6 col-lg-4">
 	            <div class="single-post-area mb-100 wow fadeInUp" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
-	                <a href="#" class="post-thumbnail"><img src="/wayou/resources/images/bg-img/2.jpg" alt=""></a>
+	                <a href="#" class="post-thumbnail"><img src="/wadmin/uploads/hotel/${mainRanking.saveFilename}" alt=""></a>
 	                <!-- Post Meta -->
 	                <div class="">
 	                    <a href="<%=cp%>/hotel/hotel/article?hotelCode=${mainRanking.hotelCode}&page=1" class="post-date" style="font-size: 20px; color: #1cc3b2;">${mainRanking.hName }</a>
@@ -177,8 +177,8 @@ div {
    
     
    <div class="projects-slides owl-carousel">
-     	     <c:forEach var="mainRanking" items="${mainRanking }">
-       <div class="single-project-slide bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/5.jpg);height:500px;">
+     	     <c:forEach var="mainRanking" items="${mainRanking}">
+       <div class="single-project-slide bg-img" style="background-image: url(/wadmin/uploads/hotel/${mainRanking.saveFilename});height:500px;">
            <!-- Project Text -->
            <div class="project-content">
                <div class="text">
@@ -238,7 +238,7 @@ div {
 	                </div>
 	                <!-- Post Title -->
 	                    <a href="<%=cp%>/hotel/hevent/article?eventNum=${mainHevent.eventNum}" class="post-title">${mainHevent.subject}</a>
-	                    <p>${mainHevent.content}</p>
+	                    <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${mainHevent.content}</p>
 	                    <a href="<%=cp%>/hotel/hevent/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	                </c:forEach>
 	                </div>
@@ -256,7 +256,7 @@ div {
 	                </div>
 	                <!-- Post Title -->
 	                <a href="<%=cp%>/hotel/hnotice/article?noticeNum=${mainHnotice.noticeNum}" class="post-title">${mainHnotice.subject}</a>
-	                <p>${mainHnotice.content}</p>
+	                <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${mainHnotice.content}</p>
 	                <a href="<%=cp%>/hotel/hnotice/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	            </c:forEach>
 	            </div>
@@ -274,7 +274,7 @@ div {
 	                </div>
 	                <!-- Post Title -->
 	                <a href="<%=cp%>/hotel/hqna/main" class="post-title">${mainHqna.subject}</a>
-	                <p>${mainHqna.content}</p>
+	                <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${mainHqna.content}</p>
 	                <a href="<%=cp%>/hotel/hqna/main" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	            </c:forEach>
 	            </div>

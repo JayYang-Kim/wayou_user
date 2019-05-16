@@ -150,8 +150,11 @@ public class TicketController {
 	}
 	
 	@RequestMapping(value="/ticket/tab1", method=RequestMethod.POST)
-	public String tab1 (
-			) throws Exception {
+	public String tab1 (@RequestParam int ticketCode, Model model) throws Exception {
+		List<Ticket> listTicketFile = ticketService.listTicketFile(ticketCode);
+		
+		model.addAttribute("listTicketFile", listTicketFile);
+		
 		return "ticket/tab1";
 	}
 	

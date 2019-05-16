@@ -114,6 +114,9 @@ public class HeventController {
 			){
 		try {
 			HEvent event = eventService.eventArticle(eventNum);
+			
+			event.setContent(myUtil.htmlSymbols(event.getContent()));
+			
 			eventService.updateHitCount(eventNum);
 			searchValue = URLDecoder.decode(searchValue, "utf-8");
 			String query = "page="+current_page+"&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");

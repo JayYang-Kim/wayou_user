@@ -183,39 +183,19 @@ $(function () {
                    <div class="room-thumbnail-slides mb-50">
                             <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div class="carousel-item">
-                                        <img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item active">
-                                        <img  src="<%=cp%>/resources/images/bg-img/50.jpg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img  src="<%=cp%>/resources/images/bg-img/51.jpg"class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="<%=cp%>/resources/images/bg-img/52.jpg" class="d-block w-100" alt="">
-                                    </div>
+                                	<c:forEach var="roomList" items="${list}">
+	                                    <div class="carousel-item active">
+	                                        <img  src="/wadmin/uploads/hotel/${roomList.saveFilename}" class="d-block w-100" alt="">
+	                                    </div>
+                                    </c:forEach>
                                 </div>
 
                                 <ol class="carousel-indicators">
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="0" class="">
-                                        <img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="1" class="">
-                                        <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="2" class="active">
-                                        <img  src="<%=cp%>/resources/images/bg-img/50.jpg"  class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="3" class="">
-                                        <img  src="<%=cp%>/resources/images/bg-img/51.jpg" class="d-block w-100" alt="">
-                                    </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="4" class="">
-                                        <img src="<%=cp%>/resources/images/bg-img/52.jpg" class="d-block w-100" alt="">
-                                    </li>
+                                	<c:forEach var="roomList" items="${list}" varStatus="status">
+	                                    <li data-target="#room-thumbnail--slide" data-slide-to="${status.index}" class="">
+	                                        <img src="/wadmin/uploads/hotel/${roomList.saveFilename}" class="d-block w-100" alt="">
+	                                    </li>
+                                    </c:forEach>
                                 </ol>         
                             </div>
                         </div>
@@ -252,7 +232,7 @@ $(function () {
 
             
                     <!-- Room Service -->
-                  
+               <div class="col-12 col-lg-12">   
                     <div class="room-service mb-50">
                         <h4>Room Services</h4>
 
@@ -268,15 +248,15 @@ $(function () {
                          <h4 style="margin-top: 20px;">&nbsp;한눈에&nbsp;살펴보기&nbsp;</h4>
                         <div style="font-size: 14px;background-color: #ebebeb; padding: 20px;line-height: 28px; margin-top: 12px">${maxDto.information }</div>
                     </div>
+                   </div>
             
-            <c:forEach var="dto" items="${list }">
-               
+            <div class="col-12 col-lg-12">
+            <c:forEach var="dto" items="${list}">
+               			
                         <div class="room-features-area d-flex flex-wrap mb-50" style=" border: 1px solid #ebebeb;">
                           <h6>객실&nbsp;이름 &nbsp;-&nbsp;${dto.roomName }
                                  <span>
-                                  ${dto.saveFilename }
-                                        <%-- <img src="<%=cp%>/resources/images/bg-img/49.jpg" class="d-block w-100" alt=""> --%>
-                            
+                                 	<img src="/wadmin/uploads/hotel/${dto.saveFilename}" class="d-block w-100" alt="">
                                 </span>    
                          </h6>
                             <h6>객실&nbsp;정보 <span >${dto.information }</span></h6>
@@ -293,9 +273,10 @@ $(function () {
                         </div>
             
              </c:forEach>
+             </div>
    
              </div>
-            
+            <div class="col-12 col-lg-12">
              <div class="single-room-review-area d-flex align-items-center" style="padding-top: 20px; padding: 15px 0px;" >
                      
                    <div class="reviwer-thumbnail">
@@ -332,6 +313,7 @@ $(function () {
                   
                     </div >
                         <div id="listReview" style="padding-top: 20px;" ></div>
+                    </div>
                     </div>
                 </div>
 </div>

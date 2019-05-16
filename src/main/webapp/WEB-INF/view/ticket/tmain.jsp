@@ -162,16 +162,16 @@
                 <!-- Single Service Area -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms" style="visibility: visible; animation-delay: 300ms; animation-name: fadeInUp;">
-                        <img src="<%=cp%>/resources/images/bg-img/2.jpg" alt="">
+                        <img src="<%=cp%>/uploads/location/2019051609515049291553806152.jpg" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
-                            <h5>제주도</h5>
+                            <h5>서울</h5>
                         </div>
                     </div>
                 </div>
                 <!-- Single Service Area -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="500ms" style="visibility: visible; animation-delay: 500ms; animation-name: fadeInUp;">
-                        <img src="<%=cp%>/resources/images/bg-img/3.jpg" alt="">
+                        <img src="<%=cp%>/uploads/location/2019051609501349194939638584.jpg" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
                             <h5>부산</h5>
                         </div>
@@ -180,9 +180,9 @@
                 <!-- Single Service Area -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="700ms" style="visibility: visible; animation-delay: 700ms; animation-name: fadeInUp;">
-                        <img src="<%=cp%>/resources/images/bg-img/4.jpg" alt="">
+                        <img src="<%=cp%>/uploads/location/2019051609502149202754842341.jpg" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
-                            <h5>전주</h5>
+                            <h5>제주도</h5>
                         </div>
                     </div>
                 </div>
@@ -207,7 +207,7 @@
 	 
 	<div class="projects-slides owl-carousel">
 	    <c:forEach var="listBest" items="${listBest}">
-	    <div class="single-project-slide bg-img" style="background-image: url(<%=cp%>/resources/images/bg-img/5.jpg);height:400px;">
+	    <div class="single-project-slide bg-img" style="background-image: url(/wadmin/uploads/store/${listBest.saveFilename});height:400px;">
 	        <!-- Project Text -->
 	        <div class="project-content" style="height: 150px;">
 	            <div class="text" style="height: 100px;">
@@ -266,7 +266,7 @@
 	                </div>
 	                <!-- Post Title -->
 	                <a href="<%=cp%>/ticket/notice/article?noticeNum=${listNotice.noticeNum}" class="post-title">${listNotice.subject}</a>
-	                <p>${listNotice.content}</p>
+	                <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${listNotice.content}</p>
 	                <a href="<%=cp%>/ticket/notice/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	            </c:forEach>
 	            </div>
@@ -284,7 +284,7 @@
 	                </div>
 	                <!-- Post Title -->
 	                <a href="<%=cp%>/ticket/qna/list" class="post-title">${listQnA.subject}</a>
-	                <p>${listQnA.content}</p>
+	                <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${listQnA.content}</p>
 	                <a href="<%=cp%>/ticket/qna/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	            </c:forEach>
 	            </div>
@@ -302,7 +302,7 @@
 	                </div>
 	                <!-- Post Title -->
 	                    <a href="<%=cp%>/ticket/event/article?eventNum=${listEvent.eventNum}" class="post-title">${listEvent.subject}</a>
-	                    <p>${listEvent.content}</p>
+	                    <p style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">${listEvent.content}</p>
 	                    <a href="<%=cp%>/ticket/event/list" class="btn continue-btn">더보기 &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></a>
 	                </c:forEach>
 	                </div>

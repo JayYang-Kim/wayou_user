@@ -280,12 +280,11 @@
                         </div>
                     </form>
                 </div>
-                </c:if>
-                
+                </c:if>    
                 <!-- 채팅 -->
-                <div class="mt20 mb20" style="height:500px">
+                <!-- <div class="mt20 mb20" style="height:500px">
 					<iframe src="http://211.238.142.187:3001" width="500" height="500" frameborder="0"></iframe>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

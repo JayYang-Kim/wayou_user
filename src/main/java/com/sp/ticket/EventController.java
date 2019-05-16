@@ -117,6 +117,8 @@ public class EventController {
 			searchValue = URLDecoder.decode(searchValue, "utf-8");
 			String query = "page="+current_page+"&searchKey="+searchKey+"&searchValue="+URLEncoder.encode(searchValue, "utf-8");
 			
+			event.setContent(util.htmlSymbols(event.getContent()));
+			
 			event.setStartDate(event.getStartDate().substring(0, 10));
 			event.setEndDate(event.getEndDate().substring(0, 10));
 			

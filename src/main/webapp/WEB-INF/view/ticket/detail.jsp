@@ -192,8 +192,9 @@ $(function(){
 
 function viewTabContent(id, url, tab) {
 	var storeCode = ${dto.storeCode};
+	var ticketCode = ${dto.ticketCode};
 	
-	$.post(url, {storeCode : storeCode}, function(data){		
+	$.post(url, {storeCode : storeCode, ticketCode : ticketCode}, function(data){		
 		  id.html(data);
 
 		  if(tab=="2")
@@ -478,7 +479,7 @@ $(function(){
             <div class="row h-100 align-items-end">
                 <div class="col-12">
                     <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
-                        <h2 class="room-title">ticket</h2>
+                        <h2 class="room-title">Ticket</h2>
                        <!--  <h2 class="room-price">$180 <span>/ Per Night</span></h2> -->
                     </div>
                 </div>
@@ -500,22 +501,19 @@ $(function(){
                         <div class="room-thumbnail-slides mb-50">
                             <div id="room-thumbnail--slide" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner mb-50">
-                                    <div class="carousel-item active">
-                                        <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" class="d-block w-100" alt="">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="<%=cp%>/resources/images/bg-img/everland2.jpeg" class="d-block w-100" alt="">
-                                    </div>
-                                   
+                                	<c:forEach var="listStoreFile" items="${listStoreFile}">
+	                                    <div class="carousel-item active">
+	                                        <img src="/wadmin/uploads/store/${listStoreFile.saveFilename}" class="d-block w-100" alt="">
+	                                    </div>
+                                    </c:forEach>
                                 </div>
 
                                 <ol class="carousel-indicators">
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="0" class="active">
-                                        <img src="<%=cp%>/resources/images/bg-img/everland.jpeg" class="d-block w-100" alt="">
+                                	<c:forEach var="listStoreFile" items="${listStoreFile}" varStatus="status">
+                                    <li data-target="#room-thumbnail--slide" data-slide-to="${status.index}" class="active">
+                                        <img src="/wadmin/uploads/store/${listStoreFile.saveFilename}" class="d-block w-100" alt="">
                                     </li>
-                                    <li data-target="#room-thumbnail--slide" data-slide-to="1">
-                                        <img src="<%=cp%>/resources/images/bg-img/everland2.jpeg" class="d-block w-100" alt="">
-                                    </li>
+                                    </c:forEach>
                                 </ol>
                             </div>
                         </div>

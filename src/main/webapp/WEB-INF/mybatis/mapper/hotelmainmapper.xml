@@ -66,8 +66,9 @@ SELECT * FROM (
           ) where g=1  
          )  newT ON newT.hotelCode=h.hotelCode
          LEFT OUTER JOIN(
-            select roomcode, saveFilename FROM roomfile
-            WHERE fileCode=(SELECT min(fileCode) FROM roomfile)
+            SELECT roomcode, MIN(fileCode) AS fileCode, MIN(saveFilename) AS saveFilename
+            FROM roomfile
+            GROUP BY roomcode
          )nf ON nf.roomCode=newT.roomCode    
           LEFT OUTER JOIN(
             select AVG(star) AS STAR  , NVL(COUNT(*),0) AS REVIEW, HOTELCODE FROM HREVIEW   

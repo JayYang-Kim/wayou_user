@@ -6,8 +6,10 @@
    String cp = request.getContextPath();
 %>
 
-<div class="body-container" style="width: 700px;">
-    <div class="body-title">
+<div class="container">
+	<div class="row mt20">
+		<div class="col-md-12">
+			 <div class="body-title">
         <h3><span style="font-family: Webdings">2</span> 게시판 </h3>
     </div>
     
@@ -59,15 +61,15 @@
 			<tr height="45">
 			    <td width="300" align="left">
 			    
-			          <button type="button" class="btn" onclick="updateHqna('${dto.qnaCode}');">수정</button>
+			          <button type="button" class="btn_classic" onclick="updateHqna('${dto.qnaCode}');">수정</button>
 			 
 			
-			          <button type="button" class="btn" onclick="deleteHqna('${dto.qnaCode}');">삭제</button>
+			          <button type="button" class="btn_classic" onclick="deleteHqna('${dto.qnaCode}');">삭제</button>
 			   
 			    </td>
 			
 			    <td align="right">
-			        <button type="button" class="btn" onclick="listPage(pageNo)">리스트</button>
+			        <button type="button" class="btn_classic" onclick="listPage(pageNo)">리스트</button>
 			    </td>
 			</tr>
 			</table>
@@ -102,4 +104,6 @@
             
            </div>
         </div> 
+		</div>
+	</div>
 </div>

@@ -51,9 +51,10 @@
 				) detail on detail.ticketCode=t.ticketCode
 				JOIN store s ON t.storeCode=s.storeCode
 				LEFT OUTER JOIN(
-                select storeCode, saveFilename FROM storefile
-                WHERE fileCode=(SELECT min(fileCode) FROM storefile)
-                )sf ON sf.storeCode=t.storeCode
+                	SELECT storeCode, MIN(fileCode) AS fileCode, MIN(saveFilename) AS saveFilename
+		            FROM storefile
+		            GROUP BY storeCode
+                ) sf ON sf.storeCode=t.storeCode
 				LEFT OUTER JOIN (       
                 		SELECT AVG(star) AS star, NVL(COUNT(*), 0) AS reviewCount, storeCode FROM storeReview
                 		GROUP BY storeCode
@@ -66,7 +67,7 @@
 						AND s.categoryCode=#{cateCode}
 					</if>
 				</where>
-				ORDER BY t.ticketCode DESC
+				ORDER BY t.ticketCode ASC
 <![CDATA[				
 	        )tb WHERE ROWNUM <= #{end}
        )WHERE rnum >= #{start}
@@ -155,7 +156,7 @@
 	
 	<select id="listTicketFile" parameterType="Integer" resultType="com.sp.ticket.Ticket">
 	SELECT fileCode, ticketCode, savefilename, originalfilename
-	FROM storeFile
+	FROM ticketFile
 	WHERE ticketCode=#{ticketCode}
 	</select>
 	

@@ -165,18 +165,21 @@
 						<div id="room-thumbnail--slide" class="carousel slide"
 							data-ride="carousel">
 							<div class="carousel-inner">
-								<div class="carousel-item active">
-									<c:if test="${not empty landmarkFiles}">
-										<c:forEach var="landmarkFiles" items="${landmarkFiles}">
+								<c:if test="${not empty landmarkFiles}">
+									<c:forEach var="landmarkFiles" items="${landmarkFiles}">
+										<div class="carousel-item active">
 											<img src="<%=cp%>/uploads/landmark/${landmarkFiles.saveFilename}" class="d-block w-100" alt="">
-										</c:forEach>
-									</c:if>
-									<c:if test="${empty landmarkFiles}">
-										<c:forEach var="landmarkFiles" items="${landmarkFiles}">
+										</div>
+									</c:forEach>
+								</c:if>
+								
+								<c:if test="${empty landmarkFiles}">
+									<c:forEach var="landmarkFiles" items="${landmarkFiles}">
+										<div class="carousel-item active">
 											<img src="<%=cp%>/resources/images/bg-img/48.jpg" class="d-block w-100" alt="">
-										</c:forEach>
-									</c:if>
-								</div>
+										</div>
+									</c:forEach>
+								</c:if>
 							</div>
 							
 							<c:if test="${not empty landmarkFiles}">

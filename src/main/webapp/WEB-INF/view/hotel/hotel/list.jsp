@@ -99,7 +99,7 @@ div {
                         <!-- Room Thumbnail -->
                         <div class="room-thumbnail">
                             <%-- <img src="<%=cp%>/resources/images/bg-img/43.jpg" alt=""> --%>
-                            <img src="<%=cp%>/resources/images/${dto.saveFilename}" alt="">
+                            <img src="/wadmin/uploads/hotel/${dto.saveFilename}" alt="">
                             
                         </div>
                         <!-- Room Content -->

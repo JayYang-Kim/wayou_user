@@ -92,6 +92,7 @@ public class NoticeController {
 		try {
 			Notice notice = noticeService.readNotice(noticeNum);
 			
+			notice.setContent(util.htmlSymbols(notice.getContent()));
 			
 			noticeService.updateHitCount(noticeNum);
 			searchValue = URLDecoder.decode(searchValue, "utf-8");

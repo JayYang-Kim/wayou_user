@@ -47,7 +47,6 @@ public class HotelController {
 		model.addAttribute("mainHqna", list3);
 		model.addAttribute("mainRanking", list4);
 		
-		
 		return ".hotel.hotel.main";
 	}
 	

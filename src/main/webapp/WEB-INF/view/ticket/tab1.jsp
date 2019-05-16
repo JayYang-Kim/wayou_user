@@ -7,5 +7,7 @@
 %>
 
 <div>
-	<img src="<%=cp%>/resources/images/bg-img/everland-detail.jpg" alt="" style="padding-left: 200px; padding-top: 50px; padding-bottom: 50px;">
+	<c:forEach var="listTicketFile" items="${listTicketFile}">
+		<img src="/wadmin/uploads/ticket/${listTicketFile.saveFilename}" alt="" style="padding-left: 200px; padding-top: 50px; padding-bottom: 50px;">
+	</c:forEach>
 </div>

@@ -613,6 +613,9 @@ public class TravelController {
 			){
 		try {
 			Event event = eventService.eventArticle(eventCode);
+			
+			event.setContent(util.htmlSymbols(event.getContent()));
+			
 			event.setFiles(eventService.eventFiles(eventCode));
 			eventService.updateHitCount(eventCode);
 			searchValue = URLDecoder.decode(searchValue, "utf-8");
@@ -771,6 +774,7 @@ public class TravelController {
 			Notice notice = noticeService.readNotice(notiCode);
 			notice.setFiles(noticeService.readFiles(notiCode));
 			
+			notice.setContent(util.htmlSymbols(notice.getContent()));
 			
 			noticeService.updateHitCount(notiCode);
 			searchValue = URLDecoder.decode(searchValue, "utf-8");
